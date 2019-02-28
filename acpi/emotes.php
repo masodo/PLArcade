@@ -1,10 +1,10 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
@@ -38,8 +38,8 @@ fwrite($file2, $v);
 } 
 fclose($file2);
 }
-$face = isset($_POST['face']);
-$pic = isset($_POST['pic']);
+if (isset($_POST['face']))$face = $_POST['face'];
+if (isset($_POST['pic']))$pic = $_POST['pic'];
 if (isset($_POST['face'])) {
 vsess();
 $smilefile = fopen($textloc."/emotes_faces.txt", "a");
