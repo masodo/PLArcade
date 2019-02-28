@@ -1,0 +1,4 @@
+----- One per line below. Ban with ranges by only entering part of the IP e.x:
+123.45
+123.45.67
+94.6
