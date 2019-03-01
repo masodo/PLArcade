@@ -388,7 +388,6 @@ echo "Sorry, the password you entered for the account, <b>$userID</b> is incorre
 die();
 }
 } else {
-echo "<script language='Javascript'>alert('hello\nworld')</script>";
 echo "Sorry, that username, <b>$name</b>  doesn't appear to exist. <a href='index.php'>Please go back and try again</a><br /><br />Did you mistype it? Are you <a href='index.php?action=register'>Registered?</a><br /><br /><a href='index.php?action=forgotpass'>Forgot Password?</a>";
 die();
 }
