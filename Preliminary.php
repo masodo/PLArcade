@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 3/1/2019   By: MaSoDo
+# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 3/2/2019   By: MaSoDo
 session_start();
 if($_GET['captcha']){
 $im = imagecreatefrompng("captchabg.png");
@@ -112,7 +112,8 @@ setcookie("gname", $_GET['play']);
 // ---------------------------------------------------------------------------------/
 ob_start();
 if (isset($_GET['cparea']) == "settings" && isset($_POST['SettingsUpdate'])) header("Location: ?cparea=settings");
-if (isset($_GET['play']) && is_numeric(isset($_GET['tournament']))) setcookie("phpqa_tourney",$_GET['tournament']);
+if (isset($_GET['play']) && isset($_GET['tournament']) && is_numeric($_GET['tournament'])) setcookie("phpqa_tourney",$_GET['tournament']);
+
 // FSmod addline
 if (isset($_GET['fullscreen']) && is_numeric(isset($_GET['tournament']))) setcookie("phpqa_tourney",$_GET['tournament']);
 // FSmod
@@ -149,7 +150,7 @@ $smilies = file($textloc.'/emotes_faces.txt');
 $smiliesp = file($textloc.'/emotes_pics.txt');
 for($x=1;$x<count($smilies);$x++) {
 $trim = rtrim($smilies[$x]);
-$g.= "<img src=\"emoticons/$smiliesp[$x]\" onclick=\"document.forms['postbox'].elements['senttext'].value=document.forms['postbox'].elements['senttext'].value+&#39;$trim&#39;\"> ";
+$g.= "<img src=\"emoticons/".$smiliesp[$x]."\" onclick=\"document.forms['postbox'].elements['senttext'].value=document.forms['postbox'].elements['senttext'].value+&#39;$trim&#39;\"> ";
 }
 return $g;
 }
@@ -169,8 +170,8 @@ $h=htmlspecialchars(mysql_error(), ENT_QUOTES);
 if($h) { 
 $sql=htmlspecialchars($sql, ENT_QUOTES);	
 echo "<script language='Javascript'>
-alert('Database Error: $h');
-alert('Query used: $sql');
+alert('Database Error: ".$h."');
+alert('Query used: ".$sql."');
 </script>"; 
 }
 return $sql?$r_q:$queries;
@@ -206,10 +207,10 @@ die();
 }
 /*   Tournament Stuff  */
 if (isset($_COOKIE['phpqa_tourney'])){
-if (!$_GET['play']&&(($_GET['id']||$_GET['do'])&&!$_POST)||!is_numeric($_COOKIE['phpqa_tourney'])||!mysql_num_rows(run_query("SELECT id FROM phpqa_tournaments WHERE user='$phpqa_user_cookie' AND tournament_id='".$_COOKIE['phpqa_tourney']."'"))) {
+if (!isset($_GET['play'])&&((isset($_GET['id'])||isset($_GET['do']))&&!$_POST)||!is_numeric($_COOKIE['phpqa_tourney'])||!mysql_num_rows(run_query("SELECT id FROM phpqa_tournaments WHERE user='".$phpqa_user_cookie."' AND tournament_id='".$_COOKIE['phpqa_tourney']."'"))) {
 setcookie("phpqa_tourney",false);$_COOKIE['phpqa_tourney']=false;}
 //FSmod addlines
-if (!$_GET['fullscreen']&&(($_GET['id']||$_GET['do'])&&!$_POST)||!is_numeric($_COOKIE['phpqa_tourney'])||!mysql_num_rows(run_query("SELECT id FROM phpqa_tournaments WHERE user='$phpqa_user_cookie' AND tournament_id='".$_COOKIE['phpqa_tourney']."'"))) {
+if (!isset($_GET['fullscreen'])&&((isset($_GET['id'])||isset($_GET['do']))&&!$_POST)||!is_numeric($_COOKIE['phpqa_tourney'])||!mysql_num_rows(run_query("SELECT id FROM phpqa_tournaments WHERE user='".$phpqa_user_cookie."' AND tournament_id='".$_COOKIE['phpqa_tourney']."'"))) {
 setcookie("phpqa_tourney",false);$_COOKIE['phpqa_tourney']=false;}
 //FSmod
 }
@@ -365,7 +366,7 @@ $thepassword_in_db = md5(sha1($pword));
 if(isset($_GET['recovery'])) $thepassword_in_db = $pword;
 if (rtrim($exist[2]) == $thepassword_in_db) {
 if(!isset($_POST['cookiescheck'])) {
-setcookie("phpqa_user_c", "$exist[1]");
+setcookie("phpqa_user_c", "".$exist[1]."");
 setcookie("phpqa_user_p", $thepassword_in_db, 0, ""."; HttpOnly'");
 } else {
 setcookie("phpqa_user_c", "{$exist[1]}", time()+99999);
@@ -388,7 +389,8 @@ echo "Sorry, the password you entered for the account, <b>$userID</b> is incorre
 die();
 }
 } else {
-echo "Sorry, that username, <b>$name</b>  doesn't appear to exist. <a href='index.php'>Please go back and try again</a><br /><br />Did you mistype it? Are you <a href='index.php?action=register'>Registered?</a><br /><br /><a href='index.php?action=forgotpass'>Forgot Password?</a>";
+echo "<script language='Javascript'>alert('hello\nworld')</script>";
+echo "Sorry, that username, <b>".$name."</b>  doesn't appear to exist. <a href='index.php'>Please go back and try again</a><br /><br />Did you mistype it? Are you <a href='index.php?action=register'>Registered?</a><br /><br /><a href='index.php?action=forgotpass'>Forgot Password?</a>";
 die();
 }
 }
@@ -398,10 +400,10 @@ $pic="BlackDefault";
 } else { 
 $pic=$exist[7]; 
 } 
-if(file_exists("./$themesloc/$pic/crown1.gif")){
-$crowndir="./$themesloc/$pic";
+if(file_exists("./".$themesloc."/".$pic."/crown1.gif")){
+$crowndir="./".$themesloc."/".$pic."";
 } else {
-$crowndir="./$themesloc/Default/";
+$crowndir="./".$themesloc."/Default/";
 }
 //end
 ?>
