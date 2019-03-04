@@ -23,7 +23,7 @@ $thescore = $_POST['gscore'];
 //$thescore = $_POST['enscore'];
 //echo "<script>alert('Score (enscore): [" . $thescore . "]');</script>";
 //}
- if (isset($_GET['do']) == 'newscore') {
+  if (isset($_GET['do']) && $_GET['do'] == 'newscore') {
   $id=htmlspecialchars($_POST['gname'], ENT_QUOTES);
   $thescore = $_POST['gscore'];
  }
