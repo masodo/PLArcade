@@ -1,10 +1,10 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
@@ -82,7 +82,7 @@ if(isset($_GET['modcparea'])) {
 // 		Visuals
 // ==================================== \\
 message("Welcome to the Moderators CP, <b>$phpqa_user_cookie</b>.");
-echo "<div align='center'><div class='tableborder'><table width=100%% cellpadding='4' cellspacing='1'><td width='60%' align=center class=headertableblock>Options</td><tr><td class=arcade1 valign='top'><div align='left'> » <a href='?modcparea=find'>Lookup Tools</a> <br /> » <a href='?modcparea=IPscan'>IP Scanner/WHOIS</a><br /></div></td></table></div><br>";
+echo "<div align='center'><div class='tableborder'><table width=100%% cellpadding='4' cellspacing='1'><td width='60%' align=center class=headertableblock>Options</td><tr><td class=arcade1 valign='top'><div align='left'> Â» <a href='?modcparea=find'>Lookup Tools</a> <br /> Â» <a href='?modcparea=IPscan'>IP Scanner/WHOIS</a><br /></div></td></table></div><br>";
 ?>
 <?php
 if(isset($_GET['modcparea'])=="find") {
@@ -121,8 +121,8 @@ if($_GET['modcparea']=="IPscan") {
 ?>
 <div align='center'><div class='tableborder'><table width=100%% cellpadding='5' cellspacing='1'><tr><td class=headertableblock colspan=9><b><font size=-5>IP Scan</font></b></td></tr><td class=arcade1 align=left>
 <?php
-$serv=htmlspecialchars(isset($_GET['serv']), ENT_QUOTES);
 if (isset($_GET['serv'])) {
+$serv=htmlspecialchars($_GET['serv'], ENT_QUOTES);
 echo "IP Scan on ( <b>$serv</b> )<br><br>";echo "Scanning...<br><br>";
 $host = @gethostbyaddr($serv);
 echo "Scanned IP Host Information: <b>$host</b><br><br>";
