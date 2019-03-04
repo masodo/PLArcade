@@ -1,17 +1,17 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 2/28/2019  By: MaSoDo
+# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 3/2/2019  By: MaSoDo
 
 if (isset($_POST['thescore']))$thescore = $_POST['thescore'];
 if (isset($_GET['autocom'])) {
@@ -132,19 +132,19 @@ $post_user_cookie = $adminplayas;
 }
 //End Admin Play As
 
-   $o=run_query("UPDATE phpqa_tournaments SET times_played=times_played+1,average_score='$avg' WHERE user='$post_user_cookie' AND tournament_id='".$_COOKIE['phpqa_tourney']."'");   
+   $o=run_query("UPDATE phpqa_tournaments SET times_played=times_played+1,average_score='".$avg."' WHERE user='".$post_user_cookie."' AND tournament_id='".$_COOKIE['phpqa_tourney']."'");   
 if ($opponent[2]>=$misc[1]&&($player[2]+1)>=$misc[1]) {
     $user=${($avg2>$opponent[1])?"player":"opponent"};
     $userlevel=$user[3]+1;
     $user=$user[0];
     if ($userlevel==log($num_players,2)) {
-     run_query("UPDATE phpqa_tournaments SET winner='$user' WHERE tournament_id='".$_COOKIE['phpqa_tourney']."' AND game_id IS NOT NULL");
-     run_query("UPDATE phpqa_accounts SET tournaments=tournaments+1 WHERE name='$user'");
+     run_query("UPDATE phpqa_tournaments SET winner='".$user."' WHERE tournament_id='".$_COOKIE['phpqa_tourney']."' AND game_id IS NOT NULL");
+     run_query("UPDATE phpqa_accounts SET tournaments=tournaments+1 WHERE name='".$user."'");
     }
-    run_query("UPDATE phpqa_tournaments SET level=level+1,times_played=0,average_score=concat(average_score,' 0') WHERE user='$user' AND tournament_id='".$_COOKIE['phpqa_tourney']."'");
+    run_query("UPDATE phpqa_tournaments SET level=level+1,times_played=0,average_score=concat(average_score,' 0') WHERE user='".$user."' AND tournament_id='".$_COOKIE['phpqa_tourney']."'");
     if ($user==$phpqa_user_cookie) $winner=1;
    }
-   header("Location: index.php?action=tournaments&submit=$thescore&game=$gameid&winner=$winner&st=".$misc[0]);
+   header("Location: index.php?action=tournaments&submit=".$thescore."&game=".$gameid."&winner=".$winner."&st=".$misc[0]);
   }
   } else {
    echo "You've already used all of your turns....";
@@ -204,8 +204,8 @@ $post_user_cookie = $adminplayas;
 }
 //End Admin Play As
 
-   $checkTOPscore = @mysql_fetch_array(run_query("SELECT * FROM phpqa_scores WHERE gameidname='$id' ORDER BY thescore DESC LIMIT 0,1"));
-   $checkscore = @mysql_fetch_array(run_query("SELECT * FROM phpqa_scores WHERE gameidname='$id' && username='$post_user_cookie' ORDER BY thescore DESC"));
+   $checkTOPscore = @mysql_fetch_array(run_query("SELECT * FROM phpqa_scores WHERE gameidname='".$id."' ORDER BY thescore DESC LIMIT 0,1"));
+   $checkscore = @mysql_fetch_array(run_query("SELECT * FROM phpqa_scores WHERE gameidname='".$id."' && username='".$post_user_cookie."' ORDER BY thescore DESC"));
    if ($checkscore) { // a score already exists by this person.
     if ($checkscore["thescore"] < $thescore) { // if checkscore is greater than thescore....
     //UpDated!
@@ -218,7 +218,7 @@ $post_user_cookie = $adminplayas;
 }
 //End Admin Play As
 
-     run_query("UPDATE `phpqa_scores` SET `thescore` = '$thescore', `gamename` = '$gameinfo[game]', `phpdate` = '$time',`ip` = '$ipa' WHERE gameidname='$id' && username='$post_user_cookie'");
+     run_query("UPDATE `phpqa_scores` SET `thescore` = '".$thescore."', `gamename` = '".$gameinfo[game]."', `phpdate` = '".$time."',`ip` = '".$ipa."' WHERE gameidname='".$id."' && username='".$post_user_cookie."'");
      if($settings['allow_comments']) echo $commentthing;
 
   } else {
@@ -238,7 +238,7 @@ $post_user_cookie = $adminplayas;
 
 
   // First time, submit it in.
-   run_query("INSERT INTO phpqa_scores (username,thescore,ip,comment,phpdate,gameidname,gamename) VALUES ('$post_user_cookie','$thescore','$ipa','','$time','$gameidname','$gameinfo[game]')");
+   run_query("INSERT INTO phpqa_scores (username,thescore,ip,comment,phpdate,gameidname,gamename) VALUES ('".$post_user_cookie."','".$thescore."','".$ipa."','','".$time."','".$gameidname."','".$gameinfo['game']."')");
   if($settings['allow_comments']) echo $commentthing;
  }
 
@@ -254,8 +254,8 @@ if($psettings[4] != "No" && $person_to_mail['email'] !=$exist['email']) {
 $SiteDomain = "http://".htmlspecialchars($_SERVER[HTTP_HOST]).htmlspecialchars($_SERVER[PHP_SELF])."?id={$gameidname}";
 //$hd="admin@{$_SERVER[HTTP_HOST]}";
 $hd=$siteemail;
-$mailsub = "Message from $settings[arcade_title] - Top {$gameinfo['game']} score defeated!";
-$mailbody = "Hello {$checkTOPscore['username']}, \n\r\n\r Oh no! Someone has taken your top score for the game: -- {$gameinfo[game]} -- at {$settings['arcade_title']}!\n\rBetter get back in there and take your score! \n\r\n\r Visit the link below to view the scoreboard for {$gameinfo['game']}: \n\r ----------------------------------------------- \n\r $SiteDomain \n\r\n\r-----------------------------------------------\n\rThank you for your participation!\n\r{$settings['arcade_title']} Admin\n\r\n\r If you do not want to recieve these email notices:\n\rplease login, visit settings >> preferences >> and set Allow other members/the admin to contact you by Email? to NO.";
+$mailsub = "Message from ".$settings['arcade_title']." - Top {$gameinfo['game']} score defeated!";
+$mailbody = "Hello {$checkTOPscore['username']}, \n\r\n\r Oh no! Someone has taken your top score for the game: -- {$gameinfo[game]} -- at {$settings['arcade_title']}!\n\rBetter get back in there and take your score! \n\r\n\r Visit the link below to view the scoreboard for {$gameinfo['game']}: \n\r ----------------------------------------------- \n\r ".$SiteDomain." \n\r\n\r-----------------------------------------------\n\rThank you for your participation!\n\r{$settings['arcade_title']} Admin\n\r\n\r If you do not want to recieve these email notices:\n\rplease login, visit settings >> preferences >> and set Allow other members/the admin to contact you by Email? to NO.";
 $headers = "From: $hd\n";
 @mail($person_to_mail['email'],$mailsub,$mailbody,$headers);
 }
@@ -271,11 +271,11 @@ $post_user_cookie = $adminplayas;
 //End Admin Play As
 				
   echo "<div class='tableborder'><table width='100%'><td class='arcade1' width='100%' align='center'>Congratulations, you are the NEW Champion!</td></table></div><br /><br />";
-   run_query("DELETE FROM `phpqa_leaderboard` WHERE `gamename`='$id'");
-   run_query("INSERT INTO phpqa_leaderboard (username,thescore,gamename) VALUES ('$post_user_cookie','$thescore','$id')"); 
-   run_query("UPDATE `phpqa_games` SET `Champion_name` = '$post_user_cookie',`Champion_score` = '$thescore' WHERE gameid='$id'");
+   run_query("DELETE FROM `phpqa_leaderboard` WHERE `gamename`='".$id."'");
+   run_query("INSERT INTO phpqa_leaderboard (username,thescore,gamename) VALUES ('".$post_user_cookie."','".$thescore."','".$id."')"); 
+   run_query("UPDATE `phpqa_games` SET `Champion_name` = '".$post_user_cookie."',`Champion_score` = '".$thescore."' WHERE gameid='".$id."'");
    // Update the date and IP
-  run_query("UPDATE `phpqa_scores` SET `ip` = '$ipa',`phpdate` = '$time' WHERE gameidname='$id' && username='$post_user_cookie'");
+  run_query("UPDATE `phpqa_scores` SET `ip` = '".$ipa."',`phpdate` = '".$time."' WHERE gameidname='".$id."' && username='".$post_user_cookie."'");
   }
  }
  // end set check
@@ -319,10 +319,10 @@ $checkbadwords = rtrim($badwords[$gx]);
 $postsofsomething= preg_replace("/$checkbadwords/i", "@!&^*%", $postsofsomething);
 } 
 }
-echo "<tr><td class='arcade1' align='center'><a href='index.php?action=profile&amp;user=$g[1]'>$g[1]</a></td><td class='arcade1' align='center'>" . str_replace('-', '', $g[2]) . "</td><td class='arcade1' width='40%' align='center'>$postsofsomething</td><td class='arcade1' width='20%' align='center'>$parse_stamp</td>";
+echo "<tr><td class='arcade1' align='center'><a href='index.php?action=profile&amp;user=".$g[1]."'>".$g[1]."</a></td><td class='arcade1' align='center'>" . str_replace('-', '', $g[2]) . "</td><td class='arcade1' width='40%' align='center'>".$postsofsomething."</td><td class='arcade1' width='20%' align='center'>".$parse_stamp."</td>";
 isset($exist[6]) ? $exist[6] : null;
 if(isset($exist[6]) && $exist[6] == "Moderator" || isset($exist[6]) && $exist[6] == "Admin") {
-echo "<td width='20%' class='arcade1' align='center'><a href='?modcparea=IPscan&serv=$g[3]'>$g[3]</a></td><td width='2%' class='arcade1' align='center'><input type='checkbox' name='score_m[]' value='$g[0]'></td>";
+echo "<td width='20%' class='arcade1' align='center'><a href='?modcparea=IPscan&serv=".$g[3]."'>".$g[3]."</a></td><td width='2%' class='arcade1' align='center'><input type='checkbox' name='score_m[]' value='".$g[0]."'></td>";
 }
 echo "</tr>";
 
