@@ -121,8 +121,8 @@ if($_GET['modcparea']=="IPscan") {
 ?>
 <div align='center'><div class='tableborder'><table width=100%% cellpadding='5' cellspacing='1'><tr><td class=headertableblock colspan=9><b><font size=-5>IP Scan</font></b></td></tr><td class=arcade1 align=left>
 <?php
-$serv=htmlspecialchars(isset($_GET['serv']), ENT_QUOTES);
 if (isset($_GET['serv'])) {
+$serv=htmlspecialchars($_GET['serv'], ENT_QUOTES);
 echo "IP Scan on ( <b>".$serv."</b> )<br><br>";echo "Scanning...<br><br>";
 $host = @gethostbyaddr($serv);
 echo "Scanned IP Host Information: <b>".$host."</b><br><br>";
