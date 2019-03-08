@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: TournamentOption.php  Function: Tournaments/Challenges Engine   Modified: 3/2/2019   By: MaSoDo
+# Section: TournamentOption.php  Function: Tournaments/Challenges Engine   Modified: 3/8/2019   By: MaSoDo
 
 if (!$phpqa_user_cookie) die();
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -25,19 +25,19 @@ die();
 
 }
 
-if (is_numeric(isset($_GET['tid']))){
+if (isset($_GET['tid']) && is_numeric($_GET['tid'])) {
 $ie=strstr($_SERVER['HTTP_USER_AGENT'],"MSIE");
 $q=run_query("SELECT * FROM phpqa_tournaments WHERE tournament_id='".$_GET['tid']."' ORDER BY id ASC");
 $q2=run_query("SELECT phpqa_games.game,phpqa_tournaments.game_id,phpqa_tournaments.misc_settings,null,null,null,null,null,null FROM phpqa_games,phpqa_tournaments WHERE phpqa_tournaments.game_id=phpqa_games.gameid AND tournament_id='".$_GET['tid']."'");
 $udata=false;
-while($f=mysql_fetch_assoc($q)) {$data[]=$f;if ($f[user]==$phpqa_user_cookie) $udata=$f[times_played];}
+while($f=mysql_fetch_assoc($q)) {$data[]=$f;if ($f['user']==$phpqa_user_cookie) $udata=$f['times_played'];}
 $gameid=$data[0]['game_id'];
 $gamedata=mysql_fetch_assoc($q2);
 $doray = explode(",",$gamedata['misc_settings']);
 $attempts=array_pop($doray);
 $game=$gamedata['game'];
 $numplayers=$data[0]['players'];
-function img($n){global $pic;return "<img width='20px' height='20px' src='".$themesloc."/".(file_exists("skins/".$pic."/".$n."-bar.gif")? $pic:"Default")."/".$n."-bar.gif' border='0' />";}
+function img($n){global $pic, $themesloc;return "<img width='20px' height='20px' src='".$themesloc."/".(file_exists("skins/".$pic."/".$n."-bar.gif")? $pic:"Default")."/".$n."-bar.gif' border='0' />";}
 
 //Calculating next #:
 //prev#*2+1=next#
@@ -49,6 +49,8 @@ $space=Array(0,1,3,7);
 $table=Array();
 $levels=log($numplayers,2)+1;
 $real_players=0;
+$tidval=0;
+$attpop='';
 for($x=0;$x<$levels;$x++) {
 $last=($x==$levels-1);
 $y=0;
@@ -66,13 +68,13 @@ if ($x==0) $real_players++;
 $xx=0;
 }
 }
-if ($last&&!$players[0]) $over=false; else $over=true;
+if (isset($last)&&!isset($players[0])) $over=false; else $over=true;
 $t=$x?$numplayers/pow(2,$x):$numplayers;
-for($y=0;$y<$t;$y++) if (!$players[$y]) $players[$y]="------";
-foreach($players as $k=>$v) if ($v[0]==$phpqa_user_cookie) $opponent=str_replace("-","",$players[($k+(($k+1)%2?1:-1))]);
+for($y=0;$y<$t;$y++) if (!isset($players[$y])) $players[$y]="------";
+foreach($players as $k=>$v) if (isset($v[0])&&$v[0]==$phpqa_user_cookie) $opponent=str_replace("-","",$players[($k+(($k+1)%2?1:-1))]);
 for($y=0;$y<$space[$x];$y++) $table[$y].="<td></td>".($last?"":"<td></td>");
 foreach($players as $k=>$v) {
-$table[$y++].="<td class='challengename'>".($v!="------"?($last?"<img src='".$crowndir."/crown1.gif' /> ".$v[0]." <img src='skins/Default/crown1.gif' />":$v[0]." (".($v[3]>$x?$attempts:$v[2])."/".$attempts."): <b>".after_decimal($v[1],3)."</b>"):$v)."</td>".($last?"":"<td>".img($k%2?"ltu":"ltd")."</td>");
+$table[$y++].="<td class='challengename'>".($v!="------"?($last?"<img src='".$crowndir."/crown1.gif' /> ".$v[0]." <img src='skins/Default/crown1.gif' />":$v[0]." (".(isset($v[3])&&$v[3]>$x?$attempts:$v[2])."/".$attempts."): <b>".after_decimal($v[1],3)."</b>"):$v)."</td>".($last?"":"<td>".img($k%2?"ltu":"ltd")."</td>");
 $playpop = array_keys($players);
 if ($k!=array_pop($playpop)) for($z=0;$z<$space[$x+1];$z++) $table[$y++].="<td></td>".($last?"":"<td".($ie?" style='padding-left:1px'":"").">".($k%2?"":img(($z==floor($space[$x+1]/2)?"tri":"vert")))."</td>");
 }
@@ -83,7 +85,8 @@ if (!isset($_GET['join'])) {
 $q=mysql_fetch_array(run_query("SELECT `id` FROM `phpqa_tournaments` WHERE `user`='".$phpqa_user_cookie."' AND `tournament_id`='".$_GET['tid']."'"));
 if ($q) message("You are already in this tournament."); else {
 if ($numplayers<=$real_players) message("This Tournament is full"); else {
-run_query("INSERT INTO `phpqa_tournaments`(`tournament_id`,`user`) VALUES('".$_GET['tid']."','".$phpqa_user_cookie."')");
+$tidval = $_GET['tid'];
+run_query("INSERT INTO `phpqa_tournaments`(`tournament_id`,`user`) VALUES('".$tidval."','".$phpqa_user_cookie."')");
 message("Joined tournament Successfully. <a href='index.php?action=tournaments&tid=".$_GET['tid']."'>Refresh</a>");
 }
 }
@@ -101,13 +104,14 @@ echo "
 </td>
 </tr>
 </table></div>";
-} elseif (is_numeric(isset($_GET['submit']))&&isset($_GET['game'])) {
-$q=mysql_fetch_array(run_query("SELECT * FROM phpqa_tournaments WHERE user='".$phpqa_user_cookie."' AND tournament_id='".$_COOKIE['phpqa_tourney']."'"));
-$attempts=array_pop(explode(",",mysql_result(run_query("SELECT misc_settings FROM phpqa_tournaments WHERE tournament_id='".$_COOKIE['phpqa_tourney']."'"),0)));
-$left=($attempts-$q[times_played]);
-$average=explode(" ",$q[average_score]);
-if (isset($_GET['winner'])) {$left=0;array_pop($average);}
-echo "<div class='tableborder'><table width='100%'><tr><td class='arcade1' align='center'><br /><br /><br />Your score was: ".$_GET['submit']."<br />Your current ".($_GET['st']==1?"highest":"average")." score is: ".array_pop($average)."<br />You have ".$left." Chance".($left==1?"":"s")." Left<br /><br />".($left&&!$_GET['winner']?"<a href='index.php?play=".$_GET['game']."&tournament=".$_COOKIE['phpqa_tourney']."'>Play Again?</a><br />":"")."<a href='index.php?action=tournaments&tid=".$_COOKIE['phpqa_tourney']."'>View Tournament Status</a><br /><br /><br /><br /></td></tr></table></div><br />";
+} elseif (isset($_GET['submit'])&&is_numeric($_GET['submit'])&&isset($_GET['game'])) {
+$q=mysql_fetch_array(run_query("SELECT * FROM phpqa_tournaments WHERE `user`='".$phpqa_user_cookie."' AND `tournament_id`='".$_COOKIE['phpqa_tourney']."'"));
+$attpop = explode(",",mysql_result(run_query("SELECT `misc_settings` FROM `phpqa_tournaments` WHERE `tournament_id`='".$_COOKIE['phpqa_tourney']."'"),0));
+$attempts=array_pop($attpop);
+$left=($attempts-$q['times_played']);
+$average=explode(" ",$q['average_score']);
+if (isset($_GET['winner'])) {global $left, $average; $left=0; array_pop($average);}
+echo "<div class='tableborder'><table width='100%'><tr><td class='arcade1' align='center'><br /><br /><br />Your score was: ".$_GET['submit']."<br />Your current ".(isset($_GET['st'])&&$_GET['st']==1?"highest":"average")." score is: ".array_pop($average)."<br />You have ".$left." Chance".(isset($left)&&$left==1?"":"s")." Left<br /><br />".(isset($left)&&!$_GET['winner']?"<a href='index.php?play=".$_GET['game']."&tournament=".$_COOKIE['phpqa_tourney']."'>Play Again?</a><br />":"")."<a href='index.php?action=tournaments&tid=".$_COOKIE['phpqa_tourney']."'>View Tournament Status</a><br /><br /><br /><br /></td></tr></table></div><br />";
 } elseif (isset($_GET['create'])) {
 $players=Array(2,4,8);
 if (isset($_POST['submit'])) {
@@ -125,7 +129,7 @@ if (!$q) echo "ERROR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ".mysql_error(); else echo "<
 } else {
 echo "<form method='post'><input type='hidden' name='akey' value='$key'><table class='tableborder'><tr><td class='arcade1'><center><h3>Create A Tournament</h3><br /><br /><table><tr><td>Game:</td><td><select name='gameid'>";
 $q=run_query("SELECT game,gameid FROM phpqa_games ORDER BY game");
-while($f=mysql_fetch_assoc($q)) echo "<option value='".$f[gameid]."'>".$f[game]."</option>";
+while($f=mysql_fetch_assoc($q)) echo "<option value='".$f['gameid']."'>".$f['game']."</option>";
 echo "</select></td></tr><tr><td>Number of Players:</td><td><select name='players'>";
 foreach($players as $v) echo "<option value='".$v."'>".$v."</option>";
 echo "</select></td></tr><tr><td>Scoring Method:</td><td><select name='meth'><option value='0'>Average Score</option><option value='1'>Highest Score</option></select></td></tr><tr><td>Scoring Attempts:</td><td><select name='attempts'>";
@@ -133,10 +137,10 @@ for($x=1;$x<11;$x++) echo "<option value='".$x."'>".$x."</option>";
 echo "</select></td></tr><tr><td colspan='2' align='center'><input type='submit' value='Create Tournament' name='submit' /></td></tr></table></td></table></form>";
 }
 } else {
-$q=run_query("SELECT tournament_id,game_id,winner,players,misc_settings FROM phpqa_tournaments WHERE players IS NOT NULL GROUP BY tournament_id ORDER BY tournament_id DESC".(!isset($_GET['showall'])?" LIMIT 0,50":""));
-$q2=run_query("SELECT gameid,game FROM phpqa_games");
-$q3=run_query("SELECT tournament_id,count(tournament_id) FROM phpqa_tournaments GROUP BY tournament_id");
-$q4=run_query("SELECT tournament_id,times_played FROM phpqa_tournaments WHERE user='".$phpqa_user_cookie."'");
+$q=run_query("SELECT `tournament_id`,`game_id`,`winner`,`players`,`misc_settings` FROM `phpqa_tournaments` WHERE `players` IS NOT NULL GROUP BY `tournament_id` ORDER BY `tournament_id` DESC".(!isset($_GET['showall'])?" LIMIT 0,50":""));
+$q2=run_query("SELECT `gameid`,`game` FROM `phpqa_games`");
+$q3=run_query("SELECT `tournament_id`,count(`tournament_id`) FROM `phpqa_tournaments` GROUP BY `tournament_id`");
+$q4=run_query("SELECT `tournament_id`,`times_played` FROM `phpqa_tournaments` WHERE `user`='".$phpqa_user_cookie."'");
 while($f=mysql_fetch_array($q4)) $tournaments_in[$f[0]]=$f[1];
 while($f=mysql_fetch_array($q3)) $num_players[$f[0]]=$f[1];
 while($f=mysql_fetch_array($q2)) $gamename[$f[0]]=$f[1];
