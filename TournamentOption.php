@@ -12,19 +12,16 @@
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
 # Section: TournamentOption.php  Function: Tournaments/Challenges Engine   Modified: 3/8/2019   By: MaSoDo
-
 if (!$phpqa_user_cookie) die();
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //	       Arcade Tournaments/Challenges Engine
 //              Coded By: http://seanj.jcink.com
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 if(!$settings['enable_tournies']) {
 message("The arcade admin has disabled the tournaments system. <br /><b>There is a problem with the tournament system. It will return as soon as I figure it out</b> - Admin.<br /><b>SORRY!</b>");
 die();
-
 }
-
+error_reporting(~E_NOTICE);
 if (isset($_GET['tid']) && is_numeric($_GET['tid'])) {
 $ie=strstr($_SERVER['HTTP_USER_AGENT'],"MSIE");
 $q=run_query("SELECT * FROM phpqa_tournaments WHERE tournament_id='".$_GET['tid']."' ORDER BY id ASC");
@@ -38,7 +35,6 @@ $attempts=array_pop($doray);
 $game=$gamedata['game'];
 $numplayers=$data[0]['players'];
 function img($n){global $pic, $themesloc;return "<img width='20px' height='20px' src='".$themesloc."/".(file_exists("skins/".$pic."/".$n."-bar.gif")? $pic:"Default")."/".$n."-bar.gif' border='0' />";}
-
 //Calculating next #:
 //prev#*2+1=next#
 //ex:
@@ -93,14 +89,12 @@ message("Joined tournament Successfully. <a href='index.php?action=tournaments&t
 }
 echo "<br />
 <div align='center'><div class='tableborder'><table width=100% cellpadding='4' cellspacing='1'><td width=60% align=center class='headertableblock'>".$game." Tournament: ".$numplayers." Players</td><tr><td class='arcade1' valign='top' align='center'>
-
 <table style='border-collapse:collapse;' cellpadding='0'>";
 foreach($table as $v) echo "\n<tr>".$v."</tr>";
 echo "
 </table>
 ".(is_numeric($udata)&&!$over?"<br />".(!$opponent?"You dont have an opponent to go against.":($udata<$attempts?"You havent used up all of your turns yet. <a href='index.php?play=".$gameid."&tournament=".$_GET['tid']."'>Play Now</a>":"You've used up all of your turns.")):($numplayers>$real_players?"<a href='index.php?action=tournaments&tid=".$_GET['tid']."&join=1'>Join</a> This Tournament":""))."
 <br /><br />
-
 </td>
 </tr>
 </table></div>";
@@ -117,10 +111,8 @@ $players=Array(2,4,8);
 if (isset($_POST['submit'])) {
 	vsess();
 if (!in_array($_POST['players'],$players)) die("LoL Good thing I know JavaScript!");
-
 // Patch - 04/20/2009
 if (isset($_POST['gameid']))$_POST['gameid']=htmlspecialchars($_POST['gameid'], ENT_QUOTES);
-
 if (!mysql_fetch_array(run_query("SELECT id FROM phpqa_games WHERE gameid='".$_POST['gameid']."'"))) die("Ha! Like I'd leave myself open to THAT one");
 $max=mysql_result(run_query("SELECT MAX(tournament_id) FROM phpqa_tournaments"),0)+1;
 foreach(Array('players','meth','attempts') as $v) if (!is_numeric($_POST[$v])) die();
@@ -146,7 +138,6 @@ while($f=mysql_fetch_array($q3)) $num_players[$f[0]]=$f[1];
 while($f=mysql_fetch_array($q2)) $gamename[$f[0]]=$f[1];
 echo "<table class='tableborder'><tr>";
 foreach(Array('Game','Players','Open Spots','Status','Erase') as $v) {
-
 if($v == 'Erase') {
 if($exist['group']=="Moderator" || $exist['group']=="Admin") {
 echo "<td class='headertableblock'>".$v."</td>";
@@ -154,9 +145,7 @@ echo "<td class='headertableblock'>".$v."</td>";
 } else  {
 echo "<td class='headertableblock'>".$v."</td>";
 }
-
 }
-
 while($f=mysql_fetch_assoc($q)) {
 $doray = explode(",",$f['misc_settings']);
 $attempts=array_pop($doray);
@@ -166,11 +155,8 @@ echo "<td class=\"arcade1\"><a href=\"?action=tournaments&tourndel=".$f['tournam
 }
 echo "</tr>";
 }
-
 echo "</table><br />";
 echo "<div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><tr><td class='arcade1'><a href='index.php?action=tournaments&create=1'>Create</a> A Tournament</td></table></div><br />";
-
-
 }
 echo "<br />";
 ?>
