@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 3/2/2019   By: MaSoDo
+# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 2/28/2019   By: MaSoDo
 ?>
 <div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><tr><td class='arcade1' align='left'>
 <?php
@@ -47,9 +47,9 @@ if(isset($_GET['cpiarea'])) {
 $_GET['cpiarea']=htmlspecialchars($_GET['cpiarea']);
 echo "<div class='navigation'><a href='index.php?cpiarea=idx'>Arcade AdminCP</a></div> &#187; <b><a href='index.php?cpiarea=".$_GET['cpiarea']."'>{$cparea_info[$_GET['cpiarea']]}</a></b>";
 }
-} elseif (isset($_GET['action']) && $_GET['action'] == "profile" ) {
+} elseif (isset($_GET['action']) && $_GET['action'] == 'profile' ) {
 echo "<b>Viewing Member Profile</b>";
-} elseif (isset($_GET['action']) && $_GET['action'] == "tournaments") {
+} elseif (isset($_GET['action']) && $_GET['action'] == 'tournaments') {
 echo "<a href='index.php?action=tournaments'>Tournament Index (Last 50)</a> [<a href='index.php?action=tournaments&showall=1'>Show All</a>]"; if (isset($_GET['tid'])) echo " &#187; Viewing Tournament Status";
 } else {// Ok. You seem to be in arcade index then.
 ?>
