@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 3/2/2019  By: MaSoDo
+# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 2/28/2019  By: MaSoDo
 
 if (isset($_POST['thescore']))$thescore = $_POST['thescore'];
 if (isset($_GET['autocom'])) {
@@ -23,7 +23,7 @@ $thescore = $_POST['gscore'];
 //$thescore = $_POST['enscore'];
 //echo "<script>alert('Score (enscore): [" . $thescore . "]');</script>";
 //}
-  if (isset($_GET['do']) && $_GET['do'] == 'newscore') {
+ if (isset($_GET['do']) == 'newscore') {
   $id=htmlspecialchars($_POST['gname'], ENT_QUOTES);
   $thescore = $_POST['gscore'];
  }
@@ -83,26 +83,27 @@ if (isset($_COOKIE['phpqa_tourney'])){
  $data=Array();
  $data[]=mysql_fetch_array(run_query("SELECT * FROM phpqa_tournaments WHERE tournament_id='".$_COOKIE['phpqa_tourney']."' AND user='$phpqa_user_cookie'"));
  $gamedata=mysql_fetch_array(run_query("SELECT * FROM phpqa_tournaments WHERE tournament_id='".$_COOKIE['phpqa_tourney']."' AND game_id IS NOT NULL"));
- $attempts=array_pop(explode(",",$gamedata[misc_settings]));
+ $miscpop = explode(",",$gamedata['misc_settings']);
+ $attempts=array_pop($miscpop);
  $q=run_query("SELECT * FROM phpqa_tournaments WHERE tournament_id='".$_COOKIE['phpqa_tourney']."' ORDER BY id ASC");
  while($f=mysql_fetch_assoc($q)) $data[]=$f;
  $level=$player=array_shift($data);
- $player=Array($player[user],explode(" ",$player[average_score]),$player[times_played],$player[level]);
+ $player=Array($player['user'],explode(" ",$player['average_score']),$player['times_played'],$player['level']);
  if ($player[2]>=$attempts||!mysql_fetch_array(run_query("SELECT id FROM phpqa_tournaments WHERE tournament_id='".$_COOKIE['phpqa_tourney']."' AND game_id='$id'"))) $cheating=true;
- if (!$cheating){
+ if (!isset($cheating)){
   $level=$level['level'];
   $xx=0;
   $players=Array();
 foreach($data as $v) {
-if ($v[players]) $num_players=$v[players];
+if ($v['players']) $num_players=$v['players'];
 $xx++;
 if ($xx>=1+pow(2,$player[3])&&$player[3]) {
-if ($v[level]<$x) $players[]="";
+if ($v['level']<$x) $players[]="";
 $xx=1;
 }
-if ($v[level]>=$player[3]) {
-$score=explode(" ",$v[average_score]);
-$players[]=Array($v[user],$score[$player[3]],$v[times_played],$v[level]);
+if ($v['level']>=$player[3]) {
+$score=explode(" ",$v['average_score']);
+$players[]=Array($v['user'],$score[$player[3]],$v['times_played'],$v['level']);
 $xx=0;
 }
 }
@@ -110,11 +111,11 @@ $xx=0;
   $id=$opponent=false;
   foreach($players as $k=>$v) if ($v[0]==$phpqa_user_cookie) $id=$k;
   $opponent=$players[($id+(($id+1)%2?1:-1))];
-  if (!$opponent) echo "You dont have an opponent to go against...";
+  if (!isset($opponent)) echo "You dont have an opponent to go against...";
   else {
    //We're READY TO GO GO GO GO GO!
    $tmp=$player[1];
-   $misc=explode(",",$gamedata[misc_settings]);
+   $misc=explode(",",$gamedata['misc_settings']);
    if ($misc[0]=="1") {
    $lastscore=array_pop($tmp);
    $avg2=$avg=($lastscore>$thescore?$lastscore:$thescore);
