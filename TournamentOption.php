@@ -48,19 +48,20 @@ $real_players=0;
 $tidval=0;
 $attpop='';
 for($x=0;$x<$levels;$x++) {
-$last=($x==$levels-1);
+//$last=($x==$levels-1);
+$last=(isset($x)&&$x==$levels-1);
 $y=0;
 $xx=0;
 foreach($data as $v) {
 $xx++;
 if ($xx>=(pow(2,$x)-1)+pow(2,$x)&&$x) {
-if ($v['level']<$x) $players[]="------";
+if (isset($v['level'])&&$v['level']<$x) $players[]="------";
 $xx=1;
 }
-if ($v['level']>=$x) {
+if (isset($v['level'])&&$v['level']>=$x) {
 $score=explode(" ",$v['average_score']);
 $players[]=Array($v['user'],$score[$x],$v['times_played'],$v['level']);
-if ($x==0) $real_players++;
+if (isset($x)&&$x==0) $real_players++;
 $xx=0;
 }
 }
