@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpmoderate.php  Function: Moderator Control Panel   Modified: 3/2/2019   By: MaSoDo
+# Section: acpmoderate.php  Function: Moderator Control Panel   Modified: 2/28/2019   By: MaSoDo
 if(isset($_REQUEST['modcpcheck'])) {
 echo "<script type='text/javascript'>alert('Die Request')</script>"; 
 die();
@@ -35,7 +35,7 @@ run_query("DELETE FROM `phpqa_shoutbox` WHERE `id` = '".$shoutnumber."'");
 }
 if(isset($_GET['tourndel'])) {
 $tournnumber = $_GET['tourndel'];
-if(is_numeric($tournnumber)) {
+if(isset($tournnumber)&&is_numeric($tournnumber)) {
 vsess();
 run_query("DELETE FROM `phpqa_tournaments` WHERE `tournament_id` = '".$tournnumber."'");
 }
