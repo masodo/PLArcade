@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 3/2/2019   By: MaSoDo
+# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 3/8/2019   By: MaSoDo
 session_start();
 if($_GET['captcha']){
 $im = imagecreatefrompng("captchabg.png");
@@ -133,7 +133,7 @@ if(count($g) == 2) return true;
 function after_decimal($i,$l) {
 $t = explode(".",$i);
 $r = $t[0];
-if ($t[1]) $r.= "." . substr($t[1],0,$l);
+if (isset($t[1])) $r.= "." . substr($t[1],0,$l);
 return $r;
 }
 function ordsuf($num) { 
@@ -207,10 +207,11 @@ die();
 }
 /*   Tournament Stuff  */
 if (isset($_COOKIE['phpqa_tourney'])){
-if (!isset($_GET['play'])&&((isset($_GET['id'])||isset($_GET['do']))&&!$_POST)||!is_numeric($_COOKIE['phpqa_tourney'])||!mysql_num_rows(run_query("SELECT id FROM phpqa_tournaments WHERE user='".$phpqa_user_cookie."' AND tournament_id='".$_COOKIE['phpqa_tourney']."'"))) {
+global $phpqa_user_cookie;
+if (!isset($_GET['play'])&&((isset($_GET['id'])||isset($_GET['do']))&&!$_POST)||!is_numeric($_COOKIE['phpqa_tourney'])||!mysql_num_rows(run_query("SELECT `id` FROM phpqa_tournaments WHERE `user`='".$phpqa_user_cookie."' AND tournament_id='".$_COOKIE['phpqa_tourney']."'"))) {
 setcookie("phpqa_tourney",false);$_COOKIE['phpqa_tourney']=false;}
 //FSmod addlines
-if (!isset($_GET['fullscreen'])&&((isset($_GET['id'])||isset($_GET['do']))&&!$_POST)||!is_numeric($_COOKIE['phpqa_tourney'])||!mysql_num_rows(run_query("SELECT id FROM phpqa_tournaments WHERE user='".$phpqa_user_cookie."' AND tournament_id='".$_COOKIE['phpqa_tourney']."'"))) {
+if (!isset($_GET['fullscreen'])&&((isset($_GET['id'])||isset($_GET['do']))&&!$_POST)||!is_numeric($_COOKIE['phpqa_tourney'])||!mysql_num_rows(run_query("SELECT `id` FROM phpqa_tournaments WHERE `user`='".$phpqa_user_cookie."' AND tournament_id='".$_COOKIE['phpqa_tourney']."'"))) {
 setcookie("phpqa_tourney",false);$_COOKIE['phpqa_tourney']=false;}
 //FSmod
 }
