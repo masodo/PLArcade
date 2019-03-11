@@ -1,17 +1,17 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: PlayOption.php  Function: Game Play Block   Modified: 2/28/2019   By: MaSoDo
+# Section: PlayOption.php  Function: Game Play Block   Modified: 3/11/2019   By: MaSoDo
 
 //modified to play HTML5 Games
 $play = htmlspecialchars($_GET['play'], ENT_QUOTES);
@@ -72,10 +72,7 @@ while($f=mysql_fetch_array($q)) echo "<li><b>".$f[0]."</b>: ".$f[1]."</li>";
 </ol></div>
 </b><div class='navigation' style='background-color: black; margin-left: 10px; margin-right: 10px; margin-top: 10px; padding: -5px 10px 5px 10px;'><a href='index.php?id=<?php echo $play ?>' onmouseover='document.getElementById("popup").style.display=""' onmouseout="document.getElementById('popup').style.display='none'" onmousemove="s=document.getElementById('popup').style;s.top=document.body.scrollTop+event.clientY+2;s.left=document.body.scrollLeft+event.clientX-152;"><p><i>Game Champion</i></p><img alt='image' src='<?php echo($crowndir) ?>/crown1.gif' />&nbsp;<b style='color: white;'><?php echo $g['Champion_name']; ?></b>&nbsp;<img alt='image' src='<?php echo($crowndir) ?>/crown1.gif' /><br /><?php echo str_replace('-', '', $g['Champion_score']); ?></a></div><p><?php echo $yourscore!=$g['Champion_score']&&$yourscore?"<i>Your Best:</i> " . str_replace('-', '', $yourscore) . "</p>":""; }?>
 <br />
-<?php
-//FSmod addlines
-if (isset($_GET['play'])&&is_numeric(isset($_GET['tournament']))){ ?> <a href="index.php?fullscreen='<?php echo $_GET['play']; ?>'&tournament=<?php echo $_COOKIE['phpqa_tourney']; ?>" target="_blank" title="Fullscreen Mode"><img src="<?php echo $imgloc; ?>/FullScreen.gif" alt="Fullscreen Mode" /></a><br /><?php } else { ?><a href="index.php?fullscreen=<?php echo $_GET['play']; ?>" target="_blank"><img src="<?php echo $imgloc; ?>/FullScreen.gif" alt="Fullscreen Mode" /></a><br /> <?php } 
-//FSmod ?>
+<a href="index.php?fullscreen=<?php echo $_GET['play']; ?>" title="Fullscreen Mode" target="_blank"><img src="<?php echo $imgloc; ?>/FullScreen.gif" alt="Fullscreen Mode" /></a><br />
 <br />
 <?php 
 if ($CheckPlatform != 'H5') {
