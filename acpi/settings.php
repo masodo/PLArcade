@@ -1,10 +1,10 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
@@ -22,11 +22,10 @@
 <div class='tableborder'><table width=100% cellpadding='4' cellspacing='1'><td width=60% align=center class=headertableblock>Settings</td><td width=60% align=center class=headertableblock>Current setting</td><tr>
 <?php
 $in='';
-$collectstuff="<?php\n//-----------------------------------------------------------------------------------/        \n//Practical-Lightning-Arcade [PLA] 1.0 (BETA based on PHP-Quick-Arcade 3.0 © Jcink.com\n//Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design\n//Michael S. DeBurger [DeBurger Photo Image & Design]\n//-----------------------------------------------------------------------------------/\n//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        \n//\n//  Version: 3.0.23 Final. Released: Sunday, May 02, 2010\n//-----------------------------------------------------------------------------------/\n// Thanks to (Sean) http://seanj.jcink.com \n// for: Tournies, JS, and more\n// ---------------------------------------------------------------------------------/\n# These Settings Last Generated: ".date("F j, Y, g:i a")."\n\n\$maintenance = '0';\n\$notinstalled = '0';\n";
+$collectstuff="<?php\n//-----------------------------------------------------------------------------------/        \n//Practical-Lightning-Arcade [PLA] 1.0 (BETA based on PHP-Quick-Arcade 3.0 Â© Jcink.com\n//JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design\n//Michael S. DeBurger [DeBurger Photo Image & Design]\n//-----------------------------------------------------------------------------------/\n//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        \n//\n//  Version: 3.0.23 Final. Released: Sunday, May 02, 2010\n//-----------------------------------------------------------------------------------/\n// Thanks to (Sean) http://seanj.jcink.com \n// for: JS and more\n// ---------------------------------------------------------------------------------/\n# These Settings Last Generated: ".date("F j, Y, g:i a")."\n\n\$maintenance = '0';\n\$notinstalled = '0';\n";
 // Questions with a Yes/No answer.
 $settingsarray=Array(
 'Enable Online List?'=>'enable_onlinelist',
-'Enable Tournaments? (not yet functional - do not enable)'=>'enable_tournies',
 'Enable Password Recovery?'=>'enable_passrecovery',
 'Enable Shoutbox?'=>'enable_shoutbox',
 'Use logo at the top of every page? (Logo takes the name of the skin and looks for the image in the arcade images folder if enabled)'=>'enable_logo',
