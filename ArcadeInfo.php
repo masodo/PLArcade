@@ -1,17 +1,17 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ArcadeInfo.php  Function: Latest Site Info Block   Modified: 2/28/2019   By: MaSoDo
+# Section: ArcadeInfo.php  Function: Latest Site Info Block   Modified: 3/11/2019   By: MaSoDo
 ?>
 <br />
 <div align="center">
@@ -121,7 +121,7 @@ echo " (<a href='index.php?cpiarea=idx'><b>Admin CP</b></a>) &middot; (<a href='
 if ($exist[6]=="Moderator") {
 echo " (<a href='index.php?modcparea=idx'><b>Mod CP</b></a>)";
 }
-echo"</div><div  class='navigation'>[ <a href='index.php?action=logout'>Log Out</a> ]</div><div  class='navigation'><a href='index.php?fav=1'>Favorites</a></div><div  class='navigation'><a href='index.php?action=leaderboards'>Leaderboard</a></div><div  class='navigation'><a href='javascript:tog(\"search\")'>Search</a></div><div  class='navigation'><a href='index.php?action=members'>Members</a></div><div  class='navigation'><a href='index.php?action=tournaments'>Tournaments</a></div><div  class='navigation'><a href='http://DeBurger.com'>DeBurger.com</a></div></div>";
+echo"</div><div  class='navigation'>[ <a href='index.php?action=logout'>Log Out</a> ]</div><div  class='navigation'><a href='index.php?fav=1'>Favorites</a></div><div  class='navigation'><a href='index.php?action=leaderboards'>Leaderboard</a></div><div  class='navigation'><a href='javascript:tog(\"search\")'>Search</a></div><div  class='navigation'><a href='index.php?action=members'>Members</a></div><div  class='navigation'><a href='http://DeBurger.com'>DeBurger.com</a></div></div>";
 }
 // end nav buttons
 ?>
