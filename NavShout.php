@@ -1,17 +1,17 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 2/28/2019   By: MaSoDo
+# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 3/11/2019   By: MaSoDo
 ?>
 <div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><tr><td class='arcade1' align='left'>
 <?php
@@ -47,10 +47,8 @@ if(isset($_GET['cpiarea'])) {
 $_GET['cpiarea']=htmlspecialchars($_GET['cpiarea']);
 echo "<div class='navigation'><a href='index.php?cpiarea=idx'>Arcade AdminCP</a></div> &#187; <b><a href='index.php?cpiarea=".$_GET['cpiarea']."'>{$cparea_info[$_GET['cpiarea']]}</a></b>";
 }
-} elseif (isset($_GET['action']) && $_GET['action'] == "profile" ) {
+} elseif (isset($_GET['action']) && $_GET['action'] == 'profile' ) {
 echo "<b>Viewing Member Profile</b>";
-} elseif (isset($_GET['action']) && $_GET['action'] == "tournaments") {
-echo "<a href='index.php?action=tournaments'>Tournament Index (Last 50)</a> [<a href='index.php?action=tournaments&showall=1'>Show All</a>]"; if (isset($_GET['tid'])) echo " &#187; Viewing Tournament Status";
 } else {// Ok. You seem to be in arcade index then.
 ?>
 <?php
@@ -70,7 +68,7 @@ $favslist.="'$v', ";
 $favslist = substr($favslist, 0, -2);    
 $fav_quer="WHERE gameid IN($favslist)";
 }
-$countquer = run_query("SELECT gamecat FROM phpqa_games $fav_quer".(isset($_GET['cat'])?" WHERE gamecat='".$_GET['cat']."'":""));
+$countquer = run_query("SELECT gamecat FROM phpqa_games ".$fav_quer."".(isset($_GET['cat'])?" WHERE gamecat='".$_GET['cat']."'":""));
 
     // Patch - 06/01/09
 if(isset($_GET['search'])){
@@ -98,10 +96,10 @@ $catquer = run_query("(SELECT * FROM phpqa_games ORDER BY rand() LIMIT 1) UNION 
 if (!isset($_GET['action'])||isset($_GET['action'])&&$_GET['action']!="search") {
 //below added for testing M*S*D
 //echo "<script>alert('Not Search: ".$_GET['action']."');</script>";
-$catquer = run_query("(SELECT * FROM phpqa_games ORDER BY rand() LIMIT 1) UNION ALL (SELECT * FROM phpqa_games $fav_quer".
+$catquer = run_query("(SELECT * FROM phpqa_games ORDER BY rand() LIMIT 1) UNION ALL (SELECT * FROM phpqa_games ".$fav_quer."".
 (isset($_GET['cat'])?"WHERE gamecat='".$_GET['cat']."' ":"").
 (isset($_GET['plat'])?"WHERE platform='".$_GET['plat']."' ":"").
-"ORDER BY id DESC LIMIT $limit,$show)", 1);
+"ORDER BY id DESC LIMIT ".$limit.",".$show.")", 1);
 }
 $arcadetotalcat = mysql_num_rows($countquer);
 $f = @mysql_fetch_array($catquer);
