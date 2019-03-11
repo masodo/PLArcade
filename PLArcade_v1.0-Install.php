@@ -104,7 +104,6 @@ mysql_query("CREATE TABLE `phpqa_accounts` (
   `group` varchar(255) NOT NULL default '',
   `skin` varchar(255) NOT NULL default '',
   `settings` longtext character set latin1 NOT NULL,
-  `tournaments` int(11) default '0',
   `logins` int(11) NOT NULL default '0',
   UNIQUE KEY `id` (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=45 ;
@@ -239,26 +238,6 @@ mysql_query("CREATE TABLE `phpqa_shoutbox` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=594 ;
 ");
 // ------------------------------------------------------//
- 
-//
-// Table structure for table `phpqa_tournaments`
-//
- 
-mysql_query("CREATE TABLE `phpqa_tournaments` (
-  `id` int(11) NOT NULL auto_increment,
-  `tournament_id` int(11) default NULL,
-  `user` text,
-  `players` int(11) default NULL,
-  `level` int(11) default '0',
-  `average_score` text,
-  `times_played` int(11) default '0',
-  `game_id` text,
-  `winner` text,
-  `misc_settings` text,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
-
-");
 // end tables
 // Add Data
 // data for table `phpqa_cats`
@@ -460,13 +439,13 @@ mysql_query("INSERT INTO `phpqa_games`  (
 VALUES (
 NULL , '10 x 10 Arabian Nights', '10x10-arabic_Origon', 480, 800, 'Fill up the 10x10 board with tiles. A challenging Arabian themed puzzle game that requires patience and strategy.', 6, './arcade/gamedata/10x10-arabic_Origon','', NULL, NULL, 'HI', 'H5', NULL, NULL);");
 
-mysql_query("INSERT INTO `phpqa_accounts` (`id`, `name`, `pass`, `email`, `ipaddress`, `avatar`, `group`, `skin`, `settings`, `tournaments`, `logins`) VALUES(1, 'Admin', '0c7540eb7e65b553ec1ba6b20de79608', 'admin@localhost', '{$_SERVER['REMOTE_ADDR']}', '', 'Admin', 'Default', '', 0, 0);");
-mysql_query("INSERT INTO `phpqa_accounts` (`id`, `name`, `pass`, `email`, `ipaddress`, `avatar`, `group`, `skin`, `settings`, `tournaments`, `logins`) VALUES(45, 'user', '68f32b5f0943904f5eac13096f25d756', 'admin@localhost', '{$_SERVER['REMOTE_ADDR']}', '', 'Member', 'Default', '', 0, 0);");
+mysql_query("INSERT INTO `phpqa_accounts` (`id`, `name`, `pass`, `email`, `ipaddress`, `avatar`, `group`, `skin`, `settings`, `logins`) VALUES(1, 'Admin', '0c7540eb7e65b553ec1ba6b20de79608', 'admin@localhost', '{$_SERVER['REMOTE_ADDR']}', '', 'Admin', 'Default', '', 0);");
+mysql_query("INSERT INTO `phpqa_accounts` (`id`, `name`, `pass`, `email`, `ipaddress`, `avatar`, `group`, `skin`, `settings`, `logins`) VALUES(45, 'user', '68f32b5f0943904f5eac13096f25d756', 'admin@localhost', '{$_SERVER['REMOTE_ADDR']}', '', 'Member', 'Default', '', 0);");
 
 // Writing to the conf.
 $conf=@fopen('arcade_conf.php', 'w');
 
-$goforit = @fwrite($conf,"<?php\n\$maintenance='0';\n\$notinstalled='0';\n\$settings['enable_onlinelist']='1';\n\$settings['enable_tournies']='0';\n\$settings['enable_passrecovery']='1';\n\$settings['enable_shoutbox']='1';\n\$settings['enable_logo']='0';\n\$settings['allow_comments']='1';\n\$settings['show_stats_table']='1';\n\$settings['disable_reg']='0';\n\$settings['enable_validation']='0';\n\$settings['use_cheat_protect']='0';\n\$settings['upload_av_max_size']='0';\n\$settings['use_seccode']='1';\n\$settings['allow_guests']='1';\n\$settings['override_userprefs']='0';\n\$settings['arcade_title']='Practical Lightning Arcade [PLA v1.0 beta]';\n\$settings['datestamp']='jS F Y - h:i A';\n\$settings['online_list_dur']='60';\n\$settings['timezone']='-5';\n\$settings['num_pages_of']='10';\n\$settings['banned_mails']='';\n\$settings['banned_usernames']='Tasos,TasosP13';\n\$settings['upload_av_max_size']='200000';\n\$phpmyadminloc='';\n\$textloc='flat';\n\$imgloc='images';\n\$catloc='categories';\n\$avatarloc='avatars';\n\$useravasloc='useravatars';\n\$smiliesloc='emoticons';\n\$bannerloc='images/banners';\n\$themesloc='skins';\n\$gamesloc='arcade';\n\$arcurl='".$SiteURL."';\n\$arcgreet='Welcome to the Practical Lightning Arcade (BETA)';\n\$toetag='mornoovening-sm.gif';\n\$adminplayas='admin';\n\$siteemail='arcade@MyNewArcade.tld';\n\$BCCcatchall='ArcadeMember@MyNewArcade.tld';\n\$dbhost='".$dbhost."';\n\$dbuser='".$dbuser."';\n\$dbpass='".$dbpass."';\n\$dbname='".$dbname."';\n?>");
+$goforit = @fwrite($conf,"<?php\n\$maintenance='0';\n\$notinstalled='0';\n\$settings['enable_onlinelist']='1';\n\$settings['enable_passrecovery']='1';\n\$settings['enable_shoutbox']='1';\n\$settings['enable_logo']='0';\n\$settings['allow_comments']='1';\n\$settings['show_stats_table']='1';\n\$settings['disable_reg']='0';\n\$settings['enable_validation']='0';\n\$settings['use_cheat_protect']='0';\n\$settings['upload_av_max_size']='0';\n\$settings['use_seccode']='1';\n\$settings['allow_guests']='1';\n\$settings['override_userprefs']='0';\n\$settings['arcade_title']='Practical Lightning Arcade [PLA v1.0 beta]';\n\$settings['datestamp']='jS F Y - h:i A';\n\$settings['online_list_dur']='60';\n\$settings['timezone']='-5';\n\$settings['num_pages_of']='10';\n\$settings['banned_mails']='';\n\$settings['banned_usernames']='Tasos,TasosP13';\n\$settings['upload_av_max_size']='200000';\n\$phpmyadminloc='';\n\$textloc='flat';\n\$imgloc='images';\n\$catloc='categories';\n\$avatarloc='avatars';\n\$useravasloc='useravatars';\n\$smiliesloc='emoticons';\n\$bannerloc='images/banners';\n\$themesloc='skins';\n\$gamesloc='arcade';\n\$arcurl='".$SiteURL."';\n\$arcgreet='Welcome to the Practical Lightning Arcade (BETA)';\n\$toetag='mornoovening-sm.gif';\n\$adminplayas='admin';\n\$siteemail='arcade@MyNewArcade.tld';\n\$BCCcatchall='ArcadeMember@MyNewArcade.tld';\n\$dbhost='".$dbhost."';\n\$dbuser='".$dbuser."';\n\$dbpass='".$dbpass."';\n\$dbname='".$dbname."';\n?>");
 
 if(!$goforit) { 
 message("arcade_conf.php could not be opened for writing. Please check the permissions.","Failed to write to conf");
@@ -491,6 +470,6 @@ message("Your new arcade is installed! Congratulations! <a href='index.php'>Clic
 <?php
 }
 ?>
-<div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><tr><td class='arcade1'><?php echo date('md')=='0401'?'Gilligans Arcade':'<b>Practical-Lightning-Arcade [PLA] 1.0 </b> (BETA)'; ?> based on <b>PHP-Quick-Arcade 3.0</b> &copy; <a href='http://Jcink.com'>Jcink.com</a><br />Tournaments & JS By: <a href='http://seanj.jcink.com'>SeanJ</a>. -  Heavily Modified by <font size='2' face='Lucida Console'><b><a href='http://www.practicallightning.com' target='_blank'>practical<sub><img src='http://infinitelyremote.dynu.net/image-box/PL_logo_sm.gif' alt='PracticalLightning.com' border='0'></sub>lightning</a></b></font> Web Design [<i><a title='DeBurger Photo Image &amp; Design'>DPI&ampD</a></i>]</td></tr></table></div></div><br />
+<div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><tr><td class='arcade1'><?php echo date('md')=='0401'?'Gilligans Arcade':'<b>Practical-Lightning-Arcade [PLA] 1.0 </b> (BETA)'; ?> based on <b>PHP-Quick-Arcade 3.0</b> &copy; <a href='http://Jcink.com'>Jcink.com</a><br />JS By: <a href='http://seanj.jcink.com'>SeanJ</a>. -  Heavily Modified by <font size='2' face='Lucida Console'><b><a href='http://www.practicallightning.com' target='_blank'>practical<sub><img src='http://infinitelyremote.dynu.net/image-box/PL_logo_sm.gif' alt='PracticalLightning.com' border='0'></sub>lightning</a></b></font> Web Design [<i><a title='DeBurger Photo Image &amp; Design'>DPI&ampD</a></i>]</td></tr></table></div></div><br />
 </body>
 </html>
