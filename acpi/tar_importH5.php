@@ -1,17 +1,17 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: tar_importH5 - Administrator Control Panel   Modified: 2/28/2019   By: MaSoDo
+# Section: acpi Place: tar_importH5 - Administrator Control Panel   Modified: 3/12/2019   By: MaSoDo
 
 {
 $plattype = 'H5';
@@ -91,6 +91,8 @@ $champ = '';
 $champs = '';
 if($idname !="") {
 run_query("INSERT INTO phpqa_games (game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring) VALUES ('$gamename','$idname','$gameheight','$gamewidth','$about','$thecat','$remoteurl','$champ','$champs','','$plattype','$scoretype')");
+$NewGtext = "[color=green][i]A new game has been added![/i] [/color][size=18] [url=".$arcurl."/index.php?id=".$idname."][b]".$gamename."[/b][/url][/size] :D [i]Enjoy![/i]";
+run_query("INSERT INTO phpqa_shoutbox (`name`,`shout`,`ipa`) VALUES ('Admin','" . $NewGtext . "','localhost')", 1);
 }
 } else {
 }
@@ -134,6 +136,4 @@ echo  "<option value='$catlist[0]'>$catlist[1]</option>";
 <br />
 <?php
 } 
-
-
 ?>
