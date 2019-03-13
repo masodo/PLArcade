@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: tar_import - Administrator Control Panel   Modified: 3/12/2019   By: MaSoDo
+# Section: acpi Place: tar_import - Administrator Control Panel   Modified: 3/13/2019   By: MaSoDo
 
 {
 $plattype = 'FL';
@@ -96,7 +96,7 @@ $champ = '';
 $champs = '';
 if($idname !="") {
 run_query("INSERT INTO phpqa_games (game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring) VALUES ('$gamename','$idname','$gameheight','$gamewidth','$about','$thecat','$remoteurl','$champ','$champs','','$plattype','$scoretype')");
-$NewGtext = "[color=green][i]A new game has been added![/i] [/color][size=18] [url=".$arcurl."/index.php?id=".$idname."][b]".$gamename."[/b][/url][/size] :D [i]Enjoy![/i]";
+$NewGtext = "[color=green][i]New Game Added![/i] [/color][size=16] [url=".$arcurl."/index.php?id=".$idname."][b]".$gamename."[/b][/url][/size]  [color=green][i]Enjoy![/i][/color] [:D]";
 run_query("INSERT INTO phpqa_shoutbox (`name`,`shout`,`ipa`) VALUES ('Admin','" . $NewGtext . "','localhost')", 1);
 }
 } else {
