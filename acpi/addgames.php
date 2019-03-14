@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi place: addgames Administrator Control Panel   Modified: 3/13/2019   By: MaSoDo
+# Section: acpi place: addgames Administrator Control Panel   Modified: 3/14/2019   By: MaSoDo
 {
 // The different methods
 if (!isset($_GET['method'])) {
@@ -54,7 +54,6 @@ $platform = htmlspecialchars($_POST['plattype'], ENT_QUOTES);
 }
 $scoretype = htmlspecialchars($_POST['scoretype'], ENT_QUOTES);
 } else { // If gamename wasn't posted, then do the importer stuff.
-//echo "<script>alert('Imported!')</script>";
 $uploadphp = @move_uploaded_file($_FILES['php']['tmp_name'], "./imports/".$_FILES['php']['name']) ;
 if ($uploadphp) { 
 
@@ -131,7 +130,6 @@ $champs='';
 $found_swf='';
 if (isset($_GET['method'])&&$_GET['method']=="edit") {
 global $game;
-echo "<script>alert('swf?: ".$swf."!')</script>";
 $editgame = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
 $champ=$editgame['Champion_name'];
 $champs=$editgame['Champion_score'];
@@ -144,7 +142,6 @@ $found_swf = 'Yes';
 }
 if ($remoteurl == '') {
 global $idname;
-//echo "<script>alert('IDNAME: ".$idname."!')</script>";
 if (file_exists('./arcade/'.$idname.'.swf')) { 
 $found_swf = "Yes";
 } else { 
