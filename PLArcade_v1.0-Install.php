@@ -22,7 +22,7 @@ $checkcol = 'red';
 } else { $checkcol = 'green'; }
 message("<div align='left'><font color='".$checkcol."'>- PHP 4 or higher</font> (installed: v<b>".$tryvers."</b>)<br />- MySQL 4 or higher<br />-UNIX/Win NT OS/FreeBSD</DIV><br /><BR />The above software is needed to install your PHPQA.","System Requirements");
 
-message("Step 1: CHMOD 777 your:<br /> arcade_conf.php<br />/arcade/ folder <br /> /pics/ folder.<br />flat/emote_faces.txt and flat/emote_pics.txt","Install Start...");
+message("Step 1: CHMOD 777 your:<br /> arcade_conf.php<br />/arcade/ folder <br /> /pics/ folder<br /> /tmp/ folder.<br />flat/emote_faces.txt and flat/emote_pics.txt","Install Start...");
 
 echo "<div align='center'><div class='tableborder'><table width=100% cellpadding='4' cellspacing='1'><td width=60% align=center class=headertableblock>Permissions check</td><tr><td class=arcade1 valign=top><div align=center>";
 
