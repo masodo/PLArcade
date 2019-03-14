@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: PlayOption.php  Function: Game Play Block   Modified: 3/11/2019   By: MaSoDo
+# Section: PlayOption.php  Function: Game Play Block   Modified: 3/14/2019   By: MaSoDo
 
 //modified to play HTML5 Games
 $play = htmlspecialchars($_GET['play'], ENT_QUOTES);
@@ -99,8 +99,15 @@ echo "<a href='./index.php?cat=".$g['gamecat']."' title='".$showcat[0]."'><img s
 if ($CheckScoring == 'LO') {
 echo "<a title='Lowest Score Wins This Game'><img src='".$arcurl."/".$imgloc."/low.png'  height='21' width='25' alt='Lowest Score Wins This Game' style='margin-left:auto; margin-right:auto; margin-top:15px;' /></a>";
 }
+
 echo "</div>";
-echo "<div style='position: relative; width:25px; margin-left:auto; margin-right:auto; margin-top: 60px;'>".$fav_action."</div>";
+echo "<div style='position: relative; width:25px; margin-left:auto; margin-right:auto; margin-top: 60px;'>".$fav_action."</br>";
+if ($CheckPlatform == 'H5') {
+if ($exist[6] == "Admin" || $exist[6] == "Affiliate") { 
+echo "<a href='GetGame.php?GID=".$play."' title='Download Game TAR'><img src='".$arcurl."/".$imgloc."/DL.png' height='25' width='25' alt='Download Game .tar' style='margin-left:auto; margin-right:auto; margin-top:15px;' /></a>";
+}
+}
+echo "</div>";
 } else { 
 
 echo "You must be logged in to play the arcade games. Register an account to play - it's free <a href='index.php?action=register'>Click here</a>!</td><td class='arcade1' valign='top' align='center'>";
