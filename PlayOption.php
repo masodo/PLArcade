@@ -59,10 +59,10 @@ echo '<iframe src="' . $g['remotelink'] . '" style="outline: none; border: 0px; 
 <?php if(!isset($_COOKIE['phpqa_user_c'])) { echo "<br />[ You are not logged in. Your score will not be saved. <a href='?action=register'>Register</a> to submit highscores. ]"; } ?>
 </td>
 <td class='arcade1' valign='top' align='center'>
-<a href='index.php?play=<?php echo $play; ?>'><img alt='image' border='0' src='arcade/pics/<?php echo $play; ?>.gif' width='80' height='80' /></a>
+<a href='javascript:alert("<?php echo $g['about'] ?>");'><img alt='image' border='0' src='arcade/pics/<?php echo $play; ?>.gif' width='80' height='80' /></a>
 <br />
 <?php if ($g['gamecat'] != '20' && $g['gamecat'] != '16') { ?>
-<div id='popup' style='position:absolute;left:0px;top:0px;border:1px solid #333;background-color:#DDD;color:#888;display:none;width:150px;'>
+<div id='popup' style='position:relative;margin-left:auto;margin-right:auto;top:0px;border:1px solid #333;background-color:#DDD;color:#888;display:none;width:150px;'>
 <center><b>Highscores</b></center><br />
 <ol style="text-align:left">
 <?php
@@ -70,7 +70,8 @@ $q=run_query("SELECT username,thescore FROM phpqa_scores WHERE gameidname='".$pl
 while($f=mysql_fetch_array($q)) echo "<li><b>".$f[0]."</b>: ".$f[1]."</li>";
 ?>
 </ol></div>
-</b><div class='navigation' style='background-color: black; margin-left: 10px; margin-right: 10px; margin-top: 10px; padding: -5px 10px 5px 10px;'><a href='index.php?id=<?php echo $play ?>' onmouseover='document.getElementById("popup").style.display=""' onmouseout="document.getElementById('popup').style.display='none'" onmousemove="s=document.getElementById('popup').style;s.top=document.body.scrollTop+event.clientY+2;s.left=document.body.scrollLeft+event.clientX-152;"><p><i>Game Champion</i></p><img alt='image' src='<?php echo($crowndir) ?>/crown1.gif' />&nbsp;<b style='color: white;'><?php echo $g['Champion_name']; ?></b>&nbsp;<img alt='image' src='<?php echo($crowndir) ?>/crown1.gif' /><br /><?php echo str_replace('-', '', $g['Champion_score']); ?></a></div><p><?php echo $yourscore!=$g['Champion_score']&&$yourscore?"<i>Your Best:</i> " . str_replace('-', '', $yourscore) . "</p>":""; }?>
+<a href="index.php?id=<?php echo $play ?>" onmouseover="document.getElementById('popup').style.display=''" onmouseout="document.getElementById('popup').style.display='none'" onmousemove="s=document.getElementById('popup').style;s.top=document.body.scrollTop+event.clientY+2;s.left=document.body.scrollLeft+event.clientX-152;">
+<div class="navigation" style="background-color: black; margin-left: 10px; margin-right: 10px; margin-top: 10px; padding: -5px 10px 5px 10px;"><p><i>Game Champion</i></p><img alt='image' src='<?php echo($crowndir) ?>/crown1.gif' />&nbsp;<b style='color: white;'><?php echo $g['Champion_name']; ?></b>&nbsp;<img alt='image' src='<?php echo($crowndir) ?>/crown1.gif' /><br /><?php echo str_replace('-', '', $g['Champion_score']); ?></div></a><p><?php echo $yourscore!=$g['Champion_score']&&$yourscore?"<i>Your Best:</i> " . str_replace('-', '', $yourscore) . "</p>":""; }?>
 <br />
 <a href="index.php?fullscreen=<?php echo $_GET['play']; ?>" title="Fullscreen Mode" target="_blank"><img src="<?php echo $imgloc; ?>/FullScreen.gif" alt="Fullscreen Mode" /></a><br />
 <br />
@@ -108,6 +109,10 @@ echo "<a href='GetGame.php?GID=".$play."' title='Download Game TAR'><img src='".
 }
 }
 echo "</div>";
+$HOF = run_query("SELECT `avatar` FROM `phpqa_accounts` WHERE `name` = '" . $g['Champion_name'] . "'");
+$HOFimg=mysql_fetch_array($HOF);
+if (!$HOFimg['avatar'])$HOFimg['avatar'] = $avatarloc.'/man.gif';
+echo "<div class='navigation' style='background-color: black; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px; padding: -5px 10px 5px 10px;'><i>Hall of Fame</i><br /><img alt='image' src='" . $HOFimg['avatar'] . "' height='' width='75' alt='" . $g['Champion_name'] . "' style='width:75px ; margin-left:auto; margin-right:auto; margin-top:5px; margin-bottom:5px;'  /><br /><img alt='image' src='" . $crowndir ."/crown1.gif' />&nbsp;<b style='color: white;'>" . $g['Champion_name'] . "</b>&nbsp;<img alt='image' src=' " . $crowndir . "/crown1.gif' /><br /><span style='color:black;'>" . str_replace('-', '', $g['Champion_score']) ."</span></div>";
 } else { 
 
 echo "You must be logged in to play the arcade games. Register an account to play - it's free <a href='index.php?action=register'>Click here</a>!</td><td class='arcade1' valign='top' align='center'>";
