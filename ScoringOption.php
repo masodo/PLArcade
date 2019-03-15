@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 3/13/2019  By: MaSoDo
+# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 3/15/2019  By: MaSoDo
 
 if (isset($_POST['thescore']))$thescore = $_POST['thescore'];
 if (isset($_GET['autocom'])) {
@@ -116,7 +116,8 @@ $post_user_cookie = $adminplayas;
 }
 //End Admin Play As
 
-   $checkTOPscore = @mysql_fetch_array(run_query("SELECT * FROM phpqa_scores WHERE gameidname='".$id."' ORDER BY thescore DESC LIMIT 0,1"));
+   $checkTOPscore = @mysql_fetch_array(run_query("SELECT * FROM `phpqa_scores` WHERE `gameidname`='".$id."' ORDER BY `thescore` DESC LIMIT 0,1"));
+   $checkHOFscore = @mysql_fetch_array(run_query("SELECT `HOF_score` FROM `phpqa_games` WHERE `gameid`='".$id."'"));
    $checkscore = @mysql_fetch_array(run_query("SELECT * FROM phpqa_scores WHERE gameidname='".$id."' && username='".$post_user_cookie."' ORDER BY thescore DESC"));
    if ($checkscore) { // a score already exists by this person.
     if ($checkscore['thescore'] < $thescore) { // if checkscore is greater than thescore....
@@ -155,6 +156,11 @@ $post_user_cookie = $adminplayas;
  }
 
  if ($thescore > $checkTOPscore[2]) { // We have a champion!
+ $WINNERTAG = ' ';
+ if ($thescore > $checkHOFscore['HOF_score']) { // We have a New HOF champion!
+ $WINNERTAG = ' HALL OF FAME ';
+ run_query("UPDATE `phpqa_games` SET `HOF_name` = '".$post_user_cookie."',`HOF_score` = '".$thescore."' WHERE gameid='".$id."'");   
+ }
 // ---------------
 // Email the loser
 // ---------------
@@ -182,7 +188,7 @@ $post_user_cookie = $adminplayas;
 }
 //End Admin Play As
 				
-  echo "<div class='tableborder'><table width='100%'><td class='arcade1' width='100%' align='center'>Congratulations, you are the NEW Champion!</td></table></div><br /><br />";
+  echo "<div class='tableborder'><table width='100%'><td class='arcade1' width='100%' align='center'>Congratulations, you are the NEW" . $WINNERTAG ."Champion!</td></table></div><br /><br />";
    run_query("DELETE FROM `phpqa_leaderboard` WHERE `gamename`='".$id."'");
    run_query("INSERT INTO phpqa_leaderboard (username,thescore,gamename) VALUES ('".$post_user_cookie."','".$thescore."','".$id."')"); 
    run_query("UPDATE `phpqa_games` SET `Champion_name` = '".$post_user_cookie."',`Champion_score` = '".$thescore."' WHERE gameid='".$id."'");
