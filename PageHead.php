@@ -105,4 +105,8 @@ function anchorlink(L) { window.location.href="#" + L + ""; }
 </script>
 </head>
 <body><a id="top" name="top"></a>
+<?php
+if(isset($_GET['action']) && $_GET['action'] =='emotes') {} else {
+?>
 <div style="text-align:left; margin-bottom: 5px; margin-top: 5px;"><input id="Button1" type="button" value='&#8595; Go to Bottom of Page &#8595;' onclick="anchorlink('bottom');" style="font-size:16px; font-weight:bold; color:silver;" /></div>
+<?php } ?>
