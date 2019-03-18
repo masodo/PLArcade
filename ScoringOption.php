@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 3/13/2019  By: MaSoDo
+# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 3/18/2019  By: MaSoDo
 
 if (isset($_POST['thescore']))$thescore = $_POST['thescore'];
 if (isset($_GET['autocom'])) {
@@ -187,8 +187,7 @@ global $adminplayas;
 $post_user_cookie = $adminplayas;
 }
 //End Admin Play As
-				
-  echo "<div class='tableborder'><table width='100%'><td class='arcade1' width='100%' align='center'><h2>Congratulations, you are the NEW" . $WINNERTAG ."Champion!</h2></td></table></div><br /><br />";
+echo "<div class='tableborder'><script type=\"text/javascript\">alert(\"Congratulations! \\nYou are the NEW" . $WINNERTAG . "Champion!\")</script><table width='100%'><td class='arcade1' width='100%' align='center'><h2>Congratulations, you are the NEW " . $WINNERTAG . "Champion!</h2></td></table></div><br /><br />";
    run_query("DELETE FROM `phpqa_leaderboard` WHERE `gamename`='".$id."'");
    run_query("INSERT INTO phpqa_leaderboard (username,thescore,gamename) VALUES ('".$post_user_cookie."','".$thescore."','".$id."')"); 
    run_query("UPDATE `phpqa_games` SET `Champion_name` = '".$post_user_cookie."',`Champion_score` = '".$thescore."' WHERE gameid='".$id."'");
