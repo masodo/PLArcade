@@ -37,11 +37,12 @@ $CPF = $CPF-1;
 }
 }
 if(isset($settings['enable_logo'])) {
+if(isset($_GET['action']) && $_GET['action'] =='emotes') {} else {
 echo "<div align='center' style='margin-top: 0px; width:100%;'>"; 
 if (!isset($_GET['fullscreen'])) {echo "<a href='index.php?plat=FL' title='List Only Flash Games'><img src='$arcurl/$imgloc/flash.png' style='width:75px; margin-bottom:15px; margin-right:10%;' /></a>";}
 echo "<a href='index.php' title='$arcgreet'><img src='arcade/pics/$pic.gif' border='0' /></a>";
 if (!isset($_GET['fullscreen'])) {echo "<a href='index.php?plat=H5' title='List Only HTML5 Games'><img src='$arcurl/$imgloc/HTML5.png' style='width:75px; margin-bottom:15px; margin-left:10%;' /></a>";}
 echo "<div style='position:relative; width:640px; top:10px; font-size: 14px; color: yellow; background-color: navy; padding:3px;'>Currently Featuring <b>$CPF Flash</b> Games, <b>$CPH HTML5</b> Games &amp; <b>$CPD DOS</b> Games<hr /><b>Countdown to Arcade Score Reset:<br /><div id='countbox'></div></div>";
 echo "</div>";
-}
+}}
 ?>
