@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 3/11/2019   By: MaSoDo
+# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 3/18/2019   By: MaSoDo
 ?>
 <div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><tr><td class='arcade1' align='left'>
 <?php
@@ -26,6 +26,8 @@ echo "<b>Registering!</b>";
 echo "<b>Viewing Member List</b>";
 } elseif (isset($_GET['action']) && $_GET['action'] == "leaderboards") { // At the leaderboards
 echo "<b>Viewing Leaders</b>";
+} elseif (isset($_GET['action']) && $_GET['action'] == "HOF") { // At the HOF boards
+echo "<b>Viewing Hall of Fame</b>";
 } elseif (isset($_GET['cparea'])||isset($_GET['cpiarea'])) {
 $cparea_info='';
 $cparea_info['tar_import']="*.tar import new FL games";
