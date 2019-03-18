@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Leaderboards.php  Function: Display of Leaderboards   Modified: 3/11/2019   By: MaSoDo
+# Section: Leaderboards.php  Function: Display of Leaderboards   Modified: 3/18/2019   By: MaSoDo
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //		  Leaderboards
@@ -33,9 +33,10 @@ echo "</table></div><div style='position:absolute;display:none;margin-top:-100px
  echo "<td width='2%' align=left class='headertableblock'>UsersName</td><td width='30%' align=center class='headertableblock'>Totals</td>";
 while($scores=mysql_fetch_array($scoreboard)){ 
 if ($scores['avatar'] == ''){ $scores['avatar'] = $avatarloc.'/man.gif'; }
+if ($scores['champions'] > 0) {
 // avatar popup here "leadboxpopup"
 echo"<tr><td class='arcade1'><div align='center'><A href='index.php?action=profile&amp;user=".$scores['name']."' onmouseover=\"s=document.getElementById('leadboxpopup');s.style.display='';s.getElementsByTagName('img')[0].src='" . $scores['avatar'] . "';\" onmousemove=\"s=document.getElementById('leadboxpopup').style;s.top=document.body.scrollTop+2+event.clientY;s.left=document.body.scrollLeft+event.clientX;\" onmouseout=\"document.getElementById('leadboxpopup').style.display='none'\"><b>".$scores['name']."</b></a></div></td><td class='arcade1'><div align='center'>".$scores['champions']." wins</div></td></td></tr>";
-}
+}}
 echo "</table></div><br />";
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //		End Leaderboards
