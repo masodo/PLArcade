@@ -106,7 +106,7 @@ mysql_query("CREATE TABLE `phpqa_accounts` (
   `settings` longtext character set latin1 NOT NULL,
   `logins` int(11) NOT NULL default '0',
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=45 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 ");
 // ------------------------------------------------------//
  
@@ -119,7 +119,7 @@ mysql_query("CREATE TABLE `phpqa_cats` (
   `cat` varchar(15) default NULL,
   `displayorder` int(11) NOT NULL,
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 ");
 // ------------------------------------------------------//
  
@@ -148,7 +148,7 @@ mysql_query("CREATE TABLE `phpqa_games` (
   UNIQUE KEY `id` (`id`),
   KEY `gamecat` (`gamecat`),
   KEY `gameid` (`gameid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=603 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 ");
 // ------------------------------------------------------//
  
@@ -165,7 +165,7 @@ mysql_query("CREATE TABLE `phpqa_leaderboard` (
   UNIQUE KEY `id` (`id`),
   KEY `username` (`username`),
   KEY `username_2` (`username`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1943 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 ");
 // ------------------------------------------------------//
  
@@ -187,7 +187,7 @@ mysql_query("CREATE TABLE `phpqa_logs` (
   UNIQUE KEY `id` (`id`),
   KEY `username` (`username`),
   KEY `gameidname` (`gameidname`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 ");
 // ------------------------------------------------------//
  
@@ -208,7 +208,7 @@ mysql_query("CREATE TABLE `phpqa_scores` (
   UNIQUE KEY `id` (`id`),
   KEY `username` (`username`),
   KEY `gameidname` (`gameidname`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1047 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 ");
 // ------------------------------------------------------//
  
@@ -222,7 +222,7 @@ mysql_query("CREATE TABLE `phpqa_sessions` (
   `time` varchar(255) NOT NULL default '',
   `location` varchar(255) NOT NULL default '',
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2214 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 ");
 // ------------------------------------------------------//
  
@@ -237,9 +237,27 @@ mysql_query("CREATE TABLE `phpqa_shoutbox` (
   `ipa` varchar(255) NOT NULL default '',
   `tstamp` timestamp NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=594 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 ");
 // ------------------------------------------------------//
+
+//
+// Table structure for table `phpqa_wall`
+//
+
+mysql_query("CREATE TABLE `phpqa_wall` (
+  `id` int(11) NOT NULL auto_increment,
+  `Wyear` int(11) NOT NULL,
+  `Wplace` smallint(6) NOT NULL,
+  `Wgames` int(11) NOT NULL,
+  `Wname` varchar(80) NOT NULL,
+  `Wavatar` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+");
+
+// ------------------------------------------------------//
+
 // end tables
 // Add Data
 // data for table `phpqa_cats`
