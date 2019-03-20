@@ -11,39 +11,65 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Arcade.php  Function: Main Organization Page   Modified: 3/18/2019   By: MaSoDo
-//-----------------------------------------------------------------------------------/
-require "./Preliminary.php";
-require "./Functions.php";
-require "./PageHead.php";
-require "./HeaderBlock.php";
-require "./AddStyle.php";
-require "./JavaScript.php";
-require "./SmileyPop.php";
-require "./FullScreen.php";
-require "./ArcadeInfo.php";
-require "./ShoutBox.php";
-require "./Categories.php";
-require "./NavShout.php";
-if (isset($_GET['play']) && $_GET['play']) require "./PlayOption.php"; // Playing?
-if (isset($_GET['action']) && $_GET['action'] == "forgotpass") require "./ForgotPassOption.php";
-elseif (isset($_GET['action']) && $_GET['action'] == "members") require "./MembersOption.php";
-elseif (isset($_GET['action']) && $_GET['action'] == "register") require "./RegisterOption.php";
-elseif (isset($_GET['action']) && $_GET['action'] == "Online") require "./OnlineOption.php";
-elseif (isset($_GET['action']) && $_GET['action'] == "profile") require "./ProfileOption.php";
-elseif (isset($_GET['action']) && $_GET['action'] == "leaderboards") require "./LeaderboardsOption.php";
-elseif (isset($_GET['action']) && $_GET['action'] == "HOF") require "./HOFboardsOption.php";
-elseif (isset($_GET["action"]) && $_GET['action'] == "settings") require "./SettingsOption.php";
-if (isset($id) || isset($_GET['do']) && $_GET['do'] == "newscore" || isset($_GET['autocom'])) { 
-require "./ScoringOption.php";
+# Section: acp.php  Function: (Experimental) Administrator Control Panel   Modified: 3/19/2019   By: MaSoDo
+$place = htmlspecialchars($_GET['cpiarea']); 
+if (isset($_REQUEST['acpcheck'])) die();
+if (isset($_COOKIE['acpcheck'])) die();
+if ($acpcheck !="ok") die("You cannot access this area directly.");
+if($place == "idx") {
+require "acpi/idx.php";
+} elseif ($place == "addgames") {
+require "acpi/addgames.php";
+} elseif($place == "tar_import") {
+require "acpi/tar_import.php";
+} elseif($place == "tar_importH5") {
+require "acpi/tar_importH5.php";
+} elseif($place == "skin") {
+require "acpi/skin.php";
 }
-if(isset($_GET['cparea'])||isset($_GET['cpiarea'])) {
-require "./AdminOption.php";
-} elseif(isset($_GET['modcparea'])) {
-require "./ModOption.php";
-} else {      				// You"re on the index. OK.
-require "./IndexOption.php";
+
+if ($place == "editor") {
+require "acpi/editor.php";
 }
-require "./PageMaker.php";
-require "./FooterBlock.php";
+
+if($place == "games") {
+require "acpi/games.php";
+}
+
+if ($place == 'emotes') {
+require "acpi/emotes.php";
+}
+
+if ($place == 'mysql') {
+require "acpi/mysql.php";
+} elseif($place=="members") {
+require "acpi/members.php";
+}
+
+if ($place == 'bannedIPlist') {
+require "acpi/bannedIPlist.php";
+}
+	
+if($place == "Cheating_Attempts") {
+require "acpi/Cheating_Attempts.php";
+}
+
+if ($place == 'settings') {
+require "acpi/settings.php";
+} 
+
+if ($place == 'cats') {
+require "acpi/cats.php";
+} 
+
+if($place == "Email") {
+require "acpi/Email.php";
+}
+
+if ($place == 'filter') {
+require "acpi/filter.php";
+}
+if ($place == 'snapshot') {
+require "acpi/SnapShot.php";
+}
 ?>
