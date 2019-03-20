@@ -1,17 +1,17 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: GetGame.php - Download Game Script   Modified: 3/14/2019   By: MaSoDo
+# Section: GetGame.php - Download Game Script   Modified: 3/20/2019   By: MaSoDo
 
 if (isset($_COOKIE['PHPSESSID'])) {
 $key=htmlspecialchars($_COOKIE['PHPSESSID'], ENT_QUOTES);
@@ -103,7 +103,7 @@ $object = $g['about'];
 $hs_type == 'HI' ? $highscore_type = 'high' : $highscore_type = 'low'; 
 $DLtime =  date('Y-m-d H:i:s');
  
- $configfile = "<?php\n/*--------------------------------------------------*/\n/* File Created by PracticalLightning Arcade 1.0!	    */\n/* File Generated:     ".$DLtime."                             */\n/*--------------------------------------------------*/\n\n\$config = array(\n	'active'			=> '1',\n	'bgcolor'			=> '000000',\n	'gcat'			=> '".$gameid."',\n	'gheight'			=> '".$gheight."',\n	'gkeys'			=> '',\n	'gname'			=> '".$gname."',\n	'gtitle'			=> '".$gtitle."',\n	'gwidth'			=> '".$gwidth."',\n	'gwords'			=> '".$gwords."',\n	'highscore_type'			=> '".$highscore_type."',\n	'object'			=> '".$object."',\n	'snggame'			=> '0',\n);\n?>";
+ $configfile = "<?php\n/*--------------------------------------------------*/\n/* File Created by PracticalLightning Arcade 1.0!	    */\n/* File Generated:     ".$DLtime."                             */\n/*--------------------------------------------------*/\n\n\$config = array(\n	'active'			=> '1',\n	'bgcolor'			=> '000000',\n	'gcat'			=> '".$gcat."',\n	'gheight'			=> '".$gheight."',\n	'gkeys'			=> '',\n	'gname'			=> '".$gname."',\n	'gtitle'			=> '".$gtitle."',\n	'gwidth'			=> '".$gwidth."',\n	'gwords'			=> '".$gwords."',\n	'highscore_type'			=> '".$highscore_type."',\n	'object'			=> '".$object."',\n	'snggame'			=> '0',\n);\n?>";
 
 
 $target = "tmp/".$gameid.".tar";
