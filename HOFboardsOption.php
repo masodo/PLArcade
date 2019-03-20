@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Leaderboards.php  Function: Display of Hall of Fame   Modified: 3/18/2019   By: MaSoDo
+# Section: Leaderboards.php  Function: Display of Hall of Fame   Modified: 3/19/2019   By: MaSoDo
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //		  Leaderboards
@@ -38,6 +38,47 @@ if ($scores['HOF_champ'] > 0) {
 echo"<tr><td class='arcade1'><div align='center'><A href='index.php?action=profile&amp;user=".$scores['name']."' onmouseover=\"s=document.getElementById('leadboxpopup');s.style.display='';s.getElementsByTagName('img')[0].src='" . $scores['avatar'] . "';\" onmousemove=\"s=document.getElementById('leadboxpopup').style;s.top=document.body.scrollTop+2+event.clientY;s.left=document.body.scrollLeft+event.clientX;\" onmouseout=\"document.getElementById('leadboxpopup').style.display='none'\"><b>".$scores['name']."</b></a></div></td><td class='arcade1'><div align='center'>".$scores['HOF_champ']." Games</div></td></td></tr>";
 }}
 echo "</table></div><br />";
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//		  Wall of Fame
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo "<div class='tableborder'><table width='100%' cellpadding='5' cellspacing='1'><tr><td width='100%' align=center class='headertableblock' style='font-size:24px'> Arcade Wall of Fame</td></tr></table>";
+echo "<div style='height:400px;'>";
+
+$Wyears = run_query("SELECT DISTINCT `Wyear` FROM `phpqa_wall` ORDER BY `Wyear` ASC");
+while($WYsee = mysql_fetch_array($Wyears)) {
+//echo "<h1>[" . $WYsee['Wyear'] . "] - </h1>";
+$ShowYear = $WYsee['Wyear'];
+$Wscoreboard = run_query("SELECT * FROM `phpqa_wall` WHERE `Wyear` = $ShowYear ORDER BY `Wplace` ASC LIMIT 0,3");
+$Wscores=mysql_fetch_array($Wscoreboard);
+if ($Wscores['Wavatar'] == ''){ $Wscores['Wavatar'] = $avatarloc.'/man.gif'; }
+$Wyear = $ShowYear;
+$WLyear = $Wyear - 1;
+$Wplace = $Wscores['Wplace'];
+$Wgames = $Wscores['Wgames'];
+$Wname = $Wscores['Wname'];
+$Wavatar = $Wscores['Wavatar'];
+echo "<div style='width:200px; height: 300px; float:left; margin-left:15px; margin-top:15px;'><table style='text-align:center;' width='100%' cellpadding='5' cellspacing='0'><tr><th colspan='2' class='headertableblock'>Season: ". $WLyear ." /  ". $Wyear ."</th></tr>";
+echo "<tr><td colspan='2' class='arcade1'>1st Place <img src='$crowndir/crown1.gif' /> ". $Wgames ." Games</td></tr>";
+echo "<tr><td colspan='2' class='arcade1'><img src='$Wavatar' height='150' alt='" . $Wname . "' /></td></tr>";
+echo "<tr><td colspan='2' class='arcade1'><b>". $Wname ."</b><hr /></td></tr>";
+
+while($Wscores=mysql_fetch_array($Wscoreboard)){
+if ($Wscores['Wavatar'] == ''){ $Wscores['Wavatar'] = $avatarloc.'/man.gif'; }
+$plaque = '';
+$Wplace = $Wscores['Wplace'];
+$Wgames = $Wscores['Wgames'];
+$Wname = $Wscores['Wname'];
+$Wavatar = $Wscores['Wavatar'];
+if ($Wplace == 2) { $plaque = "2nd Place<br /><img src='$crowndir/crown2.gif' /><br />"; }  
+if ($Wplace == 3) { $plaque = "3rd Place<br /><img src='$crowndir/crown3.gif' /><br />"; }  
+echo "<td class='arcade1'><table style='text-align:center;' cellspacing='0'><tr><td>" . $plaque . $Wgames ." Games</td></tr>";
+echo "<tr><td><img src='$Wavatar' alt='" . $Wname . "' height='50' /></td></tr>";
+echo "<tr><td><b>". $Wname ."</b></td></tr></table></td>";
+}
+echo "</div></table></div>";
+}
+echo "</div>";
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //		End Leaderboards
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
