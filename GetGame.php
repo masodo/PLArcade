@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: GetGame.php - Download Game Script   Modified: 3/20/2019   By: MaSoDo
+# Section: GetGame.php - Download Game Script   Modified: 3/21/2019   By: MaSoDo
 
 if (isset($_COOKIE['PHPSESSID'])) {
 $key=htmlspecialchars($_COOKIE['PHPSESSID'], ENT_QUOTES);
@@ -111,12 +111,13 @@ $dir = "tmp/TMP-".$gameid."";
 if (!file_exists('tmp/TMP-'.$gameid.''))mkdir('tmp/TMP-'.$gameid.'', 0755);
 if (!file_exists('tmp/TMP-'.$gameid.'/gamedata'))mkdir('tmp/TMP-'.$gameid.'/gamedata', 0755);
 if (!file_exists('tmp/TMP-'.$gameid.'/gamedata/'.$gameid.''))mkdir('tmp/TMP-'.$gameid.'/gamedata/'.$gameid.'', 0755);
-
+if (file_exists('arcade/gamedata/'.$gameid.'/index.html')) {
 recurse_copy('arcade/gamedata/'.$gameid.'','tmp/TMP-'.$gameid.'/gamedata/'.$gameid.'');
-
+}
   $phar = new PharData($target);
   $phar->buildFromDirectory($dir);
   $phar->addFromString($gameid.'.php', $configfile);
+  if (file_exists('arcade/'.$gameid.'.swf')) $phar->addFromString($gameid.'.swf',file_get_contents('arcade/'.$gameid.'.swf'));
   $phar->addFromString($gameid.'1.gif',file_get_contents('arcade/pics/'.$gameid.'.gif'));
   
   rrmdir($dir);
