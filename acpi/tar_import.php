@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: tar_import - Administrator Control Panel   Modified: 3/18/2019   By: MaSoDo
+# Section: acpi Place: tar_import - Administrator Control Panel   Modified: 3/22/2019   By: MaSoDo
 
 {
 $plattype = 'FL';
@@ -91,7 +91,7 @@ $scoretype = $config['highscore_type'];
 if ($scoretype == 'high')$scoretype='HI';
 if ($scoretype == 'low')$scoretype='LO';
 } else {
-$scoretype = 'high';
+$scoretype = 'HI';
 }
 $idname = htmlspecialchars($idname, ENT_QUOTES);
 $addedalready = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
@@ -145,4 +145,6 @@ echo  "<option value='$catlist[0]'>$catlist[1]</option>";
 <br />
 <?php
 } 
+
+
 ?>
