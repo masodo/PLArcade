@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: tar_import - Administrator Control Panel   Modified: 3/22/2019   By: MaSoDo
+# Section: acpi Place: tar_import - Administrator Control Panel   Modified: 3/26/2019   By: MaSoDo
 
 {
 $plattype = 'FL';
@@ -138,13 +138,11 @@ echo  "<option value='$catlist[0]'>$catlist[1]</option>";
 }
 ?>
 </select>
-<tr><td class='headertableblock' colspan='2'><div align=center><input type='hidden' name='cpiarea' value='tar_import'><input type='Submit' name='addgame' value='Switch Category'></div></td></tr>
+<tr><td class='headertableblock' colspan='2'><div align=center><input type='hidden' name='cpiarea' value='tar_import'><input type='Submit' name='addgame' value='Set Category'></div></td></tr>
 </form>
 </table>
 </div>
 <br />
 <?php
 } 
-
-
 ?>
