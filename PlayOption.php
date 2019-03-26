@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: PlayOption.php  Function: Game Play Block   Modified: 3/21/2019   By: MaSoDo
+# Section: PlayOption.php  Function: Game Play Block   Modified: 3/26/2019   By: MaSoDo
 
 //modified to play HTML5 Games
 $play = htmlspecialchars($_GET['play'], ENT_QUOTES);
@@ -51,7 +51,7 @@ $yourscore=$yourscore[0];
 //modified to play HTML5 Games
 $CheckPlatform = $g['platform'];
 if ($CheckPlatform == 'H5') {
-echo '<iframe src="' . $g['remotelink'] . '" style="outline: none; border: 0px; width: ' . $g['gamewidth'] . 'px; height: ' . $g['gameheight'] . 'px; overflow: hidden;" id="' . $g['id'] . '" data-id="' . $g['id'] . '" data-gname="' . $g['gameid'] . '"></iframe>';
+echo '<iframe src="' . $g['remotelink'] . '" scrolling="no" style="overflow: hidden; outline: none; border: 0px; width: ' . $g['gamewidth'] . 'px; height: ' . $g['gameheight'] . 'px; overflow: hidden;" id="' . $g['id'] . '" data-id="' . $g['id'] . '" data-gname="' . $g['gameid'] . '"></iframe>';
 } else { 
 ?>
 <object classid=clsid:D27CDB6E-AE6D-11cf-96B8-444553540000 codebase=http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0 align=middle WIDTH=<?php echo $g['gamewidth']; ?> HEIGHT=<?php echo $g['gameheight']; ?>> <param name='movie' value='<?php echo $swf_resource ?>' /><param name=quality value=high /> <param name=allowScriptAccess value=sameDomain /> <param name='menu' value='false' /> <embed src="<?php echo $swf_resource; ?>" quality=high pluginspage=http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash WIDTH=<?php echo $g['gamewidth']; ?> HEIGHT=<?php echo $g['gameheight']; ?> menu='false' type=application/x-shockwave-flash align=middle /></object>
