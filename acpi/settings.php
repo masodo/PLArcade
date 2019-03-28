@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: settings.php  Function: Set Global Arcade Variables   Modified: 2/28/2019   By: MaSoDo
+# Section: settings.php  Function: Set Global Arcade Variables   Modified: 3/28/2019   By: MaSoDo
 
 { ?>
 <br />
@@ -29,6 +29,7 @@ $settingsarray=Array(
 'Enable Password Recovery?'=>'enable_passrecovery',
 'Enable Shoutbox?'=>'enable_shoutbox',
 'Use logo at the top of every page? (Logo takes the name of the skin and looks for the image in the arcade images folder if enabled)'=>'enable_logo',
+'Enable Countdown Timer?'=>'enable_timer',
 'Allow users to post comments?'=>'allow_comments',
 'Display the arcade stats above the shoutbox/Login bar?'=>'show_stats_table',
 'Disable New Registrations?'=>'disable_reg',
@@ -92,6 +93,7 @@ $settingsarray3=Array(
 'Games root folder? (def=arcade)'=>'gamesloc',
 'Site complete URL? (example: http://deburger.com/ARCADE)'=>'arcurl',
 'Arcade Greeting? (def=Welcome to the Practical Lightning Arcade)'=>'arcgreet',
+'Countdown Target Time? (yyyy,mo,dd,hh,mm,se)'=>'ResetTime',
 'Footer Image? (stored in image file folder)'=>'toetag',
 'Admin plays as this user? (def=admin)'=>'adminplayas',
 'Site Email sent from this email address?'=>'siteemail',
