@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Functions.php  Function: Some Common Functions   Modified: 3/18/2019   By: MaSoDo
+# Section: Functions.php  Function: Some Common Functions   Modified: 3/28/2019   By: MaSoDo
 
 function rangecheck($a){
 if (substr($a,-1)!=".") $a.=".";
@@ -28,8 +28,7 @@ die();
 ?>
 <SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript">
 <!--
-
-dateFuture = new Date(2019,2,31,20,01,0);
+dateFuture = new Date(<?php echo($ResetTime);?>); //(yyyy,mo,dd,hh,mm,se)
 
 function GetCount(){
 
