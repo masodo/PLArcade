@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: PlayOption.php  Function: Game Play Block   Modified: 3/26/2019   By: MaSoDo
+# Section: PlayOption.php  Function: Game Play Block   Modified: 4/1/2019   By: MaSoDo
 
 //modified to play HTML5 Games
 $play = htmlspecialchars($_GET['play'], ENT_QUOTES);
@@ -108,7 +108,7 @@ echo "<a href='GetGame.php?GID=".$play."' title='Download Game TAR'><img src='".
 }
 echo "</div>";
 if ($g['gamecat'] != '20' && $g['gamecat'] != '16') {
-$HOF = run_query("SELECT `avatar` FROM `phpqa_accounts` WHERE `name` = '" . $g['Champion_name'] . "'");
+$HOF = run_query("SELECT `avatar` FROM `phpqa_accounts` WHERE `name` = '" . $g['HOF_name'] . "'");
 $HOFimg=mysql_fetch_array($HOF);
 if (!$HOFimg['avatar'])$HOFimg['avatar'] = $avatarloc.'/man.gif';
 echo "<div class='navigation' style='background-color: black; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px; padding: -5px 10px 5px 10px;'><i>Hall of Fame</i><br /><img alt='image' src='" . $HOFimg['avatar'] . "' height='' width='75' alt='" . $g['HOF_name'] . "' style='width:75px ; margin-left:auto; margin-right:auto; margin-top:5px; margin-bottom:5px;'  /><br /><img alt='image' src='" . $crowndir ."/crown1.gif' />&nbsp;<b style='color: white;'>" . $g['HOF_name'] . "</b>&nbsp;<img alt='image' src=' " . $crowndir . "/crown1.gif' /><br /><span style='color:black;'>" . str_replace('-', '', $g['HOF_score']) ."</span></div>";
