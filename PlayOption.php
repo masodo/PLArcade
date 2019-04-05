@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: PlayOption.php  Function: Game Play Block   Modified: 4/1/2019   By: MaSoDo
+# Section: PlayOption.php  Function: Game Play Block   Modified: 4/5/2019   By: MaSoDo
 
 //modified to play HTML5 Games
 $play = htmlspecialchars($_GET['play'], ENT_QUOTES);
@@ -95,6 +95,9 @@ if ($CheckPlatform == 'H5') {
 echo "<a href='./index.php?plat=".$g['platform']."' title='".$g['platform']."'><img src='".$arcurl."/".$imgloc."/HTML5.png'  height='25' width='25' alt='HTML5 Game' style='float:left; margin-left:0px; margin-top:15px;' /></a>";
 } else {
 echo "<a href='./index.php?plat=".$g['platform']."' title='".$g['platform']."'><img src='".$arcurl."/".$imgloc."/flash.png'  height='25' width='25' alt='HTML5 Game' style='float:left; margin-left:0px; margin-top:15px;' /></a>";
+}
+if ($g['gamecat'] == '23'){
+echo "<script>alert('this game is currently being tested!\\nuse at your own risk\\n(may not score properly)');</script>";
 }
 echo "<a href='./index.php?cat=".$g['gamecat']."' title='".$showcat[0]."'><img src='".$arcurl."/".$catloc."/".$showcat[0].".png'  height='25' width='25' alt='".$showcat[0]."' style='float:left; margin-left:5px; margin-top:15px;' /></a>";
 if ($CheckScoring == 'LO') {
