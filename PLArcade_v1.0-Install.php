@@ -258,8 +258,30 @@ mysql_query("CREATE TABLE `phpqa_wall` (
 
 // ------------------------------------------------------//
 
+//
+// Table structure for table `phpqa_affiliate`
+//
+
+mysql_query("CREATE TABLE `phpqa_affiliate` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `img` varchar(255) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `tag` varchar(255) NOT NULL,
+  `sort` int(11) NOT NULL,
+  `key` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+");
+
 // end tables
+
 // Add Data
+
+// data for table `phpqa_affiliate`
+
+mysql_query("INSERT INTO `phpqa_affiliate` VALUES(1, 'DeBurgerGameRoom.gif', 'http://DeBurger.com/ARCADE ', 'The DeBurger Game Room', 1, '');");
+mysql_query("INSERT INTO `phpqa_affiliate` VALUES(2, 'PracticalLightning.jpg', 'http://PracticalLightning.com/ARCADE', 'PracticalLightning Arcade ', 2, '');");
+
 // data for table `phpqa_cats`
 
 mysql_query("INSERT INTO `phpqa_cats` (`id`, `cat`, `displayorder`) VALUES(1, 'New', 1);");
