@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi place: idx.php Administrator Control Panel   Modified: 3/19/2019   By: MaSoDo
+# Section: acpi place: idx.php Administrator Control Panel   Modified: 4/5/2019   By: MaSoDo
 
 {
 message("Welcome to the Admin CP, <b>$phpqa_user_cookie</b>.");
@@ -30,6 +30,8 @@ message("Welcome to the Admin CP, <b>$phpqa_user_cookie</b>.");
 <br />
 <div class='tableborder'><table width='100%' cellpadding='5' cellspacing='1'><tr><td class='headertableblock' align='left' colspan=9><b><font size=-5>Member Editor</font></b></td></tr><td class='arcade1' align='left'>Edit members. Avatar, and profile info, erase members... also get IP address on date of registration, make moderators and admins, etc. 
 <br><br>[ <a href=index.php?cpiarea=members>Manager</a> ] [ <a href='?cpiarea=members&act=Validating'>Validating Users</a> ]</div></td></table></div>
+<br />
+<div align='center'><div class='tableborder'><table width=100%% cellpadding='5' cellspacing='1'><tr><td class=headertableblock colspan=9><b><font size=-5>Affiliated Arcades</font></b></td></tr><td class=arcade1>Data Management for Bottom Page Banner Marquee<br><br>[ <a href='?cpiarea=affiliates'>Manage</a> ]</div></td></table></div>
 <br />
 <div align='center'><div class='tableborder'><table width=100%% cellpadding='5' cellspacing='1'><tr><td class=headertableblock colspan=9><b><font size=-5>Banned IP addresses</font></b></td></tr><td class=arcade1>Banned IP address list.<br><br>[ <a href='?cpiarea=bannedIPlist'>Manage</a> ]</div></td></table></div>
 <br />
@@ -52,6 +54,4 @@ at some point in the future this will change, but not for now.
 <br />
 <?php
 }
-
-
 ?>
