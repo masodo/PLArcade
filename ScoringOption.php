@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 3/18/2019  By: MaSoDo
+# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 4/26/2019  By: MaSoDo
 
 if (isset($_POST['thescore']))$thescore = $_POST['thescore'];
 if (isset($_GET['autocom'])) {
@@ -166,6 +166,7 @@ $post_user_cookie = $adminplayas;
 // ---------------
 if($settings['email_scores']) {
 if($checkTOPscore['username'] !="") {
+if($checkTOPscore['username'] != $post_user_cookie) {
 $person_to_mail=mysql_fetch_array(run_query("SELECT email,settings FROM phpqa_accounts WHERE name='".$checkTOPscore['username']."'"));
 $psettings = explode("|", $person_to_mail['settings']);
 if($psettings[4] != "No" && $person_to_mail['email'] !=$exist['email']) { 
@@ -176,6 +177,7 @@ $mailsub = "Message from ".$settings['arcade_title']." - Top {$gameinfo['game']}
 $mailbody = "Hello {$checkTOPscore['username']}, \n\r\n\r Oh no! Someone has taken your top score for the game: -- {$gameinfo['game']} -- at {$settings['arcade_title']}!\n\rBetter get back in there and take your score! \n\r\n\r Visit the link below to view the scoreboard for {$gameinfo['game']}: \n\r ----------------------------------------------- \n\r ".$SiteDomain." \n\r\n\r-----------------------------------------------\n\rThank you for your participation!\n\r{$settings['arcade_title']} Admin\n\r\n\r If you do not want to recieve these email notices:\n\rplease login, visit settings >> preferences >> and set Allow other members/the admin to contact you by Email? to NO.";
 $headers = "From: $hd\n";
 @mail($person_to_mail['email'],$mailsub,$mailbody,$headers);
+}
 }
 }
 				}
