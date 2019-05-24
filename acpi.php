@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acp.php  Function: (Experimental) Administrator Control Panel   Modified: 4/5/2019   By: MaSoDo
+# Section: acp.php  Function: (Experimental) Administrator Control Panel   Modified: 5/24/2019   By: MaSoDo
 $place = htmlspecialchars($_GET['cpiarea']); 
 if (isset($_REQUEST['acpcheck'])) die();
 if (isset($_COOKIE['acpcheck'])) die();
@@ -42,7 +42,11 @@ require "acpi/emotes.php";
 
 if ($place == 'mysql') {
 require "acpi/mysql.php";
-} elseif($place=="members") {
+} 
+
+if ($place == 'JSbeauty') {
+require "acpi/beautify.php";
+}elseif($place=="members") {
 require "acpi/members.php";
 }
 
