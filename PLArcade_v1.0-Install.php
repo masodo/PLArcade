@@ -306,6 +306,8 @@ mysql_query("INSERT INTO `phpqa_cats` (`id`, `cat`, `displayorder`) VALUES(19, '
 mysql_query("INSERT INTO `phpqa_cats` (`id`, `cat`, `displayorder`) VALUES(20, 'DOS', 21);");
 mysql_query("INSERT INTO `phpqa_cats` (`id`, `cat`, `displayorder`) VALUES(21, 'Slingo', 4);");
 mysql_query("INSERT INTO `phpqa_cats` (`id`, `cat`, `displayorder`) VALUES(23, 'Testing', 22);");
+mysql_query("INSERT INTO `phpqa_cats` (`id`, `cat`, `displayorder`) VALUES(24, 'Platform', 7);");
+
 
 
 mysql_query("INSERT INTO `phpqa_games`  (
