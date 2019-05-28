@@ -20,13 +20,13 @@ $tryvers = array_shift($PV);
 if ($tryvers < 4) {
 $checkcol = 'red';
 } else { $checkcol = 'green'; }
-message("<div align='left'><font color='".$checkcol."'>- PHP 4 or higher</font> (installed: v<b>".$tryvers."</b>)<br />- MySQL 4 or higher<br />-UNIX/Win NT OS/FreeBSD</DIV><br /><BR />The above software is needed to install your PHPQA.","System Requirements");
+message("<div align='left'><font color='".$checkcol."'>- PHP 4 or higher</font> (installed: v<b>".$tryvers."</b>)<br />- MySQL 4 or higher [This Arcade NOT COMPATIBLE with PHPv7+]<br />-UNIX/Win NT OS/FreeBSD</DIV><br /><BR />The above software is needed to install your PHPQA.","System Requirements");
 
 message("Step 1: CHMOD 777 your:<br /> arcade_conf.php<br />/arcade/ folder <br /> /pics/ folder<br /> /tmp/ folder.<br />flat/emote_faces.txt and flat/emote_pics.txt","Install Start...");
 
 echo "<div align='center'><div class='tableborder'><table width=100% cellpadding='4' cellspacing='1'><td width=60% align=center class=headertableblock>Permissions check</td><tr><td class=arcade1 valign=top><div align=center>";
 
-$files=Array('skins/BlackDefault.css','skins/GrayDefault.css','skins/Default.css','skins/','arcade_conf.php','flat/emotes_faces.txt','flat/emotes_pics.txt','arcade','arcade/pics','arcade/gamedata');
+$files=Array('skins/BlackDefault.css','skins/GrayDefault.css','skins/Default.css','skins/','arcade_conf.php','flat/emotes_faces.txt','flat/emotes_pics.txt','arcade','arcade/pics','arcade/gamedata','tmp','tars','tarsH5');
 
 
 if ($_SERVER['WINDIR']) {
