@@ -133,7 +133,7 @@ mysql_query("CREATE TABLE `phpqa_games` (
   `gameid` varchar(255) NOT NULL default '',
   `gameheight` smallint(3) NOT NULL default '0',
   `gamewidth` smallint(3) NOT NULL default '0',
-  `about` varchar(255) NOT NULL default '',
+  `about` varchar(512) NOT NULL default '',
   `gamecat` varchar(255) NOT NULL default '',
   `remotelink` varchar(255) NOT NULL default '',
   `Champion_name` varchar(255) NOT NULL default '',
