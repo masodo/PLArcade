@@ -75,7 +75,7 @@ while($f=mysql_fetch_array($q)) echo "<li><b>".$f[0]."</b>: ".$f[1]."</li>";
 <br />
 <?php 
 if (isset($exist[6])&&$exist[6] == "Admin") { 
-echo "<a href='index.php?cpiarea=addgames&method=edit&game=".$play."' title='Edit Game Settings' class='navigation'>EDIT</a>";
+echo "<a href='index.php?cpiarea=addgames&method=edit&game=".$play."' title='Edit Game Settings' class='navigation'>EDIT</a><br />";
 }
 if ($CheckPlatform != 'H5') {
 ?>
