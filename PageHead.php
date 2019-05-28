@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: PageHead.php  Function: HTML Page Heading   Modified: 3/18/2019   By: MaSoDo
+# Section: PageHead.php  Function: HTML Page Heading   Modified: 5/28/2019   By: MaSoDo
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/2002/REC-xhtml1-20020801/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
@@ -35,7 +35,7 @@
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="msapplication-TileImage" content="/icon/ms-icon-144x144.png">
 <meta name="theme-color" content="#ffffff">
-<meta http-equiv="content-type" content="text/html; charset=iso-8859-15" /> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <style type="text/css">
 .divVisible {display:block;}
 .divHidden{display:none;} 
