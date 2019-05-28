@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi place: addgames Administrator Control Panel   Modified: 3/14/2019   By: MaSoDo
+# Section: acpi place: addgames Administrator Control Panel   Modified: 5/28/2019   By: MaSoDo
 {
 // The different methods
 if (!isset($_GET['method'])) {
@@ -56,7 +56,6 @@ $scoretype = htmlspecialchars($_POST['scoretype'], ENT_QUOTES);
 } else { // If gamename wasn't posted, then do the importer stuff.
 $uploadphp = @move_uploaded_file($_FILES['php']['tmp_name'], "./imports/".$_FILES['php']['name']) ;
 if ($uploadphp) { 
-
 // Did the upload fail? If not require in that importer file.
 require("./imports/".$_FILES['php']['name']);
 $gamename = $config['gtitle'];
@@ -75,8 +74,6 @@ unlink("./imports/".$_FILES['php']['name']);
 message("The Importer file failed to upload. Check to make sure the imports folder is CHMOD 777.");
 }
 }
-
-
 // Method check
 $remoteurl = '';
 if (isset($_GET['method'])&&$_GET['method']=="upload") {
@@ -95,8 +92,6 @@ $gif_ok = "Yes";
 message("The GIF file failed to upload. Make sure the pics folder <a href=\"arcade/pics\" target='_new'>exists</a> and is CHMOD 777."); 
 }
 }
-
-
 //==================================
 // End uploadable method , start FTP
 //==================================
@@ -105,12 +100,9 @@ $swf_ok = "Yes";
 $gif_ok = "Yes";
 $plattype = 'FL';
 }
-
-
 //==================================
 // End FTP method , HotLink
 //==================================
-
 if (isset($_GET['method'])&&$_GET['method']=="hotlink") {
 $swf_ok = "Yes";
 $remoteurl = $swf;
@@ -158,8 +150,9 @@ $addedalready = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gam
 if (empty($addedalready)) {
 message("Game added/edited. <br>[ <a href='index.php?cpiarea=idx'>Arcade CP Home</a> | <a href='index.php?cpiarea=addgames&method=".$_GET['method']."'>Add Another</a> ]");
 run_query("INSERT INTO phpqa_games (game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring) VALUES ('$gamename','$idname','$gameheight','$gamewidth','$about','$gamecat','$remoteurl','$champ','$champs','','$plattype','$scoretype')");
+if(null!==$idname){
 $NewGtext = "[color=green][i]New Game Added![/i] [/color][size=16] [url=".$arcurl."/index.php?id=".$idname."][b]".$gamename."[/b][/url][/size]  [color=green][i]Enjoy![/i][/color] [:D]";
-run_query("INSERT INTO phpqa_shoutbox (`name`,`shout`,`ipa`) VALUES ('Admin','" . $NewGtext . "','localhost')", 1);
+run_query("INSERT INTO phpqa_shoutbox (`name`,`shout`,`ipa`) VALUES ('Admin','" . $NewGtext . "','localhost')", 1);}
 } else {
 message("This game is already added, or the idname conflicts with an existing game. Please delete the game, or change the idname to correct the problem.");
 }
@@ -262,8 +255,13 @@ echo "<input type='hidden' name='idname' value='".$editgame['gameid']."'> ".$edi
 <tr><td class='arcade1' align='left'><b>Scoring Type:</b></td>
 <td class='arcade1' align='center'>
 <select size='1' name='scoretype'>
+<?php if( isset($editgame['scoring']) && $editgame['scoring'] == 'HI' ) { ?>
 <option value='HI' selected>High Score</option>
 <option value='LO'>Low Score</option>
+<?php } else {?>
+<option value='HI'>High Score</option>
+<option value='LO' selected>Low Score</option>
+<?php }?>
 </select>
 </td>
 </tr>
@@ -271,11 +269,11 @@ echo "<input type='hidden' name='idname' value='".$editgame['gameid']."'> ".$edi
 <tr><td class='arcade1' align='left'><b>Category Options :</b></td><td class='arcade1' align='center'><select name='gamecat'>
 <?php
 $catquery=run_query("SELECT * FROM phpqa_cats");
- while ($catlist= mysql_fetch_array($catquery)) {
-if( isset($editgame['gamecat']) == $catlist[0] ) {
-echo  "<option value='$catlist[0]' selected='selected'>$catlist[1]</option>";
+while ($catlist=mysql_fetch_array($catquery)) {
+if( isset($editgame['gamecat']) && $editgame['gamecat'] == $catlist[0] ) {
+echo  "<option value='".$catlist[0]."' selected='selected'>".$catlist[1]."</option>";
 } else {
-echo  "<option value='$catlist[0]'>$catlist[1]</option>";
+echo  "<option value='".$catlist[0]."'>".$catlist[1]."</option>";
 }
 }
 ?>
@@ -289,4 +287,7 @@ echo  "<option value='$catlist[0]'>$catlist[1]</option>";
 <?php
 }
 }
+
+
+
 ?>
