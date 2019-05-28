@@ -11,8 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: PlayOption.php  Function: Game Play Block   Modified: 4/5/2019   By: MaSoDo
-
+# Section: PlayOption.php  Function: Game Play Block   Modified: 5/28/2019   By: MaSoDo
 //modified to play HTML5 Games
 $play = htmlspecialchars($_GET['play'], ENT_QUOTES);
 	$g = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gameid='".$play."'")); 
@@ -44,7 +43,6 @@ $swf_resource = $g['remotelink'];
 global $phpqa_user_cookie;
 $yourscore=mysql_fetch_row(run_query("SELECT thescore FROM phpqa_scores WHERE gameidname='".$play."' AND username='".$phpqa_user_cookie."'"));
 $yourscore=$yourscore[0];
-
 ?>
 <a name="game"></a>
 <?php 
@@ -76,6 +74,9 @@ while($f=mysql_fetch_array($q)) echo "<li><b>".$f[0]."</b>: ".$f[1]."</li>";
 <a href="index.php?fullscreen=<?php echo $_GET['play']; ?>" title="Fullscreen Mode" target="_blank"><img src="<?php echo $imgloc; ?>/FullScreen.gif" alt="Fullscreen Mode" /></a><br />
 <br />
 <?php 
+if (isset($exist[6])&&$exist[6] == "Admin") { 
+echo "<a href='index.php?cpiarea=addgames&method=edit&game=".$play."' title='Edit Game Settings' class='navigation'>EDIT</a>";
+}
 if ($CheckPlatform != 'H5') {
 ?>
 Width: <a href="javascript:void(0)" onclick="document.getElementById('<?php echo $g['id']; ?>').innerHTML=chsize('width');" title='Change...'><?php echo $g['gamewidth']; ?></a><br />Height: <a href="javascript:void(0)" onclick="document.getElementById('<?php echo $g['id']; ?>').innerHTML=chsize('height')" title='Change...'><?php echo $g['gameheight']; ?></a><br />
@@ -103,7 +104,6 @@ echo "<a href='./index.php?cat=".$g['gamecat']."' title='".$showcat[0]."'><img s
 if ($CheckScoring == 'LO') {
 echo "<a title='Lowest Score Wins This Game'><img src='".$arcurl."/".$imgloc."/low.png'  height='21' width='25' alt='Lowest Score Wins This Game' style='margin-left:auto; margin-right:auto; margin-top:15px;' /></a>";
 }
-
 echo "</div>";
 echo "<div style='position: relative; width:25px; margin-left:auto; margin-right:auto; margin-top: 60px;'>".$fav_action."</br>";
 if ((isset($exist[6])&&$exist[6] == "Admin") || (isset($exist[6])&&$exist[6] ==  "Affiliate")) { 
@@ -116,7 +116,6 @@ $HOFimg=mysql_fetch_array($HOF);
 if (!$HOFimg['avatar'])$HOFimg['avatar'] = $avatarloc.'/man.gif';
 echo "<div class='navigation' style='background-color: black; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px; padding: -5px 10px 5px 10px;'><i>Hall of Fame</i><br /><img alt='image' src='" . $HOFimg['avatar'] . "' height='' width='75' alt='" . $g['HOF_name'] . "' style='width:75px ; margin-left:auto; margin-right:auto; margin-top:5px; margin-bottom:5px;'  /><br /><img alt='image' src='" . $crowndir ."/crown1.gif' />&nbsp;<b style='color: white;'>" . $g['HOF_name'] . "</b>&nbsp;<img alt='image' src=' " . $crowndir . "/crown1.gif' /><br /><span style='color:black;'>" . str_replace('-', '', $g['HOF_score']) ."</span></div>";
 }} else { 
-
 echo "You must be logged in to play the arcade games. Register an account to play - it's free <a href='index.php?action=register'>Click here</a>!</td><td class='arcade1' valign='top' align='center'>";
 }
 ?>
