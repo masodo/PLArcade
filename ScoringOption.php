@@ -11,8 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 5/25/2019  By: MaSoDo
-
+# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 5/28/2019  By: MaSoDo
 if (isset($_POST['thescore']))$thescore = $_POST['thescore'];
 if (isset($_GET['autocom'])) {
 $id=htmlspecialchars($_COOKIE['gname'], ENT_QUOTES);
@@ -62,12 +61,10 @@ die();
 //////////////////////////////////////////////////////////////////////////////////////////
 // Removed Tourney Code 3/11/2019 MSD
 //////////////////////////////////////////////////////////////////////////////////////////
-
  if (isset($_COOKIE['phpqa_user_c'])) { // Only if the cookie is set....
   if (isset($_GET['c']) == 1 && !isset($_POST['sb'])) { // Ah well, so what that anyone can edit their comment <_<
   vsess();
   global $senttext;
-
 // Admin Play As
  $post_user_cookie = $phpqa_user_cookie;
 if ($post_user_cookie == 'Admin') {
@@ -75,7 +72,6 @@ global $adminplayas;
 $post_user_cookie = $adminplayas;
 }
 //End Admin Play As
-
   run_query("UPDATE `phpqa_scores` SET `comment` = '".$senttext."' WHERE gameidname='".$id."' && username='".$post_user_cookie."'"); 
 }
  if(isset($_GET['do']) || isset($_POST['thescore'])) $commentthing =  "<form name='postbox' action='index.php?id=$id&amp;c=1' method='POST'><input type='hidden' name='akey' value='".$key."'><div class='tableborder'><table width='100%'><td class='arcade1' width='100%' align='center'>Congratulations, new best score, your final score was: <b>".$thescore."</b>.<br /><br /><input type='text' name='senttext'><input type='submit' name='gocomment' value='Send Comment'></form><br/>".displayemotes()."</td></table></div><br /><br />";
@@ -107,7 +103,6 @@ $checkscoring = @mysql_fetch_array(run_query("SELECT scoring FROM phpqa_games WH
 if ($checkscoring['scoring'] == 'LO') {
 $thescore = -$thescore;
 }
-
 // Admin Play As
 $post_user_cookie = $phpqa_user_cookie;
 if ($post_user_cookie == 'Admin') {
@@ -115,7 +110,6 @@ global $adminplayas, $post_user_cookie;
 $post_user_cookie = $adminplayas;
 }
 //End Admin Play As
-
    $checkTOPscore = @mysql_fetch_array(run_query("SELECT * FROM `phpqa_scores` WHERE `gameidname`='".$id."' ORDER BY `thescore` DESC LIMIT 0,1"));
    $checkHOFscore = @mysql_fetch_array(run_query("SELECT `HOF_score` FROM `phpqa_games` WHERE `gameid`='".$id."'"));
    $checkscore = @mysql_fetch_array(run_query("SELECT * FROM phpqa_scores WHERE gameidname='".$id."' && username='".$post_user_cookie."' ORDER BY thescore DESC"));
@@ -130,15 +124,12 @@ global $adminplayas, $post_user_cookie;
 $post_user_cookie = $adminplayas;
 }
 //End Admin Play As
-
      run_query("UPDATE `phpqa_scores` SET `thescore` = '".$thescore."', `gamename` = '".$gameinfo['game']."', `phpdate` = '".$time."',`ip` = '".$ipa."' WHERE gameidname='".$id."' && username='".$post_user_cookie."'");
      if($settings['allow_comments']) echo $commentthing;
-
   } else {
     echo "<div class='tableborder'><table width='100%'><td class='arcade1' width='100%' align='center'>Your score score was: <b>" . str_replace('-', '', $thescore) . "</b>...";
    echo "<br /><br />Try again.</td></table></div><br /><br />";
    }
-
  } else {
  
 // Admin Play As
@@ -148,13 +139,10 @@ global $adminplayas, $post_user_cookie;
 $post_user_cookie = $adminplayas;
 }
 //End Admin Play As
-
-
   // First time, submit it in.
    run_query("INSERT INTO phpqa_scores (username,thescore,ip,comment,phpdate,gameidname,gamename) VALUES ('".$post_user_cookie."','".$thescore."','".$ipa."','','".$time."','".$gameidname."','".$gameinfo['game']."')");
   if($settings['allow_comments']) echo $commentthing;
  }
-
  if ($thescore > $checkTOPscore[2]) { // We have a champion!
  $WINNERTAG = ' ';
  if ($thescore > $checkHOFscore['HOF_score']) { // We have a New HOF champion!
@@ -164,7 +152,7 @@ $post_user_cookie = $adminplayas;
 // ---------------
 // Email the loser
 // ---------------
-if($settings['email_scores']) {
+if(isset($settings['email_scores'])) {
 if($checkTOPscore['username'] !="") {
 if($checkTOPscore['username'] != $post_user_cookie) {
 $person_to_mail=mysql_fetch_array(run_query("SELECT email,settings FROM phpqa_accounts WHERE name='".$checkTOPscore['username']."'"));
@@ -199,8 +187,6 @@ echo "<div class='tableborder'><table width='100%'><td class='arcade1' width='10
  }
  // end set check
 }
-
-
 //=================
 // 				comments
 //==================
@@ -212,7 +198,6 @@ global $key;
 echo "<form action='' method='POST'><input type='hidden' name='akey' value='$key'><div class='tableborder'><table width='100%' cellpadding='5' cellspacing='1' class='highscore'><tr><td width='2%' class='headertableblock' align='center'>Username</td><td width='15%' class='headertableblock' align='center'>Score</td><td width='30%' class='headertableblock' align='center'>Comments</td><td width='30%' class='headertableblock' align='center'>Time &amp; Date</td>";
 isset($exist[6]) ? $exist[6] : null;
 if(isset($exist[6]) && $exist[6] == "Moderator" || isset($exist[6]) && $exist[6] == "Admin") {
-
 echo "<td width='20%' class='headertableblock' align='center'>IP Address</td><td width='2%' class='headertableblock' align='center'>";
 ?>
 <input type='checkbox' onclick="s=document.getElementsByTagName('input');for(x=0;x<s.length;x++) if (s[x].type=='checkbox') s[x].checked=this.checked" />
@@ -244,12 +229,10 @@ if(isset($exist[6]) && $exist[6] == "Moderator" || isset($exist[6]) && $exist[6]
 echo "<td width='20%' class='arcade1' align='center'><a href='?modcparea=IPscan&serv=".$g[3]."'>".$g[3]."</a></td><td width='2%' class='arcade1' align='center'><input type='checkbox' name='score_m[]' value='".$g[0]."'></td>";
 }
 echo "</tr>";
-
 	}
 isset($exist[6]) ? $exist[6] : null;
 if(isset($exist[6]) && $exist[6] == "Moderator" || isset($exist[6]) && $exist[6] == "Admin") {
 echo "<tr><td class='headertableblock' colspan='6'><div align=center><select name='dowhat_m'><option value='erase'>Delete Score</option><option value='comment'>Delete Comment</option><input type='submit' name='scoreaction' value='Go'></div></td></tr>";
 }
 echo "</table></div><br /></form>";
-
 ?>
