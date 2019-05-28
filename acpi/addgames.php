@@ -150,7 +150,7 @@ $addedalready = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gam
 if (empty($addedalready)) {
 message("Game added/edited. <br>[ <a href='index.php?cpiarea=idx'>Arcade CP Home</a> | <a href='index.php?cpiarea=addgames&method=".$_GET['method']."'>Add Another</a> ]");
 run_query("INSERT INTO phpqa_games (game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring) VALUES ('$gamename','$idname','$gameheight','$gamewidth','$about','$gamecat','$remoteurl','$champ','$champs','','$plattype','$scoretype')");
-if(null!==$idname){
+if (!isset($_GET['game'])){
 $NewGtext = "[color=green][i]New Game Added![/i] [/color][size=16] [url=".$arcurl."/index.php?id=".$idname."][b]".$gamename."[/b][/url][/size]  [color=green][i]Enjoy![/i][/color] [:D]";
 run_query("INSERT INTO phpqa_shoutbox (`name`,`shout`,`ipa`) VALUES ('Admin','" . $NewGtext . "','localhost')", 1);}
 } else {
