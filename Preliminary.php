@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 3/11/2019   By: MaSoDo
+# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 5/30/2019   By: MaSoDo
 session_start();
 if($_GET['captcha']){
 $im = imagecreatefrompng("captchabg.png");
@@ -209,6 +209,9 @@ $first_p = "";
 $all_pag = "";
 $last_pag = "";
 $last_p = "";
+$PlatWord = "";
+$PlatImg = "";
+$IDXV = "";
 empty($show);
 $name = "unregistered";
 $catquer = null;
@@ -368,6 +371,10 @@ echo "Sorry, that username, <b>".$name."</b>  doesn't appear to exist. <a href='
 die();
 }
 }
+//check the view
+if (isset($acct_setting[10]) && $acct_setting[10] == 'CV'){ 
+$IDXV = 'CV';
+} else {$IDXV = 'GV';}
 //check
 if (!isset($exist[7]) || (isset($exist[7]) && $exist[7] =="")) { 
 $pic="BlackDefault"; 
