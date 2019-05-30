@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: PlayOption.php  Function: Game Play Block   Modified: 5/28/2019   By: MaSoDo
+# Section: PlayOption.php  Function: Game Play Block   Modified: 5/30/2019   By: MaSoDo
 //modified to play HTML5 Games
 $play = htmlspecialchars($_GET['play'], ENT_QUOTES);
 	$g = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gameid='".$play."'")); 
@@ -43,6 +43,10 @@ $swf_resource = $g['remotelink'];
 global $phpqa_user_cookie;
 $yourscore=mysql_fetch_row(run_query("SELECT thescore FROM phpqa_scores WHERE gameidname='".$play."' AND username='".$phpqa_user_cookie."'"));
 $yourscore=$yourscore[0];
+$CHMP = run_query("SELECT `avatar` FROM `phpqa_accounts` WHERE `name` = '" . $g['Champion_name'] . "'");
+$CHMPimg=mysql_fetch_array($CHMP);
+if (!$CHMPimg['avatar'])$CHMPimg['avatar'] = $avatarloc.'/man.gif';
+
 ?>
 <a name="game"></a>
 <?php 
@@ -60,7 +64,7 @@ echo '<iframe src="' . $g['remotelink'] . '" scrolling="no" style="overflow: hid
 <a href='javascript:alert("<?php echo $g['about'] ?>");'><img alt='image' border='0' src='arcade/pics/<?php echo $play; ?>.gif' width='80' height='80' /></a>
 <br />
 <?php if ($g['gamecat'] != '20' && $g['gamecat'] != '16') { ?>
-<div id='popup' style='position:relative;margin-left:auto;margin-right:auto;top:0px;border:1px solid #333;background-color:#DDD;color:#888;display:none;width:150px;'>
+<div id='popup' style='position:absolute;margin-left:auto;margin-right:auto;top:0px;border:1px solid #333;background-color:#DDD;color:#888;display:none;width:150px;'>
 <center><b>Highscores</b></center><br />
 <ol style="text-align:left">
 <?php
@@ -68,8 +72,8 @@ $q=run_query("SELECT username,thescore FROM phpqa_scores WHERE gameidname='".$pl
 while($f=mysql_fetch_array($q)) echo "<li><b>".$f[0]."</b>: ".$f[1]."</li>";
 ?>
 </ol></div>
-<a href="index.php?id=<?php echo $play ?>" onmouseover="document.getElementById('popup').style.display=''" onmouseout="document.getElementById('popup').style.display='none'" onmousemove="s=document.getElementById('popup').style;s.top=document.body.scrollTop+event.clientY+2;s.left=document.body.scrollLeft+event.clientX-152;">
-<div class="navigation" style="background-color: black; margin-left: 10px; margin-right: 10px; margin-top: 10px; padding: -5px 10px 5px 10px;"><p><i>Game Champion</i></p><img alt='image' src='<?php echo($crowndir) ?>/crown1.gif' />&nbsp;<b style='color: white;'><?php echo $g['Champion_name']; ?></b>&nbsp;<img alt='image' src='<?php echo($crowndir) ?>/crown1.gif' /><br /><?php echo str_replace('-', '', $g['Champion_score']); ?></div></a><p><?php echo $yourscore!=$g['Champion_score']&&$yourscore?"<i>Your Best:</i> " . str_replace('-', '', $yourscore) . "</p>":""; }?>
+<a href="index.php?id=<?php echo $g['gameid']; ?>" onmouseover="document.getElementById('popup').style.display=''" onmouseout="document.getElementById('popup').style.display='none'" onmousemove="s=document.getElementById('popup').style;s.top=document.body.scrollTop+event.clientY+2;s.left=document.body.scrollLeft+event.clientX-152;">
+<div class="navigation" style="background-color: black; margin-left: 10px; margin-right: 10px; margin-top: 10px; padding: -5px 10px 5px 10px;"><p><i>Game Champion</i></p><p><img src='<?php echo $arcurl."/".$CHMPimg['avatar'] ?>'  width='50' /></p><img alt='image' src='<?php echo($crowndir) ?>/crown1.gif' />&nbsp;<b style='color: white;'><?php echo $g['Champion_name']; ?></b>&nbsp;<img alt='image' src='<?php echo($crowndir) ?>/crown1.gif' /><br /><?php echo str_replace('-', '', $g['Champion_score']); ?></div></a><p><?php echo $yourscore!=$g['Champion_score']&&$yourscore?"<i>Your Best:</i> " . str_replace('-', '', $yourscore) . "</p>":""; }?>
 <br />
 <a href="index.php?fullscreen=<?php echo $_GET['play']; ?>" title="Fullscreen Mode" target="_blank"><img src="<?php echo $imgloc; ?>/FullScreen.gif" alt="Fullscreen Mode" /></a><br />
 <br />
@@ -91,12 +95,15 @@ $fav_action="<br /><a href='index.php?action=fav&game=".$g['gameid']."&favtype=a
 $CheckPlatform = $g['platform'];
 $CheckScoring = $g['scoring'];
 $showcat=mysql_fetch_array(run_query("SELECT cat FROM phpqa_cats WHERE id='{$g['gamecat']}'"));	
-echo "<div style='width:60px; margin-left:auto; margin-right:auto;'>";
-if ($CheckPlatform == 'H5') {
-echo "<a href='./index.php?plat=".$g['platform']."' title='".$g['platform']."'><img src='".$arcurl."/".$imgloc."/HTML5.png'  height='25' width='25' alt='HTML5 Game' style='float:left; margin-left:0px; margin-top:15px;' /></a>";
-} else {
-echo "<a href='./index.php?plat=".$g['platform']."' title='".$g['platform']."'><img src='".$arcurl."/".$imgloc."/flash.png'  height='25' width='25' alt='HTML5 Game' style='float:left; margin-left:0px; margin-top:15px;' /></a>";
+if ($CheckPlatform == 'H5') { 
+$PlatWord = 'HTML5';
 }
+if ($CheckPlatform == 'FL') { 
+$PlatWord = 'flash';
+}
+echo "<div style='width:60px; margin-left:auto; margin-right:auto;'>";
+echo "<a href='./index.php?plat=".$g['platform']."' title='".$PlatWord." Game'><img src='".$arcurl."/".$imgloc."/".$PlatWord.".png'  height='25' width='25' alt='".$PlatWord." Game' style='float:left; margin-left:0px; margin-top:15px;' /></a>";
+
 if ($g['gamecat'] == '23'){
 echo "<script>alert('this game is currently being tested!\\nuse at your own risk\\n(may not score properly)');</script>";
 }
