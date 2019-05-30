@@ -11,8 +11,8 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: SettingsOption.php  Function: User Definable Configuration   Modified: 2/28/2019   By: MaSoDo
-
+# Section: SettingsOption.php  Function: User Definable Configuration   Modified: 5/30/2019   By: MaSoDo
+echo "<!-- SettingsOption.php --------------------------------------------------------------------------------------------------------------------------------------------- -->";
 if (isset($_COOKIE['phpqa_user_c'])) {
 if($exist[6] == "Validating") {
 message("!ALERT!: Sorry, your account is still in validation. This means you cannot: submit your highscores, shout on the shoutbox, or edit your profile. Please wait for an admin to validate your account, then you'll be ready to play.");
@@ -188,8 +188,9 @@ if (isset($_POST['showinfo']))$showinfo = htmlspecialchars($_POST['showinfo'], E
 if (isset($_POST['showshout']))$showshout = htmlspecialchars($_POST['showshout'], ENT_QUOTES);
 if (isset($_POST['showcats']))$showcats = htmlspecialchars($_POST['showcats'], ENT_QUOTES);
 if (isset($_POST['showindex']))$showindex = htmlspecialchars($_POST['showindex'], ENT_QUOTES);
+if (isset($_POST['idxview']))$idxview = htmlspecialchars($_POST['idxview'], ENT_QUOTES);
 vsess();
-run_query("UPDATE `phpqa_accounts` SET `settings` = '$viewavatars|$viewshoutbox|$numberofgamesperpage|$viewtop|$allowmemoradmin|$acct_setting[5]|$showinfo|$showshout|$showcats|$showindex' WHERE name='$phpqa_user_cookie'");
+run_query("UPDATE `phpqa_accounts` SET `settings` = '$viewavatars|$viewshoutbox|$numberofgamesperpage|$viewtop|$allowmemoradmin|$acct_setting[5]|$showinfo|$showshout|$showcats|$showindex|$idxview' WHERE name='$phpqa_user_cookie'");
 echo "Settings updated! <a href='index.php?action=settings&amp;p=display'>Reload</a> to see changes...";
 } else {
 echo '<form action="index.php?action=settings&p=display" method="POST">';
@@ -223,7 +224,6 @@ echo "</select><br />";
 // 
 // Number of games per page?
 //
-if(!isset($acct_setting[2]))$acct_setting[2]=15;	
 echo "Games & Shouts per page?<br />";
 echo "<input type='text' name='numberofgamesperpage' value='$acct_setting[2]' onblur='if (this.value!=parseFloat(this.value)) alert(\"Games per page must be a number.\")'><br />";
 // 
@@ -291,6 +291,19 @@ echo "<option value='divVisible'>Expand</option>";
 } else { 
 echo "<option value='divVisible' selected>Expand</option>";
 echo "<option value='divHidden'>Collapse</option>";
+}
+echo "</select><br /><hr />";
+//
+// Index View Option
+//
+echo "Selected <b>Games Index</b> View?";
+echo '<select size="1" name="idxview">';
+if ($acct_setting[10] == "GV") {
+echo "<option value='GV' selected>Grid View</option>";
+echo "<option value='CV'>Classic View</option>";
+} else { 
+echo "<option value='GV'>Grid View</option>";
+echo "<option value='CV' selected>Classic View</option>";
 }
 echo "</select><br /><hr />";
 ?>
