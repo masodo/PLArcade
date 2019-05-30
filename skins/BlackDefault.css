@@ -37,6 +37,7 @@ color: gray; text-decoration: none
 
 
 .tableborder { border: 1px solid #464646;background-color:#464646; padding:0px; margin:0px; width:90% }
+.tableborderG { border: none; background-color:#464646; padding:0px; margin:0px; width:90% }
 
 
 input , select {
@@ -74,4 +75,11 @@ border:1px solid #7eb9d0; -webkit-border-radius: 3px; -moz-border-radius: 3px;bo
  background-image: -ms-linear-gradient(top, #82bbd1, #193b61);
  background-image: -o-linear-gradient(top, #82bbd1, #193b61);
  background-image: linear-gradient(to bottom, #82bbd1, #193b61);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#82bbd1, endColorstr=#193b61);
+}
+ .fheight {
+height:50px;
+overflow-y:auto; 
+text-align: justify;
+padding-left:5px;
+padding-right:5px;
 }
