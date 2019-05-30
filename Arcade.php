@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Arcade.php  Function: Main Organization Page   Modified: 3/18/2019   By: MaSoDo
+# Section: Arcade.php  Function: Main Organization Page   Modified: 5/30/2019   By: MaSoDo
 //-----------------------------------------------------------------------------------/
 require "./Preliminary.php";
 require "./Functions.php";
@@ -41,8 +41,12 @@ if(isset($_GET['cparea'])||isset($_GET['cpiarea'])) {
 require "./AdminOption.php";
 } elseif(isset($_GET['modcparea'])) {
 require "./ModOption.php";
-} else {      				// You"re on the index. OK.
+} else {
+if ($IDXV == 'GV'){  				// You"re on the index. OK.
 require "./IndexOption.php";
+} else {
+require "./IndexOptionCV.php";
+}
 }
 require "./PageMaker.php";
 require "./FooterBlock.php";
