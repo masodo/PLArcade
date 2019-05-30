@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: IndexOption.php  Function: Display Games Index   Modified: 5/28/2019   By: MaSoDo
+# Section: IndexOption.php  Function: Display Games Index   Modified: 5/30/2019   By: MaSoDo
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//		  Favorites
@@ -53,23 +53,25 @@ echo "<div style='text-align:center; margin-bottom: 5px; margin-top: 5px;'><a ti
 $CheckScoring = $g['scoring'];
 if ($g['gamecat'] != '2') {
 $showcat=mysql_fetch_array(run_query("SELECT cat FROM phpqa_cats WHERE id='{$g['gamecat']}'"));	
+
+$CHMP = run_query("SELECT `avatar` FROM `phpqa_accounts` WHERE `name` = '" . $g['Champion_name'] . "'");
+$CHMPimg=mysql_fetch_array($CHMP);
+if (!$CHMPimg['avatar'])$CHMPimg['avatar'] = $avatarloc.'/man.gif';
+
 if ($g['platform'] == 'H5') { 
-echo "<div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1' class='gameview'><tr><td width='5%' align='center' class='headertableblock'></td><td width='60%' align='center' class='headertableblock'>$g[1]</td>";
-if ($g['gamecat'] != '20' && $g['gamecat'] != '16') {
-echo "<td width='20%' align='center' class='headertableblock'>Top Score</td>";
+$PlatWord = 'HTML5';
 }
-echo "</tr><tr><td class='arcade1' valign='top' align='center'><a href='index.php?play=".$g['gameid']."'><img height='60' width='60' alt='".$g['gameid']."' border='0' src='".$gamesloc."/pics/".$g['gameid'].".gif' /></a><br /></td><td class='arcade1'  align='center'><a href='./index.php?plat=".$g['platform']."' title='".$g['platform']."'><img src='".$arcurl."/".$imgloc."/HTML5.png'  height='25' width='25' alt='HTML5 Game' style='float:left; margin-left:10px; clear: both;' /></a><br /><a href='./index.php?cat=".$g['gamecat']."' title='".$showcat[0]."'><img src='".$arcurl."/".$catloc."/".$showcat[0].".png'  height='25' width='25' alt='".$showcat[0]."' style='float:left; margin-left:10px; margin-top:15px; clear: both;' /></a>".$g['about']."<br /><br />";
-} else {
-	echo "<div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1' class='gameview'><tr><td width='5%' align='center' class='headertableblock'></td><td width='60%' align='center' class='headertableblock'>".$g[1]."</td>";
-	if ($g['gamecat'] != '16') {
-	echo "<td width='20%' align='center' class='headertableblock'>Top Score</td>";
-	}
-	echo "</tr><tr><td class='arcade1' valign='top' align='center'><a href='index.php?play=".$g['gameid']."'><img height='60' width='60' alt='".$g['gameid']."' border='0' src='".$gamesloc."/pics/".$g['gameid'].".gif' /></a><br /></td><td class='arcade1'  align='center'><a href='./index.php?plat=".$g['platform']."' title='".$g['platform']."'><img src='".$arcurl."/".$imgloc."/flash.png' height='25' width='25' alt='Flash Game' style='float:left; margin-left:10px; clear: both;' /><br /><a href='./index.php?cat=".$g['gamecat']."' title='".$showcat[0]."'><img src='".$arcurl."/".$catloc."/".$showcat[0].".png'  height='25' width='25' alt='".$showcat[0]."' style='float:left; margin-left:10px; margin-top:15px; clear: both;' /></a>".$g['about']."<br /><br />";
+if ($g['platform'] == 'FL') { 
+$PlatWord = 'flash';
 }
+
+echo "<div class='tableborderG'><table style='top:0px;width: 25%; float:left; clear: right; text-align: center; padding:2px;' valign='top' cellpadding='6' cellspacing='0' class='gameview'><tr><td align='center' height='20px' class='headertableblock'>$g[1]</tr>";
+echo "<tr><td class='arcade1' valign='top' align='center'><a href='index.php?play=".$g['gameid']."'><img height='60' width='60' alt='".$g['gameid']."' border='0' src='".$gamesloc."/pics/".$g['gameid'].".gif' /></a><br /></tr><tr><td class='arcade1'  align='center' height='150px'><a href='./index.php?plat=".$g['platform']."' title='".$PlatWord." Game'><img src='".$arcurl."/".$imgloc."/".$PlatWord.".png'  height='25' width='25' alt='".$PlatWord." Game' style='float:left; margin-left:10px; clear: both;' /></a><br /><a href='./index.php?cat=".$g['gamecat']."' title='".$showcat[0]."'><img src='".$arcurl."/".$catloc."/".$showcat[0].".png'  height='25' width='25' alt='".$showcat[0]."' style='float:left; margin-left:10px; margin-top:15px; clear: both;' /></a><div class='fheight'>".$g['about']."</div><br /><br />";
+
 if ($CheckScoring == 'LO') {
 echo "<a title='Lowest Score Wins This Game'><img src='$arcurl/$imgloc/low.png'  height='21' width='25' alt='Lowest Score Wins This Game' style='float: left; margin-left:40px; margin-right:-65; margin-top:-15px;' /></a>";
 }
-if(isset($_COOKIE['phpqa_user_c']) || $settings['allow_guests']) { echo "<a href='index.php?play=".$g['gameid']."' class='navigation'> Play </a>";} else { echo " <a href='#logtop' onclick='javascript:tog(\"login_form\")' class='navigation'>Login to play</a> "; }
+if(isset($_COOKIE['phpqa_user_c']) || $settings['allow_guests']) { echo "<a href='index.php?play=".$g['gameid']."' class='navigation'> Play </a>"; } else { echo " <a href='#logtop' onclick='javascript:tog(\"login_form\")' class='navigation'>Login to play</a> "; }
 if (isset($exist[6])&&$exist[6] == "Admin") { echo "<a href='index.php?cpiarea=addgames&method=edit&game=".$g['gameid']."' title='Edit Game Settings' class='navigation'>EDIT</a>";} 
 $fav_action='';
 if(isset($_COOKIE['phpqa_user_c'])) {
@@ -79,9 +81,9 @@ if(isset($_GET['fav'])) $fav_action="<br /><a href='index.php?action=fav&game=".
 
 echo "<div class='viewedtimes'>".$fav_action."</div></td>";
 if ($g['gamecat'] != '20' && $g['gamecat'] != '16') {
-echo "<td class='arcade1' valign='top' align='center'><img alt='image' src='".$crowndir."/crown1.gif' /><br /><b>".str_replace('-', '', $g['Champion_score'])."</b><br /><b>".($g['Champion_name']?"<a href='index.php?action=profile&amp;user=".$g['Champion_name']."'>".$g['Champion_name']."</a></b>":"------------</b>")."<p><a href='index.php?id=".$g['gameid']."'>View Highscores</a></p></td>";
+echo "<tr><td align='center' height='20px' class='headertableblock'>Top Score</tr>";
+echo "<tr><td class='arcade1 fheight1' valign='top' align='center'><img alt='image' src='".$crowndir."/crown1.gif' /><br /><b>".str_replace('-', '', $g['Champion_score'])."</b><br /><div style='height:60px;'><img src='".$arcurl."/".$CHMPimg['avatar']."'  height='40' width='40' /><br /><b>".($g['Champion_name']?"<a href='index.php?action=profile&amp;user=".$g['Champion_name']."'>".$g['Champion_name']."</a></b>":"------------</b>")."</div><p><a href='index.php?id=".$g['gameid']."'>View Highscores</a></p>";
 }
-echo "</tr></table></div><br />";
-}}
-	}}
+echo "</td></tr><tr><td style='font-size:20px;'>&diam;</td></tr></table></div>";
+}}}}
 ?>
