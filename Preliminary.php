@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 5/30/2019   By: MaSoDo
+# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 5/31/2019   By: MaSoDo
 session_start();
 if($_GET['captcha']){
 $im = imagecreatefrompng("captchabg.png");
@@ -209,6 +209,8 @@ $first_p = "";
 $all_pag = "";
 $last_pag = "";
 $last_p = "";
+$pag_next = ""; 
+$pagN_lim = "";
 $PlatWord = "";
 $PlatImg = "";
 $IDXV = "";
