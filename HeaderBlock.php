@@ -11,10 +11,10 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: HeaderBlock.php  Function: Top of the Page   Modified: 3/28/2019   By: MaSoDo
+# Section: HeaderBlock.php  Function: Top of the Page   Modified: 5/31/2019   By: MaSoDo
 
 $CPH = 0;
-$CPF = 0;
+$CPF = 1;
 $CPD = 0;
 $catquer2 = run_query("(SELECT platform,gamecat FROM phpqa_games)");
 $cp=@mysql_fetch_array($catquer2);
