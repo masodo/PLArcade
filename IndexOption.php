@@ -11,8 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: IndexOption.php  Function: Display Games Index   Modified: 6/1/2019   By: MaSoDo
-
+# Section: IndexOption.php  Function: Display Games Index   Modified: 6/2/2019   By: MaSoDo
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//		  Favorites
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -45,34 +44,28 @@ if (!empty($catquer)) {
 //echo "<script>alert('Hello World!');</script>";
 //Begin Collapse #4
 echo "<div style='text-align:center; margin-bottom: 5px; margin-top: 5px;'><a title='Open/Close The Games Index'><img id='btn4' src='" . $imgloc . "/" . $collimg4 . "' type='button' alt='&#8595; Games: Collapse/Expand &#8595;' onclick='return CollapseExpand4()' style='font-size:16px; font-weight:bold; color:silver;' /></a></div><div id='MyDiv4' class='" . $collapset4 . "'>";
-
-
 	while($g=mysql_fetch_array($catquer)){ 
 	// Select from the scores table....
 	
 $CheckScoring = $g['scoring'];
 if ($g['gamecat'] != '2') {
 $showcat=mysql_fetch_array(run_query("SELECT cat FROM phpqa_cats WHERE id='{$g['gamecat']}'"));	
-
 $CHMP = run_query("SELECT `avatar` FROM `phpqa_accounts` WHERE `name` = '" . $g['Champion_name'] . "'");
 $CHMPimg=mysql_fetch_array($CHMP);
 if (!$CHMPimg['avatar'])$CHMPimg['avatar'] = $avatarloc.'/man.gif';
-
 if ($g['platform'] == 'H5') { 
 $PlatWord = 'HTML5';
 }
 if ($g['platform'] == 'FL') { 
 $PlatWord = 'flash';
 }
-
 echo "<div class='tableborderG'><table style='top:0px;width: 25%; float:left; clear: right; text-align: center; padding:2px;' valign='top' cellpadding='6' cellspacing='0' class='gameview'><tr><td align='center' height='20px' class='headertableblock'>$g[1]</tr>";
 echo "<tr><td class='arcade1' valign='top' align='center'><a href='index.php?play=".$g['gameid']."'><img height='60' width='60' alt='".$g['gameid']."' border='0' src='".$gamesloc."/pics/".$g['gameid'].".gif' /></a><br /></tr><tr><td class='arcade1'  align='center' height='150px'><a href='./index.php?plat=".$g['platform']."' title='".$PlatWord." Game'><img src='".$arcurl."/".$imgloc."/".$PlatWord.".png'  height='25' width='25' alt='".$PlatWord." Game' style='float:left; margin-left:10px; clear: both;' /></a><br /><a href='./index.php?cat=".$g['gamecat']."' title='".$showcat[0]."'><img src='".$arcurl."/".$catloc."/".$showcat[0].".png'  height='25' width='25' alt='".$showcat[0]."' style='float:left; margin-left:10px; margin-top:15px; clear: both;' /></a><div class='fheight'>".$g['about']."</div><br /><br />";
-
 if ($CheckScoring == 'LO') {
 echo "<a title='Lowest Score Wins This Game'><img src='$arcurl/$imgloc/low.png'  height='21' width='25' alt='Lowest Score Wins This Game' style='float: left; margin-left:40px; margin-right:-65; margin-top:-15px;' /></a>";
 }
 echo "<div style='text-align: center; margin-bottom: -20px;'>";
-if(isset($_COOKIE['phpqa_user_c']) || $settings['allow_guests']) { echo "<a href='index.php?play=".$g['gameid']."' class='navigation'> Play </a>"; } else { echo " <a href='#logtop' onclick='javascript:tog(\"login_form\")' class='navigation'>Login to play</a> "; }
+if(isset($_COOKIE['phpqa_user_c']) || $settings['allow_guests']) { echo "<a href='index.php?play=".$g['gameid']."' class='navigation'> Play </a><a href='index.php?fullscreen=".$g['gameid']."' class='navigation'> Full </a>"; } else { echo " <a href='#logtop' onclick='javascript:tog(\"login_form\")' class='navigation'>Login to play</a> "; }
 if (isset($exist[6])&&$exist[6] == "Admin") { echo "<a href='index.php?cpiarea=addgames&method=edit&game=".$g['gameid']."' title='Edit Game Settings' class='navigation'>EDIT</a>";} 
 $fav_action='';
 $DL_action='';
@@ -91,7 +84,6 @@ echo "<tr><td class='arcade1 fheight1' valign='top' align='center'><img alt='ima
 echo "<tr><td align='center' height='20px' class='headertableblock'>No Scores Recorded For This Game</tr>";
 echo "<tr><td class='arcade1 fheight1' valign='top' align='center'><div style='overflow:hidden; height:113px'><img alt='image' src='".$crowndir."/crown1.gif' />&nbsp;&nbsp;<img alt='image' src='".$crowndir."/crown2.gif' />&nbsp;&nbsp;<img alt='image' src='".$crowndir."/crown3.gif' /><br /><br /><i>Sorry, but this game does not record<br />your score in the arcade.</i><br /><b>Please enjoy this selection<br />just for the fun of it!</b><br /><div style='height:56px;'>&nbsp;</div></div>";
 }
-
 echo "</td></tr><tr><td style='font-size:20px;'>&diam;</td></tr></table></div>";
 }}}}
 ?>
