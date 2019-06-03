@@ -31,7 +31,6 @@ $thescore = $_POST['gscore'];
 <source src="sounds/GameOverYeah.mp3" type="audio/mpeg">
 <source src="sounds/GameOverYeah.ogg" type="audio/ogg">
 </audio> 
-}
 <?php
  }
  // highscores. UpGraded. ^.<;;
