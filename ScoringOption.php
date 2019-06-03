@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 6/2/2019  By: MaSoDo
+# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 6/3/2019  By: MaSoDo
 if (isset($_POST['thescore']))$thescore = $_POST['thescore'];
 if (isset($_GET['autocom'])) {
 $id=htmlspecialchars($_COOKIE['gname'], ENT_QUOTES);
@@ -25,6 +25,14 @@ $thescore = $_POST['gscore'];
  if (isset($_GET['do']) == 'newscore') {
   $id=htmlspecialchars($_POST['gname'], ENT_QUOTES);
   $thescore = $_POST['gscore'];
+  //Play Sound at Game Over
+?>
+<audio controls autoplay="true" style="display: none;">
+<source src="sounds/GameOverYeah.mp3" type="audio/mpeg">
+<source src="sounds/GameOverYeah.ogg" type="audio/ogg">
+</audio> 
+}
+<?php
  }
  // highscores. UpGraded. ^.<;;
  // Architect : Don't do that gay wink <_> 
