@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: PlayOption.php  Function: Game Play Block   Modified: 5/30/2019   By: MaSoDo
+# Section: PlayOption.php  Function: Game Play Block   Modified: 6/4/2019   By: MaSoDo
 //modified to play HTML5 Games
 $play = htmlspecialchars($_GET['play'], ENT_QUOTES);
 	$g = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gameid='".$play."'")); 
@@ -23,7 +23,7 @@ $play = htmlspecialchars($_GET['play'], ENT_QUOTES);
     run_query("UPDATE phpqa_games SET `times_played`=".++$g['times_played']." WHERE gameid='".$play."'");
 ?>
 <br />
-<div class='tableborder'>
+<div class='tableborder'><a name='playzone'></a>
 <table width='100%' cellpadding='4' cellspacing='1'>
 <tr>
 <td width='80%' align='center' class='headertableblock'></td>
