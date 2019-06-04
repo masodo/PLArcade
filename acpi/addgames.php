@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi place: addgames Administrator Control Panel   Modified: 5/28/2019   By: MaSoDo
+# Section: acpi place: addgames Administrator Control Panel   Modified: 6/4/2019   By: MaSoDo
 {
 // The different methods
 if (!isset($_GET['method'])) {
@@ -250,7 +250,7 @@ echo "<input type='hidden' name='idname' value='".$editgame['gameid']."'> ".$edi
 } ?>
 </td></tr>
 <tr><td class='arcade1' align='left'><b>Description:</b></td>
-<td class='arcade1' align='center'><input type='text' name='desc' value='<?php echo $editgame['about']; ?>'></td></tr>
+<td class='arcade1' align='center'><textarea rows='5' cols='60' name='desc'><?php echo $editgame['about']; ?></textarea></td></tr>
 <!-- added for LO score MOD -->
 <tr><td class='arcade1' align='left'><b>Scoring Type:</b></td>
 <td class='arcade1' align='center'>
@@ -287,7 +287,4 @@ echo  "<option value='".$catlist[0]."'>".$catlist[1]."</option>";
 <?php
 }
 }
-
-
-
 ?>
