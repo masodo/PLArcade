@@ -11,9 +11,21 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: mysql - Administrator Control Panel   Modified: 5/28/2019   By: MaSoDo
+# Section: acpi Place: mysql - Administrator Control Panel   Modified: 6/4/2019   By: MaSoDo
 
 {
+if(isset($_POST['dowhat']) && $_POST['dowhat'] == "WipeShout") {
+	vsess();
+	if(isset($_POST['WipeShouts']) && $_POST['WipeShouts'] == "yes")
+	 {
+	 $goquery=run_query('TRUNCATE TABLE phpqa_shoutbox;');
+	 if($goquery) { echo '<script>alert(\'Shoutbox Cleared!\');</script>'; } else { echo '<script>alert(\'Query Failed!\');</script>';; 
+	 echo mysql_error();
+}
+
+} else {
+echo '<script>alert(\'You Must Check the Confirmation Box to Clear Shouts!\');</script>';
+}}
 if(isset($_POST['querymysql']) && $_POST['querymysql'] == "Run Query") {
 $thequery=$_POST['thequery'];
 	vsess();
@@ -39,11 +51,14 @@ echo mysql_error();
 <?php
 $dbs = array('phpqa_accounts','phpqa_cats','phpqa_games','phpqa_leaderboard','phpqa_scores','phpqa_shoutbox');
 foreach ($dbs as $k=>$v){
+if ($v == 'phpqa_shoutbox'){
+echo "<tr><td class='arcade1' align='left'><b>$v</b> &nbsp; Confirm Here to Clear Shouts: <input type='checkbox' name='WipeShouts' value='yes'></td><td class='arcade1' align='left' width='1%'><b><input type='checkbox' name='$v' value='$v'></b></td></tr>";
+} else {
 echo "<tr><td class='arcade1' align='left'><b>$v</b></td><td class='arcade1' align='left' width='1%'><b><input type='checkbox' name='$v' value='$v'></b></td></tr>";
-}
+}}
 ?>
 <tr><td class='arcade1' align='center' colspan='2'><b>Action:</b> <select size="1" name="dowhat">
-<option value='optimize'>Optimize</option><option value='repair'>Repair</option><option value='check'>Check</option><option value='dump'>View Dump</option></td></tr>
+<option value='optimize'>Optimize</option><option value='repair'>Repair</option><option value='check'>Check</option><option value='dump'>View Dump</option><option value='WipeShout'>Clear Shouts</option></td></tr>
 <tr><td class='headertableblock' colspan='2'><div align=center><input type='Submit' name='runsql' value='Run'></div></td></tr>
 </table>
 </div>
@@ -80,7 +95,7 @@ $q=run_query("SELECT * FROM $v");
 echo "--$v's Dump:\n";
 while($r=mysql_fetch_assoc($q)) echo "INSERT INTO $v(`".implode("`,`",array_keys($r))."`) VALUES ('".implode("','",$r)."')\n";
 }
-if ($_GET['dowhat']=="downloaddump") die();
+if (isset($_GET['dowhat'])&&$_GET['dowhat']=="downloaddump") die();
 echo "</textarea></td></table></div><br />";
 } elseif($dowhat=="optimize") {
 foreach ($dbs as $k=>$v){
