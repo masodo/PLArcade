@@ -54,7 +54,7 @@ die();
  <tr>
  <td class='arcade1' valign='top'><a href='index.php?play=<?php echo $id ?>'><img alt='image' border='0' src='<?php echo $gamesloc; ?>/pics/<?php echo $id ?>.gif' /></a><br /></td>
 <?php //FSmod EDIT ?>
- <td class='arcade1' align='center'><?php echo $gameinfo['about']; ?><br /><br /><a href='index.php?play=<?php echo $id ?>' class='navigation'> Play </a><a href='index.php?fullscreen=<?php echo $id ?>' class='navigation'> Full </a><?php if (isset($exist[6])&&$exist[6] == "Admin") { echo "<a href='index.php?cpiarea=addgames&method=edit&game=".$id."' title='Edit Game Settings' class='navigation'>EDIT</a>";} ?> <div class='viewedtimes' style='font-size: 8px;'><?php echo "Played ".$gameinfo['times_played']." Time".($gameinfo['times_played']!=1?"s":""); ?></div></td>
+ <td class='arcade1' align='center'><?php echo $gameinfo['about']; ?><br /><br /><a href='index.php?play=<?php echo $id ?>#playzone' class='navigation'> Play </a><a href='index.php?fullscreen=<?php echo $id ?>' class='navigation'> Full </a><?php if (isset($exist[6])&&$exist[6] == "Admin") { echo "<a href='index.php?cpiarea=addgames&method=edit&game=".$id."' title='Edit Game Settings' class='navigation'>EDIT</a>";} ?> <div class='viewedtimes' style='font-size: 8px;'><?php echo "Played ".$gameinfo['times_played']." Time".($gameinfo['times_played']!=1?"s":""); ?></div></td>
  <td class='arcade1' valign='top' align='center'><img alt='image' src='<?php echo $crowndir; ?>/crown1.gif' /><br /><b><?php echo $gameinfo['Champion_name']?$gameinfo['Champion_name']:""; ?></b><br /><?php echo $gameinfo['Champion_score']?str_replace('-', '', $gameinfo['Champion_score']):"-------------"; ?><br /><a href='index.php?id=<?php echo $id; ?>'>View Highscores</a>
  </td>
  </tr>
