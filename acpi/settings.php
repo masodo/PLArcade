@@ -93,6 +93,7 @@ $settingsarray3=Array(
 'Smiley/Emoticon folder location (def=emoticons)'=>'smiliesloc',
 'Affiliate Banner image folder? (def=images/banners)'=>'bannerloc',
 'Site CSS Themes folder? (def=skins)'=>'themesloc',
+'Default CSS Theme? (def=BlackDefault)'=>'defCSS',
 'Games root folder? (def=arcade)'=>'gamesloc',
 'Site complete URL? (example: http://deburger.com/ARCADE)'=>'arcurl',
 'Arcade Greeting? (def=Welcome to the Practical Lightning Arcade)'=>'arcgreet',
