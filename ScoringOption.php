@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 6/4/2019  By: MaSoDo
+# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 6/5/2019  By: MaSoDo
 if (isset($_POST['thescore']))$thescore = $_POST['thescore'];
 if (isset($_GET['autocom'])) {
 $id=htmlspecialchars($_COOKIE['gname'], ENT_QUOTES);
@@ -214,7 +214,7 @@ echo "</td>";
 echo "</tr>";
 $selectfrom=run_query("SELECT * FROM phpqa_scores WHERE gameidname='$id' ORDER BY thescore DESC,phpdate ASC");
 	while($g=mysql_fetch_array($selectfrom)){ 
-$parse_stamp = gmdate($datestamp, $g[5]+3600*$settings['timezone']);
+$parse_stamp = date($datestamp, $g[5]);
 $postsofsomething = $g[4];
 $i=-1;
 while ($i <= count($smilies)) {
