@@ -385,7 +385,11 @@ $IDXV = 'CV';
 } else {$IDXV = 'GV';}
 //check
 if (!isset($exist[7]) || (isset($exist[7]) && $exist[7] =="")) { 
+if (!isset($defCSS)||(isset($defCSS)&&$defCSS=="")){
 $pic="BlackDefault"; 
+} else {
+$pic=$defCSS;
+}
 } else { 
 $pic=$exist[7]; 
 } 
