@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 5/31/2019   By: MaSoDo
+# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 6/5/2019   By: MaSoDo
 session_start();
 if($_GET['captcha']){
 $im = imagecreatefrompng("captchabg.png");
@@ -27,7 +27,6 @@ die();
 error_reporting(E_ALL);
 //uncomment below to report NO errors
 //error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE & ~E_STRICT);
-//date_default_timezone_set('America/Indiana/Indianapolis');
 // function to convert bbcode, and smiles to html
 
 function bbcodeHtml($str) {
@@ -105,7 +104,14 @@ setcookie("gname", $_GET['play']);
 ob_start();
 if (isset($_GET['cparea']) == "settings" && isset($_POST['SettingsUpdate'])) header("Location: ?cparea=settings");
 $mtime=explode(" ",microtime());
+$useTZ = '';
+$new_datetime = '';
 require("./arcade_conf.php");
+$ngnum = '';
+$lsnum = '';
+$bpnum = '';
+$useTZ = $settings['timezone'];
+date_default_timezone_set("$useTZ");
 if($notinstalled) die("<a href='PLArcade_v1.0-Install.php'>Begin installation</a>");
 if($maintenance) die("<h1>Down for maintenance - We'll be back up and running soon!</h1>");
 $datestamp=$settings['datestamp'];
