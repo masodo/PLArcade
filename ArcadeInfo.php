@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ArcadeInfo.php  Function: Latest Site Info Block   Modified: 6/4/2019   By: MaSoDo
+# Section: ArcadeInfo.php  Function: Latest Site Info Block   Modified: 6/5/2019   By: MaSoDo
 ?>
 <br />
 <div align="center">
@@ -24,6 +24,9 @@ echo "<div style='text-align:center; margin-bottom: 5px; margin-top: 5px;'><a ti
 <?php 
 if ($settings["show_stats_table"]) { 
 if (!isset($acct_setting[3]) || $acct_setting[3] !="No") {
+$settings['ng_num']!=''?$ngnum = $settings['ng_num']:$ngnum = 20;
+$settings['ls_num']!=''?$lsnum = $settings['ng_num']:$lsnum = 14;
+$settings['bp_num']!=''?$bpnum = $settings['bp_num']:$bpnum = 10;
 ?>
 <td width="12%" align="center" class="headertableblock">Newest Games</td>
 <td width="50%" align="center" class="headertableblock">Latest Scores</td>
@@ -48,7 +51,7 @@ if (!isset($acct_setting[3]) || $acct_setting[3] !="No") {
 ?>
 <td class="arcade1" valign="top" align="left">
 <?php
-$newgames = run_query("SELECT gameid,game,id,gamecat FROM phpqa_games ORDER by id DESC LIMIT 0,20");
+$newgames = run_query("SELECT gameid,game,id,gamecat FROM phpqa_games ORDER by id DESC LIMIT 0,".$ngnum."");
 	while($g=mysql_fetch_array($newgames)){ 
 	if ($g[3] != '2') {
 echo "<img height='20' width='20' src='arcade/pics/$g[0].gif' alt='$g[1]' /><a href=\"index.php?play=$g[0]#playzone\">$g[1]</a><br />";
@@ -59,7 +62,7 @@ echo "<img height='20' width='20' src='arcade/pics/$g[0].gif' alt='$g[1]' /><a h
 
 <table><td align="left">
 <?php
-	$selectfrom = run_query("SELECT * FROM phpqa_scores ORDER BY phpdate DESC LIMIT 0,14");
+	$selectfrom = run_query("SELECT * FROM phpqa_scores ORDER BY phpdate DESC LIMIT 0,".$lsnum."");
 	while($s=mysql_fetch_array($selectfrom)){ 
   $VstatG = "";
   $bigname = "";
@@ -71,7 +74,8 @@ echo "<img height='20' width='20' src='arcade/pics/$g[0].gif' alt='$g[1]' /><a h
         $bigname = "Y";
         $bigtag = "</b>";
 }
-$parse_stamp = gmdate($datestamp, $s[5]+3600*$settings['timezone']);
+//$parse_stamp = gmdate($datestamp, $s[5]+3600*$settings['timezone']);
+$parse_stamp = date($datestamp, $s[5]);
 echo "$VstatG<a href='index.php?action=profile&amp;user=$s[1]'>$s[1]</a>" . $bigtag . " scored <i>" . str_replace('-', '', $s[2]) . "</i> in <a href='index.php?id=$s[6]'><i>$s[7]</i></a> on $parse_stamp<hr>";
 }
 ?>
@@ -82,7 +86,7 @@ echo "$VstatG<a href='index.php?action=profile&amp;user=$s[1]'>$s[1]</a>" . $big
 $scoreboard = run_query("SELECT phpqa_accounts.name,phpqa_accounts.avatar, COUNT(phpqa_leaderboard.username) AS champions FROM phpqa_accounts
 LEFT JOIN phpqa_leaderboard ON phpqa_accounts.name = phpqa_leaderboard.username
 GROUP BY phpqa_leaderboard.username
-ORDER BY champions DESC LIMIT 0,10");
+ORDER BY champions DESC LIMIT 0,".$bpnum."");
 $scoresC=mysql_fetch_array($scoreboard);
 if (!$scoresC['avatar'])$scoresC['avatar']=$avatarloc.'/man.gif';
 echo "<div><table width='100%' cellpadding='5' cellspacing='1'>";
