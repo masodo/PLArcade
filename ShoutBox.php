@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ShoutBox.php  Function: ShoutBox Block   Modified: 3/25/2019   By: MaSoDo
+# Section: ShoutBox.php  Function: ShoutBox Block   Modified: 6/5/2019   By: MaSoDo
 
 if($settings['enable_shoutbox']) {
 if (!isset($acct_setting[1]) || $acct_setting[1] !="No") {
@@ -24,7 +24,8 @@ if (isset($_POST['submitter2'])) {
 if($exist[6] != "Validating") {
 if ($_POST['senttext'] != "") {
 vsess();
-run_query("INSERT INTO `phpqa_shoutbox` (`name`,`shout`,`ipa`) VALUES ('".$phpqa_user_cookie."','".$senttext."','".$ipa."')", 1);
+$time = time();
+run_query("INSERT INTO `phpqa_shoutbox` (`name`,`shout`,`ipa`,`tstamp`) VALUES ('".$phpqa_user_cookie."','".$senttext."','".$ipa."','".$time."')", 1);
 }
 }
 }
@@ -105,8 +106,12 @@ echo "<a href='javascript:if (confirm(\"Are you sure?\")) document.location=\"in
 }
 $qashoutbox[5]=$avatars[$qashoutbox[0]];
 if ($qashoutbox[5] == ''){ $qashoutbox[5] = $avatarloc.'/man.gif'; }
-$posted = gmdate($datestamp, strtotime($qashoutbox[4])+3600*$settings['timezone']) ;
- echo "<a title='".$posted."'><img src='".$imgloc."/clockin.png' alt='posted time' height='10' width='10' /></a>&nbsp; <u><b><a href='?action=profile&user=".$qashoutbox[0]."'".($qashoutbox[5]?" onmouseover=\"s=document.getElementById('shoutboxpopup');s.style.display='';s.getElementsByTagName('img')[0].src='".$qashoutbox[5]."';\" onmousemove=\"s=document.getElementById('shoutboxpopup').style;s.top=document.body.scrollTop+2+event.clientY;s.left=document.body.scrollLeft+event.clientX;\" onmouseout=\"document.getElementById('shoutboxpopup').style.display='none'":"")."\">".$qashoutbox[0]."</a></b></u>: ".$postsofsomething."<br /><hr />";
+//$posted = gmdate($datestamp, strtotime($qashoutbox[4])+3600*$settings['timezone']) ;
+//$new_datetime = DateTime::createFromFormat ( "Y-m-d H:i:s", $qashoutbox[4] );
+//$posted = $new_datetime->format('d/m/y, H:i:s');
+$parse_stamp = date($datestamp, $qashoutbox[4] );
+//$posted = gmdate($datestamp, strtotime($qashoutbox[4])-3600) ;
+ echo "<a title='".$parse_stamp."'><img src='".$imgloc."/clockin.png' alt='posted time' height='10' width='10' /></a>&nbsp; <u><b><a href='?action=profile&user=".$qashoutbox[0]."'".($qashoutbox[5]?" onmouseover=\"s=document.getElementById('shoutboxpopup');s.style.display='';s.getElementsByTagName('img')[0].src='".$qashoutbox[5]."';\" onmousemove=\"s=document.getElementById('shoutboxpopup').style;s.top=document.body.scrollTop+2+event.clientY;s.left=document.body.scrollLeft+event.clientX;\" onmouseout=\"document.getElementById('shoutboxpopup').style.display='none'":"")."\">".$qashoutbox[0]."</a></b></u>: ".$postsofsomething."<br /><hr />";
 }
 }
  ?>
