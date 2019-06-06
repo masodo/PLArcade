@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 6/5/2019   By: MaSoDo
+# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 6/6/2019   By: MaSoDo
 ?>
 <div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><tr><td class='arcade1' align='left'>
 <?php
@@ -109,8 +109,11 @@ $catquer = run_query("(SELECT * FROM phpqa_games ORDER BY rand() LIMIT 1) UNION 
 $arcadetotalcat = mysql_num_rows($countquer);
 $f = @mysql_fetch_array($catquer);
 ////////Game List Display Logic
+if(isset($settings['enable_24hr'])){
+echo "<b>Viewing Arcade Index</b> <div style='width:300px; float:right; margin-right:50px; text-align: right;'>Arcade Time: <b>" . date('G:i') ."</b><br />Local Time: <script>nowtime(24)</script></div></td><td class='arcade1' style='width:1px'><a href='?play=" . $f['gameid'] . "#playzone'>Random&nbsp;Game</a>";
+} else {
 echo "<b>Viewing Arcade Index</b> <div style='width:300px; float:right; margin-right:50px; text-align: right;'>Arcade Time: <b>" . date('g:i A') ."</b><br />Local Time: <script>nowtime()</script></div></td><td class='arcade1' style='width:1px'><a href='?play=" . $f['gameid'] . "#playzone'>Random&nbsp;Game</a>";
-}
+}}
 echo "</td></tr></table></div><div align='center'>";
 ?>
 <br />
