@@ -11,110 +11,83 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 6/6/2019   By: MaSoDo
-?>
-<div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><tr><td class='arcade1' align='left'>
-<?php
-echo "<div class='navigation'><a href='index.php'>Arcade Home</a></div> &#187; ";
-if (isset($_GET['play'])) { // Ok, you are playing.
-echo "<b>Playing Game.</b>";
-} elseif (isset($_GET['id'])) { // Now you're viewing the highscores
-echo "<b>Viewing Highscore Tables.</b>";
-} elseif (isset($_GET['action']) && $_GET['action'] == "register") { 
-echo "<b>Registering!</b>";
-} elseif (isset($_GET['action']) && $_GET['action'] == "members") {
-echo "<b>Viewing Member List</b>";
-} elseif (isset($_GET['action']) && $_GET['action'] == "leaderboards") { // At the leaderboards
-echo "<b>Viewing Leaders</b>";
-} elseif (isset($_GET['action']) && $_GET['action'] == "HOF") { // At the HOF boards
-echo "<b>Viewing Hall of Fame</b>";
-} elseif (isset($_GET['cparea'])||isset($_GET['cpiarea'])) {
-$cparea_info='';
-$cparea_info['tar_import']="*.tar import new FL games";
-$cparea_info['tar_importH5']="*.tar import new H5 games";
-$cparea_info['addgames']="Add new games";
-$cparea_info['idx']="Index";
-$cparea_info['cats']="Categories";
-$cparea_info['emotes']="Emoticons";
-$cparea_info['mysql']="MySQL Toolbox";
-$cparea_info['JSbeauty']="JavaScript Beautify";
+# Section: IndexOption.php  Function: Display Games Index   Modified: 6/6/2019   By: MaSoDo
 
-$cparea_info['members']="Member Manager";
-$cparea_info['bannedIPlist']="banned IP list";
-$cparea_info['settings']="Settings";
-$cparea_info['games']="Games Manager";
-$cparea_info['Email']="Post Office";
-$cparea_info['filter']="Word Filters";
-$cparea_info['skin']="Skin Control";
-$cparea_info['snapshot']="Champion SnapShot";
-$cparea_info['affiliates']="Affiliates Manager";
-if(isset($_GET['cpiarea'])) {
-$_GET['cpiarea']=htmlspecialchars($_GET['cpiarea']);
-echo "<div class='navigation'><a href='index.php?cpiarea=idx'>Arcade AdminCP</a></div> &#187; <b><a href='index.php?cpiarea=".$_GET['cpiarea']."'>{$cparea_info[$_GET['cpiarea']]}</a></b>";
-}
-} elseif (isset($_GET['action']) && $_GET['action'] == 'profile' ) {
-echo "<b>Viewing Member Profile</b>";
-} else {// Ok. You seem to be in arcade index then.
-?>
-<?php
-if(isset($_GET['shoutbox'])) $limit=0;
-if(isset($_GET['shoutbox'])) $show=$num_pages_of;
-// Favorite games
-// Yep, that's all there is to it.
-//Game List Display Logic:
-$fav_quer='';
-if(isset($_GET['fav'])){
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	//		  Favorites
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+if (isset($_GET['action']) && $_GET['action'] == "fav") {
+vsess();
+$_GET['game'] = htmlspecialchars($_GET['game'], ENT_QUOTES);
+$game_exist=mysql_fetch_array(run_query("SELECT `id` FROM phpqa_games WHERE gameid='{$_GET['game']}'"));
+if($game_exist[0]) {
+//Adding?
+if(isset($_GET['favtype']) && $_GET['favtype'] == "add") { 
 global $acct_setting;
-$favs=$acct_setting[5];
-$buildfavs=explode(",", $favs);
-foreach($buildfavs as $k=>$v) {
-$v=htmlspecialchars($v, ENT_QUOTES);
-$favslist.="'$v', ";
+message("Added to favorites. Refresh to see changes.");
+$acct_setting[5].="{$_GET['game']},"; 
+} else { 
+global $acct_setting;
+// Removing
+message("Removed game from favorites. Refresh to see changes.");
+$acct_setting[5]=str_replace("{$_GET['game']},", "", $acct_setting[5]); 
 }
-$favslist = substr($favslist, 0, -2);    
-$fav_quer="WHERE gameid IN($favslist)";
-}
-$countquer = run_query("SELECT gamecat FROM phpqa_games ".$fav_quer."".(isset($_GET['cat'])?" WHERE gamecat='".$_GET['cat']."'":""));
-
-    // Patch - 06/01/09
-if(isset($_GET['search'])){
-	$_GET['search']=htmlspecialchars($_GET['search'], ENT_QUOTES);
-}
-
-if(isset($_GET['searchcat']) && $_GET['searchcat'] != 'All' ){
-	$_GET['searchcat']=intval($_GET['searchcat']);
-}
-
-//#####Not sure why this was patched?//
-    // Patch - 04/20/2009
-//if(isset($_GET['by']) || isset($_GET['by']) && $_GET['by'] == '') {
-//echo "<script>alert('BY= \'".$_GET['by']."\'');</script>";
-//if($_GET['by'] != 'game' || $_GET['by'] !='gameid' || $_GET['by'] !='about' || 
-//$_GET['by'] !='Champion_name' || $_GET['by']=='') { 
-//$_GET['by']='game';
-//}
-//}
-if (isset($_GET['action'])&&$_GET['action']=="search") {
-//below added for testing M*S*D
-////echo "<script>alert('Finding: WHERE ".$_GET['by']." LIKE \'%".$_GET['search']."%\'');</script>";
-$catquer = run_query("(SELECT * FROM phpqa_games ORDER BY rand() LIMIT 1) UNION ALL (SELECT * FROM phpqa_games WHERE ".$_GET['by']." LIKE '%".$_GET['search']."%' ORDER BY id DESC)", 1);
-} 
-if (!isset($_GET['action'])||isset($_GET['action'])&&$_GET['action']!="search") {
-//below added for testing M*S*D
-//echo "<script>alert('Not Search: ".$_GET['action']."');</script>";
-$catquer = run_query("(SELECT * FROM phpqa_games ORDER BY rand() LIMIT 1) UNION ALL (SELECT * FROM phpqa_games ".$fav_quer."".
-(isset($_GET['cat'])?"WHERE gamecat='".$_GET['cat']."' ":"").
-(isset($_GET['plat'])?"WHERE platform='".$_GET['plat']."' ":"").
-"ORDER BY id DESC LIMIT ".$limit.",".$show.")", 1);
-}
-$arcadetotalcat = mysql_num_rows($countquer);
-$f = @mysql_fetch_array($catquer);
-////////Game List Display Logic
-if(isset($settings['enable_24hr'])){
-echo "<b>Viewing Arcade Index</b> <div style='width:300px; float:right; margin-right:50px; text-align: right;'>Arcade Time: <b>" . date('G:i') ."</b><br />Local Time: <script>nowtime(24)</script></div></td><td class='arcade1' style='width:1px'><a href='?play=" . $f['gameid'] . "#playzone'>Random&nbsp;Game</a>";
+run_query("UPDATE `phpqa_accounts` SET `settings` = '$acct_setting[0]|$acct_setting[1]|$acct_setting[2]|$acct_setting[3]|$acct_setting[4]|$acct_setting[5]' WHERE name='$phpqa_user_cookie'");
 } else {
-echo "<b>Viewing Arcade Index</b> <div style='width:300px; float:right; margin-right:50px; text-align: right;'>Arcade Time: <b>" . date('g:i A') ."</b><br />Local Time: <script>nowtime()</script></div></td><td class='arcade1' style='width:1px'><a href='?play=" . $f['gameid'] . "#playzone'>Random&nbsp;Game</a>";
+message("Game not found.");
+}
+}
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	//		  Game index display
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+global $catquer;
+if (!isset($_GET['action'])&&!isset($_GET['do'])||isset($_GET['action'])&&$_GET['action']!='settings') {
+//if (!empty($catquer)&&isset($_GET['action'])&&$_GET['action']!='settings') {
+if (!empty($catquer)) {
+//echo "<script>alert('Hello World!');</script>";
+//Begin Collapse #4
+echo "<div style='text-align:center; margin-bottom: 5px; margin-top: 5px;'><a title='Open/Close The Games Index'><img id='btn4' src='" . $imgloc . "/" . $collimg4 . "' type='button' alt='&#8595; Games: Collapse/Expand &#8595;' onclick='return CollapseExpand4()' style='font-size:16px; font-weight:bold; color:silver;' /></a></div><div id='MyDiv4' class='" . $collapset4 . "'>";
+
+
+	while($g=mysql_fetch_array($catquer)){ 
+	// Select from the scores table....
+	
+$CheckScoring = $g['scoring'];
+if ($g['gamecat'] != '2') {
+$showcat=mysql_fetch_array(run_query("SELECT cat FROM phpqa_cats WHERE id='{$g['gamecat']}'"));	
+if ($g['platform'] == 'H5') { 
+echo "<div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1' class='gameview'><tr><td width='5%' align='center' class='headertableblock'></td><td width='60%' align='center' class='headertableblock'>$g[1]</td>";
+if ($g['gamecat'] != '20' && $g['gamecat'] != '16') {
+echo "<td width='20%' align='center' class='headertableblock'>Top Score</td>";
+}
+echo "</tr><tr><td class='arcade1' valign='top' align='center'><a href='index.php?play=".$g['gameid']."#playzone'><img height='60' width='60' alt='".$g['gameid']."' border='0' src='".$gamesloc."/pics/".$g['gameid'].".gif' /></a><br /></td><td class='arcade1'  align='center'><a href='./index.php?plat=".$g['platform']."' title='".$g['platform']."'><img src='".$arcurl."/".$imgloc."/HTML5.png'  height='25' width='25' alt='HTML5 Game' style='float:left; margin-left:10px; clear: both;' /></a><br /><a href='./index.php?cat=".$g['gamecat']."' title='".$showcat[0]."'><img src='".$arcurl."/".$catloc."/".$showcat[0].".png'  height='25' width='25' alt='".$showcat[0]."' style='float:left; margin-left:10px; margin-top:15px; clear: both;' /></a>".$g['about']."<br /><br />";
+} else {
+	echo "<div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1' class='gameview'><tr><td width='5%' align='center' class='headertableblock'></td><td width='60%' align='center' class='headertableblock'>".$g[1]."</td>";
+	if ($g['gamecat'] != '16') {
+	echo "<td width='20%' align='center' class='headertableblock'>Top Score</td>";
+	}
+	echo "</tr><tr><td class='arcade1' valign='top' align='center'><a href='index.php?play=".$g['gameid']."#playzone'><img height='60' width='60' alt='".$g['gameid']."' border='0' src='".$gamesloc."/pics/".$g['gameid'].".gif' /></a><br /></td><td class='arcade1'  align='center'><a href='./index.php?plat=".$g['platform']."' title='".$g['platform']."'><img src='".$arcurl."/".$imgloc."/flash.png' height='25' width='25' alt='Flash Game' style='float:left; margin-left:10px; clear: both;' /><br /><a href='./index.php?cat=".$g['gamecat']."' title='".$showcat[0]."'><img src='".$arcurl."/".$catloc."/".$showcat[0].".png'  height='25' width='25' alt='".$showcat[0]."' style='float:left; margin-left:10px; margin-top:15px; clear: both;' /></a>".$g['about']."<br /><br />";
+}
+if ($CheckScoring == 'LO') {
+echo "<a title='Lowest Score Wins This Game'><img src='$arcurl/$imgloc/low.png'  height='21' width='25' alt='Lowest Score Wins This Game' style='float: left; margin-left:40px; margin-right:-65; margin-top:-15px;' /></a>";
+}
+echo "<div style='text-align: center; margin-bottom: -20px;'>";
+if(isset($_COOKIE['phpqa_user_c']) || $settings['allow_guests']) { echo "<a href='index.php?play=".$g['gameid']."#playzone' class='navigation'> Play </a><a href='index.php?fullscreen=".$g['gameid']."' class='navigation'> Full </a>"; } else { echo " <a href='#logtop' onclick='javascript:tog(\"login_form\")' class='navigation'>Login to play</a> "; }
+if (isset($exist[6])&&$exist[6] == "Admin") { echo "<a href='index.php?cpiarea=addgames&method=edit&game=".$g['gameid']."' title='Edit Game Settings' class='navigation'>EDIT</a>";} 
+$fav_action='';
+$DL_action='';
+if(isset($_COOKIE['phpqa_user_c'])) {
+$fav_action="<a href='index.php?action=fav&game=".$g['gameid']."&favtype=add&akey=".$key."&fav=1' title='Add Game To Favorites'><img src='".$imgloc."/favorite.png' alt='[Add to favorites]' width='25' height='25' /></a>";
+if(isset($_GET['fav'])) $fav_action="<a href='index.php?action=fav&game=".$g['gameid']."&favtype=remove&akey=".$key."&fav=1' title='Remove Game From Favorites'><img src='".$imgloc."/remove.png' alt='[Remove favorite]' width='25' height='25' /></a>";
+}
+if ((isset($exist[6])&&$exist[6] == "Admin") || (isset($exist[6])&&$exist[6] ==  "Affiliate")) { 
+$DL_action="<a href='GetGame.php?GID=".$g['gameid']."' title='Download Game TAR'><img src='".$arcurl."/".$imgloc."/DL.png' height='25' width='25' alt='Download Game .tar' /></a>&nbsp;";
+}
+echo "</div><div class='viewedtimes' style='float: right;'>".$DL_action.$fav_action."</div></td>";
+if ($g['gamecat'] != '20' && $g['gamecat'] != '16') {
+echo "<td class='arcade1' valign='top' align='center'><img alt='image' src='".$crowndir."/crown1.gif' /><br /><b>".str_replace('-', '', $g['Champion_score'])."</b><br /><b>".($g['Champion_name']?"<a href='index.php?action=profile&amp;user=".$g['Champion_name']."'>".$g['Champion_name']."</a></b>":"------------</b>")."<p><a href='index.php?id=".$g['gameid']."'>View Highscores</a></p></td>";
+}
+echo "</tr></table></div><br />";
 }}
-echo "</td></tr></table></div><div align='center'>";
+	}}
 ?>
-<br />
