@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: IndexOption.php  Function: Display Games Index   Modified: 6/4/2019   By: MaSoDo
+# Section: IndexOption.php  Function: Display Games Index   Modified: 6/6/2019   By: MaSoDo
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//		  Favorites
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -22,10 +22,12 @@ $game_exist=mysql_fetch_array(run_query("SELECT `id` FROM phpqa_games WHERE game
 if($game_exist[0]) {
 //Adding?
 if(isset($_GET['favtype']) && $_GET['favtype'] == "add") { 
+global $acct_setting;
 message("Added to favorites. Refresh to see changes.");
 $acct_setting[5].="{$_GET['game']},"; 
 } else { 
 // Removing
+global $acct_setting;
 message("Removed game from favorites. Refresh to see changes.");
 $acct_setting[5]=str_replace("{$_GET['game']},", "", $acct_setting[5]); 
 }
