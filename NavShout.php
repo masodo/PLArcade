@@ -64,6 +64,7 @@ if(isset($_GET['shoutbox'])) $show=$num_pages_of;
 //Game List Display Logic:
 $fav_quer='';
 if(isset($_GET['fav'])){
+global $acct_setting;
 $favs=$acct_setting[5];
 $buildfavs=explode(",", $favs);
 foreach($buildfavs as $k=>$v) {
