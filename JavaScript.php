@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: JavaScript.php  Function: Javascript Function Repository   Modified: 6/5/2019   By: MaSoDo
+# Section: JavaScript.php  Function: Javascript Function Repository   Modified: 6/6/2019   By: MaSoDo
 ?>
 <script type='text/javascript'>
 function chsize(n){
@@ -33,7 +33,19 @@ if (c[x].id!=a) {n.display='none'; continue;}
 if (n.display) n.display=''; else n.display='none';
 }
 }
-function nowtime(){
+function nowtime(g){
+if (g == 24){
+ // For 24 hours    
+
+        var ct = new Date();
+        var hr = ct.getHours();
+        var mt = ct.getMinutes();
+        if (mt < 10) {
+            mt = "0" + mt;
+        }
+var result =  document.write("<b>" + hr + ":" + mt + " " + "</b>");    
+} else {        
+// For 12 hours (AM / PM)        
 var ct = new Date();
         var hr = ct.getHours();
         var mt = ct.getMinutes();
@@ -52,6 +64,7 @@ var ct = new Date();
         }
 
   var result =  document.write("<b>" + hr + ":" + mt + " " + ampm + "</b>");
+  }
   return result;
   }
 </script>
