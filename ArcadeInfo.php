@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ArcadeInfo.php  Function: Latest Site Info Block   Modified: 6/5/2019   By: MaSoDo
+# Section: ArcadeInfo.php  Function: Latest Site Info Block   Modified: 6/6/2019   By: MaSoDo
 ?>
 <br />
 <div align="center">
@@ -25,7 +25,7 @@ echo "<div style='text-align:center; margin-bottom: 5px; margin-top: 5px;'><a ti
 if ($settings["show_stats_table"]) { 
 if (!isset($acct_setting[3]) || $acct_setting[3] !="No") {
 $settings['ng_num']!=''?$ngnum = $settings['ng_num']:$ngnum = 20;
-$settings['ls_num']!=''?$lsnum = $settings['ng_num']:$lsnum = 14;
+$settings['ls_num']!=''?$lsnum = $settings['ls_num']:$lsnum = 14;
 $settings['bp_num']!=''?$bpnum = $settings['bp_num']:$bpnum = 10;
 ?>
 <td width="12%" align="center" class="headertableblock">Newest Games</td>
