@@ -13,8 +13,8 @@
 // ---------------------------------------------------------------------------------/
 # Section: HeaderBlock.php  Function: Top of the Page   Modified: 6/7/2019   By: MaSoDo
 
-$CPH = 0;
-$CPF = 0;
+$CPH = 1;
+$CPF = 1;
 $CPD = 0;
 $catquer2 = run_query("(SELECT platform,gamecat FROM phpqa_games)");
 $cp=@mysql_fetch_array($catquer2);
