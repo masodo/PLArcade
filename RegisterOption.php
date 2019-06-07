@@ -11,8 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: RegisterOption.php  Function: Register for the Arcade   Modified: 6/6/2019   By: MaSoDo
-echo "<!-- RegisterOption.php --------------------------------------------------------------------------------------------------------------------------------------------- -->";
+# Section: RegisterOption.php  Function: Register for the Arcade   Modified: 6/7/2019   By: MaSoDo
 if (isset($_POST['usernamesign']) && $_POST['usernamesign'] != "" && isset($_POST['postpassword']) && $_POST['postpassword'] !="") {
 $name = htmlspecialchars($_POST['usernamesign'], ENT_QUOTES);
 $pass = md5(sha1(htmlspecialchars($_POST['postpassword'])));
