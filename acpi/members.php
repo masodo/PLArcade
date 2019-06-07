@@ -11,8 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: members - Control Panel   Modified: 3/14/2019   By: MaSoDo
-
+# Section: acpi Place: members - Control Panel   Modified: 6/7/2019   By: MaSoDo
 {
 message("View Only: <br /><a href='?cpiarea=members&act=Admin'>Admins</a> &middot; <a href='?cpiarea=members&act=Moderator'>Moderators</a> &middot; <a href='?cpiarea=members&act=Affiliate'>Affiliate</a> &middot; <a href='?cpiarea=members&act=Member'>Members</a> &middot; <a href='?cpiarea=members&act=Banned'>Banned</a> &middot; <a href='?cpiarea=members&act=Validating'>Validating</a>");
 if(isset($_POST['members_selected'])) {
@@ -20,65 +19,71 @@ vsess();
 $gselect=$_POST['members_selected'];
 for($x=0;$x<=count($gselect)-1;$x++){
 $f=htmlspecialchars($gselect[$x], ENT_QUOTES);
-run_query("DELETE FROM `phpqa_scores` WHERE username='$f'");
-run_query("DELETE FROM `phpqa_leaderboard` WHERE username='$f'");
-run_query("DELETE FROM `phpqa_accounts` WHERE name='$f'");
-run_query("UPDATE `phpqa_games` SET `Champion_score` = '' WHERE Champion_name='$f'");
-run_query("UPDATE `phpqa_games` SET `Champion_name` = '' WHERE Champion_name='$f'");
-run_query("DELETE FROM `phpqa_leaderboard` WHERE username='$f'");
+run_query("DELETE FROM `phpqa_scores` WHERE `username`='".$f."'");
+run_query("DELETE FROM `phpqa_leaderboard` WHERE `username`='".$f."'");
+run_query("DELETE FROM `phpqa_accounts` WHERE `name`='".$f."'");
+run_query("UPDATE `phpqa_games` SET `Champion_score` = '' WHERE `Champion_name`='".$f."'");
+run_query("UPDATE `phpqa_games` SET `Champion_name` = '' WHERE `Champion_name`='".$f."'");
+run_query("UPDATE `phpqa_games` SET `HOF_score` = '' WHERE `HOF_name`='".$f."'");
+run_query("UPDATE `phpqa_games` SET `HOF_name` = '' WHERE `HOF_name`='".$f."'");
+run_query("DELETE FROM `phpqa_leaderboard` WHERE `username`='".$f."'");
 }
 }
 /* ################## Start of change name ################## */
-$n=htmlspecialchars(isset($_GET['change']), ENT_QUOTES);
+
 if (isset($_GET['change'])) {
+$n=htmlspecialchars($_GET['change'], ENT_QUOTES);
 	vsess();
+if(isset($_POST['new_name'])){
 $new_name=htmlspecialchars($_POST['new_name'], ENT_QUOTES);
-$checkexistance = mysql_fetch_array(run_query("SELECT name FROM phpqa_accounts WHERE name = '$new_name'"));
+}
+$checkexistance = mysql_fetch_array(run_query("SELECT name FROM phpqa_accounts WHERE name = '".$new_name."'"));
 if($checkexistance) { 
-message("The name, $new_name is already being used by another person."); 
+message("The name, &quot;".$new_name."&quot; is already being used by another person."); 
 } else {
-run_query("UPDATE `phpqa_games` SET `Champion_name` = '$new_name' WHERE Champion_name='$n'");
-run_query("UPDATE `phpqa_leaderboard` SET `username` = '$new_name' WHERE username='$n'");
-run_query("UPDATE `phpqa_scores` SET `username` = '$new_name' WHERE username='$n'");
-run_query("UPDATE `phpqa_accounts` SET `name` = '$new_name' WHERE name='$n'");
-run_query("UPDATE `phpqa_tournaments` SET `user`= '$new_name' WHERE `user`='$n'");
-run_query("UPDATE `phpqa_tournaments` SET `winner`='$new_name' WHERE `winner`='$n'");
+run_query("UPDATE `phpqa_games` SET `Champion_name` = '".$new_name."' WHERE `Champion_name`='".$n."'");
+run_query("UPDATE `phpqa_games` SET `HOF_name` = '".$new_name."' WHERE `HOF_name`='".$n."'");
+run_query("UPDATE `phpqa_leaderboard` SET `username` = '".$new_name."' WHERE `username`='".$n."'");
+run_query("UPDATE `phpqa_scores` SET `username` = '".$new_name."' WHERE `username`='".$n."'");
+run_query("UPDATE `phpqa_accounts` SET `name` = '".$new_name."' WHERE `name`='".$n."'");
 }
 }
 if (isset($_GET['changename'])) {
 	$_GET['changename']=htmlspecialchars($_GET['changename']);
-echo "<div class='tableborder'><table width=100% cellpadding='4' cellspacing='1'><td width=30% align=center class=headertableblock>Change Name</td><tr><td class=arcade1><div align=center><form action='?cpiarea=members&change=$_GET[changename]' method='POST'><input type='hidden' name='akey' value='$key'><input type=text name=new_name value=\"$_GET[changename]\"><input type=submit value='Change Name'></form><br /><br />";
+echo "<div class='tableborder'><table width=100% cellpadding='4' cellspacing='1'><td width=30% align=center class=headertableblock>Change Name</td><tr><td class=arcade1><div align=center><form action='?cpiarea=members&change=".$_GET['changename']."' method='POST'><input type='hidden' name='akey' value='".$key."'><input type=text name=new_name value=\"".$_GET['changename']."\"><input type=submit value='Change Name'></form><br /><br />";
 echo "</td></tr></table></div><br>";
 }
 /* ################## end of change name ################## */
 /* ########### PASS CHANGE ################ */
+$new_pass = '';
 if (isset($_GET['changepass'])) {
 		$_GET['changepass']=htmlspecialchars($_GET['changepass']);
-echo "<div class='tableborder'><table width=100% cellpadding='4' cellspacing='1'><td width=30% align=center class=headertableblock>Change Password</td><tr><td class=arcade1><div align=center><form action='?cpiarea=members&changepwd=$_GET[changepass]' method='POST'><input type='hidden' name='akey' value='$key'><input type=text name='new_pass' value=''><br /><input type=submit value='Change Password'></form><br /><br />Enter a new password for $_GET[changepass]";
+echo "<div class='tableborder'><table width=100% cellpadding='4' cellspacing='1'><td width=30% align=center class=headertableblock>Change Password</td><tr><td class=arcade1><div align=center><form action='?cpiarea=members&changepwd=".$_GET['changepass']."' method='POST'><input type='hidden' name='akey' value='".$key."'><input type=text name='new_pass' value=''><br /><input type=submit value='Change Password'></form><br /><br />Enter a new password for ".$_GET['changepass']."";
 echo "</td></tr></table></div><br>";
 }
-$n=htmlspecialchars(isset($_GET['changepwd']), ENT_QUOTES);
-$new_pass=md5(sha1(isset($_POST['new_pass'])));
+if(isset($_POST['new_pass'])) {
+$new_pass=md5(sha1($_POST['new_pass']));
 if(isset($_GET['changepwd'])) { 
+$n=htmlspecialchars($_GET['changepwd'], ENT_QUOTES);
 vsess();
-run_query("UPDATE `phpqa_accounts` SET `pass` = '$new_pass' WHERE name='$n'", 1); 
-}
+run_query("UPDATE `phpqa_accounts` SET `pass` = '".$new_pass."' WHERE name='".$n."'", 1); 
+}}
 if(isset($_GET['validate'])) { vsess();
 	$n=htmlspecialchars($_GET['validate'], ENT_QUOTES);
-
-	run_query("UPDATE `phpqa_accounts` SET `group` = 'Member' WHERE name='$n'");
+	run_query("UPDATE `phpqa_accounts` SET `group` = 'Member' WHERE name='".$n."'");
 }
-$a=htmlspecialchars(isset($_GET['deleteav']), ENT_QUOTES);
+
 if(isset($_GET['deleteav'])) { 
+$a=htmlspecialchars($_GET['deleteav'], ENT_QUOTES);
 	vsess();
-	run_query("UPDATE `phpqa_accounts` SET `avatar` = '' WHERE name='$a'"); }
+	run_query("UPDATE `phpqa_accounts` SET `avatar` = '' WHERE name='".$a."'"); }
 if(isset($_GET['changegroupgo'])) {
 $cg=htmlspecialchars($_GET['changegroupgo'], ENT_QUOTES);
 $fg=htmlspecialchars($_POST['chosengroup'], ENT_QUOTES);
 	vsess();
-	run_query("UPDATE `phpqa_accounts` SET `group` = '$fg' WHERE name='$cg'"); }
+	run_query("UPDATE `phpqa_accounts` SET `group` = '".$fg."' WHERE name='".$cg."'"); }
 if (isset($_GET['changegroup'])) {
-echo "<div class='tableborder'><table width=100% cellpadding='4' cellspacing='1'><td width=30% align=center class=headertableblock>Change Usergroup of: $_GET[changegroup] </td><tr><td class=arcade1><div align=center><form action='?cpiarea=members&changegroupgo=".htmlspecialchars($_GET['changegroup'])."' method='POST'><input type='hidden' name='akey' value='$key'>";
+echo "<div class='tableborder'><table width=100% cellpadding='4' cellspacing='1'><td width=30% align=center class=headertableblock>Change Usergroup of: ".$_GET['changegroup']." </td><tr><td class=arcade1><div align=center><form action='?cpiarea=members&changegroupgo=".htmlspecialchars($_GET['changegroup'])."' method='POST'><input type='hidden' name='akey' value='".$key."'>";
 ?>
 About: <a href='javascript:alert("As an admin, a user has FULL control of the arcade. Including the ability to add games, make new admins and moderators, and more. Only make admins you trust, proceed with caution.");'>Admin [?]</a> &middot; <a href='javascript:alert("As a moderator, basic access is given. A user has the ability to delete scores, lookup IP addresses, and IP ban users. They are also able to moderate the shoutbox.");'>Moderator [?]</a>  &middot; <a href='javascript:alert("An Affiliate has the ability to download the game files. ");'>Affiliate [?]</a>&middot; <a href='javascript:alert("A member is the basic group. They can only use the arcade related features such as playing games and using the shoutbox.");'>Member [?]</a> &middot; <a href='javascript:alert("Validating users are members awaiting manual validation. They are blocked from using any means of communication in the arcade, and submitting their highscores.");'>Validating [?]</a> &middot; <a href='javascript:alert("A banned member no longer has access to the arcade. ");'>Banned [?]</a>
 <select name='chosengroup'>
@@ -113,6 +118,4 @@ $memberdata=run_query("SELECT * FROM phpqa_accounts WHERE `group`='$picked'");
 </form>
 <?php
 }
-
-
 ?>
