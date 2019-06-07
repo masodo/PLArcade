@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ArcadeInfo.php  Function: Latest Site Info Block   Modified: 6/6/2019   By: MaSoDo
+# Section: ArcadeInfo.php  Function: Latest Site Info Block   Modified: 6/7/2019   By: MaSoDo
 ?>
 <br />
 <div align="center">
@@ -119,7 +119,7 @@ if (!isset($_COOKIE['phpqa_user_c'])) {
 // begin nav buttons
 ?>
 <div style="width: 100%; text-align: center; margin-left: auto; margin-right: auto;"><div class="navigation">Logged off: [ <a href="javascript:tog('login_form')">Login</a> ]</div><div class="navigation">[ <a href="index.php?action=register">Register</a> ] </div><div class="navigation"><a href="index.php?action=leaderboards">Leaderboard</a></div><div class="navigation"><a href="index.php?action=HOF">Hall of Fame</a></div><div class="navigation"><a href="javascript:tog('search');">Search</a></div><div class="navigation"><a href="index.php?action=members">Members</a></div><div class="navigation"><a href="http://DeBurger.com">DeBurger.com</a></div>
-<div style="display:none" id="login_form" name="tog_collect"><br /><br /><br /><form method="post" action="?action=login"> Name: <input type="text" name="userID" style="font-size: 80%;" /> <font style="font-size: 80%;"></font> Pass: <input type="password" name="pword" style="font-size: 80%;" /> <input type="submit" value="Login" style="font-size: 80%;" /><br /><font style="font-size: 80%;"> Remember?:</font><input type="checkbox" name="cookiescheck" /><a href="index.php?action=register"><font style="font-size: 80%;">No Account? Register to play!</font></a></form></div></div>
+<div style="display:none" id="login_form" name="tog_collect"><br /><br /><br /><form method="post" action="?action=login"> Name: <input type="text" name="userID" style="font-size: 80%;" /> <font style="font-size: 80%;"></font> Pass: <input type="password" name="pword" style="font-size: 80%;" /> <input type="submit" value="Login" style="font-size: 80%;" /><br /><input type="checkbox" name="cookiescheck" />Remember Login? | <a href="index.php?action=register"><b>Register to play!</b></a><br /><a href="index.php?action=forgotpass"><i>Forgot Password?</i></a></form></div></div>
 <?php
 } else {
 $checkChamps = mysql_num_rows(run_query("SELECT username FROM phpqa_leaderboard WHERE username = '$phpqa_user_cookie'"));
