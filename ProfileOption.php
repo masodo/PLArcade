@@ -12,7 +12,7 @@
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
 # Section: ProfileOption.php  Function: View User Profile Page   Modified: 6/9/2019   By: MaSoDo
-
+if (isset($_COOKIE['phpqa_user_c'])) {
 $profiledata=@mysql_fetch_array(run_query("SELECT * FROM phpqa_accounts WHERE name='".$user."'"));
 $ggggg=explode("|",$profiledata['settings']);
 if (!isset($profiledata)) {
@@ -76,5 +76,5 @@ while($getstats=mysql_fetch_array($lq)){
 ?>
 </tr></table></div><br /><br />
 <?php
-}
+}} else {message("Sorry, guests may not view profiles!<br />Please <a href='index.php?action=register#registration'>Register</a> or <a href=\"javascript:tog('login_form')\">Login</a>");}
 ?>
