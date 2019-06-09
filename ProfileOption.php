@@ -76,5 +76,5 @@ while($getstats=mysql_fetch_array($lq)){
 ?>
 </tr></table></div><br /><br />
 <?php
-}} else {message("Sorry, guests may not view profiles!<br />Please <a href='index.php?action=register#registration'>Register</a> or <a href=\"javascript:tog('login_form')\">Login</a>");}
+}} else {message("Sorry, guests may not view profiles!<br />Please <a href='index.php?action=register#registration'>Register</a> or <a href=\"index.php#Login\"</a>");}
 ?>
