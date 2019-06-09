@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 6/5/2019   By: MaSoDo
+# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 6/9/2019   By: MaSoDo
 session_start();
 if($_GET['captcha']){
 $im = imagecreatefrompng("captchabg.png");
@@ -220,6 +220,7 @@ $pagN_lim = "";
 $PlatWord = "";
 $PlatImg = "";
 $IDXV = "";
+$acct_setting = "";
 empty($show);
 $name = "unregistered";
 $catquer = null;
@@ -359,8 +360,8 @@ setcookie("phpqa_user_p", $thepassword_in_db, time()+99999, ""."; HttpOnly");
 }
 // Count the logins here:
 //echo "<script type='text/javascript'>alert(\"This is a test - - - Count: ".$exist['logins']." visits!\")</script>"; //Die();
-
-run_query("UPDATE phpqa_accounts SET `logins`=".++$exist['logins']." WHERE name='" . $userID ."'"); 
+$time = time();
+run_query("UPDATE `phpqa_accounts` SET `logins`=".++$exist['logins'].", `vtstamp`=".$time." WHERE name='" . $userID ."'"); 
 
 if (isset($exist['logins'])&&$exist['logins'] =='1' ) {
 header("Location: index.php");
