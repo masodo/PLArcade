@@ -11,11 +11,11 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 6/6/2019   By: MaSoDo
+# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 6/9/2019   By: MaSoDo
 ?>
 <div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><tr><td class='arcade1' align='left'>
 <?php
-echo "<div class='navigation'><a href='index.php'>Arcade Home</a></div> &#187; ";
+echo "<div class='navigation'><a name='registration'></a><a href='index.php'>Arcade Home</a></div> &#187; ";
 if (isset($_GET['play'])) { // Ok, you are playing.
 echo "<b>Playing Game.</b>";
 } elseif (isset($_GET['id'])) { // Now you're viewing the highscores
@@ -65,6 +65,9 @@ if(isset($_GET['shoutbox'])) $show=$num_pages_of;
 $fav_quer='';
 if(isset($_GET['fav'])){
 global $acct_setting;
+if(!isset($acct_setting[5])){
+echo "<script>alert('You have no saved favorites!');</script>";
+} else {
 $favs=$acct_setting[5];
 $buildfavs=explode(",", $favs);
 foreach($buildfavs as $k=>$v) {
@@ -73,7 +76,7 @@ $favslist.="'$v', ";
 }
 $favslist = substr($favslist, 0, -2);    
 $fav_quer="WHERE gameid IN($favslist)";
-}
+}}
 $countquer = run_query("SELECT gamecat FROM phpqa_games ".$fav_quer."".(isset($_GET['cat'])?" WHERE gamecat='".$_GET['cat']."'":""));
 
     // Patch - 06/01/09
@@ -110,7 +113,7 @@ $catquer = run_query("(SELECT * FROM phpqa_games ORDER BY rand() LIMIT 1) UNION 
 $arcadetotalcat = mysql_num_rows($countquer);
 $f = @mysql_fetch_array($catquer);
 ////////Game List Display Logic
-if(isset($settings['enable_24hr'])){
+if(isset($settings['enable_24hr'])&&$settings['enable_24hr']==1){
 echo "<b>Viewing Arcade Index</b> <div style='width:300px; float:right; margin-right:50px; text-align: right;'>Arcade Time: <b>" . date('G:i') ."</b><br />Local Time: <script>nowtime(24)</script></div></td><td class='arcade1' style='width:1px'><a href='?play=" . $f['gameid'] . "#playzone'>Random&nbsp;Game</a>";
 } else {
 echo "<b>Viewing Arcade Index</b> <div style='width:300px; float:right; margin-right:50px; text-align: right;'>Arcade Time: <b>" . date('g:i A') ."</b><br />Local Time: <script>nowtime()</script></div></td><td class='arcade1' style='width:1px'><a href='?play=" . $f['gameid'] . "#playzone'>Random&nbsp;Game</a>";
