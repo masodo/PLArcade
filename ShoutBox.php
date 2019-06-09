@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ShoutBox.php  Function: ShoutBox Block   Modified: 6/5/2019   By: MaSoDo
+# Section: ShoutBox.php  Function: ShoutBox Block   Modified: 6/9/2019   By: MaSoDo
 
 if($settings['enable_shoutbox']) {
 if (!isset($acct_setting[1]) || $acct_setting[1] !="No") {
@@ -43,6 +43,7 @@ run_query("INSERT INTO `phpqa_shoutbox` (`name`,`shout`,`ipa`,`tstamp`) VALUES (
 </td><td class="arcade1" width="75%"><div style="position:absolute;display:none;margin-left:-110px;margin-top:20px" id="shoutboxpopup"><img /></div>
 <div id="scroll3" style="width:100%;height:225px;overflow:auto;overflow-x:hidden; margin-left:-2px;" align="left">
 <?php
+if (isset($_COOKIE['phpqa_user_c'])) {
 if(!isset($_GET['shoutbox'])) {
 	$selectfrom = run_query("SELECT `name`,`shout`,`id`,`ipa`,`tstamp` FROM `phpqa_shoutbox` ORDER BY id DESC LIMIT 0,".$num_pages_of."");
 } else {
@@ -113,7 +114,7 @@ $parse_stamp = date($datestamp, $qashoutbox[4] );
 //$posted = gmdate($datestamp, strtotime($qashoutbox[4])-3600) ;
  echo "<a title='".$parse_stamp."'><img src='".$imgloc."/clockin.png' alt='posted time' height='10' width='10' /></a>&nbsp; <u><b><a href='?action=profile&user=".$qashoutbox[0]."'".($qashoutbox[5]?" onmouseover=\"s=document.getElementById('shoutboxpopup');s.style.display='';s.getElementsByTagName('img')[0].src='".$qashoutbox[5]."';\" onmousemove=\"s=document.getElementById('shoutboxpopup').style;s.top=document.body.scrollTop+2+event.clientY;s.left=document.body.scrollLeft+event.clientX;\" onmouseout=\"document.getElementById('shoutboxpopup').style.display='none'":"")."\">".$qashoutbox[0]."</a></b></u>: ".$postsofsomething."<br /><hr />";
 }
-}
+}} else {echo "<h2>Sorry, No Guest Shouts!</h2>Please <a href='index.php?action=register#registration'>Register</a> or <a href=\"javascript:tog('login_form')\">Login</a>";}
  ?>
 </div>
 </td>
