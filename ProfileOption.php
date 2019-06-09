@@ -20,13 +20,17 @@ message("Error: No username with the name, <b>$user</b> exists");
 } else {
 $lq=run_query("SELECT `gameid`,`game`,`about`,`Champion_score` FROM phpqa_games WHERE Champion_name='".$user."'");
 $q=run_query("SELECT count(id) FROM phpqa_shoutbox WHERE name='".$user."'");
+$LastOn = '';
+if($profiledata['vtstamp']!=0){
+$LastOn=date($datestamp,$profiledata['vtstamp']);
+}
 ?>
 <div align='center'>
 <div class='tableborder'>
 <table width='100%' cellpadding='4' cellspacing='1'>
 <tr><td width=60% align=center class='headertableblock'>Profile Data</td><td width=60% align=center class='headertableblock'>Setting</td></tr>
 <tr><td class='arcade1' align='left'><b>Name</b><br /></td><td class='arcade1' align='left'><?php echo $user; ?></td></tr>
-<tr><td class='arcade1' align='left'><b>Last Login</b><br /></td><td class='arcade1' align='left'><?php echo date($datestamp,$profiledata['vtstamp']); ?></td></tr>
+<tr><td class='arcade1' align='left'><b>Last Login</b><br /></td><td class='arcade1' align='left'><?php echo $LastOn; ?></td></tr>
 <tr><td class='arcade1' align='left'><b>Group</b></td><td class='arcade1' align='left'><?php echo $profiledata['group']; ?></td></tr>
 <tr><td class='arcade1' align='left'><b>Skin</b><br /></td><td class='arcade1' align='left'>Default</td></tr>
 <tr><td class='arcade1' align='left'><b>Total Shouts</b><br /></td><td class='arcade1' align='left'><?php echo mysql_result($q,0); ?></td></tr>
@@ -76,5 +80,5 @@ while($getstats=mysql_fetch_array($lq)){
 ?>
 </tr></table></div><br /><br />
 <?php
-}} else {message("Sorry, guests may not view profiles!<br />Please <a href='index.php?action=register#registration'>Register</a> or <a href=\"index.php#Login\"</a>");}
+}} else {message("Sorry, guests may not view profiles!<br />Please <a href='index.php?action=register#registration'>Register</a> or <a href='index.php#Login'>Login</a>");}
 ?>
