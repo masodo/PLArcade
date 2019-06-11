@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: IndexOption.php  Function: Display Games Index   Modified: 6/6/2019   By: MaSoDo
+# Section: IndexOption.php  Function: Display Games Index   Modified: 6/11/2019   By: MaSoDo
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//		  Favorites
@@ -42,13 +42,10 @@ message("Game not found.");
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 global $catquer;
 if (!isset($_GET['action'])&&!isset($_GET['do'])||isset($_GET['action'])&&$_GET['action']!='settings') {
-//if (!empty($catquer)&&isset($_GET['action'])&&$_GET['action']!='settings') {
 if (!empty($catquer)) {
-//echo "<script>alert('Hello World!');</script>";
 //Begin Collapse #4
 echo "<div style='text-align:center; margin-bottom: 5px; margin-top: 5px;'><a title='Open/Close The Games Index'><img id='btn4' src='" . $imgloc . "/" . $collimg4 . "' type='button' alt='&#8595; Games: Collapse/Expand &#8595;' onclick='return CollapseExpand4()' style='font-size:16px; font-weight:bold; color:silver;' /></a></div><div id='MyDiv4' class='" . $collapset4 . "'>";
-
-
+require "./PageMakerT.php";
 	while($g=mysql_fetch_array($catquer)){ 
 	// Select from the scores table....
 	
@@ -85,9 +82,7 @@ $DL_action="<a href='GetGame.php?GID=".$g['gameid']."' title='Download Game TAR'
 }
 echo "</div><div class='viewedtimes' style='float: right;'>".$DL_action.$fav_action."</div></td>";
 if ($g['gamecat'] != '20' && $g['gamecat'] != '16') {
-echo "<td class='arcade1' valign='top' align='center'><img alt='image' src='".$crowndir."/crown1.gif' /><br /><b>".str_replace('-', '', $g['Champion_score'])."</b><br /><b>".($g['Champion_name']?"<a href='index.php?action=profile&amp;user=".$g['Champion_name']."'>".$g['Champion_name']."</a></b>":"------------</b>")."<p><a href='index.php?id=".$g['gameid']."'>View Highscores</a></p></td>";
-}
-echo "</tr></table></div><br />";
-}}
-	}}
+echo "<td class='arcade1' valign='top' align='center'><img alt='image' src='".$crowndir."/crown1.gif' /><br /><b>".str_replace('-', '', $g['Champion_score'])."</b><br /><b>".($g['Champion_name']?"<a href='index.php?action=profile&amp;user=".$g['Champion_name']."'>".$g['Champion_name']."</a></b>":"------------</b>")."<p><a href='index.php?id=".$g['gameid']."'>View Highscores</a></p></td></tr></table></div><br />";
+}}}
+}}	
 ?>
