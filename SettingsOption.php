@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: SettingsOption.php  Function: User Definable Configuration   Modified: 5/31/2019   By: MaSoDo
+# Section: SettingsOption.php  Function: User Definable Configuration   Modified: 6/11/2019   By: MaSoDo
 echo "<!-- SettingsOption.php --------------------------------------------------------------------------------------------------------------------------------------------- -->";
 if (isset($_COOKIE['phpqa_user_c'])) {
 if($exist[6] == "Validating") {
@@ -46,7 +46,7 @@ if ($_GET['action']=="settings" && isset($_GET['p'])=="") {
 echo "<div align='center'>Welcome to your arcade controls. Your last 10 scores:<hr>";
 	$selectfrom = run_query("SELECT * FROM phpqa_scores WHERE username='$phpqa_user_cookie' ORDER BY phpdate DESC LIMIT 0,10");
 while($s=mysql_fetch_array($selectfrom)){ 
-$parse_stamp = gmdate($datestamp, $s[5]+3600*$settings['timezone']);
+$parse_stamp = date($datestamp, $s[5]);
 echo "<i>$s[2]</i> in <a href='index.php?id=$s[6]'><i>$s[7]</i></a> on $parse_stamp <br />";
 }
 echo "</div>";
