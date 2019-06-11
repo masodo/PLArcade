@@ -50,8 +50,9 @@ require "./PageMakerT.php";
 	// Select from the scores table....
 	
 $CheckScoring = $g['scoring'];
-if ($g['gamecat'] != '2') {
 $showcat=mysql_fetch_array(run_query("SELECT cat FROM phpqa_cats WHERE id='{$g['gamecat']}'"));	
+if ($g['gamecat'] != '2' || (isset($exist[6])&&$exist[6] == "Admin")) {
+
 if ($g['platform'] == 'H5') { 
 echo "<div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1' class='gameview'><tr><td width='5%' align='center' class='headertableblock'></td><td width='60%' align='center' class='headertableblock'>$g[1]</td>";
 if ($g['gamecat'] != '20' && $g['gamecat'] != '16') {
