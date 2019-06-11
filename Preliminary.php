@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 6/9/2019   By: MaSoDo
+# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 6/11/2019   By: MaSoDo
 session_start();
 if($_GET['captcha']){
 $im = imagecreatefrompng("captchabg.png");
@@ -359,14 +359,13 @@ setcookie("phpqa_user_c", "{$exist[1]}", time()+99999);
 setcookie("phpqa_user_p", $thepassword_in_db, time()+99999, ""."; HttpOnly");
 }
 // Count the logins here:
-//echo "<script type='text/javascript'>alert(\"This is a test - - - Count: ".$exist['logins']." visits!\")</script>"; //Die();
 $time = time();
 run_query("UPDATE `phpqa_accounts` SET `logins`=".++$exist['logins'].", `vtstamp`=".$time." WHERE name='" . $userID ."'"); 
 
 if (isset($exist['logins'])&&$exist['logins'] =='1' ) {
 header("Location: index.php");
 $welcometext = "[color=green][i]Welcome to[/i] [b]".$settings['arcade_title']."[/b][/color] [url=".$arcurl."/index.php?action=profile&user=".$exist['name']."][size=18][b]".$exist['name']."[/b][/size][/url] [wavey] [i]Thanks for joining us![/i]";
-run_query("INSERT INTO phpqa_shoutbox (`name`,`shout`,`ipa`) VALUES ('Admin','" . $welcometext . "','localhost')", 1);
+run_query("INSERT INTO phpqa_shoutbox (`name`,`shout`,`ipa`,`tstamp`) VALUES ('Admin','" . $welcometext . "','localhost','" . $time ."')", 1);
 }
 //then load the page:
 header("Location: index.php");
