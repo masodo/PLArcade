@@ -51,8 +51,8 @@ require "./PageMakerT.php";
 	// Select from the scores table....
 	
 $CheckScoring = $g['scoring'];
-if ($g['gamecat'] != '2') {
-$showcat=mysql_fetch_array(run_query("SELECT cat FROM phpqa_cats WHERE id='{$g['gamecat']}'"));	
+$showcat=mysql_fetch_array(run_query("SELECT cat FROM phpqa_cats WHERE id='{$g['gamecat']}'"));
+if ($g['gamecat'] != '2' || (isset($exist[6])&&$exist[6] == "Admin")) {	
 $CHMP = run_query("SELECT `avatar` FROM `phpqa_accounts` WHERE `name` = '" . $g['Champion_name'] . "'");
 $CHMPimg=mysql_fetch_array($CHMP);
 if (!$CHMPimg['avatar'])$CHMPimg['avatar'] = $avatarloc.'/man.gif';
