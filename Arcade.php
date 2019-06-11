@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Arcade.php  Function: Main Organization Page   Modified: 6/10/2019   By: MaSoDo
+# Section: Arcade.php  Function: Main Organization Page   Modified: 6/11/2019   By: MaSoDo
 //-----------------------------------------------------------------------------------/
 require "./Preliminary.php";
 require "./Functions.php";
@@ -21,12 +21,15 @@ require "./AddStyle.php";
 require "./JavaScript.php";
 require "./SmileyPop.php";
 require "./FullScreen.php";
-if (!isset($_GET['act'])) {
+if (!isset($_GET['do'])) {
 require "./ArcadeInfo.php";
 require "./ShoutBox.php";
 require "./Categories.php";
 require "./NavShout.php";
-} else { echo "<br />"; message("Game Over!"); }
+} else {
+echo "<br />"; message("Game Over!"); 
+require "./NavShout.php";
+}
 if (isset($_GET['play']) && $_GET['play']) require "./PlayOption.php"; // Playing?
 if (isset($_GET['action']) && $_GET['action'] == "forgotpass") require "./ForgotPassOption.php";
 elseif (isset($_GET['action']) && $_GET['action'] == "members") require "./MembersOption.php";
@@ -50,6 +53,8 @@ require "./IndexOption.php";
 require "./IndexOptionCV.php";
 }
 }
-require "./PageMaker.php";
+if (!isset($_GET['do'])) {
+require "./PageMakerB.php";
+}
 require "./FooterBlock.php";
 ?>
