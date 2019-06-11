@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: tar_import - Administrator Control Panel   Modified: 3/26/2019   By: MaSoDo
+# Section: acpi Place: tar_import - Administrator Control Panel   Modified: 6/11/2019   By: MaSoDo
 
 {
 $plattype = 'FL';
@@ -98,10 +98,12 @@ $addedalready = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gam
 if (!$addedalready) {
 $champ = '';
 $champs = '';
+$atime = '';
 if($idname !="") {
 run_query("INSERT INTO phpqa_games (game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring) VALUES ('$gamename','$idname','$gameheight','$gamewidth','$about','$thecat','$remoteurl','$champ','$champs','','$plattype','$scoretype')");
-$NewGtext = "[color=green][i]New Game Added![/i] [/color][size=16] [url=".$arcurl."/index.php?id=".$idname."][b]".$gamename."[/b][/url][/size]  [color=green][i]Enjoy![/i][/color] [:D]";
-run_query("INSERT INTO phpqa_shoutbox (`name`,`shout`,`ipa`) VALUES ('Admin','" . $NewGtext . "','localhost')", 1);
+$atime = time();
+$NewGtext = "[color=green][i]New Game Added![/i] [/color][size=16] [url=".$arcurl."/index.php?play=".$idname."#playzone][b]".$gamename."[/b][/url][/size]  [color=green][i]Enjoy![/i][/color] [:D]";
+run_query("INSERT INTO phpqa_shoutbox (`name`,`shout`,`ipa`,`tstamp`) VALUES ('Admin','" . $NewGtext . "','localhost','" . $atime . "')", 1);
 }
 } else {
 }
