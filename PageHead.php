@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: PageHead.php  Function: HTML Page Heading   Modified: 5/28/2019   By: MaSoDo
+# Section: PageHead.php  Function: HTML Page Heading   Modified: 6/12/2019   By: MaSoDo
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/2002/REC-xhtml1-20020801/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
@@ -104,9 +104,11 @@ document.getElementById("btn4").src = "<?php echo $imgloc; ?>/open.png";
 function anchorlink(L) { window.location.href="#" + L + ""; }
 </script>
 </head>
+
 <body><a id="top" name="top"></a>
 <?php
 if(isset($_GET['action']) && $_GET['action'] =='emotes') {} else {
+if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){} else {
 ?>
 <div style="text-align:left; margin-bottom: 5px; margin-top: 5px;"><input id="Button1" type="button" value='&#8595; Go to Bottom of Page &#8595;' onclick="anchorlink('bottom');" style="font-size:16px; font-weight:bold; color:silver;" /></div>
-<?php } ?>
+<?php }} ?>
