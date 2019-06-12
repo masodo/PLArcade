@@ -243,6 +243,22 @@ mysql_query("CREATE TABLE `phpqa_shoutbox` (
 // ------------------------------------------------------//
 
 //
+// Table structure for table `phpqa_affiliate`
+//
+mysql_query("CREATE TABLE `phpqa_affiliate` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `img` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `url` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `tag` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `sort` int(11) NOT NULL,
+  `key` varchar(255) CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+");
+
+// ------------------------------------------------------//
+
+//
 // Table structure for table `phpqa_wall`
 //
 
@@ -256,7 +272,8 @@ mysql_query("CREATE TABLE `phpqa_wall` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 ");
-
+// nothing is ever truly free ;)
+ mysql_query("INSERT INTO `phpqa_affiliate` VALUES(6, 'DeBurgerGameRoom.gif', 'http://DeBurger.com/ARCADE ', 'The DeBurger Game Room', 6, '');");
 // ------------------------------------------------------//
 
 // end tables
