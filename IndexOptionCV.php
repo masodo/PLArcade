@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: IndexOption.php  Function: Display Games Index   Modified: 6/11/2019   By: MaSoDo
+# Section: IndexOption.php  Function: Display Games Index   Modified: 6/12/2019   By: MaSoDo
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//		  Favorites
@@ -79,8 +79,9 @@ $fav_action="<a href='index.php?action=fav&game=".$g['gameid']."&favtype=add&ake
 if(isset($_GET['fav'])) $fav_action="<a href='index.php?action=fav&game=".$g['gameid']."&favtype=remove&akey=".$key."&fav=1' title='Remove Game From Favorites'><img src='".$imgloc."/remove.png' alt='[Remove favorite]' width='25' height='25' /></a>";
 }
 if ((isset($exist[6])&&$exist[6] == "Admin") || (isset($exist[6])&&$exist[6] ==  "Affiliate")) { 
+if ((null !== $showcat[0] && $showcat[0] == "Testing") && ($exist[6] ==  "Affiliate")){} else {
 $DL_action="<a href='GetGame.php?GID=".$g['gameid']."' title='Download Game TAR'><img src='".$arcurl."/".$imgloc."/DL.png' height='25' width='25' alt='Download Game .tar' /></a>&nbsp;";
-}
+}}
 echo "</div><div class='viewedtimes' style='float: right;'>".$DL_action.$fav_action."</div></td>";
 if ($g['gamecat'] != '20' && $g['gamecat'] != '16') {
 echo "<td class='arcade1' valign='top' align='center'><img alt='image' src='".$crowndir."/crown1.gif' /><br /><b>".str_replace('-', '', $g['Champion_score'])."</b><br /><b>".($g['Champion_name']?"<a href='index.php?action=profile&amp;user=".$g['Champion_name']."'>".$g['Champion_name']."</a></b>":"------------</b>")."<p><a href='index.php?id=".$g['gameid']."'>View Highscores</a></p></td></tr></table></div><br />";
