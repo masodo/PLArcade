@@ -146,6 +146,7 @@ mysql_query("CREATE TABLE `phpqa_games` (
   `tags` varchar(64) default NULL COMMENT 'added MSD',
   `HOF_name` varchar(255) NOT NULL default '',
   `HOF_score` decimal(20,0) default NULL,
+  `exclusiv` TINYINIT(1) NOT NULL default '0',
   UNIQUE KEY `id` (`id`),
   KEY `gamecat` (`gamecat`),
   KEY `gameid` (`gameid`)
