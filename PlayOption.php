@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: PlayOption.php  Function: Game Play Block   Modified: 6/12/2019   By: MaSoDo
+# Section: PlayOption.php  Function: Game Play Block   Modified: 6/13/2019   By: MaSoDo
 //modified to play HTML5 Games
 $play = htmlspecialchars($_GET['play'], ENT_QUOTES);
 	$g = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gameid='".$play."'")); 
@@ -114,7 +114,7 @@ echo "<a title='Lowest Score Wins This Game'><img src='".$arcurl."/".$imgloc."/l
 echo "</div>";
 echo "<div style='position: relative; width:25px; margin-left:auto; margin-right:auto; margin-top: 60px;'>".$fav_action."</br>";
 if ((isset($exist[6])&&$exist[6] == "Admin") || (isset($exist[6])&&$exist[6] ==  "Affiliate")) { 
-if ((null !== $showcat[0] && $showcat[0] == "Testing") && ($exist[6] ==  "Affiliate")){} else {
+if (((null !== $showcat[0] && $showcat[0] == "Testing") || (null !== $g['exclusiv']) && $g['exclusiv'] == 1) && ($exist[6] ==  "Affiliate")){if($g['exclusiv'] == 1){echo $DL_action="<a title='Exclusive Game - Sorry, No Download'><img src='".$arcurl."/".$imgloc."/exclusiv.png' height='25' width='25' alt='Exclusive Game - Sorry, No Download' /></a>";} else {} } else {
 echo "<a href='GetGame.php?GID=".$play."' title='Download Game TAR'><img src='".$arcurl."/".$imgloc."/DL.png' height='25' width='25' alt='Download Game .tar' style='margin-left:auto; margin-right:auto; margin-top:15px;' /></a>";
 }}
 echo "</div>";
