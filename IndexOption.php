@@ -1,17 +1,17 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
+//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: IndexOption.php  Function: Display Games Index   Modified: 6/12/2019   By: MaSoDo
+# Section: IndexOption.php  Function: Display Games Index   Modified: 6/13/2019   By: MaSoDo
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//		  Favorites
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -78,7 +78,10 @@ $fav_action="<a href='index.php?action=fav&game=".$g['gameid']."&favtype=add&ake
 if(isset($_GET['fav'])) $fav_action="<a href='index.php?action=fav&game=".$g['gameid']."&favtype=remove&akey=".$key."&fav=1' title='Remove Game From Favorites'><img src='".$imgloc."/remove.png' alt='[Remove favorite]' width='25' height='25' /></a>";
 }
 if ((isset($exist[6])&&$exist[6] == "Admin") || (isset($exist[6])&&$exist[6] ==  "Affiliate")) { 
-if ((null !== $showcat[0] && $showcat[0] == "Testing") && ($exist[6] ==  "Affiliate")){} else {
+    if (((null !== $showcat[0] && $showcat[0] == "Testing") || (null !== $g['exclusiv']) && $g['exclusiv'] == 1) && ($exist[6] ==  "Affiliate")){
+        if($g['exclusiv'] == 1){
+        $DL_action="<a title='Exclusive Game - Sorry, No Download'><img src='".$arcurl."/".$imgloc."/exclusiv.png' height='25' width='25' alt='Exclusive Game - Sorry, No Download' /></a>";
+        }} else {
 $DL_action="<a href='GetGame.php?GID=".$g['gameid']."' title='Download Game TAR'><img src='".$arcurl."/".$imgloc."/DL.png' height='25' width='25' alt='Download Game .tar' /></a>&nbsp;";
 }}
 echo "</div><div class='viewedtimes' style='float: right;'>".$DL_action.$fav_action."</div></td>";
