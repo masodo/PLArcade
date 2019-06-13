@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi place: addgames Administrator Control Panel   Modified: 6/11/2019   By: MaSoDo
+# Section: acpi place: addgames Administrator Control Panel   Modified: 6/13/2019   By: MaSoDo
 {
 // The different methods
 if (!isset($_GET['method'])) {
@@ -49,6 +49,7 @@ $gameheight = htmlspecialchars($_POST['height'], ENT_QUOTES);
 $gamewidth = htmlspecialchars($_POST['width'], ENT_QUOTES);
 $about = htmlspecialchars($_POST['desc'], ENT_QUOTES);
 $gamecat = htmlspecialchars($_POST['gamecat'], ENT_QUOTES);
+$exclusiv = htmlspecialchars($_POST['exclusive'], ENT_QUOTES);
 if (isset($_POST['plattype'])) {
 $platform = htmlspecialchars($_POST['plattype'], ENT_QUOTES);
 }
@@ -150,7 +151,7 @@ $addedalready = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gam
 if (empty($addedalready)) {
 $atime = '';
 message("Game added/edited. <br>[ <a href='index.php?cpiarea=idx'>Arcade CP Home</a> | <a href='index.php?cpiarea=addgames&method=".$_GET['method']."'>Add Another</a> ]");
-run_query("INSERT INTO phpqa_games (game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring) VALUES ('$gamename','$idname','$gameheight','$gamewidth','$about','$gamecat','$remoteurl','$champ','$champs','','$plattype','$scoretype')");
+run_query("INSERT INTO phpqa_games (game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring,exclusiv) VALUES ('$gamename','$idname','$gameheight','$gamewidth','$about','$gamecat','$remoteurl','$champ','$champs','','$plattype','$scoretype','$exclusiv')");
 if (!isset($_GET['game'])){
 $atime = time();
 $NewGtext = "[color=green][i]New Game Added![/i] [/color][size=16] [url=".$arcurl."/index.php?play=".$idname."#playzone][b]".$gamename."[/b][/url][/size]  [color=green][i]Enjoy![/i][/color] [:D]";
@@ -263,6 +264,19 @@ echo "<input type='hidden' name='idname' value='".$editgame['gameid']."'> ".$edi
 <?php } else {?>
 <option value='HI'>High Score</option>
 <option value='LO' selected>Low Score</option>
+<?php }?>
+</select>
+</td>
+</tr>
+<tr><td class='arcade1' align='left'><b>Exclusive Game?:</b></td>
+<td class='arcade1' align='center'>
+<select size='1' name='exclusive'>
+<?php if( isset($editgame['exclusiv']) && $editgame['exclusiv'] == '1' ) { ?>
+<option value='1' selected>Exclusive</option>
+<option value='0'>Available</option>
+<?php } else {?>
+<option value='1'>Exclusive</option>
+<option value='0' selected>Available</option>
 <?php }?>
 </select>
 </td>
