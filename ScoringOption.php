@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 6/12/2019  By: MaSoDo
+# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 6/13/2019  By: MaSoDo
 if (isset($_POST['thescore']))$thescore = $_POST['thescore'];
 if (isset($_GET['autocom'])) {
 $id=htmlspecialchars($_COOKIE['gname'], ENT_QUOTES);
@@ -38,7 +38,7 @@ $thescore = $_POST['gscore'];
  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  //	Get highscores list of a game when on the id= page
  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- $gameinfo = mysql_fetch_array(run_query("SELECT gameid,game,about,Champion_name,Champion_score,times_played,gamecat FROM phpqa_games WHERE gameid = '$id'"));
+ $gameinfo = mysql_fetch_array(run_query("SELECT gameid,game,about,Champion_name,Champion_score,times_played,gamecat,exclusiv FROM phpqa_games WHERE gameid = '$id'"));
  if (!$gameinfo) {
 header("Location: index.php");
 die();
@@ -58,16 +58,19 @@ die();
 <?php //FSmod EDIT ?>
  <td class='arcade1' align='center'><a href='./index.php?cat=<?php echo $gameinfo['gamecat'] ?>' title='<?php echo $showcat[0] ?>'><img src='<?php echo $arcurl ?>/<?php echo $catloc ?>/<?php echo $showcat[0] ?>.png'  height='25' width='25' alt='<?php echo $showcat[0] ?>' style='float:left; margin-left:10px; margin-top:15px; clear: both;' /></a><?php echo $gameinfo['about']; ?><br /><br /><a href='index.php?play=<?php echo $id ?>#playzone' class='navigation'> Play </a><a href='index.php?fullscreen=<?php echo $id ?>' class='navigation'> Full </a><?php if (isset($exist[6])&&$exist[6] == "Admin") { echo "<a href='index.php?cpiarea=addgames&method=edit&game=".$id."' title='Edit Game Settings' class='navigation'>EDIT</a>";} ?> <div class='viewedtimes' style='float: right; font-size: 8px;'><?php echo "Played ".$gameinfo['times_played']." Time".($gameinfo['times_played']!=1?"s":""); ?>
  <?php
- $fav_action='';
+$fav_action='';
 $DL_action='';
 if(isset($_COOKIE['phpqa_user_c'])) {
 $fav_action="<a href='index.php?action=fav&game=".$gameinfo['gameid']."&favtype=add&akey=".$key."&fav=1' title='Add Game To Favorites'><img src='".$imgloc."/favorite.png' alt='[Add to favorites]' width='25' height='25' /></a>";
 if(isset($_GET['fav'])) $fav_action="<a href='index.php?action=fav&game=".$g['gameid']."&favtype=remove&akey=".$key."&fav=1' title='Remove Game From Favorites'><img src='".$imgloc."/remove.png' alt='[Remove favorite]' width='25' height='25' /></a>";
 }
 if ((isset($exist[6])&&$exist[6] == "Admin") || (isset($exist[6])&&$exist[6] ==  "Affiliate")) { 
-if ((null !== $showcat[0] && $showcat[0] == "Testing") && ($exist[6] ==  "Affiliate")){$DL_action="";} else {
+    if (((null !== $showcat[0] && $showcat[0] == "Testing") || (null !== $gameinfo['exclusiv']) && $gameinfo['exclusiv'] == 1) && ($exist[6] ==  "Affiliate")){
+        if($gameinfo['exclusiv'] == 1){
+        $DL_action="<a title='Exclusive Game - Sorry, No Download'><img src='".$arcurl."/".$imgloc."/exclusiv.png' height='25' width='25' alt='Exclusive Game - Sorry, No Download' /></a>";
+        }} else {
 $DL_action="<a href='GetGame.php?GID=".$gameinfo['gameid']."' title='Download Game TAR'><img src='".$arcurl."/".$imgloc."/DL.png' height='25' width='25' alt='Download Game .tar' /></a>&nbsp;";
-}} 
+}}
 ?>
 <?php echo $DL_action.$fav_action ?></div></td>
  <td class='arcade1' valign='top' align='center'><img alt='image' src='<?php echo $crowndir; ?>/crown1.gif' /><br /><b><?php echo $gameinfo['Champion_name']?$gameinfo['Champion_name']:""; ?></b><br /><?php echo $gameinfo['Champion_score']?str_replace('-', '', $gameinfo['Champion_score']):"-------------"; ?><br /><a href='index.php?id=<?php echo $id; ?>'>View Highscores</a>
