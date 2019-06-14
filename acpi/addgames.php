@@ -50,6 +50,8 @@ $gamewidth = htmlspecialchars($_POST['width'], ENT_QUOTES);
 $about = htmlspecialchars($_POST['desc'], ENT_QUOTES);
 $gamecat = htmlspecialchars($_POST['gamecat'], ENT_QUOTES);
 $exclusiv = htmlspecialchars($_POST['exclusive'], ENT_QUOTES);
+$HOFname = htmlspecialchars($_POST['HOFname'], ENT_QUOTES);
+$HOFscore = htmlspecialchars($_POST['HOFscore'], ENT_QUOTES);
 if (isset($_POST['plattype'])) {
 $platform = htmlspecialchars($_POST['plattype'], ENT_QUOTES);
 }
@@ -151,7 +153,7 @@ $addedalready = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gam
 if (empty($addedalready)) {
 $atime = '';
 message("Game added/edited. <br>[ <a href='index.php?cpiarea=idx'>Arcade CP Home</a> | <a href='index.php?cpiarea=addgames&method=".$_GET['method']."'>Add Another</a> ]");
-run_query("INSERT INTO phpqa_games (game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring,exclusiv) VALUES ('$gamename','$idname','$gameheight','$gamewidth','$about','$gamecat','$remoteurl','$champ','$champs','','$plattype','$scoretype','$exclusiv')");
+run_query("INSERT INTO phpqa_games (game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring,exclusiv,HOF_name,HOF_score) VALUES ('$gamename','$idname','$gameheight','$gamewidth','$about','$gamecat','$remoteurl','$champ','$champs','','$plattype','$scoretype','$exclusiv','$HOFname','$HOFscore')");
 if (!isset($_GET['game'])){
 $atime = time();
 $NewGtext = "[color=green][i]New Game Added![/i] [/color][size=16] [url=".$arcurl."/index.php?play=".$idname."#playzone][b]".$gamename."[/b][/url][/size]  [color=green][i]Enjoy![/i][/color] [:D]";
@@ -295,6 +297,8 @@ echo  "<option value='".$catlist[0]."'>".$catlist[1]."</option>";
 ?>
 </select>
 </td></tr>
+<input type='hidden' name='HOFname' value='<?php echo $editgame['HOF_name'] ?>'>
+<input type='hidden' name='HOFscore' value='<?php echo $editgame['HOF_score'] ?>'>
 <tr><td class='headertableblock' colspan='2'><div align=center><input type='Submit' name='addgame' value='<?php echo $what; ?> Game'></div></td></tr>
 </form>
 </table>
