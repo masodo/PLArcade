@@ -1,17 +1,17 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: OnlineListOption.php  Function: Maintain Online User List   Modified: 2/28/2019   By: MaSoDo
+# Section: OnlineListOption.php  Function: Maintain Online User List   Modified: 6/14/2019   By: MaSoDo
 
 			// = = = = = = = = = = = = = = = = = = 
 			// 		Online List
@@ -42,9 +42,11 @@ echo "</div>";
 } else { 
 echo "</div>";
 if(!isset($_GET['id']) && !isset($_GET['cparea']) && !isset($_GET['modcparea']) && !isset($_GET['play'])) $w="Viewing Arcade Index"; }
-echo "<div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><tr><td class='arcade1' align='left'><fieldset class=\"search\"><legend>Users Online in the Past ".$settings['online_list_dur']." Minutes: (<a href='?action=Online&method=time'>Last Click</a>, <a href='?action=Online&method=name'>Member Name</a>)</legend><br />";
+echo "<div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><tr><td class='arcade1' align='left'><fieldset class=\"search\"><legend>Users Online in the Past ".$settings['online_list_dur']." Minutes: (<a href='?action=Online&method=time'>Last Click</a>, <a href='?action=Online&method=name'>Member Name</a>) <span class='adminLook'>Administrator</span>  <span class='moderatorLook'>Moderator</span>  <span class='memberLook'>Member</span>  <span class='affiliateLook'>Affiliate</span> </legend><br />";
 $online=run_query("SELECT * FROM phpqa_sessions ORDER by time DESC");
 	while($g=mysql_fetch_array($online)){ 
+	$onnow = run_query("SELECT `group` FROM `phpqa_accounts` WHERE `name` = '" . $g['name'] . "'");
+        $onnowGrp=mysql_fetch_array($onnow);
 global $time;
 $HowManyMinutes=floor($time/60)-floor($g['time']/60);
 echo "</div>";
@@ -52,7 +54,7 @@ if($HowManyMinutes > $settings['online_list_dur']) {
 run_query("DELETE FROM phpqa_sessions WHERE name='".$g['name']."'");
 } else {
 $where=explode("|", $g['location']);
-echo "<a href='index.php?action=profile&user=".$g['name']."' title='".$where[0]." (".$HowManyMinutes." mins ago)'>".$g['name']."</a> ";  } 
+echo "<a href='index.php?action=profile&user=".$g['name']."' title='".$where[0]." (".$HowManyMinutes." mins ago)' class='".$onnowGrp['group']."Look'>".$g['name']."</a> ";  } 
 }
 echo "</fieldset></td></tr></table></div><br />";
 echo "<div style='text-align:left; margin-bottom: 10px; margin-left:0px;'><input id='Button1' type='button' value='&#8593; Return to Top of Page &#8593;' onclick='anchorlink(\"top\");' style='font-size:16px; font-weight:bold; color:silver;' /></div>";
