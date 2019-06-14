@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ArcadeInfo.php  Function: Latest Site Info Block   Modified: 6/11/2019   By: MaSoDo
+# Section: ArcadeInfo.php  Function: Latest Site Info Block   Modified: 6/14/2019   By: MaSoDo
 ?>
 <br />
 <div align="center">
@@ -76,17 +76,20 @@ echo "<img height='20' width='20' src='arcade/pics/$g[0].gif' alt='$g[1]' /><a h
         $VstatG = "<img src='$imgloc/rd_star.gif' height='10' width='10' alt='*' /><b>";
         $bigname = "Y";
         $bigtag = "</b>";
-}
+} else {$VstatG = "<div style='display:inline-block;width:10px;height:10px;'></div>";}
+$thisGuy = $s[1];
+$findGroup = run_query("SELECT `group` FROM `phpqa_accounts` WHERE `name` = '".$thisGuy."'");
+$thisGroup = mysql_fetch_array($findGroup);
 //$parse_stamp = gmdate($datestamp, $s[5]+3600*$settings['timezone']);
 $parse_stamp = date($datestamp, $s[5]);
-echo "$VstatG<a href='index.php?action=profile&amp;user=$s[1]'>$s[1]</a>" . $bigtag . " scored <i>" . str_replace('-', '', $s[2]) . "</i> in <a href='index.php?id=$s[6]'><i>$s[7]</i></a> on $parse_stamp<hr>";
+echo "$VstatG<a href='index.php?action=profile&amp;user=".$s[1]."' class='".$thisGroup[0]."Look'>".$s[1]."</a>" . $bigtag . " scored <i>" . str_replace('-', '', $s[2]) . "</i> in <a href='index.php?id=".$s[6]."#playzone'><i>$s[7]</i></a> on ".$parse_stamp."<hr>";
 }
 ?>
 </td></table>
 </td>
 <td class="arcade1" valign="top" nowrap="nowrap" align="left">
 <?php
-$scoreboard = run_query("SELECT phpqa_accounts.name,phpqa_accounts.avatar, COUNT(phpqa_leaderboard.username) AS champions FROM phpqa_accounts
+$scoreboard = run_query("SELECT phpqa_accounts.name,phpqa_accounts.avatar,phpqa_accounts.group, COUNT(phpqa_leaderboard.username) AS champions FROM phpqa_accounts
 LEFT JOIN phpqa_leaderboard ON phpqa_accounts.name = phpqa_leaderboard.username
 GROUP BY phpqa_leaderboard.username
 ORDER BY champions DESC LIMIT 0,".$bpnum."");
@@ -103,7 +106,7 @@ $trop = $trop + 1;
 if ($trop == 2) { $trophy = "<img src='$crowndir/crown2.gif' />"; }
 if ($trop == 3) { $trophy = "<img src='$crowndir/crown3.gif' />"; }
 if ($scores['avatar'] == ''){ $scores['avatar'] = $avatarloc.'/man.gif'; }
-echo"<span style='font-size: 14px; line-height:175%'>&nbsp;<a href='index.php?action=profile&amp;user=" . $scores['name'] . "' onmouseover=\"s=document.getElementById('champboxpopup');s.style.display='';s.getElementsByTagName('img')[0].src='" . $scores['avatar'] . "';\" onmousemove=\"s=document.getElementById('champboxpopup').style;s.top=document.body.scrollTop+2+event.clientY;s.left=document.body.scrollLeft+event.clientX;\" onmouseout=\"document.getElementById('champboxpopup').style.display='none'\"><i>" . $scores['name'] . "</i></a>&nbsp;</span>(<b>" . $scores['champions'] . "</b> Wins) &nbsp;" . $trophy . " <br />";
+echo"<span style='font-size: 14px; line-height:175%'>&nbsp;<a href='index.php?action=profile&amp;user=" . $scores['name'] . "' onmouseover=\"s=document.getElementById('champboxpopup');s.style.display='';s.getElementsByTagName('img')[0].src='" . $scores['avatar'] . "';\" onmousemove=\"s=document.getElementById('champboxpopup').style;s.top=document.body.scrollTop+2+event.clientY;s.left=document.body.scrollLeft+event.clientX;\" onmouseout=\"document.getElementById('champboxpopup').style.display='none'\" ><i>" . $scores['name'] . "</i></a>&nbsp;</span>(<b>" . $scores['champions'] . "</b> Wins) &nbsp;" . $trophy . " <br />";
 }
 } // End acct based check for big table
 } // End check for big table
