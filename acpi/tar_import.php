@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: tar_import - Administrator Control Panel   Modified: 6/11/2019   By: MaSoDo
+# Section: acpi Place: tar_import - Administrator Control Panel   Modified: 6/14/2019   By: MaSoDo
 
 {
 $plattype = 'FL';
@@ -80,6 +80,8 @@ rcopy("./tars/gamedata/{$tarfile_name}" , "./arcade/gamedata/{$tarfile_name}" );
 }
 @unlink("./tars/{$tarfile_name}.php");
 rrmdir("./tars/gamedata/{$tarfile_name}");
+//comment out line below to prevent deletion of game file after install
+if (file_exists("./tars/" . $tarfile)) unlink("./tars/" . $tarfile);
 global $remoteurl, $champ, $champs;
 $gamename = $config['gtitle'];
 $about = htmlspecialchars($config['gwords'], ENT_QUOTES);
