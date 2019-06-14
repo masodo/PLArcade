@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: tar_importH5 - Administrator Control Panel   Modified: 6/11/2019   By: MaSoDo
+# Section: acpi Place: tar_importH5 - Administrator Control Panel   Modified: 6/14/2019   By: MaSoDo
 
 {
 $plattype = 'H5';
@@ -75,6 +75,8 @@ rcopy("./tarsH5/gamedata/{$tarfile_name}" , "./arcade/gamedata/{$tarfile_name}" 
 }
 @unlink("./tarsH5/{$tarfile_name}.php");
 rrmdir("./tarsH5/gamedata/{$tarfile_name}");
+//comment out line below to prevent deletion of game file after install
+if (file_exists("./tarsH5/" . $tarfile)) unlink("./tarsH5/" . $tarfile);
 $gamename = $config['gtitle'];
 $about = htmlspecialchars($config['gwords'], ENT_QUOTES);
 $gameheight = $config['gheight'];
