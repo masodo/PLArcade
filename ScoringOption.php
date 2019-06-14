@@ -47,6 +47,7 @@ die();
  }
  ?>
  <div class='tableborder'>
+ <a name='playzone'></a>
  <table width='100%' cellpadding='4' cellspacing='1'>
  <tr>
  <td width='5%' align='center' class='headertableblock'></td>
@@ -235,6 +236,10 @@ $selectfrom=run_query("SELECT * FROM phpqa_scores WHERE gameidname='$id' ORDER B
 $parse_stamp = date($datestamp, $g[5]);
 $postsofsomething = $g[4];
 $i=-1;
+$thisGuy = $g['username'];
+$findGroup = run_query("SELECT `group` FROM `phpqa_accounts` WHERE `name` = '".$thisGuy."'");
+$thisGroup = mysql_fetch_array($findGroup);
+
 while ($i <= count($smilies)) {
 $i++;
 if (isset($smilies[$i]))$smilethis = $smilies[$i];
@@ -248,7 +253,7 @@ $checkbadwords = rtrim($badwords[$gx]);
 $postsofsomething= preg_replace("/$checkbadwords/i", "@!&^*%", $postsofsomething);
 } 
 }
-echo "<tr><td class='arcade1' align='center'><a href='index.php?action=profile&amp;user=".$g[1]."'>".$g[1]."</a></td><td class='arcade1' align='center'>" . str_replace('-', '', $g[2]) . "</td><td class='arcade1' width='40%' align='center'>".$postsofsomething."</td><td class='arcade1' width='20%' align='center'>".$parse_stamp."</td>";
+echo "<tr><td class='arcade1' align='center'><a href='index.php?action=profile&amp;user=".$g[1]."' class='".$thisGroup['group']."Look'>".$g[1]."</a></td><td class='arcade1' align='center'>" . str_replace('-', '', $g[2]) . "</td><td class='arcade1' width='40%' align='center'>".$postsofsomething."</td><td class='arcade1' width='20%' align='center'>".$parse_stamp."</td>";
 isset($exist[6]) ? $exist[6] : null;
 if(isset($exist[6]) && $exist[6] == "Moderator" || isset($exist[6]) && $exist[6] == "Admin") {
 echo "<td width='20%' class='arcade1' align='center'><a href='?modcparea=IPscan&serv=".$g[3]."'>".$g[3]."</a></td><td width='2%' class='arcade1' align='center'><input type='checkbox' name='score_m[]' value='".$g[0]."'></td>";
