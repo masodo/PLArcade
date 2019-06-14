@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: RegisterOption.php  Function: Register for the Arcade   Modified: 6/7/2019   By: MaSoDo
+# Section: RegisterOption.php  Function: Register for the Arcade   Modified: 6/14/2019   By: MaSoDo
 if (isset($_POST['usernamesign']) && $_POST['usernamesign'] != "" && isset($_POST['postpassword']) && $_POST['postpassword'] !="") {
 $name = htmlspecialchars($_POST['usernamesign'], ENT_QUOTES);
 $pass = md5(sha1(htmlspecialchars($_POST['postpassword'])));
@@ -50,7 +50,7 @@ message("You must agree to the Terms of use. Please check the box.");
 message("The email you entered was invalid.");
 } else  {
 $status='Member';
-if(isset($settings['enable_validation'])) $status='Validating';
+if(isset($settings['enable_validation'])&&$settings['enable_validation']==1) $status='Validating';
 if(isset($_POST['dont'])) {
 $s_settings='||||No||||||';
 } else {
@@ -60,10 +60,10 @@ if(isset($settings['enable_email_validation'])){
 $raw_password=rand(0,10).rand(0,10).rand(0,10).rand(0,10).rand(0,10).rand(0,10).rand(0,10).rand(0,10).rand(0,10);
 $pass = md5(sha1($raw_password));
 $hd="admin@{$_SERVER['HTTP_HOST']}";
-$mailsub = "Message from $settings[arcade_title] - Validate your email.";
-$mailbody = "Dear $name, \n\r\n\r\n\r Our records indicate that you have registered an account at {$settings['arcade_title']}. Your details are as follows: \n\r\n\r ----------------------------------------------- \n\r\n\r Username: $name \n\r\n\r Temporary Password: $raw_password \n\r\n\r -----------------------------------------------\n\r\n\r\n\r Login with your user name and the temporary password. Once logged-in you can click on &quot;settings&quot; to create a new password. \n\r\n\r\n\rIf you did not request this password change, please IGNORE and DELETE this
+$mailsub = "Message from " . $settings['arcade_title'] . "- Validate your email.";
+$mailbody = "Dear " . $name .", \n\r\n\r\n\r Our records indicate that you have registered an account at {$settings['arcade_title']}. Your details are as follows: \n\r\n\r ----------------------------------------------- \n\r\n\r Username: " . $name . "\n\r\n\r Temporary Password: " . $raw_password . " \n\r\n\r -----------------------------------------------\n\r\n\r\n\r Login with your user name and the temporary password. Once logged-in you can click on &quot;settings&quot; to create a new password. \n\r\n\r\n\rIf you did not request this password change, please IGNORE and DELETE this
 email immediately. \n\r\n\r\n\r IP address of user who signed up: {$_SERVER['REMOTE_ADDR']}";
-$headers = "From: $hd\n";
+$headers = "From: $hd\nBcc: $siteemail\n";
 @mail($email,$mailsub,$mailbody,$headers);
 }
 run_query("INSERT INTO `phpqa_accounts` (`name`,`pass`,`email`,`ipaddress`,`avatar`,`group`,`skin`,`settings`) VALUES ('$name','$pass','$email','$ipa','','$status','Default','$s_settings')", 1);
