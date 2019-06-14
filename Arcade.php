@@ -11,12 +11,21 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Arcade.php  Function: Main Organization Page   Modified: 6/12/2019   By: MaSoDo
+# Section: Arcade.php  Function: Main Organization Page   Modified: 6/14/2019   By: MaSoDo
 //-----------------------------------------------------------------------------------/
 require "./Preliminary.php";
 require "./Functions.php";
 require "./PageHead.php";
 require "./HeaderBlock.php";
+if (isset($_GET['contact'])) {
+require "./contact.php";
+}
+if (isset($_GET['privacy'])) {
+require "./privacy.php";
+}
+if (isset($_GET['disclosure'])) {
+require "./disclosure.php";
+}
 require "./AddStyle.php";
 require "./JavaScript.php";
 require "./SmileyPop.php";
@@ -30,7 +39,7 @@ if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isse
 echo "<br />"; message("Game Over!"); 
 require "./NavShout.php";
 }
-if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){}else{
+if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){require "./FooterBlock.php";}else{
 if (isset($_GET['play']) && $_GET['play']) require "./PlayOption.php"; // Playing?
 if (isset($_GET['action']) && $_GET['action'] == "forgotpass") require "./ForgotPassOption.php";
 elseif (isset($_GET['action']) && $_GET['action'] == "members") require "./MembersOption.php";
@@ -53,10 +62,9 @@ require "./IndexOption.php";
 } else {
 require "./IndexOptionCV.php";
 }
-
 if (!isset($_GET['do'])) {
 require "./PageMakerB.php";
-}}
-require "./FooterBlock.php";
 }
+require "./FooterBlock.php";
+}}
 ?>
