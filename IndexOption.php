@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: IndexOption.php  Function: Display Games Index   Modified: 6/13/2019   By: MaSoDo
+# Section: IndexOption.php  Function: Display Games Index   Modified: 6/14/2019   By: MaSoDo
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//		  Favorites
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -53,7 +53,7 @@ require "./PageMakerT.php";
 $CheckScoring = $g['scoring'];
 $showcat=mysql_fetch_array(run_query("SELECT cat FROM phpqa_cats WHERE id='{$g['gamecat']}'"));
 if ($g['gamecat'] != '2' || (isset($exist[6])&&$exist[6] == "Admin")) {	
-$CHMP = run_query("SELECT `avatar` FROM `phpqa_accounts` WHERE `name` = '" . $g['Champion_name'] . "'");
+$CHMP = run_query("SELECT `avatar`,`group` FROM `phpqa_accounts` WHERE `name` = '" . $g['Champion_name'] . "'");
 $CHMPimg=mysql_fetch_array($CHMP);
 if (!$CHMPimg['avatar'])$CHMPimg['avatar'] = $avatarloc.'/man.gif';
 if ($g['platform'] == 'H5') { 
@@ -87,7 +87,7 @@ $DL_action="<a href='GetGame.php?GID=".$g['gameid']."' title='Download Game TAR'
 echo "</div><div class='viewedtimes' style='float: right;'>".$DL_action.$fav_action."</div></td>";
 if ($g['gamecat'] != '20' && $g['gamecat'] != '16') {
 echo "<tr><td align='center' height='20px' class='headertableblock'>Top Score</tr>";
-echo "<tr><td class='arcade1 fheight1' valign='top' align='center'><img alt='image' src='".$crowndir."/crown1.gif' /><br /><b>".str_replace('-', '', $g['Champion_score'])."</b><br /><div style='height:60px;'><img src='".$arcurl."/".$CHMPimg['avatar']."'  height='40' width='40' /><br /><b>".($g['Champion_name']?"<a href='index.php?action=profile&amp;user=".$g['Champion_name']."'>".$g['Champion_name']."</a></b>":"------------</b>")."</div><p><a href='index.php?id=".$g['gameid']."'>View Highscores</a></p>";
+echo "<tr><td class='arcade1 fheight1' valign='top' align='center'><img alt='image' src='".$crowndir."/crown1.gif' /><br /><b>".str_replace('-', '', $g['Champion_score'])."</b><br /><div style='height:60px;'><img src='".$arcurl."/".$CHMPimg['avatar']."'  height='40' width='40' /><br /><b>".($g['Champion_name']?"<a href='index.php?action=profile&amp;user=".$g['Champion_name']."' class='".$CHMPimg['group']."Look'>".$g['Champion_name']."</a></b>":"------------</b>")."</div><p><a href='index.php?id=".$g['gameid']."'>View Highscores</a></p>";
 } else {
 echo "<tr><td align='center' height='20px' class='headertableblock'>No Scores Recorded For This Game</tr>";
 echo "<tr><td class='arcade1 fheight1' valign='top' align='center'><div style='overflow:hidden; height:113px'><img alt='image' src='".$crowndir."/crown1.gif' />&nbsp;&nbsp;<img alt='image' src='".$crowndir."/crown2.gif' />&nbsp;&nbsp;<img alt='image' src='".$crowndir."/crown3.gif' /><br /><br /><i>Sorry, but this game does not record<br />your score in the arcade.</i><br /><b>Please enjoy this selection<br />just for the fun of it!</b><br /><div style='height:56px;'>&nbsp;</div></div>";
