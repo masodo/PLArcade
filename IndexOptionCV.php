@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: IndexOption.php  Function: Display Games Index   Modified: 6/13/2019   By: MaSoDo
+# Section: IndexOption.php  Function: Display Games Index   Modified: 6/14/2019   By: MaSoDo
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//		  Favorites
@@ -47,8 +47,9 @@ if (!empty($catquer)) {
 echo "<div style='text-align:center; margin-bottom: 5px; margin-top: 5px;'><a title='Open/Close The Games Index'><img id='btn4' src='" . $imgloc . "/" . $collimg4 . "' type='button' alt='&#8595; Games: Collapse/Expand &#8595;' onclick='return CollapseExpand4()' style='font-size:16px; font-weight:bold; color:silver;' /></a></div><div id='MyDiv4' class='" . $collapset4 . "'>";
 require "./PageMakerT.php";
 	while($g=mysql_fetch_array($catquer)){ 
+	$CHMP = run_query("SELECT `avatar`,`group` FROM `phpqa_accounts` WHERE `name` = '" . $g['Champion_name'] . "'");
+        $CHMPimg=mysql_fetch_array($CHMP);
 	// Select from the scores table....
-	
 $CheckScoring = $g['scoring'];
 $showcat=mysql_fetch_array(run_query("SELECT cat FROM phpqa_cats WHERE id='{$g['gamecat']}'"));	
 if ($g['gamecat'] != '2' || (isset($exist[6])&&$exist[6] == "Admin")) {
@@ -87,7 +88,7 @@ $DL_action="<a href='GetGame.php?GID=".$g['gameid']."' title='Download Game TAR'
 }}
 echo "</div><div class='viewedtimes' style='float: right;'>".$DL_action.$fav_action."</div></td>";
 if ($g['gamecat'] != '20' && $g['gamecat'] != '16') {
-echo "<td class='arcade1' valign='top' align='center'><img alt='image' src='".$crowndir."/crown1.gif' /><br /><b>".str_replace('-', '', $g['Champion_score'])."</b><br /><b>".($g['Champion_name']?"<a href='index.php?action=profile&amp;user=".$g['Champion_name']."'>".$g['Champion_name']."</a></b>":"------------</b>")."<p><a href='index.php?id=".$g['gameid']."'>View Highscores</a></p></td></tr></table></div><br />";
+echo "<td class='arcade1' valign='top' align='center'><img alt='image' src='".$crowndir."/crown1.gif' /><br /><b>".str_replace('-', '', $g['Champion_score'])."</b><br /><b>".($g['Champion_name']?"<a href='index.php?action=profile&amp;user=".$g['Champion_name']."' class='".$CHMPimg['group']."Look'>".$g['Champion_name']."</a></b>":"------------</b>")."<p><a href='index.php?id=".$g['gameid']."'>View Highscores</a></p></td></tr></table></div><br />";
 }}}
 }}	
 ?>
