@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 6/9/2019   By: MaSoDo
+# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 6/14/2019   By: MaSoDo
 ?>
 <div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><tr><td class='arcade1' align='left'>
 <?php
@@ -46,6 +46,7 @@ $cparea_info['games']="Games Manager";
 $cparea_info['Email']="Post Office";
 $cparea_info['filter']="Word Filters";
 $cparea_info['skin']="Skin Control";
+$cparea_info['editor']="Skin Editor";
 $cparea_info['snapshot']="Champion SnapShot";
 $cparea_info['affiliates']="Affiliates Manager";
 if(isset($_GET['cpiarea'])) {
