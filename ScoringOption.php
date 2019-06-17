@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 6/13/2019  By: MaSoDo
+# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 6/17/2019  By: MaSoDo
 if (isset($_POST['thescore']))$thescore = $_POST['thescore'];
 if (isset($_GET['autocom'])) {
 $id=htmlspecialchars($_COOKIE['gname'], ENT_QUOTES);
@@ -167,7 +167,7 @@ $post_user_cookie = $adminplayas;
 //End Admin Play As
   // First time, submit it in.
    run_query("INSERT INTO phpqa_scores (username,thescore,ip,comment,phpdate,gameidname,gamename) VALUES ('".$post_user_cookie."','".$thescore."','".$ipa."','','".$time."','".$gameidname."','".$gameinfo['game']."')");
-  if($settings['allow_comments']) echo $commentthing;
+  if(null !== ($settings['allow_comments'])&&($settings['allow_comments']=='1')) echo $commentthing;
  }
  if ($thescore > $checkTOPscore[2]) { // We have a champion!
  $WINNERTAG = ' ';
@@ -178,7 +178,7 @@ $post_user_cookie = $adminplayas;
 // ---------------
 // Email the loser
 // ---------------
-if(isset($settings['email_scores'])) {
+if(isset($settings['email_scores'])&&$settings['email_scores']=='1') {
 if($checkTOPscore['username'] !="") {
 if($checkTOPscore['username'] != $post_user_cookie) {
 $person_to_mail=mysql_fetch_array(run_query("SELECT email,settings FROM phpqa_accounts WHERE name='".$checkTOPscore['username']."'"));
