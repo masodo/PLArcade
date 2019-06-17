@@ -50,32 +50,33 @@ message("You must agree to the Terms of use. Please check the box.");
 message("The email you entered was invalid.");
 } else  {
 $status='Member';
-if(isset($settings['enable_validation'])&&$settings['enable_validation']==1) $status='Validating';
+if(isset($settings['enable_validation'])&&$settings['enable_validation'] == '1') $status='Validating';
 if(isset($_POST['dont'])) {
 $s_settings='||||No||||||';
 } else {
 $s_settings='||||||||||';
 }
-if(isset($settings['enable_email_validation'])){
+if(isset($settings['enable_email_validation'])&&$settings['enable_email_validation'] == '1'){
+echo "<script>alert('Registration Email Sent!')</script>";
 $raw_password=rand(0,10).rand(0,10).rand(0,10).rand(0,10).rand(0,10).rand(0,10).rand(0,10).rand(0,10).rand(0,10);
 $pass = md5(sha1($raw_password));
 $hd="admin@{$_SERVER['HTTP_HOST']}";
 $mailsub = "Message from " . $settings['arcade_title'] . "- Validate your email.";
 $mailbody = "Dear " . $name .", \n\r\n\r\n\r Our records indicate that you have registered an account at {$settings['arcade_title']}. Your details are as follows: \n\r\n\r ----------------------------------------------- \n\r\n\r Username: " . $name . "\n\r\n\r Temporary Password: " . $raw_password . " \n\r\n\r -----------------------------------------------\n\r\n\r\n\r Login with your user name and the temporary password. Once logged-in you can click on &quot;settings&quot; to create a new password. \n\r\n\r\n\rIf you did not request this password change, please IGNORE and DELETE this
 email immediately. \n\r\n\r\n\r IP address of user who signed up: {$_SERVER['REMOTE_ADDR']}";
-$headers = "From: $hd\nBcc: $siteemail\n";
+$headers = "From: ".$hd."\nBcc: ".$siteemail."\n";
 @mail($email,$mailsub,$mailbody,$headers);
 }
 run_query("INSERT INTO `phpqa_accounts` (`name`,`pass`,`email`,`ipaddress`,`avatar`,`group`,`skin`,`settings`) VALUES ('$name','$pass','$email','$ipa','','$status','$defCSS','$s_settings')", 1);
-if(!$settings['enable_email_validation']) { 
+if(isset($settings['enable_email_validation'])&&$settings['enable_email_validation'] != '1') { 
 	message("Welcome to the arcade, <b>$name</b>!<br /><br /> Click the '<i>Login</i>' link above, enter your name and password and login to begin playing!");
 } else {
-	message("Welcome to the arcade, <b>$name</b>! Please check your <b>e-mail</b>. This arcade requires that you validate your email address. <br /><br />You have been given a new password via email which you must use to login.");
+	message("Welcome to the arcade, <b>$name</b>! Please check your <b>e-mail</b>.<br /> This arcade requires that you validate your email address. <br /><br />You have been given a new password via email which you must use to login.");
 }
 if($settings['enable_validation']) message("Note: The Administrator has enabled <b>validation</b> on this arcade. This means that each account must be approved by the administrator to post messages, use settings, or the shoutbox. As a validating user you will not be able to submit your score yet so please be patient, thank you.");
 }
 }
-if(isset($settings['use_seccode'])) {
+if(isset($settings['use_seccode'])&&$settings['use_seccode'] == '1') {
 $spam=rand(0,999999);
 $_SESSION['captcha']=$spam;
 }
@@ -84,8 +85,8 @@ if(isset($settings['disable_reg']) && $settings['disable_reg'] != '1') {
 <form action='?action=register' method='POST'>
 <div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><td width='60%' align='center' class='headertableblock'>Register</td><td width='60%' align='center' class='headertableblock'></td><tr>
  <tr><td class="arcade1" align="left"><b>Enter a user name</b><br />Note: username cannot contain most special characters.</td><td class="arcade1" align="left"><input type='text' name='usernamesign' /></td></tr>
- <?php if(isset($settings['enable_validation']) && $settings['enable_validation'] == '1') { ?><tr><td class="arcade1" align="left"><b>Enter a password</b><br />Choose a secure password and dont make it your username or something easy to guess.</td><td class="arcade1" align="left"><input type="password" name="postpassword" value="" /></td></tr><tr><td class="arcade1" align="left"><b>Re-enter your password</b><br />Please re-enter your password exactly as it was above.</td><td class="arcade1" align="left"><input type="password" name="postpassword2" value="" /></td></tr><?php } ?>
-  <?php if(isset($settings['enable_validation']) && $settings['enable_validation']== '0') { ?><tr><td class="arcade1" align="left"><b>A temporary password will be emailed to you.</b><br />Login with your user name and the temporary password. Once logged-in you can click on &quot;settings&quot; to create a new password.</td><td class="arcade1" align="left"><input type="hidden" name="postpassword" value="t3mp0r4ry" /></td></tr><input type="hidden" name="postpassword2" value="t3mp0r4ry" /><?php } ?>
+ <?php if(isset($settings['enable_email_validation']) && $settings['enable_email_validation'] != '1') { ?><tr><td class="arcade1" align="left"><b>Enter a password</b><br />Choose a secure password and dont make it your username or something easy to guess.</td><td class="arcade1" align="left"><input type="password" name="postpassword" value="" /></td></tr><tr><td class="arcade1" align="left"><b>Re-enter your password</b><br />Please re-enter your password exactly as it was above.</td><td class="arcade1" align="left"><input type="password" name="postpassword2" value="" /></td></tr><?php } ?>
+  <?php if(isset($settings['enable_email_validation']) && $settings['enable_email_validation'] == '1') { ?><tr><td class="arcade1" align="left"><b>A temporary password will be emailed to you.</b><br />Login with your user name and the temporary password. Once logged-in you can click on &quot;settings&quot; to create a new password.</td><td class="arcade1" align="left"><input type="hidden" name="postpassword" value="t3mp0r4ry" /></td></tr><input type="hidden" name="postpassword2" value="t3mp0r4ry" /><?php } ?>
 <tr><td class="arcade1" align="left"><b>Email</b><br />Please enter your email.</td><td class="arcade1" align="left"><input type="text" name="emailsign" value="" /></td></tr>
  <?php if(isset($settings['use_seccode'])) { ?>
  <tr><td class="arcade1" align="left"><b>Your security code</b><br />If you do not see any numbers, or see a broken image, please contact the arcade administrator to repair the problem.</td><td class="arcade1" align="left"><img src="?captcha=1"></td></tr>
