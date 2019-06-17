@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: RegisterOption.php  Function: Register for the Arcade   Modified: 6/14/2019   By: MaSoDo
+# Section: RegisterOption.php  Function: Register for the Arcade   Modified: 6/17/2019   By: MaSoDo
 if (isset($_POST['usernamesign']) && $_POST['usernamesign'] != "" && isset($_POST['postpassword']) && $_POST['postpassword'] !="") {
 $name = htmlspecialchars($_POST['usernamesign'], ENT_QUOTES);
 $pass = md5(sha1(htmlspecialchars($_POST['postpassword'])));
@@ -66,7 +66,7 @@ email immediately. \n\r\n\r\n\r IP address of user who signed up: {$_SERVER['REM
 $headers = "From: $hd\nBcc: $siteemail\n";
 @mail($email,$mailsub,$mailbody,$headers);
 }
-run_query("INSERT INTO `phpqa_accounts` (`name`,`pass`,`email`,`ipaddress`,`avatar`,`group`,`skin`,`settings`) VALUES ('$name','$pass','$email','$ipa','','$status','Default','$s_settings')", 1);
+run_query("INSERT INTO `phpqa_accounts` (`name`,`pass`,`email`,`ipaddress`,`avatar`,`group`,`skin`,`settings`) VALUES ('$name','$pass','$email','$ipa','','$status','$defCSS','$s_settings')", 1);
 if(!$settings['enable_email_validation']) { 
 	message("Welcome to the arcade, <b>$name</b>!<br /><br /> Click the '<i>Login</i>' link above, enter your name and password and login to begin playing!");
 } else {
