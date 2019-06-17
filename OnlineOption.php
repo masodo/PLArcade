@@ -11,23 +11,23 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: OnlineOption.php  Function: Show User Activity   Modified: 6/14/2019   By: MaSoDo
+# Section: OnlineOption.php  Function: Show User Activity   Modified: 6/17/2019   By: MaSoDo
 ?>
 <div class='tableborder'><table width=100% cellpadding='4' cellspacing='1'><td width=30% align=center class=headertableblock>User</td><td width=40% align=center class=headertableblock>Last Refresh</td><td width=50% align=center class=headertableblock>Location</td>
 <?php
 $how='name';
-if($_GET['method'] != "name") $how='time';
+if(isset($_GET['method']) && $_GET['method'] != "name") $how='time';
 $online=run_query("SELECT * FROM phpqa_sessions ORDER by $how DESC");
 while($g=mysql_fetch_array($online)){ 
 	$onnow = run_query("SELECT `group` FROM `phpqa_accounts` WHERE `name` = '" . $g['name'] . "'");
         $onnowGrp=mysql_fetch_array($onnow);
 if($g['location']=="") $g['location']="Viewing Arcade Index";
 $parse_stamp = date($datestamp, $g['time']);
-echo "<tr><td class=arcade1><a href='?action=profile&user=$g[name]' title='' class='".$onnowGrp['group']."Look'>$g[name]</a></td><td class=arcade1><div align=center>$parse_stamp</div></td><td class=arcade1>";
+echo "<tr><td class=arcade1><a href='?action=profile&user=$g[name]' title='' class='".$onnowGrp['group']."Look'>$g[name]</a></td><td class=arcade1><div align=center>".$parse_stamp."</div></td><td class=arcade1>";
 if (preg_match("/Playing Game/i", $g['location'])) { 
 $nameandid=explode("Playing Game: ", $g['location']);
 $id=explode("|",$nameandid[1]);
-echo "Playing Game: <a href='index.php?play=$id[1]'>$id[1]</a>";
+echo "Playing Game: <a href='index.php?play=".$id[1]."'>".$id[1]."</a>";
 } else {
 echo $g['location'];
 }
