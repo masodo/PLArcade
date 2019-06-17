@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ProfileOption.php  Function: View User Profile Page   Modified: 6/9/2019   By: MaSoDo
+# Section: ProfileOption.php  Function: View User Profile Page   Modified: 6/17/2019   By: MaSoDo
 if (isset($_COOKIE['phpqa_user_c'])) {
 $profiledata=@mysql_fetch_array(run_query("SELECT * FROM phpqa_accounts WHERE name='".$user."'"));
 $ggggg=explode("|",$profiledata['settings']);
@@ -32,7 +32,7 @@ $LastOn=date($datestamp,$profiledata['vtstamp']);
 <tr><td class='arcade1' align='left'><b>Name</b><br /></td><td class='arcade1' align='left'><?php echo $user; ?></td></tr>
 <tr><td class='arcade1' align='left'><b>Last Login</b><br /></td><td class='arcade1' align='left'><?php echo $LastOn; ?></td></tr>
 <tr><td class='arcade1' align='left'><b>Group</b></td><td class='arcade1' align='left'><?php echo $profiledata['group']; ?></td></tr>
-<tr><td class='arcade1' align='left'><b>Skin</b><br /></td><td class='arcade1' align='left'>Default</td></tr>
+<tr><td class='arcade1' align='left'><b>Skin</b><br /></td><td class='arcade1' align='left'><?php echo $profiledata['skin']; ?></td></tr>
 <tr><td class='arcade1' align='left'><b>Total Shouts</b><br /></td><td class='arcade1' align='left'><?php echo mysql_result($q,0); ?></td></tr>
 <tr><td class='arcade1' align='left'><b>Total Champions</b></td><td class='arcade1' align='left'><?php echo mysql_num_rows($lq); ?></td></tr>
 <tr><td class='arcade1' align='left'><b>Contact</b></td><td class='arcade1' align='left'>[ <?php 
