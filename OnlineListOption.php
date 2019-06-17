@@ -11,24 +11,25 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: OnlineListOption.php  Function: Maintain Online User List   Modified: 6/14/2019   By: MaSoDo
+# Section: OnlineListOption.php  Function: Maintain Online User List   Modified: 6/17/2019   By: MaSoDo
 
 			// = = = = = = = = = = = = = = = = = = 
 			// 		Online List
 			// = = = = = = = = = = = = = = = = = =
-if(isset($_GET['action']) && $_GET['action'] != 'Online') {
 $time=time();
 if (isset($_COOKIE['phpqa_user_c'])) {
-if(isset($_GET['play'])) $w="Playing Game: $g[0]|$g[gameid]";
-if(isset($id)) $w="Viewing Highscores: $gameinfo[game]";
+if(isset($_GET['play'])) $w="Playing Game: ".$g['game']."";
+if(isset($_GET['id'])) $w="Viewing Highscores: ".$gameinfo['game']."";
 if(isset($_GET['cparea'])) $w="Using AdminCP...";
 if(isset($_GET['modcparea'])) $w="Using ModCP...";
+if(isset($_GET['action']) && $_GET['action'] != 'Online') {
 if(isset($_GET['action']) && $_GET['action'] == "tournaments") $w="Viewing Tournaments";
 if(isset($_GET['action']) && $_GET['action'] == "settings") $w="Updating Arcade Profile...";
 if(isset($_GET['action']) && $_GET['action'] == "profile") $w="Viewing A Member Profile";
 if(isset($_GET['action']) && $_GET['action'] == "leaderboards") $w="Viewing The Leaderboard";
 if(isset($_GET['action']) && $_GET['action'] == "members") $w="Viewing The Members List";
-$areyouthere=@mysql_fetch_array(run_query("SELECT name FROM phpqa_sessions WHERE name='$phpqa_user_cookie'"));
+}
+$areyouthere=@mysql_fetch_array(run_query("SELECT name FROM phpqa_sessions WHERE name='".$phpqa_user_cookie."'"));
 if(!$areyouthere) {
 global $w; 
 run_query("INSERT INTO phpqa_sessions (name,time,location) VALUES ('$phpqa_user_cookie','$time','$w')"); 
@@ -36,25 +37,27 @@ run_query("INSERT INTO phpqa_sessions (name,time,location) VALUES ('$phpqa_user_
 global $w; 
 $areyouthere=run_query("UPDATE `phpqa_sessions` SET `time` = '$time', `location` = '$w' WHERE name='$phpqa_user_cookie'");
 }
-}
 // End Collapse #4
 echo "</div>";
 } else { 
 echo "</div>";
-if(!isset($_GET['id']) && !isset($_GET['cparea']) && !isset($_GET['modcparea']) && !isset($_GET['play'])) $w="Viewing Arcade Index"; }
-echo "<div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><tr><td class='arcade1' align='left'><fieldset class=\"search\"><legend>Users Online in the Past ".$settings['online_list_dur']." Minutes: (<a href='?action=Online&method=time'>Last Click</a>, <a href='?action=Online&method=name'>Member Name</a>) <span class='adminLook'>Administrator</span>  <span class='moderatorLook'>Moderator</span>  <span class='memberLook'>Member</span>  <span class='affiliateLook'>Affiliate</span> </legend><br />";
+}
+if(!isset($_GET['id']) && !isset($_GET['cparea']) && !isset($_GET['modcparea']) && !isset($_GET['play'])) $w="Viewing Arcade Index"; 
+echo "<div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><tr><td class='arcade1' align='left'><fieldset class=\"search\"><legend>Users Online in the Past ".$settings['online_list_dur']." Minutes: (<a href='./index.php?action=Online&method=time' target='_top'>Last Click</a>, <a href='./index.php?action=Online&method=name' target='_top'>Member Name</a>) <span class='adminLook'>Administrator</span>  <span class='moderatorLook'>Moderator</span>  <span class='memberLook'>Member</span>  <span class='affiliateLook'>Affiliate</span> </legend><br />";
 $online=run_query("SELECT * FROM phpqa_sessions ORDER by time DESC");
 	while($g=mysql_fetch_array($online)){ 
 	$onnow = run_query("SELECT `group` FROM `phpqa_accounts` WHERE `name` = '" . $g['name'] . "'");
         $onnowGrp=mysql_fetch_array($onnow);
-global $time;
-$HowManyMinutes=floor($time/60)-floor($g['time']/60);
+$time = time();
+$lasttime = ($g['time']);
+$HowManyMinutes=round(abs($lasttime-$time) / 60,2);
 echo "</div>";
 if($HowManyMinutes > $settings['online_list_dur']) { 
 run_query("DELETE FROM phpqa_sessions WHERE name='".$g['name']."'");
 } else {
-$where=explode("|", $g['location']);
-echo "<a href='index.php?action=profile&user=".$g['name']."' title='".$where[0]." (".$HowManyMinutes." mins ago)' class='".$onnowGrp['group']."Look'>".$g['name']."</a> ";  } 
+$where=($g['location']);
+if ($where=='')$where="Viewing Arcade Index";
+echo "<a href='index.php?action=profile&user=".$g['name']."' title='".$where." (".$HowManyMinutes." mins ago)' class='".$onnowGrp['group']."Look'>".$g['name']."</a> ";  } 
 }
 echo "</fieldset></td></tr></table></div><br />";
 echo "<div style='text-align:left; margin-bottom: 10px; margin-left:0px;'><input id='Button1' type='button' value='&#8593; Return to Top of Page &#8593;' onclick='anchorlink(\"top\");' style='font-size:16px; font-weight:bold; color:silver;' /></div>";
