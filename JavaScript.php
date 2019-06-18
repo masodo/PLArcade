@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: JavaScript.php  Function: Javascript Function Repository   Modified: 6/6/2019   By: MaSoDo
+# Section: JavaScript.php  Function: Javascript Function Repository   Modified: 6/18/2019   By: MaSoDo
 ?>
 <script type='text/javascript'>
 function chsize(n){
@@ -68,3 +68,54 @@ var ct = new Date();
   return result;
   }
 </script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+$('#ChangePanel').click(function() {
+var url = '.'; 
+   $(' #scroll3').load(url + ' #stage');
+});
+});
+</script>
+<script type="text/javascript">
+  // Original JavaScript code by Chirp Internet: www.chirp.com.au
+  // Please acknowledge use of this code by including this header.
+  function getCookie(name)
+  {
+    var re = new RegExp(name + "=([^;]+)");
+    var value = re.exec(document.cookie);
+    return (value != null) ? unescape(value[1]) : null;
+  }
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#SendShout').click(function(){   
+        var akey = $("#akey").val();             
+        var sb = $("#sb").val();   
+        var userarcadename = getCookie("phpqa_user_c");          
+        var senttext = $("#senttext").val();    
+        var dataString = 'akey=' + akey + '&sb=' + sb + '&userarcadename=' +  userarcadename + '&senttext=' + senttext;        
+                $.ajax({
+                    type: 'POST',
+                    url: 'takeshout.php',
+                    data : dataString,
+                    cache: false
+                });
+         var Nurl = '.'; 
+         $(' #scroll3').load(Nurl + ' #stage');
+         $("#senttext").val('');
+            });
+    });
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $.ajaxSetup({ cache: false }); // This part addresses an IE bug.
+  setInterval(function() {
+    var Rurl = '.'; 
+         $(' #scroll3').load(Rurl + ' #stage');
+  }, 2000); 
+});
+</script>
+
