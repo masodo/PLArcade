@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ArcadeInfo.php  Function: Latest Site Info Block   Modified: 6/14/2019   By: MaSoDo
+# Section: ArcadeInfo.php  Function: Latest Site Info Block   Modified: 6/18/2019   By: MaSoDo
 ?>
 <br />
 <div align="center">
@@ -97,7 +97,7 @@ $scoresC=mysql_fetch_array($scoreboard);
 if (!$scoresC['avatar'])$scoresC['avatar']=$avatarloc.'/man.gif';
 echo "<div><table width='100%' cellpadding='5' cellspacing='1'>";
 echo "<tr><td width='100%' align=center class='headertableblock' style='font-size:14px'>Arcade Champion</td></tr>";
-echo "<tr><td class='arcade1'><div style='font-size:12px; color: gold; padding:3px; background-color:navy;' align='center'>with <b>".$scoresC['champions']."</b> wins!</div><div align='center' style='font-size:20px'><i><a href=\"index.php?action=profile&amp;user=".$scoresC['name']."\"><img src='".$scoresC['avatar']."' height='75px' /><br /><img alt='image' src='$crowndir/crown1.gif' /> ".$scoresC['name']." <img alt='image' src='$crowndir/crown1.gif' /></a></i></div><hr /></td></tr>";
+echo "<tr><td class='arcade1'><div style='font-size:12px; color: gold; padding:3px; background-color:navy;' align='center'>with <b>".$scoresC['champions']."</b> wins!</div><div align='center' style='font-size:20px'><i><a href=\"index.php?action=profile&amp;user=".$scoresC['name']."\"><img src='".$scoresC['avatar']."' height='75px' /><br /><img alt='image' src='$crowndir/crown1.gif' /><span class='".$scoresC['group']."Look'>".$scoresC['name']."</span><img alt='image' src='$crowndir/crown1.gif' /></a></i></div><hr /></td></tr>";
 echo "</table><div style='position:absolute;display:none;margin-top:-100px;margin-left:-110px;' id='champboxpopup'><img /></div></div>";
 $trop = 1;
 while($scores=mysql_fetch_array($scoreboard)){
@@ -106,7 +106,7 @@ $trop = $trop + 1;
 if ($trop == 2) { $trophy = "<img src='$crowndir/crown2.gif' />"; }
 if ($trop == 3) { $trophy = "<img src='$crowndir/crown3.gif' />"; }
 if ($scores['avatar'] == ''){ $scores['avatar'] = $avatarloc.'/man.gif'; }
-echo"<span style='font-size: 14px; line-height:175%'>&nbsp;<a href='index.php?action=profile&amp;user=" . $scores['name'] . "' onmouseover=\"s=document.getElementById('champboxpopup');s.style.display='';s.getElementsByTagName('img')[0].src='" . $scores['avatar'] . "';\" onmousemove=\"s=document.getElementById('champboxpopup').style;s.top=document.body.scrollTop+2+event.clientY;s.left=document.body.scrollLeft+event.clientX;\" onmouseout=\"document.getElementById('champboxpopup').style.display='none'\" ><i>" . $scores['name'] . "</i></a>&nbsp;</span>(<b>" . $scores['champions'] . "</b> Wins) &nbsp;" . $trophy . " <br />";
+echo"<span style='font-size: 14px; line-height:175%'>&nbsp;<a href='index.php?action=profile&amp;user=" . $scores['name'] . "' onmouseover=\"s=document.getElementById('champboxpopup');s.style.display='';s.getElementsByTagName('img')[0].src='" . $scores['avatar'] . "';\" onmousemove=\"s=document.getElementById('champboxpopup').style;s.top=document.body.scrollTop+2+event.clientY;s.left=document.body.scrollLeft+event.clientX;\" onmouseout=\"document.getElementById('champboxpopup').style.display='none'\"  class='".$scores['group']."Look'><i>" . $scores['name'] . "</i></a>&nbsp;</span>(<b>" . $scores['champions'] . "</b> Wins) &nbsp;" . $trophy . " <br />";
 }
 } // End acct based check for big table
 } // End check for big table
