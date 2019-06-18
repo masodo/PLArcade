@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 6/14/2019   By: MaSoDo
+# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 6/18/2019   By: MaSoDo
 ?>
 <div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><tr><td class='arcade1' align='left'>
 <?php
@@ -58,8 +58,6 @@ echo "<b>Viewing Member Profile</b>";
 } else {// Ok. You seem to be in arcade index then.
 ?>
 <?php
-if(isset($_GET['shoutbox'])) $limit=0;
-if(isset($_GET['shoutbox'])) $show=$num_pages_of;
 // Favorite games
 // Yep, that's all there is to it.
 //Game List Display Logic:
