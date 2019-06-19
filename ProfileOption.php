@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ProfileOption.php  Function: View User Profile Page   Modified: 6/17/2019   By: MaSoDo
+# Section: ProfileOption.php  Function: View User Profile Page   Modified: 6/19/2019   By: MaSoDo
 if (isset($_COOKIE['phpqa_user_c'])) {
 $profiledata=@mysql_fetch_array(run_query("SELECT * FROM phpqa_accounts WHERE name='".$user."'"));
 $ggggg=explode("|",$profiledata['settings']);
@@ -19,6 +19,7 @@ if (!isset($profiledata)) {
 message("Error: No username with the name, <b>$user</b> exists");
 } else {
 $lq=run_query("SELECT `gameid`,`game`,`about`,`Champion_score` FROM phpqa_games WHERE Champion_name='".$user."'");
+$Hq=run_query("SELECT `gameid`,`game`,`about`,`HOF_score` FROM phpqa_games WHERE HOF_name='".$user."'");
 $q=run_query("SELECT count(id) FROM phpqa_shoutbox WHERE name='".$user."'");
 $LastOn = '';
 if($profiledata['vtstamp']!=0){
@@ -74,7 +75,17 @@ $x++;
 while($getstats=mysql_fetch_array($lq)){
 ?>
 <tr>
-<td class='arcade1' width=2%><img width='20' height='20' src='<?php echo $gamesloc; ?>/pics/<?php echo $getstats['gameid']; ?>.gif' /></td><td class='arcade1' align='left'><b><a href='index.php?play=<?php echo $getstats['gameid']; ?>'><?php echo $getstats['game']; ?></a></b> - <?php echo $getstats['about']; ?></b><br /></td><td class='arcade1' width='20%' align='center'>Score to beat: <br /><b><?php echo str_replace('-', '', $getstats['Champion_score']); ?></b></td>
+<td class='arcade1' width=2%><img width='20' height='20' src='<?php echo $gamesloc; ?>/pics/<?php echo $getstats['gameid']; ?>.gif' /></td><td class='arcade1' align='left'><b><a href='index.php?play=<?php echo $getstats['gameid']; ?>#playzone'><?php echo $getstats['game']; ?></a></b> - <?php echo $getstats['about']; ?></b><br /></td><td class='arcade1' width='20%' align='center'>Score to beat: <br /><b><?php echo str_replace('-', '', $getstats['Champion_score']); ?></b></td>
+<?php
+}
+?>
+</tr></table></div><br /><br />
+<div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><td width='100%' align='center' class='headertableblock' colspan='3'>Games that <?php echo $user; ?> is <b>Hall of Fame Champion.</b></td><tr>
+<?php
+while($getHstats=mysql_fetch_array($Hq)){
+?>
+<tr>
+<td class='arcade1' width=2%><img width='20' height='20' src='<?php echo $gamesloc; ?>/pics/<?php echo $getHstats['gameid']; ?>.gif' /></td><td class='arcade1' align='left'><b><a href='index.php?play=<?php echo $getHstats['gameid']; ?>#playzone'><?php echo $getHstats['game']; ?></a></b> - <?php echo $getHstats['about']; ?></b><br /></td><td class='arcade1' width='20%' align='center'>Score to beat: <br /><b><?php echo str_replace('-', '', $getHstats['HOF_score']); ?></b></td>
 <?php
 }
 ?>
