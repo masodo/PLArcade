@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Arcade.php  Function: Main Organization Page   Modified: 6/14/2019   By: MaSoDo
+# Section: Arcade.php  Function: Main Organization Page   Modified: 6/19/2019   By: MaSoDo
 //-----------------------------------------------------------------------------------/
 require "./Preliminary.php";
 require "./Functions.php";
@@ -32,14 +32,17 @@ require "./SmileyPop.php";
 require "./FullScreen.php";
 if (!isset($_GET['do'])) {
 if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){require "./LimitedArcadeInfo.php";}else{require "./ArcadeInfo.php";}
-if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){if (isset($_GET['action']) && $_GET['action'] == "register") require "./RegisterOption.php";}else{require "./ShoutBox.php";}
+if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){if (isset($_GET['action']) && $_GET['action'] == "register") require "./RegisterOption.php";}else{ require "./ShoutBox.php";}
 if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){}else{require "./Categories.php";}
 if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){}else{require "./NavShout.php";}
 } else {
 echo "<br />"; message("Game Over!"); 
 require "./NavShout.php";
 }
-if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){require "./FooterBlock.php";}else{
+if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){
+require "./FooterBlock.php";
+if (isset($_GET['action']) && $_GET['action'] == "forgotpass") require "./ForgotPassOption.php";
+} else {
 if (isset($_GET['play']) && $_GET['play']) require "./PlayOption.php"; // Playing?
 if (isset($_GET['action']) && $_GET['action'] == "forgotpass") require "./ForgotPassOption.php";
 elseif (isset($_GET['action']) && $_GET['action'] == "members") require "./MembersOption.php";
