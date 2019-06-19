@@ -146,7 +146,6 @@ mysql_query("CREATE TABLE `phpqa_games` (
   `tags` varchar(64) default NULL COMMENT 'added MSD',
   `HOF_name` varchar(255) NOT NULL default '',
   `HOF_score` decimal(20,0) default NULL,
-  `exclusiv` TINYINIT(1) NOT NULL default '0',
   UNIQUE KEY `id` (`id`),
   KEY `gamecat` (`gamecat`),
   KEY `gameid` (`gameid`)
@@ -244,22 +243,6 @@ mysql_query("CREATE TABLE `phpqa_shoutbox` (
 // ------------------------------------------------------//
 
 //
-// Table structure for table `phpqa_affiliate`
-//
-mysql_query("CREATE TABLE `phpqa_affiliate` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `img` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `url` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `tag` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `sort` int(11) NOT NULL,
-  `key` varchar(255) CHARACTER SET utf8 NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
-");
-
-// ------------------------------------------------------//
-
-//
 // Table structure for table `phpqa_wall`
 //
 
@@ -273,8 +256,7 @@ mysql_query("CREATE TABLE `phpqa_wall` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 ");
-// nothing is ever truly free ;)
- mysql_query("INSERT INTO `phpqa_affiliate` VALUES(6, 'DeBurgerGameRoom.gif', 'http://DeBurger.com/ARCADE ', 'The DeBurger Game Room', 6, '');");
+
 // ------------------------------------------------------//
 
 // end tables
@@ -484,7 +466,7 @@ mysql_query("INSERT INTO `phpqa_accounts` (`id`, `name`, `pass`, `email`, `ipadd
 // Writing to the conf.
 $conf=@fopen('arcade_conf.php', 'w');
 
-$goforit = @fwrite($conf,"<?php\n\$maintenance='0';\n\$notinstalled='0';\n\$settings['enable_onlinelist']='1';\n\$settings['enable_passrecovery']='1';\n\$settings['enable_shoutbox']='1';\n\$settings['enable_logo']='0';\n\$settings['enable_timer']='0';\n\$settings['allow_comments']='1';\n\$settings['show_stats_table']='1';\n\$settings['disable_reg']='0';\n\$settings['enable_validation']='0';\n\$settings['use_cheat_protect']='0';\n\$settings['upload_av_max_size']='0';\n\$settings['use_seccode']='1';\n\$settings['allow_guests']='1';\n\$settings['override_userprefs']='0';\n\$settings['arcade_title']='Practical Lightning Arcade [PLA v1.0 beta]';\n\$settings['datestamp']='jS F Y - h:i A';\n\$settings['online_list_dur']='60';\n\$settings['timezone']='-5';\n\$settings['num_pages_of']='10';\n\$settings['banned_mails']='';\n\$settings['banned_usernames']='Tasos,TasosP13';\n\$settings['upload_av_max_size']='200000';\n\$phpmyadminloc='';\n\$textloc='flat';\n\$imgloc='images';\n\$catloc='categories';\n\$avatarloc='avatars';\n\$useravasloc='useravatars';\n\$smiliesloc='emoticons';\n\$bannerloc='images/banners';\n\$themesloc='skins';\n\$gamesloc='arcade';\n\$arcurl='".$SiteURL."';\n\$arcgreet='Welcome to the Practical Lightning Arcade (BETA)';\n\$ResetTime ='2025,02,31,20,01,0';\n\$toetag='mornoovening-sm.gif';\n\$adminplayas='admin';\n\$siteemail='arcade@MyNewArcade.tld';\n\$BCCcatchall='ArcadeMember@MyNewArcade.tld';\n\$dbhost='".$dbhost."';\n\$dbuser='".$dbuser."';\n\$dbpass='".$dbpass."';\n\$dbname='".$dbname."';\n?>");
+$goforit = @fwrite($conf,"<?php\n\$maintenance='0';\n\$notinstalled='0';\n\$settings['enable_onlinelist']='1';\n\$settings['enable_passrecovery']='1';\n\$settings['enable_shoutbox']='1';\n\$settings['enable_logo']='0';\n\$settings['enable_timer']='0';\n\$settings['allow_comments']='1';\n\$settings['show_stats_table']='1';\n\$settings['disable_reg']='0';\n\$settings['enable_validation']='0';\n\$settings['use_cheat_protect']='0';\n\$settings['upload_av_max_size']='0';\n\$settings['use_seccode']='1';\n\$settings['allow_guests']='1';\n\$settings['override_userprefs']='0';\n\$settings['arcade_title']='Practical Lightning Arcade [PLA v1.0 beta]';\n\$settings['datestamp']='jS F Y - h:i A';\n\$settings['online_list_dur']='60';\n\$settings['timezone']='-5';\n\$settings['num_pages_of']='10';\n\$settings['ng_num']='20';\n\$settings['ls_num']='14';\n\$settings['bp_num']='10';\n\$settings['catdiv']='80';\n\$settings['catimg']='60';\n\$settings['banned_mails']='';\n\$settings['banned_usernames']='Tasos,TasosP13';\n\$settings['upload_av_max_size']='200000';\n\$phpmyadminloc='';\n\$textloc='flat';\n\$imgloc='images';\n\$catloc='categories';\n\$avatarloc='avatars';\n\$useravasloc='useravatars';\n\$smiliesloc='emoticons';\n\$bannerloc='images/banners';\n\$themesloc='skins';\n\$gamesloc='arcade';\n\$arcurl='".$SiteURL."';\n\$arcgreet='Welcome to the Practical Lightning Arcade (BETA)';\n\$ResetTime ='2025,02,31,20,01,0';\n\$toetag='mornoovening-sm.gif';\n\$adminplayas='admin';\n\$siteemail='arcade@MyNewArcade.tld';\n\$BCCcatchall='ArcadeMember@MyNewArcade.tld';\n\$dbhost='".$dbhost."';\n\$dbuser='".$dbuser."';\n\$dbpass='".$dbpass."';\n\$dbname='".$dbname."';\n?>");
 
 if(!$goforit) { 
 message("arcade_conf.php could not be opened for writing. Please check the permissions.","Failed to write to conf");
