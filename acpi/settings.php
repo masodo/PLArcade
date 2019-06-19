@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: settings.php  Function: Set Global Arcade Variables   Modified: 6/12/2019   By: MaSoDo
+# Section: settings.php  Function: Set Global Arcade Variables   Modified: 6/19/2019   By: MaSoDo
 
 { ?>
 <br />
@@ -69,6 +69,8 @@ $settingsarray2=Array(
 'Number of New Games to display in Site Info? (def. 20)'=>'ng_num',
 'Number of Latest Scores to display in Site Info? (def. 14)'=>'ls_num',
 'Number of Best Players to display in Site Info? (def. 10)'=>'bp_num',
+'Size of Category Cell (in px square?) (def. 80)'=>'catdiv',
+'Size of Category Icon (in px square?) (def. 60)'=>'catimg',
 'Banned E-Mail Addresses? (Separate by commas)'=>'banned_mails',
 'Banned Usernames? (Separate by commas)'=>'banned_usernames',
 'Maxium size of avatar upload files in bytes? Leave blank to disallow avatar uploads.'=>'upload_av_max_size',
