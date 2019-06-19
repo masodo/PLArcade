@@ -11,9 +11,13 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Categories.php  Function: Display Categories w/Icons   Modified: 6/11/2019   By: MaSoDo
+# Section: Categories.php  Function: Display Categories w/Icons   Modified: 6/19/2019   By: MaSoDo
 global $catquery;
 $c=@mysql_data_seek($catquery,0);
+$catcell = '';
+$caticon = '';
+(isset($settings['catdiv'])&&$settings['catdiv']!='')?$catcell = $settings['catdiv']:$catcell = '80';
+(isset($settings['catimg'])&&$settings['catimg']!='')?$caticon = $settings['catimg']:$caticon = '60';
 if($c) {
  echo "<div style='text-align: center; margin-bottom: 5px; margin-top: 5px;'>";
  //Begin Collapse #3
@@ -22,10 +26,10 @@ if($c) {
 while ($c = mysql_fetch_array($catquery)) {
 
 if ($c[0] != '2') {
-echo  "<div style='width: 80px; height: 80px; padding: 10px; float: left; margin-right: 5px; margin-bottom: 5px; text-align:center;' class='arcade1'><a href='index.php?cat=".$c[0]."' title='".$c[1]."'><img src='".$catloc."/".$c[1].".png' style='width:60px; height:60px;' /><br />$c[1]</a></div>";
+echo  "<div style='width: ".$catcell."px; height: ".$catcell."px; padding: 10px; float: left; margin-right: 5px; margin-bottom: 5px; text-align:center;' class='arcade1'><a href='index.php?cat=".$c[0]."' title='".$c[1]."'><img src='".$catloc."/".$c[1].".png' style='width:".$caticon."px; height:".$caticon."px;' /><br />$c[1]</a></div>";
 } }
 if (isset($exist[6])&&$exist[6] == "Admin") {
-echo  "<div style='width: 80px; height: 80px; padding: 10px; float: left; margin-right: 5px; margin-bottom: 5px; text-align:center;' class='arcade1'><a href='index.php?cat=2' title='dead'><img src='".$catloc."/Dead.png' style='width:60px; height:60px;' /><br />Dead</a></div>";
+echo  "<div style='width: ".$catcell."px; height: ".$catcell."px; padding: 10px; float: left; margin-right: 5px; margin-bottom: 5px; text-align:center;' class='arcade1'><a href='index.php?cat=2' title='dead'><img src='".$catloc."/Dead.png' style='width:".$caticon."px; height:".$caticon."px;' /><br />Dead</a></div>";
 }
 echo"</div></td></tr></div></table><br />";
 // End Collapse #3
