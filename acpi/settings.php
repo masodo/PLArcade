@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: settings.php  Function: Set Global Arcade Variables   Modified: 6/19/2019   By: MaSoDo
+# Section: settings.php  Function: Set Global Arcade Variables   Modified: 6/20/2019   By: MaSoDo
 
 { ?>
 <br />
@@ -33,6 +33,7 @@ $settingsarray=Array(
 'Use logo at the top of every page? (Logo takes the name of the skin and looks for the image in the arcade images folder if enabled)'=>'enable_logo',
 'Enable Countdown Timer?'=>'enable_timer',
 'Allow users to post comments?'=>'allow_comments',
+'Enable announcement?'=>'show_announcement',
 'Display the arcade stats above the shoutbox/Login bar?'=>'show_stats_table',
 'Disable New Registrations?'=>'disable_reg',
 'Enable Admin Validation of New Members?'=>'enable_validation',
@@ -90,6 +91,7 @@ echo "<br></td></tr>";
 $settingsarray3=Array(
 'URL to phpMyAdmin Database Utility? (if available.)'=>'phpmyadminloc',
 'Flat database (.txt) folder location? (def=flat)'=>'textloc',
+'Announcement File? (placed in flat folder)'=>'AnnounceFile',
 'Image files folder location? (def=images)'=>'imgloc',
 'Catagory Icons folder location? (def=categories)'=>'catloc',
 'Avatar Gallery root folder? (def=avatars)'=>'avatarloc',
