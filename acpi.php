@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acp.php  Function: (Experimental) Administrator Control Panel   Modified: 5/24/2019   By: MaSoDo
+# Section: acp.php  Function: (Experimental) Administrator Control Panel   Modified: 6/20/2019   By: MaSoDo
 $place = htmlspecialchars($_GET['cpiarea']); 
 if (isset($_REQUEST['acpcheck'])) die();
 if (isset($_COOKIE['acpcheck'])) die();
@@ -26,7 +26,7 @@ require "acpi/tar_import.php";
 require "acpi/tar_importH5.php";
 } elseif($place == "skin") {
 require "acpi/skin.php";
-}
+} 
 
 if ($place == "editor") {
 require "acpi/editor.php";
