@@ -259,6 +259,22 @@ mysql_query("CREATE TABLE `phpqa_wall` (
 
 // ------------------------------------------------------//
 
+//
+// Table structure for table `phpqa_emotes`
+//
+
+mysql_query("CREATE TABLE `phpqa_emotes` (
+  `id` int(40) NOT NULL AUTO_INCREMENT,
+  `filename` varchar(40) CHARACTER SET utf8 DEFAULT NULL,
+  `code` varchar(32) CHARACTER SET utf8 DEFAULT NULL,
+  `description` varchar(128) CHARACTER SET utf8 DEFAULT NULL,
+  `enabled` tinyint(4) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
+");
+
+// ------------------------------------------------------//
+
 // end tables
 // Add Data
 // data for table `phpqa_cats`
@@ -286,7 +302,23 @@ mysql_query("INSERT INTO `phpqa_cats` (`id`, `cat`, `displayorder`) VALUES(20, '
 mysql_query("INSERT INTO `phpqa_cats` (`id`, `cat`, `displayorder`) VALUES(21, 'Slingo', 4);");
 mysql_query("INSERT INTO `phpqa_cats` (`id`, `cat`, `displayorder`) VALUES(23, 'Testing', 22);");
 
+// data for table `phpqa_emotes`
+mysql_query("INSERT INTO `phpqa_emotes` VALUES(1, '1.gif', ':)', 'basic smiley', 1);");
+mysql_query("INSERT INTO `phpqa_emotes` VALUES(2, '10.gif', ':p', 'toungue out', 1);");
+mysql_query("INSERT INTO `phpqa_emotes` VALUES(3, '11.gif', ':sweat:', 'sweat', 1);");
+mysql_query("INSERT INTO `phpqa_emotes` VALUES(4, '14.gif', '>.<', 'grimmace', 1);");
+mysql_query("INSERT INTO `phpqa_emotes` VALUES(5, '3.gif', ':(', 'sad face', 1);");
+mysql_query("INSERT INTO `phpqa_emotes` VALUES(6, '5.gif', '[:D]', 'grin', 1);");
+mysql_query("INSERT INTO `phpqa_emotes` VALUES(7, 'wavey.gif', '[wavey]', 'wavey guy', 1);");
+mysql_query("INSERT INTO `phpqa_emotes` VALUES(8, 'angry.gif', 'angry', 'angry face', 1);");
+mysql_query("INSERT INTO `phpqa_emotes` VALUES(9, 'th_computerbrain.gif', 'hack', 'hacking', 1);");
+mysql_query("INSERT INTO `phpqa_emotes` VALUES(10, 'question.gif', '[quest]', 'guestion', 1);");
+mysql_query("INSERT INTO `phpqa_emotes` VALUES(11, 'hi.gif', '[hi]', 'Hi', 1);");
+mysql_query("INSERT INTO `phpqa_emotes` VALUES(12, 'thumbsup.gif', '[thumbup]', 'thumbs up', 1);");
+mysql_query("INSERT INTO `phpqa_emotes` VALUES(13, 'SM074.gif', '!@#$%', 'cussing', 1);");
+mysql_query("INSERT INTO `phpqa_emotes` VALUES(14, 'SM039.gif', 'OhYeah', 'Happy Nanna Dance', 1);");
 
+// data for table `phpqa_games`
 mysql_query("INSERT INTO `phpqa_games`  (
 `id` ,
 `game` ,
