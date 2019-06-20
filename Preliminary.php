@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 6/11/2019   By: MaSoDo
+# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 6/19/2019   By: MaSoDo
 session_start();
 if($_GET['captcha']){
 $im = imagecreatefrompng("captchabg.png");
@@ -115,9 +115,6 @@ date_default_timezone_set("$useTZ");
 if($notinstalled) die("<a href='PLArcade_v1.0-Install.php'>Begin installation</a>");
 if($maintenance) die("<h1>Down for maintenance - We'll be back up and running soon!</h1>");
 $datestamp=$settings['datestamp'];
-$smilies = file($textloc."/emotes_faces.txt");
-$smiliesp = file($textloc."/emotes_pics.txt");
-$csmile=count($smilies);
 $modcpcheck=$acpcheck='ok';
 function is_email($text) { 
 $g = explode("@", $text);
@@ -139,11 +136,11 @@ if ($long && $f == "0" || $long && substr($num,-2,1) == "1" || substr($num,-1,1)
 function displayemotes() { 
 $g = "";
 global $textloc;
-$smilies = file($textloc.'/emotes_faces.txt');
-$smiliesp = file($textloc.'/emotes_pics.txt');
-for($x=1;$x<count($smilies);$x++) {
-$trim = rtrim($smilies[$x]);
-$g.= "<img src=\"emoticons/".$smiliesp[$x]."\" onclick=\"document.forms['postbox'].elements['senttext'].value=document.forms['postbox'].elements['senttext'].value+&#39;$trim&#39;\"> ";
+global $smiliesloc;
+$emotesdata = run_query("SELECT * FROM `phpqa_emotes`");
+while($smils=mysql_fetch_array($emotesdata)){ 
+$trim = rtrim($smils['code']);
+$g.= "<a title='".$smils['description']."'><img src=\"".$smiliesloc."/".$smils['filename']."\" onclick=\"document.forms['postbox'].elements['senttext'].value=document.forms['postbox'].elements['senttext'].value+&#39;".$trim."&#39;\"></a> ";
 }
 return $g;
 }
