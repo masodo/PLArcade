@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Arcade.php  Function: Main Organization Page   Modified: 6/19/2019   By: MaSoDo
+# Section: Arcade.php  Function: Main Organization Page   Modified: 6/20/2019   By: MaSoDo
 //-----------------------------------------------------------------------------------/
 require "./Preliminary.php";
 require "./Functions.php";
@@ -55,7 +55,7 @@ elseif (isset($_GET["action"]) && $_GET['action'] == "settings") require "./Sett
 if (isset($id) || isset($_GET['do']) && $_GET['do'] == "newscore" || isset($_GET['autocom'])) { 
 require "./ScoringOption.php";
 }
-if(isset($_GET['cparea'])||isset($_GET['cpiarea'])) {
+if(isset($_GET['cpiarea'])) {
 require "./AdminOption.php";
 } elseif(isset($_GET['modcparea'])) {
 require "./ModOption.php";
