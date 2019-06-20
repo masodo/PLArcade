@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ShoutBox.php  Function: ShoutBox Block   Modified: 6/18/2019   By: MaSoDo
+# Section: ShoutBox.php  Function: ShoutBox Block   Modified: 6/19/2019   By: MaSoDo
 
 if($settings['enable_shoutbox']) {
 if (!isset($acct_setting[1]) || $acct_setting[1] !="No") {
