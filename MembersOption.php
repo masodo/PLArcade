@@ -11,17 +11,19 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: MembersOption.php  Function: Show the Members List   Modified: 6/14/2019   By: MaSoDo
+# Section: MembersOption.php  Function: Show the Members List   Modified: 6/20/2019   By: MaSoDo
 
 $q=run_query("SELECT `name`,`group`,`skin`,`vtstamp` FROM phpqa_accounts ORDER BY name ASC");
-echo "<table class='tableborder'><tr><td class='headertableblock'>Username</td><td class='headertableblock'>Group</td><td class='headertableblock'>Skin</td><td class='headertableblock'>Last On</td></tr>";
+echo "<table class='tableborder'><tr><td class='headertableblock'>Username</td><td class='headertableblock'>Group</td><td class='headertableblock'>Skin</td><td class='headertableblock'>Last On <span style='font-weight:normal'>( &larr; <i>today</i> )</span></td></tr>";
 $LastOn='';
+$indicate='';
+$thisday=date('jS F Y');
 while ($f=mysql_fetch_array($q)){ 
-
 if($f[3]!=0){
 $LastOn=date($datestamp,$f[3]);
-} else { $LastOn=''; }
-echo "<tr><td class='arcade1'><a href='?action=profile&amp;user=".$f[0]."' class='".$f[1]."Look'>".$f[0]."</a></td><td class='arcade1'>".$f[1]."</td><td class='arcade1'>".$f[2]."</td><td class='arcade1'>".$LastOn."</td></tr>";
+(date('jS F Y',$f[3])==$thisday)?$indicate='&larr;':$indicate='';
+} else { $LastOn=''; $indicate='';}
+echo "<tr><td class='arcade1'><a href='?action=profile&amp;user=".$f[0]."' class='".$f[1]."Look'>".$f[0]."</a></td><td class='arcade1'>".$f[1]."</td><td class='arcade1'>".$f[2]."</td><td class='arcade1'>".$LastOn." ".$indicate."</td></tr>";
 }
 $total=mysql_num_rows($q);
 echo "</table><br /><table width='100%' cellpadding='4' cellspacing='1'class='tableborder'><tr><td class='arcade1'>Total Registered Members: $total</td></tr></table><br /><div align='center'>";
