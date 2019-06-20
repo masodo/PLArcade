@@ -11,13 +11,10 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: AdminOption.php  Function: Call To Administrator Control Panel   Modified: 3/18/2019   By: MaSoDo
+# Section: AdminOption.php  Function: Call To Administrator Control Panel   Modified: 6/20/2019   By: MaSoDo
 
 if ($exist['group'] == "Admin") { 
-if(isset($_GET['cparea'])) { 
-echo "<script>alert('This Is Ye Olde CP!')</script>";
-require("acp.php");
-}
+
 if(isset($_GET['cpiarea'])) {
 //echo "<script>alert('Experimental')</script>";
 require("acpi.php");
