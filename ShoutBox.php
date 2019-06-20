@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ShoutBox.php  Function: ShoutBox Block   Modified: 6/19/2019   By: MaSoDo
+# Section: ShoutBox.php  Function: ShoutBox Block   Modified: 6/20/2019   By: MaSoDo
 
 if($settings['enable_shoutbox']) {
 if (!isset($acct_setting[1]) || $acct_setting[1] !="No") {
@@ -33,6 +33,12 @@ run_query("INSERT INTO `phpqa_shoutbox` (`name`,`shout`,`ipa`,`tstamp`) VALUES (
 ?>
 
 <div style="text-align:center; margin-bottom: 5px; margin-top: 5px;"><a title="Open/Close The Shoutbox Section"><img src="<?php echo $imgloc; ?>/<?php echo $collimg2; ?>" id="btn2" alt="&#8595; Shoutbox: Collapse/Expand &#8595;" onclick="return CollapseExpand2()" style="font-size:16px; font-weight:bold; color:silver;" /></a></div><div id="MyDiv2" class="<?php echo $collapset2; ?>">
+<?php
+//comment out the following three lines if you are running announcements above arcade info block
+if(isset($settings['show_announcement'])&&$settings['show_announcement']==1) {
+require($textloc."/".$AnnounceFile);
+}
+?>
 <div class="tableborder">
 <table width="100%" cellpadding="4" cellspacing="1">
 <tr>
