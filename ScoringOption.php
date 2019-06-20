@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 6/17/2019  By: MaSoDo
+# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 6/19/2019  By: MaSoDo
 if (isset($_POST['thescore']))$thescore = $_POST['thescore'];
 if (isset($_GET['autocom'])) {
 $id=htmlspecialchars($_COOKIE['gname'], ENT_QUOTES);
@@ -240,12 +240,14 @@ $thisGuy = $g['username'];
 $findGroup = run_query("SELECT `group` FROM `phpqa_accounts` WHERE `name` = '".$thisGuy."'");
 $thisGroup = mysql_fetch_array($findGroup);
 
-while ($i <= count($smilies)) {
-$i++;
-if (isset($smilies[$i]))$smilethis = $smilies[$i];
-if (isset($smiliesp[$i]))$smilethisp = $smiliesp[$i];
-$postsofsomething = str_replace(rtrim($smilethis), "<img src='".$smiliesloc."/".$smilethisp."'>", $postsofsomething);
+
+$emotesdata = run_query("SELECT * FROM `phpqa_emotes`");
+while($smils=mysql_fetch_array($emotesdata)){
+$postsofsomething = bbcodeHtml($postsofsomething);
+if (isset($smils['code'])) $postsofsomething = str_replace(rtrim($smils['code']), "<img src='".$smiliesloc."/".$smils['filename']."' />", $postsofsomething);
 }
+
+
 global $tb;
 for($gx=-1;$gx<$tb;$gx++) {
 if(isset($badwords[$gx]) && $badwords[$gx] != "") {
