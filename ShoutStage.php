@@ -1,17 +1,17 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ShoutStage.php  Function: Shout Box Display Mechanics   Modified: 6/18/2019   By: MaSoDo
+# Section: ShoutStage.php  Function: Shout Box Display Mechanics   Modified: 6/19/2019   By: MaSoDo
 //-----------------------------------------------------------------------------------/
 if(isset($_GET['shoutbox'])) $limit=0;
 if(isset($_GET['shoutbox'])) $show=$num_pages_of;
@@ -64,10 +64,10 @@ $toppost = print_r($dataa[0], true);
 foreach($dataa as $qashoutbox){
 $postsofsomething = $qashoutbox[1];
 $i=-1;
-while ($i <= $csmile) {
-$i++;
+$emotesdata = run_query("SELECT * FROM `phpqa_emotes`");
+while($smils=mysql_fetch_array($emotesdata)){
 $postsofsomething = bbcodeHtml($postsofsomething);
-if (isset($smilies[$i])) $postsofsomething = str_replace(rtrim($smilies[$i]), "<img src='emoticons/".$smiliesp[$i]."' />", $postsofsomething);
+if (isset($smils['code'])) $postsofsomething = str_replace(rtrim($smils['code']), "<img src='".$smiliesloc."/".$smils['filename']."' />", $postsofsomething);
 }
 for($gx=-1;$gx<$tb;$gx++) {
 if(isset($badwords[$gx]) && $badwords[$gx] != "") {
