@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: JavaScript.php  Function: Javascript Function Repository   Modified: 6/18/2019   By: MaSoDo
+# Section: JavaScript.php  Function: Javascript Function Repository   Modified: 6/21/2019   By: MaSoDo
 ?>
 <script type='text/javascript'>
 function chsize(n){
@@ -118,4 +118,35 @@ $(document).ready(function() {
   }, 2000); 
 });
 </script>
-
+<script type="text/javascript">
+function dismissannounce() {
+setCookie('DeAnn','YES',1);
+location.reload(); 
+}
+function restoreannounce() {
+setCookie('DeAnn','NO',0);  
+location.reload(); 
+}
+function setCookie(name,value,days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
+function eraseCookie(name) {   
+    document.cookie = name+'=; Max-Age=-99999999;';  
+}
+</script>
