@@ -104,10 +104,11 @@ $catquer = run_query("(SELECT * FROM phpqa_games ORDER BY rand() LIMIT 1) UNION 
 if (!isset($_GET['action'])||isset($_GET['action'])&&$_GET['action']!="search") {
 //below added for testing M*S*D
 //echo "<script>alert('Not Search: ".$_GET['action']."');</script>";
+global $SortOrd, $SortDir;
 $catquer = run_query("(SELECT * FROM phpqa_games ORDER BY rand() LIMIT 1) UNION ALL (SELECT * FROM phpqa_games ".$fav_quer."".
 (isset($_GET['cat'])?"WHERE gamecat='".$_GET['cat']."' ":"").
 (isset($_GET['plat'])?"WHERE platform='".$_GET['plat']."' ":"").
-"ORDER BY `game` ASC LIMIT ".$limit.",".$show.")", 1);
+"ORDER BY `".$SortOrd."` ".$SortDir." LIMIT ".$limit.",".$show.")", 1);
 }
 $arcadetotalcat = mysql_num_rows($countquer);
 $f = @mysql_fetch_array($catquer);
