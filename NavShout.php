@@ -11,23 +11,23 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 6/18/2019   By: MaSoDo
+# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 6/21/2019   By: MaSoDo
 ?>
 <div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><tr><td class='arcade1' align='left'>
 <?php
-echo "<div class='navigation'><a name='registration'></a><a href='index.php'>Arcade Home</a></div> &#187; ";
+echo "<div class='navigation'><a name='registration'></a><a href='index.php'>Arcade Home</a></div>";
 if (isset($_GET['play'])) { // Ok, you are playing.
-echo "<b>Playing Game.</b>";
+echo "<div class='navigation'>&#187; <b>Playing Game.</b></div>";
 } elseif (isset($_GET['id'])) { // Now you're viewing the highscores
-echo "<b>Viewing Highscore Tables.</b>";
+echo "<div class='navigation'>&#187; <b>Viewing Highscore Tables.</b></div>";
 } elseif (isset($_GET['action']) && $_GET['action'] == "register") { 
-echo "<b>Registering!</b>";
+echo "<div class='navigation'>&#187; <b>Registering!</b></div>";
 } elseif (isset($_GET['action']) && $_GET['action'] == "members") {
-echo "<b>Viewing Member List</b>";
+echo "<div class='navigation'>&#187; <b>Viewing Member List</b></div>";
 } elseif (isset($_GET['action']) && $_GET['action'] == "leaderboards") { // At the leaderboards
-echo "<b>Viewing Leaders</b>";
+echo "<div class='navigation'>&#187; <b>Viewing Leaders</b></div>";
 } elseif (isset($_GET['action']) && $_GET['action'] == "HOF") { // At the HOF boards
-echo "<b>Viewing Hall of Fame</b>";
+echo "<div class='navigation'>&#187; <b>Viewing Hall of Fame</b></div>";
 } elseif (isset($_GET['cparea'])||isset($_GET['cpiarea'])) {
 $cparea_info='';
 $cparea_info['tar_import']="*.tar import new FL games";
@@ -51,10 +51,10 @@ $cparea_info['snapshot']="Champion SnapShot";
 $cparea_info['affiliates']="Affiliates Manager";
 if(isset($_GET['cpiarea'])) {
 $_GET['cpiarea']=htmlspecialchars($_GET['cpiarea']);
-echo "<div class='navigation'><a href='index.php?cpiarea=idx'>Arcade AdminCP</a></div> &#187; <b><a href='index.php?cpiarea=".$_GET['cpiarea']."'>{$cparea_info[$_GET['cpiarea']]}</a></b>";
+echo "<div class='navigation'><a href='index.php?cpiarea=idx'>Arcade AdminCP</a></div> <div class='navigation'>&#187; <b><a href='index.php?cpiarea=".$_GET['cpiarea']."'>{$cparea_info[$_GET['cpiarea']]}</a></b></div>";
 }
 } elseif (isset($_GET['action']) && $_GET['action'] == 'profile' ) {
-echo "<b>Viewing Member Profile</b>";
+echo "<div class='navigation'> &#187; <b>Viewing Member Profile</b></div>";
 } else {// Ok. You seem to be in arcade index then.
 ?>
 <?php
@@ -113,9 +113,9 @@ $arcadetotalcat = mysql_num_rows($countquer);
 $f = @mysql_fetch_array($catquer);
 ////////Game List Display Logic
 if(isset($settings['enable_24hr'])&&$settings['enable_24hr']==1){
-echo "<b>Viewing Arcade Index</b> <div style='width:300px; float:right; margin-right:50px; text-align: right;'>Arcade Time: <b>" . date('G:i') ."</b><br />Local Time: <script>nowtime(24)</script></div></td><td class='arcade1' style='width:1px'><a href='?play=" . $f['gameid'] . "#playzone'>Random&nbsp;Game</a>";
+echo "<div class='navigation'> &#187; <b>Viewing Arcade Index</b></div> <div style='width:300px; float:right; margin-right:50px; text-align: right;'>Arcade Time: <b>" . date('G:i') ."</b><br />Local Time: <script>nowtime(24)</script></div></td><td class='arcade1' style='width:1px'><div class='navigation'><a href='?play=" . $f['gameid'] . "#playzone'><b>Random&nbsp;Game</b></a></div>";
 } else {
-echo "<b>Viewing Arcade Index</b> <div style='width:300px; float:right; margin-right:50px; text-align: right;'>Arcade Time: <b>" . date('g:i A') ."</b><br />Local Time: <script>nowtime()</script></div></td><td class='arcade1' style='width:1px'><a href='?play=" . $f['gameid'] . "#playzone'>Random&nbsp;Game</a>";
+echo "<div class='navigation'> &#187; <b>Viewing Arcade Index</b></div> <div style='width:300px; float:right; margin-right:50px; text-align: right;'>Arcade Time: <b>" . date('g:i A') ."</b><br />Local Time: <script>nowtime()</script></div></td><td class='arcade1' style='width:1px'><div class='navigation'><a href='?play=" . $f['gameid'] . "#playzone'><b>Random&nbsp;Game</b></a></div>";
 }}
 echo "</td></tr></table></div><div align='center'>";
 ?>
