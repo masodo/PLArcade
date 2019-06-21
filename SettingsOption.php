@@ -310,7 +310,7 @@ echo "</select><br />";
 //
 // Index Sort Option
 //
-echo "Selected Games<b>Sort Order</b>?";
+echo "Selected Games <b>Sort Order</b>?";
 echo '<select size="1" name="sortord">';
 if ($acct_setting[11] == "alph") {
 echo "<option value='alph' selected>Name (A~Z)</option>";
