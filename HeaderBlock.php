@@ -37,7 +37,7 @@ $CPF = $CPF-1;
 }
 }
 if(isset($settings['enable_logo'])) {
-if(isset($_GET['action']) && $_GET['action'] =='emotes') {} else {
+if(isset($_GET['action']) && ($_GET['action'] =='emotes'||$_GET['action'] =='allshouts')) {}  else {
 if($settings['enable_timer']==1) {$timershow = '<hr /><b>Countdown to Arcade Score Reset:<br /><div id=\'countbox\'></div>';} else {$timershow = '';}
 echo "<div align='center' style='margin-top: 0px; width:100%;'>"; 
 if (!isset($_GET['fullscreen'])) {echo "<a href='index.php?plat=FL' title='List Only Flash Games'><img src='$arcurl/$imgloc/flash.png' style='width:75px; margin-bottom:15px; margin-right:10%;' /></a>";}
