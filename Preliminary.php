@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 6/19/2019   By: MaSoDo
+# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 6/21/2019   By: MaSoDo
 session_start();
 if($_GET['captcha']){
 $im = imagecreatefrompng("captchabg.png");
@@ -175,6 +175,7 @@ if (isset($_GET['action']) && $_GET['action'] == "logout") {
 echo "<script language='Javascript'> alert('Did You Hear Me Say LOGOUT?'); </script>"; 
 setcookie("phpqa_user_c",FALSE,time()-1);
 setcookie("phpqa_user_p",FALSE,time()-1);
+setcookie("DeAnn",FALSE,time()-1);
 header("Location: ?");
 }
 $ipa = $_SERVER['REMOTE_ADDR'];
@@ -217,6 +218,8 @@ $pagN_lim = "";
 $PlatWord = "";
 $PlatImg = "";
 $IDXV = "";
+$SortOrd = "";
+$SortDir = "";
 $acct_setting = "";
 empty($show);
 $name = "unregistered";
@@ -380,6 +383,14 @@ die();
 if (isset($acct_setting[10]) && $acct_setting[10] == 'CV'){ 
 $IDXV = 'CV';
 } else {$IDXV = 'GV';}
+//check the sort
+if (isset($acct_setting[11]) && $acct_setting[11] == 'sid'){ 
+$SortOrd = 'id';
+$SortDir = 'DESC';
+} else {
+$SortOrd = 'game';
+$SortDir = 'ASC';
+}
 //check
 if (!isset($exist[7]) || (isset($exist[7]) && $exist[7] =="")) { 
 if (!isset($defCSS)||(isset($defCSS)&&$defCSS=="")){
