@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: SettingsOption.php  Function: User Definable Configuration   Modified: 6/11/2019   By: MaSoDo
+# Section: SettingsOption.php  Function: User Definable Configuration   Modified: 6/21/2019   By: MaSoDo
 echo "<!-- SettingsOption.php --------------------------------------------------------------------------------------------------------------------------------------------- -->";
 if (isset($_COOKIE['phpqa_user_c'])) {
 if($exist[6] == "Validating") {
@@ -189,8 +189,9 @@ if (isset($_POST['showshout']))$showshout = htmlspecialchars($_POST['showshout']
 if (isset($_POST['showcats']))$showcats = htmlspecialchars($_POST['showcats'], ENT_QUOTES);
 if (isset($_POST['showindex']))$showindex = htmlspecialchars($_POST['showindex'], ENT_QUOTES);
 if (isset($_POST['idxview']))$idxview = htmlspecialchars($_POST['idxview'], ENT_QUOTES);
+if (isset($_POST['sortord']))$sortord = htmlspecialchars($_POST['sortord'], ENT_QUOTES);
 vsess();
-run_query("UPDATE `phpqa_accounts` SET `settings` = '$viewavatars|$viewshoutbox|$numberofgamesperpage|$viewtop|$allowmemoradmin|$acct_setting[5]|$showinfo|$showshout|$showcats|$showindex|$idxview' WHERE name='$phpqa_user_cookie'");
+run_query("UPDATE `phpqa_accounts` SET `settings` = '$viewavatars|$viewshoutbox|$numberofgamesperpage|$viewtop|$allowmemoradmin|$acct_setting[5]|$showinfo|$showshout|$showcats|$showindex|$idxview|$sortord' WHERE name='$phpqa_user_cookie'");
 echo "Settings updated! <a href='index.php?action=settings&amp;p=display'>Reload</a> to see changes...";
 } else {
 echo '<form action="index.php?action=settings&p=display" method="POST">';
@@ -304,6 +305,19 @@ echo "<option value='CV' selected>Classic View</option>";
 } else { 
 echo "<option value='GV' selected>Grid View</option>";
 echo "<option value='CV'>Classic View</option>";
+}
+echo "</select><br />";
+//
+// Index Sort Option
+//
+echo "Selected Games<b>Sort Order</b>?";
+echo '<select size="1" name="sortord">';
+if ($acct_setting[11] == "alph") {
+echo "<option value='alph' selected>Name (A~Z)</option>";
+echo "<option value='sid'>Date (New~Old)</option>";
+} else { 
+echo "<option value='alph'>Name (A~Z)</option>";
+echo "<option value='sid' selected>Date</option>";
 }
 echo "</select><br /><hr />";
 ?>
