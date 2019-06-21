@@ -11,43 +11,18 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ShoutStage.php  Function: Shout Box Display Mechanics   Modified: 6/19/2019   By: MaSoDo
+# Section: ShoutStage.php  Function: Shout Box Display Mechanics   Modified: 6/21/2019   By: MaSoDo
 //-----------------------------------------------------------------------------------/
 if(isset($_GET['shoutbox'])) $limit=0;
 if(isset($_GET['shoutbox'])) $show=$num_pages_of;
 if (isset($_COOKIE['phpqa_user_c'])) {
-if(!isset($_GET['shoutbox'])) {
 	$selectfrom = run_query("SELECT `name`,`shout`,`id`,`ipa`,`tstamp` FROM `phpqa_shoutbox` ORDER BY id DESC LIMIT 0,".$num_pages_of."");
-} else {
-	$selectfrom = run_query("SELECT `name`,`shout`,`id`,`ipa`,`tstamp` FROM `phpqa_shoutbox` ORDER BY id DESC LIMIT ".$limit.",".$show."");
-}
 	$shouttotal = mysql_fetch_array(run_query("SHOW TABLE STATUS LIKE 'phpqa_shoutbox'"));
 
 echo "<div align='center'>";
-if(!isset($_GET['arcade'])) { 
-if ($limit > 0) {
-if ($limnm < 0) {
-echo "<a href='index.php?limit=0&amp;show=".$num_pages_of."&amp;page=1&shoutbox=1'>Previous Page (".$pgnm.")</a> ";
-} else {
-echo "<a href='index.php?limit=".$limnm."&amp;show=".$num_pages_of."&amp;page=".$pgnm."&shoutbox=1'>Previous Page (".$pgnm.")</a> ";
-}}
-}
-echo ":: Total Shouts: " . $shouttotal['Rows'] . " :: ";
-if(!isset($_GET['arcade'])) {
-if (isset($shouttotal['Rows']) && $shouttotal['Rows'] >= $limn && $shouttotal['Rows'] != $limn) {
-if (!isset($_GET['cat'])) {
-if (isset($_GET['plat'])) {
-echo "<a href='index.php?plat=".$plat."&amp;limit=".$limn."&amp;show=".$num_pages_of."&amp;page=".$pgn."&shoutbox=1'>Next Page (".$pgn.")</a>"; 
-} else  {
-echo "<a href='index.php?limit=".$limn."&amp;show=".$num_pages_of."&amp;page=".$pgn."&shoutbox=1'>Next Page (".$pgn.")</a>"; 
-} } else  {
-echo "<a href='index.php?cat=".$cat."&amp;limit=".$limn."&amp;show=".$num_pages_of."&amp;page=".$pgn."&shoutbox=1'>Next Page (".$pgn.")</a>"; 
-}
-}
-} else {
-echo "<a href='index.php'>View Pages</a>";
-}
-echo "<hr></div>";
+echo "Viewing ".$num_pages_of." Shouts :: Total Shouts: " . $shouttotal['Rows'] . " :: <a title='Open PopUp Archive' href=\"javascript:window.open('index.php?action=allshouts', 'Shouts Archive', 'width=800,height=800,directories=no,location=no,menubar=no,resizable=no,scrollbars=yes,status=no,toolbar=no');void(0);\">See All</a>";
+
+echo "<hr /></div>";
 if($shouttotal['Rows'] > 0) {
 $badwords= file($textloc."/badwords.txt");
 $tb=count($badwords);
