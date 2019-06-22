@@ -11,9 +11,50 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: mysql - Administrator Control Panel   Modified: 6/4/2019   By: MaSoDo
+# Section: acpi Place: mysql - Administrator Control Panel   Modified: 6/22/2019   By: MaSoDo
 
 {
+$goquery1 = '';
+$goquery2 = '';
+$goquery3 = '';
+$goquery4 = '';
+
+//Hall of fame scores reset
+if(isset($_POST['HOFwipe'])&&$_POST['HOFwipe']=='1'){
+if(isset($_POST['RESETH'])&&isset($_POST['RESETH'])=='yes'){
+vsess();
+$goquery1=run_query("UPDATE `phpqa_games` set `HOF_name` = '', `HOF_score` = '' WHERE `HOF_score` > 0;");
+if($goquery1) { 
+echo '<script>alert(\'Hall of Fame has been RESET\');</script>'; 
+} else { echo '<script>alert(\'Query Failed!\');</script>';; 
+echo mysql_error();
+}}else {
+echo '<script>alert(\'You Must Check the Confirmation Box to Reset HOF Scores!\');</script>';
+}}
+
+
+//Game champion scores reset
+if(isset($_POST['CHAMPwipe'])&&$_POST['CHAMPwipe']=='1'){
+if(isset($_POST['RESETC'])&&isset($_POST['RESETC'])=='yes'){
+vsess();
+$goquery2=run_query("UPDATE `phpqa_games` set `Champion_name` = '', `Champion_score` = '' WHERE `Champion_score` > 0;");
+if($goquery2){
+sleep(15); 
+$goquery3=run_query("TRUNCATE TABLE `phpqa_scores`");
+if($goquery3){
+sleep(3);
+$goquery4=run_query("TRUNCATE TABLE `phpqa_leaderboard`");
+if($goquery4){
+echo '<script>alert(\'Arcade has been RESET\');</script>';
+}}} else { 
+echo '<script>alert(\'Query Failed!\');</script>'; 
+echo mysql_error();
+}}else {
+echo '<script>alert(\'You Must Check the Confirmation Box to Reset Arcade Scores!\');</script>';
+}}
+
+//Clear-out Shouts reset
+
 if(isset($_POST['dowhat']) && $_POST['dowhat'] == "WipeShout") {
 	vsess();
 	if(isset($_POST['WipeShouts']) && $_POST['WipeShouts'] == "yes")
@@ -64,7 +105,13 @@ echo "<tr><td class='arcade1' align='left'><b>$v</b></td><td class='arcade1' ali
 </div>
 <br />
 </form>
+<div class='tableborder'>
+<table width="100%" cellpadding="5" cellspacing="1"><tr><td class="headertableblock" align="center" colspan=9><b>Scores Reset</b></td></tr><tr><td class="arcade1" align="center"><form action="" method="POST">Confirm Here to perform this action: <input type="checkbox" name="RESETH" value="yes"> &nbsp; <input type="Submit" name="HOF_reset" value="Hall of Fame RESET"><input type="hidden" name="HOFwipe" value="1"></form></td></tr>
+<tr><td class="arcade1" align="center"><form action="" method="POST">Confirm Here to perform this action: <input type="checkbox" name="RESETC" value="yes"> &nbsp;  <input type="Submit" name="Champ_reset" value="Arcade Scores RESET"> &nbsp; </td></tr>
+<input type="hidden" name="CHAMPwipe" value="1"></form></table>
+</div><br />
 <div class='tableborder'><table width='100%' cellpadding='5' cellspacing='1'><tr><td class='headertableblock' align='center' colspan=9><b>Full Backup</b></td></tr><td class='arcade1' align='center'><form action='' method='POST'>
+
 <?php
 foreach ($dbs as $k=>$v){
 echo "<input type='hidden' name='$v' value='a'>";
