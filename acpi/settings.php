@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: settings.php  Function: Set Global Arcade Variables   Modified: 6/20/2019   By: MaSoDo
+# Section: settings.php  Function: Set Global Arcade Variables   Modified: 6/21/2019   By: MaSoDo
 
 { ?>
 <br />
@@ -30,7 +30,7 @@ $settingsarray=Array(
 'Enable Online List?'=>'enable_onlinelist',
 'Enable Password Recovery?'=>'enable_passrecovery',
 'Enable Shoutbox?'=>'enable_shoutbox',
-'Use logo at the top of every page? (Logo takes the name of the skin and looks for the image in the arcade images folder if enabled)'=>'enable_logo',
+'Show Arcade Greeting Atop Arcade Info?'=>'enable_logo',
 'Enable Countdown Timer?'=>'enable_timer',
 'Allow users to post comments?'=>'allow_comments',
 'Enable announcement?'=>'show_announcement',
