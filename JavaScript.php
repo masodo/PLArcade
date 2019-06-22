@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: JavaScript.php  Function: Javascript Function Repository   Modified: 6/21/2019   By: MaSoDo
+# Section: JavaScript.php  Function: Javascript Function Repository   Modified: 6/22/2019   By: MaSoDo
 ?>
 <script type='text/javascript'>
 function chsize(n){
@@ -111,7 +111,7 @@ var url = '.';
 
 <script type="text/javascript">
 $(document).ready(function() {
-  $.ajaxSetup({ cache: false }); // This part addresses an IE bug.
+  $.ajaxSetup({ cache: true }); // This part addresses an IE bug.
   setInterval(function() {
     var Rurl = '.'; 
          $(' #scroll3').load(Rurl + ' #stage');
