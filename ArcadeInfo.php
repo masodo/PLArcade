@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ArcadeInfo.php  Function: Latest Site Info Block   Modified: 6/18/2019   By: MaSoDo
+# Section: ArcadeInfo.php  Function: Latest Site Info Block   Modified: 6/21/2019   By: MaSoDo
 ?>
 <br />
 <div align="center">
@@ -21,15 +21,18 @@ echo "<div style='text-align:center; margin-bottom: 5px; margin-top: 5px;'><a ti
 }
 ?>
 <div class="tableborder">
-<table width="100%" cellpadding="4" cellspacing="1">
-<tr><a name="logtop"></a>
 <?php 
 if (isset($settings["show_stats_table"])&&$settings["show_stats_table"]=='1') { 
 if (!isset($acct_setting[3]) || $acct_setting[3] !="No") {
+if (isset($settings["enable_logo"])&&$settings["enable_logo"]==1){
+echo "<table width='100%' cellpadding='4' cellspacing='1'><tr><td width='100%' align='center' class='headertableblock'>".$arcgreet."</td></tr></table>";
+}
 $settings['ng_num']!=''?$ngnum = $settings['ng_num']:$ngnum = 20;
 $settings['ls_num']!=''?$lsnum = $settings['ls_num']:$lsnum = 14;
 $settings['bp_num']!=''?$bpnum = $settings['bp_num']:$bpnum = 10;
 ?>
+<table width="100%" cellpadding="4" cellspacing="1">
+<tr><a name="logtop"></a>
 <td width="12%" align="center" class="headertableblock">Newest Games</td>
 <td width="50%" align="center" class="headertableblock">Latest Scores</td>
 <td width="10%" align="center" class="headertableblock">Bestest Players</td>
