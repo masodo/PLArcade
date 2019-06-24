@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Arcade.php  Function: Main Organization Page   Modified: 6/20/2019   By: MaSoDo
+# Section: Arcade.php  Function: Main Organization Page   Modified: 6/24/2019   By: MaSoDo
 //-----------------------------------------------------------------------------------/
 require "./Preliminary.php";
 require "./Functions.php";
@@ -31,7 +31,7 @@ require "./JavaScript.php";
 require "./SmileyPop.php";
 require "./FullScreen.php";
 if (!isset($_GET['do'])) {
-if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){require "./LimitedArcadeInfo.php";}else{require "./ArcadeInfo.php";}
+if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){require "./LimitedArcadeInfo.php";}else{$IDXV=='GV'?require './ArcadeInfoLG.php':require './ArcadeInfo.php';}
 if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){if (isset($_GET['action']) && $_GET['action'] == "register") require "./RegisterOption.php";}else{ require "./ShoutBox.php";}
 if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){}else{require "./Categories.php";}
 if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){}else{require "./NavShout.php";}
