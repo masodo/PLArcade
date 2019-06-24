@@ -1,10 +1,10 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
@@ -76,7 +76,7 @@ $scoresC=mysql_fetch_array($scoreboard);
 if (!$scoresC['avatar'])$scoresC['avatar']=$avatarloc.'/man.gif';
 echo "<div><table width='100%' cellpadding='5' cellspacing='1'>";
 
-echo "<td class='arcade1'><div align='center'><i><span style='font-size: 14px; line-height:175%'><a href=\"index.php?action=profile&amp;user=".$scoresC['name']."\"><img src='".$scoresC['avatar']."' height='60px' /><br /><img alt='image' src='$crowndir/crown1.gif'   style='margin-left:8px;margin-right:8px;' /><span class='".$scoresC['group']."Look'>".$scoresC['name']."</span><img alt='image' src='$crowndir/crown1.gif'  style='margin-left:8px;margin-right:8px;' /></a></i><br /><div padding:3px; background-color:navy;' align='center'>with <b>".$scoresC['champions']."</b> wins!</div></div></td>";
+echo "<td class='arcade1'><div align='center' style='border:dotted gold;padding:5px;'><i><span style='font-size: 14px; line-height:175%'><a href=\"index.php?action=profile&amp;user=".$scoresC['name']."\"><img src='".$scoresC['avatar']."' height='60px' /><br /><img alt='image' src='$crowndir/crown1.gif'   style='margin-left:8px;margin-right:8px;' /><span class='".$scoresC['group']."Look'>".$scoresC['name']."</span><img alt='image' src='$crowndir/crown1.gif'  style='margin-left:8px;margin-right:8px;' /></a></i><br /><div padding:3px; background-color:navy;' align='center'>with <b>".$scoresC['champions']."</b> wins!</div></div></td>";
 echo "</table><div style='position:absolute;display:none;margin-top:-100px;margin-left:-110px;' id='champboxpopup'><img /></div></div>";
 $trop = 1;
 while($scores=mysql_fetch_array($scoreboard)){
