@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: SettingsOption.php  Function: User Definable Configuration   Modified: 6/21/2019   By: MaSoDo
+# Section: SettingsOption.php  Function: User Definable Configuration   Modified: 6/24/2019   By: MaSoDo
 echo "<!-- SettingsOption.php --------------------------------------------------------------------------------------------------------------------------------------------- -->";
 if (isset($_COOKIE['phpqa_user_c'])) {
 if($exist[6] == "Validating") {
@@ -297,7 +297,7 @@ echo "</select><br /><hr />";
 //
 // Index View Option
 //
-echo "Selected <b>Games Index</b> View?";
+echo "Selected <b>Layout</b>?";
 echo '<select size="1" name="idxview">';
 if ($acct_setting[10] == "CV") {
 echo "<option value='GV'>Grid View</option>";
