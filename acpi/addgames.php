@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi place: addgames Administrator Control Panel   Modified: 6/13/2019   By: MaSoDo
+# Section: acpi place: addgames Administrator Control Panel   Modified: 6/25/2019   By: MaSoDo
 {
 // The different methods
 if (!isset($_GET['method'])) {
@@ -123,11 +123,19 @@ message("The GIF file failed to upload. Make sure the pics folder <a href=\"arca
 $champ='';
 $champs='';
 $found_swf='';
+$HOFn='';
+$HOFs='';
+$preid='';
+$pretimes=0;
 if (isset($_GET['method'])&&$_GET['method']=="edit") {
 global $game;
 $editgame = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
 $champ=$editgame['Champion_name'];
 $champs=$editgame['Champion_score'];
+$HOFn=$editgame['HOF_name'];
+$HOFs=$editgame['HOF_score'];
+$preid=$editgame['id'];
+$pretimes=$editgame['times_played'];
 $plattype=$editgame['platform'];
 run_query("DELETE FROM phpqa_games WHERE gameid='$game'");
 $remoteurl = $swf;
@@ -153,10 +161,10 @@ $addedalready = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gam
 if (empty($addedalready)) {
 $atime = '';
 message("Game added/edited. <br>[ <a href='index.php?cpiarea=idx'>Arcade CP Home</a> | <a href='index.php?cpiarea=addgames&method=".$_GET['method']."'>Add Another</a> ]");
-run_query("INSERT INTO phpqa_games (game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring,exclusiv,HOF_name,HOF_score) VALUES ('$gamename','$idname','$gameheight','$gamewidth','$about','$gamecat','$remoteurl','$champ','$champs','','$plattype','$scoretype','$exclusiv','$HOFname','$HOFscore')");
+run_query("INSERT INTO phpqa_games (id,game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring,exclusiv,HOF_name,HOF_score) VALUES ('$preid','$gamename','$idname','$gameheight','$gamewidth','$about','$gamecat','$remoteurl','$champ','$champs','$pretimes','$plattype','$scoretype','$exclusiv','$HOFn','$HOFs')");
 if (!isset($_GET['game'])){
 $atime = time();
-$NewGtext = "[color=green][i]New Game Added![/i] [/color][size=16] [url=".$arcurl."/index.php?play=".$idname."#playzone][b]".$gamename."[/b][/url][/size]  [color=green][i]Enjoy![/i][/color] [:D]";
+$NewGtext = "[color=green][i]New Game Added![/i] [/color][img=".$arcurl."/arcade/pics/".$idname.".gif] [size=16][url=".$arcurl."/index.php?play=".$idname."#playzone][b]".$gamename."[/b][/url][/size]  [color=green][i]Enjoy![/i][/color] [:D]";
 run_query("INSERT INTO phpqa_shoutbox (`name`,`shout`,`ipa`,`tstamp`) VALUES ('Admin','" . $NewGtext . "','localhost','".$atime."')", 1);}
 } else {
 message("This game is already added, or the idname conflicts with an existing game. Please delete the game, or change the idname to correct the problem.");
@@ -307,4 +315,7 @@ echo  "<option value='".$catlist[0]."'>".$catlist[1]."</option>";
 <?php
 }
 }
+
+
+
 ?>
