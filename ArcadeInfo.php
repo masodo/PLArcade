@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ArcadeInfo.php  Function: Latest Site Info Block   Modified: 6/21/2019   By: MaSoDo
+# Section: ArcadeInfo.php  Function: Latest Site Info Block   Modified: 6/25/2019   By: MaSoDo
 ?>
 <br />
 <div align="center">
@@ -33,9 +33,10 @@ $settings['bp_num']!=''?$bpnum = $settings['bp_num']:$bpnum = 10;
 ?>
 <table width="100%" cellpadding="4" cellspacing="1">
 <tr><a name="logtop"></a>
-<td width="12%" align="center" class="headertableblock">Newest Games</td>
+<td width="16%" align="center" class="headertableblock">Newest Games</td>
 <td width="50%" align="center" class="headertableblock">Latest Scores</td>
-<td width="10%" align="center" class="headertableblock">Bestest Players</td>
+<td width="16%" align="center" class="headertableblock">Bestest Players</td>
+<td width="16%" align="center" class="headertableblock">Hottest Games</td>
 <?php 
 } else {
 echo "<td width='10%' align='center' class='headertableblock'>".$arcgreet." <br />(Enable \"Arcade Header\" in your settings for latest news!)</td>";
@@ -45,10 +46,7 @@ echo "<td width='10%' align='center' class='headertableblock'>".$arcgreet."</td>
 }
 ?>
 </tr>
-<tr>
-<td class="arcade1" colspan="3" align="left">
-</td>
-</tr>
+
 <tr>
 <?php
 if (!isset($_GET['pplay'])) {
@@ -56,6 +54,7 @@ if (isset($settings["show_stats_table"])&&$settings["show_stats_table"]=='1') {
 if (!isset($acct_setting[3]) || $acct_setting[3] !="No") {
 ?>
 <td class="arcade1" valign="top" align="left">
+
 <?php
 $newgames = run_query("SELECT gameid,game,id,gamecat FROM phpqa_games ORDER by id DESC LIMIT 0,".$ngnum."");
 	while($g=mysql_fetch_array($newgames)){ 
@@ -91,6 +90,7 @@ echo "$VstatG<a href='index.php?action=profile&amp;user=".$s[1]."' class='".$thi
 </td></table>
 </td>
 <td class="arcade1" valign="top" nowrap="nowrap" align="left">
+
 <?php
 $scoreboard = run_query("SELECT phpqa_accounts.name,phpqa_accounts.avatar,phpqa_accounts.group, COUNT(phpqa_leaderboard.username) AS champions FROM phpqa_accounts
 LEFT JOIN phpqa_leaderboard ON phpqa_accounts.name = phpqa_leaderboard.username
@@ -109,13 +109,25 @@ $trop = $trop + 1;
 if ($trop == 2) { $trophy = "<img src='$crowndir/crown2.gif' />"; }
 if ($trop == 3) { $trophy = "<img src='$crowndir/crown3.gif' />"; }
 if ($scores['avatar'] == ''){ $scores['avatar'] = $avatarloc.'/man.gif'; }
-echo"<span style='font-size: 14px; line-height:175%'>&nbsp;<a href='index.php?action=profile&amp;user=" . $scores['name'] . "' onmouseover=\"s=document.getElementById('champboxpopup');s.style.display='';s.getElementsByTagName('img')[0].src='" . $scores['avatar'] . "';\" onmousemove=\"s=document.getElementById('champboxpopup').style;s.top=document.body.scrollTop+2+event.clientY;s.left=document.body.scrollLeft+event.clientX;\" onmouseout=\"document.getElementById('champboxpopup').style.display='none'\"  class='".$scores['group']."Look'><i>" . $scores['name'] . "</i></a>&nbsp;</span>(<b>" . $scores['champions'] . "</b> Wins) &nbsp;" . $trophy . " <br />";
+echo"<span style='font-size: 14px; line-height:175%'>&nbsp;<a href='index.php?action=profile&amp;user=" . $scores['name'] . "' onmouseover=\"s=document.getElementById('champboxpopup');s.style.display='';s.getElementsByTagName('img')[0].src='" . $scores['avatar'] . "';\" onmousemove=\"s=document.getElementById('champboxpopup').style;s.top=document.body.scrollTop+2+event.clientY;s.left=document.body.scrollLeft+event.clientX;\" onmouseout=\"document.getElementById('champboxpopup').style.display='none'\"  class='".$scores['group']."Look'><i>" . $scores['name'] . "</i></a>&nbsp;</span>(<b>" . $scores['champions'] . "</b> Wins) &nbsp;" . $trophy . " <br /><hr />";
 }
 } // End acct based check for big table
 } // End check for big table
 } // end play check
 ?>
 </td>
+<td class="arcade1" valign="top" align="left">
+
+<?php
+$hotgames = run_query("SELECT `gameid`,`game`,`id`,`gamecat`,`times_played`  FROM `phpqa_games` ORDER by `times_played` DESC LIMIT 0,".$ngnum."");
+	while($hg=mysql_fetch_array($hotgames)){ 
+	if ($hg[3] != '2') {
+echo "<img height='20' width='20' src='arcade/pics/$hg[0].gif' alt='$hg[1]' style='margin-left:5px;' /><a href=\"index.php?play=$hg[0]#playzone\">$hg[1]</a> (".$hg['times_played'].")<br />";
+}}
+?>
+
+</td>
+
 </tr></table>
 </div>
 <?php // End Collapse #1 
