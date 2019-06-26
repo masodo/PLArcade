@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ArcadeInfoLG.php By: Legionaire Function: Latest Site Info Block   Modified: 6/24/2019   By: MaSoDo
+# Section: ArcadeInfoLG.php By: Legionaire Function: Latest Site Info Block   Modified: 6/26/2019   By: MaSoDo
 ?>
 <br />
 <div align="center">
@@ -59,7 +59,8 @@ if (!isset($acct_setting[3]) || $acct_setting[3] !="No") {
 <?php
 $newgames = run_query("SELECT `gameid`,`game`,`id`,`gamecat` FROM `phpqa_games` ORDER by `id` DESC LIMIT 0,".$ngnum."");
 	while($g=mysql_fetch_array($newgames)){ 
-	if ($g[3] != '2') {
+	if (($g[3] != '23')&&($g[3] != '2')){
+	
 echo "<img height='20' width='20' src='arcade/pics/$g[0].gif' alt='$g[1]' /><a href=\"index.php?play=$g[0]#playzone\">$g[1]</a><br />";
 }}
 ?>
