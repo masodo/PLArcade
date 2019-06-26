@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: IndexOption.php  Function: Display Games Index   Modified: 6/14/2019   By: MaSoDo
+# Section: IndexOption.php  Function: Display Games Index   Modified: 6/26/2019   By: MaSoDo
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//		  Favorites
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -52,7 +52,8 @@ require "./PageMakerT.php";
 	
 $CheckScoring = $g['scoring'];
 $showcat=mysql_fetch_array(run_query("SELECT cat FROM phpqa_cats WHERE id='{$g['gamecat']}'"));
-if ($g['gamecat'] != '2' || (isset($exist[6])&&$exist[6] == "Admin")) {	
+
+if (($g['gamecat'] != '2' && $g['gamecat'] != '23') || (isset($exist[6])&&$exist[6] == "Admin")) {	
 $CHMP = run_query("SELECT `avatar`,`group` FROM `phpqa_accounts` WHERE `name` = '" . $g['Champion_name'] . "'");
 $CHMPimg=mysql_fetch_array($CHMP);
 if (!$CHMPimg['avatar'])$CHMPimg['avatar'] = $avatarloc.'/man.gif';
