@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 6/21/2019  By: MaSoDo
+# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 6/26/2019  By: MaSoDo
 if (isset($_POST['thescore']))$thescore = $_POST['thescore'];
 if (isset($_GET['autocom'])) {
 $id=htmlspecialchars($_COOKIE['gname'], ENT_QUOTES);
@@ -42,7 +42,12 @@ $thescore = $_POST['gscore'];
  if (!$gameinfo) {
 header("Location: index.php");
 die();
- } else {
+ } 
+ if ($gameinfo['gamecat'] == '2' || $gameinfo['gamecat'] == '23') {
+message("<b>Successfully Submitted Score!</b><br />Game: ".$id."<br />Score: ".$thescore."<br />Player: ".$_COOKIE['phpqa_user_c']."");
+die();
+ } 
+ else {
  $showcat=mysql_fetch_array(run_query("SELECT cat FROM phpqa_cats WHERE id='{$gameinfo['gamecat']}'"));	
  }
  ?>
@@ -221,10 +226,10 @@ echo "<div class='tableborder'><table width='100%'><td class='arcade1' width='10
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  // select...
 global $key;
-echo "<form action='' method='POST'><input type='hidden' name='akey' value='$key'><div class='tableborder'><table width='100%' cellpadding='5' cellspacing='1' class='highscore'><tr><td width='2%' class='headertableblock' align='center'>Username</td><td width='15%' class='headertableblock' align='center'>Score</td><td width='30%' class='headertableblock' align='center'>Comments</td><td width='30%' class='headertableblock' align='center'>Time &amp; Date</td>";
+echo "<form action='' method='POST'><input type='hidden' name='akey' value='$key'><div class='tableborder'><table width='100%' cellpadding='5' cellspacing='1' class='highscore'><tr><td width='15%' class='headertableblock' align='center'>Username</td><td width='15%' class='headertableblock' align='center'>Score</td><td width='30%' class='headertableblock' align='center'>Comments</td><td width='30%' class='headertableblock' align='center'>Time &amp; Date</td>";
 isset($exist[6]) ? $exist[6] : null;
 if(isset($exist[6]) && $exist[6] == "Moderator" || isset($exist[6]) && $exist[6] == "Admin") {
-echo "<td width='20%' class='headertableblock' align='center'>IP Address</td><td width='15%' class='headertableblock' align='center'>";
+echo "<td width='20%' class='headertableblock' align='center'>IP Address</td><td width='2%' class='headertableblock' align='center'>";
 ?>
 <input type='checkbox' onclick="s=document.getElementsByTagName('input');for(x=0;x<s.length;x++) if (s[x].type=='checkbox') s[x].checked=this.checked" />
 <?php
