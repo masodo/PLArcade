@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: HeaderBlock.php  Function: Top of the Page   Modified: 6/21/2019   By: MaSoDo
+# Section: HeaderBlock.php  Function: Top of the Page   Modified: 6/27/2019   By: MaSoDo
 
 $CPH = 1;
 $CPF = 1;
@@ -46,6 +46,8 @@ if (!isset($_GET['fullscreen'])) {echo "<a href='index.php?plat=H5' title='List 
 echo "<div style='position:relative; width:640px; top:10px; font-size: 14px; color: yellow; background-color: navy; padding:3px;'>Currently Featuring <b>$CPF Flash</b> Games, <b>$CPH HTML5</b> Games &amp; <b>$CPD DOS</b> Games".$timershow."</div>";
 echo "</div>";
 }}
+if(isset($_GET['action']) && ($_GET['action'] =='emotes'||$_GET['action'] =='allshouts')) {} else {
 //uncomment line below to feature announcements above arcade info block
 //require('Announcement.php');
+}
 ?>
