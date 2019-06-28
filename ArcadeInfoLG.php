@@ -11,9 +11,36 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ArcadeInfoLG.php By: Legionaire Function: Latest Site Info Block   Modified: 6/27/2019   By: MaSoDo
+# Section: ArcadeInfoLG.php By: Legionaire Function: Latest Site Info Block   Modified: 6/28/2019   By: MaSoDo
 ?>
 <br />
+
+<table align="center" width="1200" cellpadding="4" cellspacing="1">
+<tr>
+<td colspan="3" class="arcade1" align="center">
+<?php
+if (!isset($_COOKIE['phpqa_user_c'])) {
+// begin nav buttons
+?>
+<div style="width: 100%; text-align: center; margin-left: auto; margin-right: auto;"><a name="Login"></a><div class="navigation">Logged off: [ <a href="javascript:tog('login_form')">Login</a> ]</div><div class="navigation">[ <a href="index.php?action=register#registration">Register</a> ] </div><div class="navigation"><a href="index.php?action=leaderboards">Leaderboard</a></div><div class="navigation"><a href="index.php?action=HOF">Hall of Fame</a></div><div class="navigation"><a href="javascript:tog('search');">Search</a></div><div class="navigation"><a href="index.php?action=members">Members</a></div><div class="navigation"><a href="/FORUM">Forum (Separate Login)</a></div>
+<div style="display:none" id="login_form" name="tog_collect"><br /><br /><br /><form method="post" action="?action=login"> Name: <input type="text" name="userID" style="font-size: 80%;" /> <font style="font-size: 80%;"></font> Pass: <input type="password" name="pword" style="font-size: 80%;" /> <input type="submit" value="Login" style="font-size: 80%;" /><br /><input type="checkbox" name="cookiescheck" />Remember Login? | <a href="index.php?action=register#registration"><b>Register to play!</b></a><br /><a href="index.php?action=forgotpass"><i>Forgot Password?</i></a></form></div></div>
+<?php
+} else {
+$checkChamps = mysql_num_rows(run_query("SELECT username FROM phpqa_leaderboard WHERE username = '$phpqa_user_cookie'"));
+echo "<div style='width: 100%; text-align: center; margin-left: auto; margin-right: auto;'><div  class='navigation'>Logged in: <A href='index.php?action=profile&amp;user=$phpqa_user_cookie'>$phpqa_user_cookie</a> Total Wins: $checkChamps </div><div class='navigation'><a href='index.php?action=settings'>Settings</a>";
+if ($exist[6]=="Admin") {
+echo " (<a href='index.php?cpiarea=idx'><b>Admin CP</b></a>) &middot; (<a href='index.php?modcparea=idx'><b>Mod CP</b></a>)";
+}
+if ($exist[6]=="Moderator") {
+echo " (<a href='index.php?modcparea=idx'><b>Mod CP</b></a>)";
+}
+echo"</div><div  class='navigation'>[ <a href='index.php?action=logout'>Log Out</a> ]</div><div  class='navigation'><a href='index.php?fav=1'>Favorites</a></div><div  class='navigation'><a href='index.php?action=leaderboards'>Leaderboard</a></div><div  class='navigation'><a href='index.php?action=HOF'>Hall of Fame</a></div><div  class='navigation'><a href='javascript:tog(\"search\")'>Search</a></div><div  class='navigation'><a href='index.php?action=members'>Members</a></div><div  class='navigation'><a href='/FORUM'>Forum (Separate Login)</a></div></div>";
+}
+// end nav buttons
+?>
+</td>
+</tr></table>
+<div style="display:none; width:250px; margin-left:auto; margin-right:auto;" class='tableborder' id="search" name="tog_collect"><br />Search The Arcade<br /><br /><form method="get">Term: <input type="text" name="search" value="" /><br />Search By: <select name="by"><?php foreach(Array('game'=>'Game Name','gameid'=>'Game ID','about'=>'Game desc','Champion_name'=>'Champion Name') as $k=>$v) echo "<option value='$k'>$v</option>";?></select><br />In Category: <select size="1" name="searchcat"><option value='All' selected="selected">All</option><?php $catquery=run_query("SELECT * FROM phpqa_cats ORDER BY `displayorder`");while ($catlist= mysql_fetch_array($catquery)) echo  "<option value='$catlist[0]'>$catlist[1]</option>"; ?></select><br /><input type="submit" value="search" name="action" /></form></div>
 <div align="center">
 <?php // Begin Collapse #1 
 if (isset($settings["show_stats_table"])&&$settings["show_stats_table"]=='1') { 
@@ -140,28 +167,5 @@ if (isset($settings["show_stats_table"])&&$settings["show_stats_table"]=='1') {
 echo "</div>";
 }
 ?>
-<table>
-<td colspan="3" class="arcade1" align="center">
-<?php
-if (!isset($_COOKIE['phpqa_user_c'])) {
-// begin nav buttons
-?>
-<div style="width: 100%; text-align: center; margin-left: auto; margin-right: auto;"><a name="Login"></a><div class="navigation">Logged off: [ <a href="javascript:tog('login_form')">Login</a> ]</div><div class="navigation">[ <a href="index.php?action=register#registration">Register</a> ] </div><div class="navigation"><a href="index.php?action=leaderboards">Leaderboard</a></div><div class="navigation"><a href="index.php?action=HOF">Hall of Fame</a></div><div class="navigation"><a href="javascript:tog('search');">Search</a></div><div class="navigation"><a href="index.php?action=members">Members</a></div><div class="navigation"><a href="/FORUM">Forum (Separate Login)</a></div>
-<div style="display:none" id="login_form" name="tog_collect"><br /><br /><br /><form method="post" action="?action=login"> Name: <input type="text" name="userID" style="font-size: 80%;" /> <font style="font-size: 80%;"></font> Pass: <input type="password" name="pword" style="font-size: 80%;" /> <input type="submit" value="Login" style="font-size: 80%;" /><br /><input type="checkbox" name="cookiescheck" />Remember Login? | <a href="index.php?action=register#registration"><b>Register to play!</b></a><br /><a href="index.php?action=forgotpass"><i>Forgot Password?</i></a></form></div></div>
-<?php
-} else {
-$checkChamps = mysql_num_rows(run_query("SELECT username FROM phpqa_leaderboard WHERE username = '$phpqa_user_cookie'"));
-echo "<div style='width: 100%; text-align: center; margin-left: auto; margin-right: auto;'><div  class='navigation'>Logged in: <A href='index.php?action=profile&amp;user=$phpqa_user_cookie'>$phpqa_user_cookie</a> Total Wins: $checkChamps </div><div class='navigation'><a href='index.php?action=settings'>Settings</a>";
-if ($exist[6]=="Admin") {
-echo " (<a href='index.php?cpiarea=idx'><b>Admin CP</b></a>) &middot; (<a href='index.php?modcparea=idx'><b>Mod CP</b></a>)";
-}
-if ($exist[6]=="Moderator") {
-echo " (<a href='index.php?modcparea=idx'><b>Mod CP</b></a>)";
-}
-echo"</div><div  class='navigation'>[ <a href='index.php?action=logout'>Log Out</a> ]</div><div  class='navigation'><a href='index.php?fav=1'>Favorites</a></div><div  class='navigation'><a href='index.php?action=leaderboards'>Leaderboard</a></div><div  class='navigation'><a href='index.php?action=HOF'>Hall of Fame</a></div><div  class='navigation'><a href='javascript:tog(\"search\")'>Search</a></div><div  class='navigation'><a href='index.php?action=members'>Members</a></div><div  class='navigation'><a href='/FORUM'>Forum (Separate Login)</a></div></div>";
-}
-// end nav buttons
-?>
-</td>
-</tr></table>
+
 <div style="display:none; width:250px;" class='tableborder' id="search" name="tog_collect"><br />Search The Arcade<br /><br /><form method="get">Term: <input type="text" name="search" value="" /><br />Search By: <select name="by"><?php foreach(Array('game'=>'Game Name','gameid'=>'Game ID','about'=>'Game desc','Champion_name'=>'Champion Name') as $k=>$v) echo "<option value='$k'>$v</option>";?></select><br />In Category: <select size="1" name="searchcat"><option value='All' selected="selected">All</option><?php $catquery=run_query("SELECT * FROM phpqa_cats ORDER BY `displayorder`");while ($catlist= mysql_fetch_array($catquery)) echo  "<option value='$catlist[0]'>$catlist[1]</option>"; ?></select><br /><input type="submit" value="search" name="action" /></form></div>
