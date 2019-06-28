@@ -14,7 +14,19 @@
 # Section: ArcadeInfo.php  Function: Latest Site Info Block   Modified: 6/28/2019   By: MaSoDo
 ?>
 <br />
-
+<?php
+$anysent = 0;
+$MyMess = '';
+$alertstyle = '';
+if (isset($_COOKIE['phpqa_user_c'])) {
+$MyMess = $_COOKIE['phpqa_user_c'];
+$checkmessages=run_query("SELECT `id` FROM `PLA_users` where `username` = '".$MyMess."'"); 
+$checkmess= mysql_fetch_array($checkmessages);
+$checkmess_for = $checkmess['id'];
+$anysent=mysql_num_rows(run_query("SELECT `status` FROM `PLA_pun_pm_messages` WHERE `receiver_id` = '".$checkmess_for."' AND `status` = 'sent'"));
+if($anysent > 0){ $AlertMe='yes'; $alertstyle='border:lime dotted; color:lime;'; }
+}
+?>
 <table align="center" width="1200" cellpadding="4" cellspacing="1">
 <tr>
 <td colspan="3" class="arcade1" align="center">
@@ -22,7 +34,7 @@
 if (!isset($_COOKIE['phpqa_user_c'])) {
 // begin nav buttons
 ?>
-<div style="width: 100%; text-align: center; margin-left: auto; margin-right: auto;"><a name="Login"></a><div class="navigation">Logged off: [ <a href="javascript:tog('login_form')">Login</a> ]</div><div class="navigation">[ <a href="index.php?action=register#registration">Register</a> ] </div><div class="navigation"><a href="index.php?action=leaderboards">Leaderboard</a></div><div class="navigation"><a href="index.php?action=HOF">Hall of Fame</a></div><div class="navigation"><a href="javascript:tog('search');">Search</a></div><div class="navigation"><a href="index.php?action=members">Members</a></div><div class="navigation"><a href="/FORUM">Forum (Separate Login)</a></div>
+<div style="width: 100%; text-align: center; margin-left: auto; margin-right: auto;"><a name="Login"></a><div class="navigation">Logged off: [ <a href="javascript:tog('login_form')">Login</a> ]</div><div class="navigation">[ <a href="index.php?action=register#registration">Register</a> ] </div><div class="navigation"><a href="index.php?action=leaderboards">Leaderboard</a></div><div class="navigation"><a href="index.php?action=HOF">Hall of Fame</a></div><div class="navigation"><a href="javascript:tog('search');">Search</a></div><div class="navigation"><a href="index.php?action=members">Members</a></div><div class="navigation" style="<?php echo $alertstyle; ?>"><a href="/FORUM">Forum (Separate Login)</a></div>
 <div style="display:none" id="login_form" name="tog_collect"><br /><br /><br /><form method="post" action="?action=login"> Name: <input type="text" name="userID" style="font-size: 80%;" /> <font style="font-size: 80%;"></font> Pass: <input type="password" name="pword" style="font-size: 80%;" /> <input type="submit" value="Login" style="font-size: 80%;" /><br /><input type="checkbox" name="cookiescheck" />Remember Login? | <a href="index.php?action=register#registration"><b>Register to play!</b></a><br /><a href="index.php?action=forgotpass"><i>Forgot Password?</i></a></form></div></div>
 <?php
 } else {
@@ -34,7 +46,7 @@ echo " (<a href='index.php?cpiarea=idx'><b>Admin CP</b></a>) &middot; (<a href='
 if ($exist[6]=="Moderator") {
 echo " (<a href='index.php?modcparea=idx'><b>Mod CP</b></a>)";
 }
-echo"</div><div  class='navigation'>[ <a href='index.php?action=logout'>Log Out</a> ]</div><div  class='navigation'><a href='index.php?fav=1'>Favorites</a></div><div  class='navigation'><a href='index.php?action=leaderboards'>Leaderboard</a></div><div  class='navigation'><a href='index.php?action=HOF'>Hall of Fame</a></div><div  class='navigation'><a href='javascript:tog(\"search\")'>Search</a></div><div  class='navigation'><a href='index.php?action=members'>Members</a></div><div  class='navigation'><a href='/FORUM'>Forum (Separate Login)</a></div></div>";
+echo"</div><div  class='navigation'>[ <a href='index.php?action=logout'>Log Out</a> ]</div><div  class='navigation'><a href='index.php?fav=1'>Favorites</a></div><div  class='navigation'><a href='index.php?action=leaderboards'>Leaderboard</a></div><div  class='navigation'><a href='index.php?action=HOF'>Hall of Fame</a></div><div  class='navigation'><a href='javascript:tog(\"search\")'>Search</a></div><div  class='navigation'><a href='index.php?action=members'>Members</a></div><div class='navigation' style='".$alertstyle."' ><a href='/FORUM'>Forum (Separate Login)</a></div></div>";
 }
 // end nav buttons
 ?>
