@@ -11,7 +11,8 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: members - Control Panel   Modified: 6/7/2019   By: MaSoDo
+# Section: acpi Place: members - Control Panel   Modified: 6/28/2019   By: MaSoDo
+//require('exportuserstoforum.php');
 {
 message("View Only: <br /><a href='?cpiarea=members&act=Admin'>Admins</a> &middot; <a href='?cpiarea=members&act=Moderator'>Moderators</a> &middot; <a href='?cpiarea=members&act=Affiliate'>Affiliate</a> &middot; <a href='?cpiarea=members&act=Member'>Members</a> &middot; <a href='?cpiarea=members&act=Banned'>Banned</a> &middot; <a href='?cpiarea=members&act=Validating'>Validating</a>");
 if(isset($_POST['members_selected'])) {
@@ -66,7 +67,8 @@ $new_pass=md5(sha1($_POST['new_pass']));
 if(isset($_GET['changepwd'])) { 
 $n=htmlspecialchars($_GET['changepwd'], ENT_QUOTES);
 vsess();
-run_query("UPDATE `phpqa_accounts` SET `pass` = '".$new_pass."' WHERE name='".$n."'", 1); 
+run_query("UPDATE `phpqa_accounts` SET `pass` = '".$new_pass."' WHERE `name`='".$n."'", 1); 
+run_query("UPDATE `PLA_users` SET `password` = '".$new_pass."' WHERE `username`='".$n."'", 1);
 }}
 if(isset($_GET['validate'])) { vsess();
 	$n=htmlspecialchars($_GET['validate'], ENT_QUOTES);
