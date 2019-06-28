@@ -1,4 +1,19 @@
 <?php
+
+//-----------------------------------------------------------------------------------/
+//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
+//Michael S. DeBurger [DeBurger Photo Image & Design]
+//-----------------------------------------------------------------------------------/
+//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//
+//  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
+//-----------------------------------------------------------------------------------/
+// Thanks to (Sean) http://seanj.jcink.com 
+// for: Tournies, JS, and more
+// ---------------------------------------------------------------------------------/
+# Section: install.php  Function: Install PunBB Forum   Modified: 6/28/2019   By: MaSoDo
+
 /**
  * Installation script.
  *
@@ -254,7 +269,7 @@ if (!isset($_POST['form_sent']))
 			<div class="sf-set set5">
 				<div class="sf-box text">
 					<label for="fld6"><span><?php echo $lang_install['Table prefix'] ?></span> <small><?php echo $lang_install['Table prefix help'] ?></small></label><br />
-					<span class="fld-input"><input id="fld6" type="text" name="db_prefix" size="35" maxlength="30" /></span>
+					<span class="fld-input"><input id="fld6" type="text" name="db_prefix" size="35" maxlength="30" value="PLA_" /></span>
 				</div>
 			</div>
 		</fieldset>
@@ -1632,6 +1647,20 @@ else
 	{
 		$query['INSERT'] .= ', g_id';
 		$query['VALUES'] .= ', 4';
+	}
+	
+	$forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+	$query = array(
+		'INSERT'	=> 'g_title, g_user_title, g_moderator, g_mod_edit_users, g_mod_rename_users, g_mod_change_passwords, g_mod_ban_users, g_read_board, g_view_users, g_post_replies, g_post_topics, g_edit_posts, g_delete_posts, g_delete_topics, g_set_title, g_search, g_search_users, g_send_email, g_post_flood, g_search_flood, g_email_flood',
+		'INTO'		=> 'groups',
+		'VALUES'	=> '\'Affiliate\', \'Affiliate\', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0'
+	);
+
+	if ($db_type != 'pgsql')
+	{
+		$query['INSERT'] .= ', g_id';
+		$query['VALUES'] .= ', 5';
 	}
 
 	$forum_db->query_build($query) or error(__FILE__, __LINE__);
