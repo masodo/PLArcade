@@ -1,3 +1,5 @@
+# This is a specially modified version of PunBB for use with the accompaning version of PracticalLightning Arcade
+
 # PunBB
 
 PunBB is a fast and lightweight PHP-powered discussion board. It is released under the GNU General Public License. Its primary goals are to be faster, smaller and less graphically intensive as compared to other discussion boards. PunBB has fewer features than many other discussion boards, but is generally faster and outputs smaller, semantically correct XHTML-compliant pages.
