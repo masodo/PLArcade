@@ -11,12 +11,14 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Categories.php  Function: Display Categories w/Icons   Modified: 6/26/2019   By: MaSoDo
+# Section: Categories.php  Function: Display Categories w/Icons   Modified: 7/3/2019   By: MaSoDo
 global $catquery;
 $c=@mysql_data_seek($catquery,0);
 $catcell = '';
 $caticon = '';
 $catcnt = '';
+$testC = '';
+$deadC = '';
 (isset($settings['catdiv'])&&$settings['catdiv']!='')?$catcell = $settings['catdiv']:$catcell = '80';
 (isset($settings['catimg'])&&$settings['catimg']!='')?$caticon = $settings['catimg']:$caticon = '60';
 if($c) {
@@ -27,12 +29,14 @@ if($c) {
 while ($c = mysql_fetch_array($catquery)) {
 $catcnt = run_query("(SELECT COUNT(*) as total FROM `phpqa_games` WHERE `gamecat` = ".$c[0].")");
 $dcat=mysql_fetch_assoc($catcnt);
+if($c[0]==23)$testC=$dcat['total'];
+if($c[0]==2)$deadC=$dcat['total'];
 if (($c[0] != '2')&&($c[0] != '23')) {
 echo  "<div style='width: ".$catcell."px; height: ".$catcell."px; padding: 10px; float: left; margin-right: 5px; margin-bottom: 5px; text-align:center;' class='arcade1'><a href='index.php?cat=".$c[0]."' title='".$c[1]." (".$dcat['total'].")'><img src='".$catloc."/".$c[1].".png' style='width:".$caticon."px; height:".$caticon."px;' /><br />$c[1]</a><br /><span style='font-size:9px; color:#000;'>(".$dcat['total'].")</span></div>";
 } }
 if (isset($exist[6])&&$exist[6] == "Admin") {
-echo  "<div style='width: ".$catcell."px; height: ".$catcell."px; padding: 10px; float: left; margin-right: 5px; margin-bottom: 5px; text-align:center;' class='arcade1'><a href='index.php?cat=2' title='Dead (".$dcat['total'].")'><img src='".$catloc."/Dead.png' style='width:".$caticon."px; height:".$caticon."px;' /><br />Dead</a><br /><span style='font-size:9px; color:#000;'>(".$dcat['total'].")</span></div>";
-echo  "<div style='width: ".$catcell."px; height: ".$catcell."px; padding: 10px; float: left; margin-right: 5px; margin-bottom: 5px; text-align:center;' class='arcade1'><a href='index.php?cat=23' title='Testing (".$dcat['total'].")'><img src='".$catloc."/Testing.png' style='width:".$caticon."px; height:".$caticon."px;' /><br />Testing</a><br /><span style='font-size:9px; color:#000;'>(".$dcat['total'].")</span></div>";
+echo  "<div style='width: ".$catcell."px; height: ".$catcell."px; padding: 10px; float: left; margin-right: 5px; margin-bottom: 5px; text-align:center;' class='arcade1'><a href='index.php?cat=2' title='Dead (".$deadC.")'><img src='".$catloc."/Dead.png' style='width:".$caticon."px; height:".$caticon."px;' /><br />Dead</a><br /><span style='font-size:9px; color:#000;'>(".$deadC.")</span></div>";
+echo  "<div style='width: ".$catcell."px; height: ".$catcell."px; padding: 10px; float: left; margin-right: 5px; margin-bottom: 5px; text-align:center;' class='arcade1'><a href='index.php?cat=23' title='Testing (".$testC.")'><img src='".$catloc."/Testing.png' style='width:".$caticon."px; height:".$caticon."px;' /><br />Testing</a><br /><span style='font-size:9px; color:#000;'>(".$testC.")</span></div>";
 
 }
 echo"</div></td></tr></div></table><br />";
