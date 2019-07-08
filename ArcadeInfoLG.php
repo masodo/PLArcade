@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ArcadeInfoLG.php By: Legionaire Function: Latest Site Info Block   Modified: 7/1/2019   By: MaSoDo
+# Section: ArcadeInfoLG.php By: Legionaire Function: Latest Site Info Block   Modified: 7/8/2019   By: MaSoDo
 ?>
 <br />
 <?php
@@ -180,4 +180,3 @@ echo "</div>";
 }
 ?>
 
-<div style="display:none; width:250px;" class='tableborder' id="search" name="tog_collect"><br />Search The Arcade<br /><br /><form method="get">Term: <input type="text" name="search" value="" /><br />Search By: <select name="by"><?php foreach(Array('game'=>'Game Name','gameid'=>'Game ID','about'=>'Game desc','Champion_name'=>'Champion Name') as $k=>$v) echo "<option value='$k'>$v</option>";?></select><br />In Category: <select size="1" name="searchcat"><option value='All' selected="selected">All</option><?php $catquery=run_query("SELECT * FROM phpqa_cats ORDER BY `displayorder`");while ($catlist= mysql_fetch_array($catquery)) echo  "<option value='$catlist[0]'>$catlist[1]</option>"; ?></select><br /><input type="submit" value="search" name="action" /></form></div>
