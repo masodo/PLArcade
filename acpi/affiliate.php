@@ -25,7 +25,7 @@ run_query($strSQLadd);
 }
 
 {
-message("Testing Affiliate Manager:");
+message("Affiliate Manager:");
 }
 $affiliatedata=run_query("SELECT * FROM `phpqa_affiliate` ORDER BY `sort` ASC"); 
 ?>
