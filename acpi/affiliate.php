@@ -20,7 +20,7 @@ run_query($strSQL);
 }
 } 
 if (isset($_GET['act'])&&$_GET['act']=='add'){
-$strSQLadd = "INSERT INTO `phpqa_affiliate` VALUES('', '".$_POST['addFILE']."', '".$_POST['addURL']."', '".$_POST['addTAG']."', '".$_POST['addSORT']."', '".$_POST['addKEY']."', 0, '');";
+$strSQLadd = "INSERT INTO `phpqa_affiliate` VALUES('', '".$_POST['addFILE']."', '".$_POST['addURL']."', '".$_POST['addTAG']."', '".$_POST['addSORT']."', '".$_POST['addKEY']."', 0);";
 run_query($strSQLadd);
 }
 
