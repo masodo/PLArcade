@@ -15,12 +15,12 @@
 
 if (isset($_GET['act'])&&$_GET['act']=='edit'){
 for($i=1;$i<=$_POST['RecNo'];$i++){
-$strSQL = "UPDATE `PLArcade`.`phpqa_affiliate` SET `url`='".$_POST["url$i"]."', `tag`='".$_POST["tag$i"]."', `img`='".$_POST["file$i"]."', `sort`=".$_POST["sort$i"]." WHERE `id`=".$_POST["EdId$i"]." ";
+$strSQL = "UPDATE `phpqa_affiliate` SET `url`='".$_POST["url$i"]."', `tag`='".$_POST["tag$i"]."', `img`='".$_POST["file$i"]."', `sort`=".$_POST["sort$i"]." WHERE `id`=".$_POST["EdId$i"]." ";
 run_query($strSQL);
 }
 } 
 if (isset($_GET['act'])&&$_GET['act']=='add'){
-$strSQLadd = "INSERT INTO `PLArcade`.`phpqa_affiliate` VALUES('', '".$_POST['addFILE']."', '".$_POST['addURL']."', '".$_POST['addTAG']."', '".$_POST['addSORT']."', '".$_POST['addKEY']."', 0, '');";
+$strSQLadd = "INSERT INTO `phpqa_affiliate` VALUES('', '".$_POST['addFILE']."', '".$_POST['addURL']."', '".$_POST['addTAG']."', '".$_POST['addSORT']."', '".$_POST['addKEY']."', 0, '');";
 run_query($strSQLadd);
 }
 
