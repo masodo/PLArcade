@@ -110,7 +110,24 @@ mysql_query("CREATE TABLE `phpqa_accounts` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 ");
 // ------------------------------------------------------//
- 
+
+//
+// Table structure for table `phpqa_affiliate`
+//
+
+mysql_query("CREATE TABLE `phpqa_affiliate` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `img` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `url` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `tag` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `sort` int(11) NOT NULL,
+  `key` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `refs` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+"); 
+// ------------------------------------------------------//
+
 //
 // Table structure for table `phpqa_cats`
 //
