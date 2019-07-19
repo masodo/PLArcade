@@ -1,4 +1,17 @@
 <?php
+//-----------------------------------------------------------------------------------/
+//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
+//Michael S. DeBurger [DeBurger Photo Image & Design]
+//-----------------------------------------------------------------------------------/
+//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//
+//  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
+//-----------------------------------------------------------------------------------/
+// Thanks to (Sean) http://seanj.jcink.com 
+// for: Tournies, JS, and more
+// ---------------------------------------------------------------------------------/
+# Section: post.php  Function: create new post in forum   Modified: 7/19/2019   By: MaSoDo
 /**
  * Adds a new post to the specified topic or a new topic to the specified forum.
  *
@@ -464,17 +477,16 @@ if ($forum_user['is_guest'])
 if ($fid)
 {
 	($hook = get_hook('po_pre_req_subject')) ? eval($hook) : null;
-
+	
 ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text required longtext">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_post['Topic subject'] ?></span></label><br />
-						<span class="fld-input"><input id="fld<?php echo $forum_page['fld_count'] ?>" type="text" name="req_subject" value="<?php if (isset($_POST['req_subject'])) echo forum_htmlencode($subject); ?>" size="<?php echo FORUM_SUBJECT_MAXIMUM_LENGTH ?>" maxlength="<?php echo FORUM_SUBJECT_MAXIMUM_LENGTH ?>" required /></span>
+						<span class="fld-input"><input id="fld<?php echo $forum_page['fld_count'] ?>" type="text" name="req_subject" value="<?php if (isset($_POST['req_subject'])) {echo forum_htmlencode($subject);} if (isset ($_GET['REPORT_GAME'])) echo forum_htmlencode("Reporting Game: " . $_GET['REPORT_GAME']);} ?>" size="<?php echo FORUM_SUBJECT_MAXIMUM_LENGTH ?>" maxlength="<?php echo FORUM_SUBJECT_MAXIMUM_LENGTH ?>" required /></span>
 					</div>
 				</div>
 <?php
 
-}
 
 ($hook = get_hook('po_pre_post_contents')) ? eval($hook) : null;
 
