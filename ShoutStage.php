@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ShoutStage.php  Function: Shout Box Display Mechanics   Modified: 6/21/2019   By: MaSoDo
+# Section: ShoutStage.php  Function: Shout Box Display Mechanics   Modified: 7/19/2019   By: MaSoDo
 //-----------------------------------------------------------------------------------/
 if(isset($_GET['shoutbox'])) $limit=0;
 if(isset($_GET['shoutbox'])) $show=$num_pages_of;
@@ -20,7 +20,11 @@ if (isset($_COOKIE['phpqa_user_c'])) {
 	$shouttotal = mysql_fetch_array(run_query("SHOW TABLE STATUS LIKE 'phpqa_shoutbox'"));
 
 echo "<div align='center'>";
+if ($shouttotal['Rows'] != 0){
 echo "Viewing ".$num_pages_of." Shouts :: Total Shouts: " . $shouttotal['Rows'] . " :: <a title='Open PopUp Archive' href=\"javascript:window.open('index.php?action=allshouts', 'Shouts Archive', 'width=800,height=800,directories=no,location=no,menubar=no,resizable=no,scrollbars=yes,status=no,toolbar=no');void(0);\">See All</a>";
+} else { 
+echo "<b>Shoutbox is empty...</b> <i>why not add something?</i>";
+}
 
 echo "<hr /></div>";
 if($shouttotal['Rows'] > 0) {
