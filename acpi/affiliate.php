@@ -15,12 +15,12 @@
 
 if (isset($_GET['act'])&&$_GET['act']=='edit'){
 for($i=1;$i<=$_POST['RecNo'];$i++){
-$strSQL = "UPDATE `phpqa_affiliate` SET `url`='".$_POST["url$i"]."', `tag`='".$_POST["tag$i"]."', `img`='".$_POST["file$i"]."', `sort`=".$_POST["sort$i"]." WHERE `id`=".$_POST["EdId$i"]." ";
+$strSQL = "UPDATE `phpqa_affiliate` SET `url`='".$_POST["url$i"]."', `tag`='".$_POST["tag$i"]."', `img`='".$_POST["file$i"]."', `sort`=".$_POST["sort$i"].", `active` = ".$_POST["active$i"]." WHERE `id`=".$_POST["EdId$i"]." ";
 run_query($strSQL);
 }
 } 
 if (isset($_GET['act'])&&$_GET['act']=='add'){
-$strSQLadd = "INSERT INTO `phpqa_affiliate` VALUES('', '".$_POST['addFILE']."', '".$_POST['addURL']."', '".$_POST['addTAG']."', '".$_POST['addSORT']."', '".$_POST['addKEY']."', 0);";
+$strSQLadd = "INSERT INTO `phpqa_affiliate` VALUES('', '".$_POST['addFILE']."', '".$_POST['addURL']."', '".$_POST['addTAG']."', '".$_POST['addSORT']."', '".$_POST['addKEY']."', 0, 1);";
 run_query($strSQLadd);
 }
 
@@ -30,7 +30,7 @@ message("Affiliate Manager:");
 $affiliatedata=run_query("SELECT * FROM `phpqa_affiliate` ORDER BY `sort` ASC"); 
 ?>
 
-<div class="tableborder"><table width="100%" cellpadding="4" cellspacing="1"><tr><td width="10%" align="center" class="headertableblock">BANNER</td><td width="20%" align="center" class="headertableblock">URL</td><td width="20%" align="center" class="headertableblock">TAG</td><td width=5% align="center" class="headertableblock">IMAGE FILENAME</td><td width=5% align="center" class="headertableblock">SORT</td><td width="5%" align="center" class="headertableblock">HITS</td><td width="5%" align="center" class="headertableblock">KEY</td></tr>
+<div class="tableborder"><table width="100%" cellpadding="4" cellspacing="1"><tr><td width="2" align="center" class="headertableblock">Use</td><td width="10%" align="center" class="headertableblock">BANNER</td><td width="20%" align="center" class="headertableblock">URL</td><td width="20%" align="center" class="headertableblock">TAG</td><td width=5% align="center" class="headertableblock">IMAGE FILENAME</td><td width=5% align="center" class="headertableblock">SORT</td><td width="5%" align="center" class="headertableblock">HITS</td><td width="5%" align="center" class="headertableblock">KEY</td></tr>
 <form action="?cpiarea=affiliates&act=edit" method="post" name="affiliatable">
 <?php
 $i = 0;
@@ -39,6 +39,7 @@ $i = 0;
 ?>
 
 <tr>
+<td class="arcade1" align="center"><input type="text" style="text-align: left;" name="active<?php echo $i; ?>" value="<?php echo $A['active']; ?>" /></td>
 <td class="arcade1" align="center"><a href="<?php echo $A['url']; ?>" title="<?php echo $A['tag']; ?>"><img src="<?php echo($arcurl)?>/<?php echo($bannerloc)?>/<?php echo($A['img'])?>" border="0" width="100" height="20" /></a></td>
 <td class="arcade1" align="left"><input type="text" size="52" name="url<?php echo $i; ?>" value="<?php echo $A['url']; ?>"></input></td>
 <td class="arcade1"><div align="center"><input type="text" size="52" style="text-align: left;" name="tag<?php echo $i; ?>" value="<?php echo $A['tag']; ?>"></input></td>
