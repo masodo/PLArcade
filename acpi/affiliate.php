@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: affiliates - Control Panel   Modified: 7/15/2019   By: MaSoDo
+# Section: acpi Place: affiliates - Control Panel   Modified: 7/19/2019   By: MaSoDo
 
 if (isset($_GET['act'])&&$_GET['act']=='edit'){
 for($i=1;$i<=$_POST['RecNo'];$i++){
