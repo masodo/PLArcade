@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 6/21/2019   By: MaSoDo
+# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 7/19/2019   By: MaSoDo
 session_start();
 if($_GET['captcha']){
 $im = imagecreatefrompng("captchabg.png");
@@ -202,6 +202,7 @@ die();
 //	Never take this out or move this!
 //                   NEVER!
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ReportID = 1; //set to topic id for game reports
 $exist='';
 //declare some variables would be nice
 $plat = "";
@@ -352,9 +353,11 @@ $thepassword_in_db = md5(sha1($pword));
 if(isset($_GET['recovery'])) $thepassword_in_db = $pword;
 if (rtrim($exist[2]) == $thepassword_in_db) {
 if(!isset($_POST['cookiescheck'])) {
+$authorized = true;
 setcookie("phpqa_user_c", "".$exist[1]."");
 setcookie("phpqa_user_p", $thepassword_in_db, 0, ""."; HttpOnly'");
 } else {
+$authorized = true;
 setcookie("phpqa_user_c", "{$exist[1]}", time()+99999);
 setcookie("phpqa_user_p", $thepassword_in_db, time()+99999, ""."; HttpOnly");
 }
