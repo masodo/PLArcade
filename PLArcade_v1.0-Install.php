@@ -123,6 +123,7 @@ mysql_query("CREATE TABLE `phpqa_affiliate` (
   `sort` int(11) NOT NULL,
   `key` varchar(255) CHARACTER SET utf8 NOT NULL,
   `refs` int(11) NOT NULL,
+  `active` tinyint(1) NOT NULL default '1',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 "); 
