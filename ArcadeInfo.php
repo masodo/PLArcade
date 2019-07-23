@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ArcadeInfo.php  Function: Latest Site Info Block   Modified: 7/19/2019   By: MaSoDo
+# Section: ArcadeInfo.php  Function: Latest Site Info Block   Modified: 7/23/2019   By: MaSoDo
 ?>
 <br />
 <?php
@@ -47,7 +47,7 @@ if (!isset($_COOKIE['phpqa_user_c'])) {
 <div style="display:none" id="login_form" name="tog_collect"><br /><br /><br /><form method="post" action="?action=login"> Name: <input type="text" name="userID" style="font-size: 80%;" /> <font style="font-size: 80%;"></font> Pass: <input type="password" name="pword" style="font-size: 80%;" /> <input type="submit" value="Login" style="font-size: 80%;" /><br /><input type="checkbox" name="cookiescheck" />Remember Login? | <a href="index.php?action=register#registration"><b>Register to play!</b></a><br /><a href="index.php?action=forgotpass"><i>Forgot Password?</i></a></form></div></div>
 <?php
 } else {
-$checkChamps = mysql_num_rows(run_query("SELECT username FROM phpqa_leaderboard WHERE username = '$phpqa_user_cookie'"));
+$checkChamps = mysql_num_rows(run_query("SELECT `username` FROM `phpqa_leaderboard` WHERE `username` = '$phpqa_user_cookie'"));
 echo "<div style='width: 100%; text-align: center; margin-left: auto; margin-right: auto;'><div  class='navigation'>Logged in: <A href='index.php?action=profile&amp;user=$phpqa_user_cookie'>$phpqa_user_cookie</a> Total Wins: $checkChamps </div><div class='navigation'><a href='index.php?action=settings'>Settings</a>";
 if ($exist[6]=="Admin") {
 echo " (<a href='index.php?cpiarea=idx'><b>Admin CP</b></a>) &middot; (<a href='index.php?modcparea=idx'><b>Mod CP</b></a>)";
@@ -104,7 +104,7 @@ if (!isset($acct_setting[3]) || $acct_setting[3] !="No") {
 <td class="arcade1" valign="top" align="left">
 
 <?php
-$newgames = run_query("SELECT gameid,game,id,gamecat FROM phpqa_games ORDER by id DESC LIMIT 0,".$ngnum."");
+$newgames = run_query("SELECT `gameid`,`game`,`id`,`gamecat` FROM `phpqa_games` ORDER by `id` DESC LIMIT 0,$ngnum");
 	while($g=mysql_fetch_array($newgames)){ 
 	if (($g[3] != '23')&&($g[3] != '2')){
 	
@@ -116,12 +116,12 @@ echo "<img height='20' width='20' src='arcade/pics/$g[0].gif' alt='$g[1]' /><a h
 
 <table><td align="left">
 <?php
-	$selectfrom = run_query("SELECT * FROM phpqa_scores ORDER BY phpdate DESC LIMIT 0,".$lsnum."");
+	$selectfrom = run_query("SELECT * FROM `phpqa_scores` ORDER BY `phpdate` DESC LIMIT 0,$lsnum");
 	while($s=mysql_fetch_array($selectfrom)){ 
   $VstatG = "";
   $bigname = "";
   $bigtag = "";
-  $gameinfo = run_query("SELECT Champion_name,Champion_score FROM phpqa_games WHERE gameid = '$s[6]'");
+  $gameinfo = run_query("SELECT `Champion_name`,`Champion_score` FROM `phpqa_games` WHERE `gameid` = '$s[6]'");
   $g=mysql_fetch_array($gameinfo);
     if ($s[2]==$g[1]) {
         $VstatG = "<img src='$imgloc/rd_star.gif' height='10' width='10' alt='*' /><b>";
@@ -160,19 +160,21 @@ if ($trop == 3) { $trophy = "<img src='$crowndir/crown3.gif' />"; }
 if ($scores['avatar'] == ''){ $scores['avatar'] = $avatarloc.'/man.gif'; }
 echo"<span style='font-size: 14px; line-height:175%'>&nbsp;<a href='index.php?action=profile&amp;user=" . $scores['name'] . "' onmouseover=\"s=document.getElementById('champboxpopup');s.style.display='';s.getElementsByTagName('img')[0].src='" . $scores['avatar'] . "';\" onmousemove=\"s=document.getElementById('champboxpopup').style;s.top=document.body.scrollTop+2+event.clientY;s.left=document.body.scrollLeft+event.clientX;\" onmouseout=\"document.getElementById('champboxpopup').style.display='none'\"  class='".$scores['group']."Look'><i>" . $scores['name'] . "</i></a>&nbsp;</span>(<b>" . $scores['champions'] . "</b> Wins) &nbsp;" . $trophy . " <br /><hr />";
 }
-} // End acct based check for big table
-} // End check for big table
-} // end play check
+
 ?>
 </td>
 <td class="arcade1" valign="top" align="left">
 
 <?php
-$hotgames = run_query("SELECT `gameid`,`game`,`id`,`gamecat`,`times_played`  FROM `phpqa_games` ORDER by `times_played` DESC LIMIT 0,".$ngnum."");
+//global $ngnum;
+$hotgames = run_query("SELECT `gameid`,`game`,`id`,`gamecat`,`times_played` FROM `phpqa_games` ORDER by `times_played` DESC LIMIT 0,$ngnum");
 	while($hg=mysql_fetch_array($hotgames)){ 
 	if ($hg[3] != '2') {
 echo "<img height='20' width='20' src='arcade/pics/$hg[0].gif' alt='$hg[1]' style='margin-left:5px;' /><a href=\"index.php?play=$hg[0]#playzone\">$hg[1]</a> (".$hg['times_played'].")<br />";
 }}
+}// End acct based check for big table
+} // End check for big table
+} // end play check
 ?>
 
 </td>
