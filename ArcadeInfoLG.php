@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ArcadeInfoLG.php By: Legionaire Function: Latest Site Info Block   Modified: 7/19/2019   By: MaSoDo
+# Section: ArcadeInfoLG.php By: Legionaire Function: Latest Site Info Block   Modified: 7/23/2019   By: MaSoDo
 ?>
 <br />
 <?php
@@ -136,9 +136,7 @@ if ($trop == 3) { $trophy = "<img src='$crowndir/crown3.gif' style='margin-left:
 if ($scores['avatar'] == ''){ $scores['avatar'] = $avatarloc.'/man.gif'; }
 echo "<td class='arcade1'><div align='center'><i><span style='font-size: 14px; line-height:175%'><a href=\"index.php?action=profile&amp;user=".$scores['name']."\"><img src='".$scores['avatar']."' height='60px' /><br />" . $trophy . "<span class='".$scores['group']."Look'>".$scores['name']."</span>" . $trophy . "</a></i><br /><div padding:3px; background-color:navy;' align='center'>with <b>".$scores['champions']."</b> wins!</div></div></td>";
 }
-} // End acct based check for big table
-} // End check for big table
-} // end play check
+ // end play check
 ?>
 </td>
 </tr>
@@ -151,7 +149,7 @@ echo "<td class='arcade1'><div align='center'><i><span style='font-size: 14px; l
 <?php
 echo "";
 
-	$selectfrom = run_query("SELECT * FROM phpqa_scores ORDER BY phpdate DESC LIMIT 0,".$lsnum."");
+	$selectfrom = run_query("SELECT * FROM `phpqa_scores` ORDER BY `phpdate` DESC LIMIT 0,$lsnum");
 	while($s=mysql_fetch_array($selectfrom)){ 
   $VstatG = "";
   $bigname = "";
@@ -173,11 +171,14 @@ echo "$VstatG<a href='index.php?action=profile&amp;user=".$s[1]."' class='".$thi
 ?>
 </td><td class="arcade1" valign="top" align="left">
 <?php
-$hotgames = run_query("SELECT `gameid`,`game`,`id`,`gamecat`,`times_played`  FROM `phpqa_games` ORDER by `times_played` DESC LIMIT ".$lsnum."");
+$hotgames = run_query("SELECT `gameid`,`game`,`id`,`gamecat`,`times_played`  FROM `phpqa_games` ORDER by `times_played` DESC LIMIT $lsnum");
 	while($hg=mysql_fetch_array($hotgames)){ 
 	if ($hg[3] != '2') {
 echo "<img height='20' width='20' src='arcade/pics/$hg[0].gif' alt='$hg[1]' style='margin-left:5px;' /><a href=\"index.php?play=$hg[0]#playzone\">$hg[1]</a> (".$hg['times_played'].")<br />";
 }}
+} // End acct based check for big table
+} // End check for big table
+}
 ?>
 </td></tr></table>
 </table></td>
@@ -188,3 +189,4 @@ if (isset($settings["show_stats_table"])&&$settings["show_stats_table"]=='1') {
 echo "</div>";
 }
 ?>
+
