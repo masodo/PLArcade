@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: SettingsOption.php  Function: User Definable Configuration   Modified: 6/24/2019   By: MaSoDo
+# Section: SettingsOption.php  Function: User Definable Configuration   Modified: 6/27/2019   By: MaSoDo
 echo "<!-- SettingsOption.php --------------------------------------------------------------------------------------------------------------------------------------------- -->";
 if (isset($_COOKIE['phpqa_user_c'])) {
 if($exist[6] == "Validating") {
@@ -144,7 +144,9 @@ if (isset($_POST['newpass'])) {
 if ($_POST['newpass'] != "") {
 $UpDated = md5(sha1($_POST['newpass']));
 vsess();
-run_query("UPDATE `phpqa_accounts` SET `pass` = '$UpDated' WHERE name='$phpqa_user_cookie'", 1);
+run_query("UPDATE `phpqa_accounts` SET `pass` = '$UpDated' WHERE `name`='$phpqa_user_cookie'", 1);
+run_query("UPDATE `PLA_users` SET `password` = '$UpDated' WHERE `username`='$phpqa_user_cookie'", 1);
+
 echo "Password updated. You must now login again.";
 } else {
 echo "You didn't enter a new password. Please go back and fill out the input box.";

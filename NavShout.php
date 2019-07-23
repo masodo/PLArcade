@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 6/21/2019   By: MaSoDo
+# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 7/1/2019   By: MaSoDo
 ?>
 <div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><tr><td class='arcade1' align='left'>
 <?php
@@ -112,11 +112,21 @@ $catquer = run_query("(SELECT * FROM phpqa_games ORDER BY rand() LIMIT 1) UNION 
 }
 $arcadetotalcat = mysql_num_rows($countquer);
 $f = @mysql_fetch_array($catquer);
+$playrandg = '';
+$findNG = '';
+if (($f['gamecat'] != 2)&&($f['gamecat'] != 2)){
+$playrang = $f['gameid'];
+} else { 
+$findNG = run_query("SELECT `gameid` FROM phpqa_games WHERE `gamecat` != '2' AND `gamecat` != '23' ORDER by id DESC LIMIT 0,1");
+$FNG = mysql_fetch_array($findNG);
+$playrang = $FNG[0];
+}
+
 ////////Game List Display Logic
 if(isset($settings['enable_24hr'])&&$settings['enable_24hr']==1){
-echo "<div class='navigation'> &#187; <b>Viewing Arcade Index</b></div> <div style='width:300px; float:right; margin-right:50px; text-align: right;'>Arcade Time: <b>" . date('G:i') ."</b><br />Local Time: <script>nowtime(24)</script></div></td><td class='arcade1' style='width:1px'><div class='navigation'><a href='?play=" . $f['gameid'] . "#playzone'><b>Random&nbsp;Game</b></a></div>";
+echo "<div class='navigation'> &#187; <b>Viewing Arcade Index</b></div> <div style='width:300px; float:right; margin-right:50px; text-align: right;'>Arcade Time: <b>" . date('G:i') ."</b><br />Local Time: <script>nowtime(24)</script></div></td><td class='arcade1' style='width:1px'><div class='navigation'><a href='?play=" . $playrang . "#playzone'><b>Random&nbsp;Game</b></a></div>";
 } else {
-echo "<div class='navigation'> &#187; <b>Viewing Arcade Index</b></div> <div style='width:300px; float:right; margin-right:50px; text-align: right;'>Arcade Time: <b>" . date('g:i A') ."</b><br />Local Time: <script>nowtime()</script></div></td><td class='arcade1' style='width:1px'><div class='navigation'><a href='?play=" . $f['gameid'] . "#playzone'><b>Random&nbsp;Game</b></a></div>";
+echo "<div class='navigation'> &#187; <b>Viewing Arcade Index</b></div> <div style='width:300px; float:right; margin-right:50px; text-align: right;'>Arcade Time: <b>" . date('g:i A') ."</b><br />Local Time: <script>nowtime()</script></div></td><td class='arcade1' style='width:1px'><div class='navigation'><a href='?play=" . $playrang . "#playzone'><b>Random&nbsp;Game</b></a></div>";
 }}
 echo "</td></tr></table></div><div align='center'>";
 ?>

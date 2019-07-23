@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: PlayOption.php  Function: Game Play Block   Modified: 6/13/2019   By: MaSoDo
+# Section: PlayOption.php  Function: Game Play Block   Modified: 7/19/2019   By: MaSoDo
 //modified to play HTML5 Games
 $play = htmlspecialchars($_GET['play'], ENT_QUOTES);
 	$g = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gameid='".$play."'")); 
@@ -53,8 +53,8 @@ if (!$CHMPimg['avatar'])$CHMPimg['avatar'] = $avatarloc.'/man.gif';
 //modified to play HTML5 Games
 $CheckPlatform = $g['platform'];
 if ($CheckPlatform == 'H5') {
-echo '<iframe src="' . $g['remotelink'] . '" scrolling="no" style="overflow: hidden; outline: none; border: 0px; width: ' . $g['gamewidth'] . 'px; height: ' . $g['gameheight'] . 'px; overflow: hidden;" id="' . $g['id'] . '" data-id="' . $g['id'] . '" data-gname="' . $g['gameid'] . '"></iframe>';
-} else { 
+echo "<iframe src='" . $g['remotelink'] . "' scrolling='no' style='overflow: hidden; outline: none; border: 0px; width: " . $g['gamewidth'] . "px; height: " . $g['gameheight'] . "px; overflow: hidden;' id='" . $g['id'] . "' data-id='" . $g['id'] . "' data-gname='" . $g['gameid'] . "'></iframe><div style='width:25px;float:left; margin-top:20px; margin-left:20px;'><a href='/FORUM/post.php?fid=".$ReportID."&REPORT_GAME_ID=".$g['gameid'] . "&REPORT_GAME_NAME=".$g['game'] . "' target='_blank' title='please report any trouble with this game'><img src='".$imgloc."/redflag.png' /></a></div>";
+} else { echo "<div style='width:25px;float:left; margin-top:20px; margin-left:20px;'><a href='/FORUM/post.php?fid=".$ReportID."&REPORT_GAME_ID=".$g['gameid'] . "&REPORT_GAME_NAME=".$g['game'] . "' target='_blank' title='please report any trouble with this game'><img src='".$imgloc."/redflag.png' /></a></div>";
 ?>
 <object classid=clsid:D27CDB6E-AE6D-11cf-96B8-444553540000 codebase=http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0 align=middle WIDTH=<?php echo $g['gamewidth']; ?> HEIGHT=<?php echo $g['gameheight']; ?>> <param name='movie' value='<?php echo $swf_resource ?>' /><param name=quality value=high /> <param name=allowScriptAccess value=sameDomain /> <param name='menu' value='false' /> <embed src="<?php echo $swf_resource; ?>" quality=high pluginspage=http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash WIDTH=<?php echo $g['gamewidth']; ?> HEIGHT=<?php echo $g['gameheight']; ?> menu='false' type=application/x-shockwave-flash align=middle /></object>
 <?php } ?>
@@ -73,7 +73,7 @@ while($f=mysql_fetch_array($q)) echo "<li><b>".$f[0]."</b>: ".$f[1]."</li>";
 ?>
 </ol></div>
 <a href="index.php?id=<?php echo $g['gameid']; ?>" onmouseover="document.getElementById('popup').style.display=''" onmouseout="document.getElementById('popup').style.display='none'" onmousemove="s=document.getElementById('popup').style;s.top=document.body.scrollTop+event.clientY+2;s.left=document.body.scrollLeft+event.clientX-152;">
-<div class="navigation" style="background-color: black; margin-left: 10px; margin-right: 10px; margin-top: 10px; padding: -5px 10px 5px 10px;"><p><i>Game Champion</i></p><p><img src='<?php echo $arcurl."/".$CHMPimg['avatar'] ?>'  width='50' /></p><img alt='image' src='<?php echo($crowndir) ?>/crown1.gif' />&nbsp;<b style='color: white;'><?php echo $g['Champion_name']; ?></b>&nbsp;<img alt='image' src='<?php echo($crowndir) ?>/crown1.gif' /><br /><?php echo str_replace('-', '', $g['Champion_score']); ?></div></a><p><?php echo $yourscore!=$g['Champion_score']&&$yourscore?"<i>Your Best:</i> " . str_replace('-', '', $yourscore) . "</p>":""; }?>
+<div class="navigation" style="background-color: black; margin-left: 10px; margin-right: 10px; margin-top: 10px; padding: -5px 10px 5px 10px;"><p><i>Game Champion</i></p><p><img src='<?php echo $CHMPimg['avatar'] ?>'  width='50' /></p><img alt='image' src='<?php echo($crowndir) ?>/crown1.gif' />&nbsp;<b style='color: white;'><?php echo $g['Champion_name']; ?></b>&nbsp;<img alt='image' src='<?php echo($crowndir) ?>/crown1.gif' /><br /><?php echo str_replace('-', '', $g['Champion_score']); ?></div></a><p><?php echo $yourscore!=$g['Champion_score']&&$yourscore?"<i>Your Best:</i> " . str_replace('-', '', $yourscore) . "</p>":""; }?>
 <br />
 <a href="index.php?fullscreen=<?php echo $_GET['play']; ?>" title="Fullscreen Mode" target="_blank"><img src="<?php echo $imgloc; ?>/FullScreen.gif" alt="Fullscreen Mode" /></a><br />
 <br />

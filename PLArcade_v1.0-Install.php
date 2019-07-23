@@ -110,7 +110,25 @@ mysql_query("CREATE TABLE `phpqa_accounts` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 ");
 // ------------------------------------------------------//
- 
+
+//
+// Table structure for table `phpqa_affiliate`
+//
+
+mysql_query("CREATE TABLE `phpqa_affiliate` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `img` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `url` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `tag` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `sort` int(11) NOT NULL,
+  `key` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `refs` int(11) NOT NULL,
+  `active` tinyint(1) NOT NULL default '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+"); 
+// ------------------------------------------------------//
+
 //
 // Table structure for table `phpqa_cats`
 //
@@ -146,6 +164,7 @@ mysql_query("CREATE TABLE `phpqa_games` (
   `tags` varchar(64) default NULL COMMENT 'added MSD',
   `HOF_name` varchar(255) NOT NULL default '',
   `HOF_score` decimal(20,0) default NULL,
+  `exclusiv` TINYINT(1) NOT NULLL default '0', 
   UNIQUE KEY `id` (`id`),
   KEY `gamecat` (`gamecat`),
   KEY `gameid` (`gameid`)
@@ -236,7 +255,7 @@ mysql_query("CREATE TABLE `phpqa_shoutbox` (
   `name` varchar(255) NOT NULL default '',
   `shout` mediumtext NOT NULL,
   `ipa` varchar(255) NOT NULL default '',
-  `tstamp` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  `tstamp` int(10) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 ");
@@ -300,7 +319,8 @@ mysql_query("INSERT INTO `phpqa_cats` (`id`, `cat`, `displayorder`) VALUES(18, '
 mysql_query("INSERT INTO `phpqa_cats` (`id`, `cat`, `displayorder`) VALUES(19, 'Physics', 18);");
 mysql_query("INSERT INTO `phpqa_cats` (`id`, `cat`, `displayorder`) VALUES(20, 'DOS', 21);");
 mysql_query("INSERT INTO `phpqa_cats` (`id`, `cat`, `displayorder`) VALUES(21, 'Slingo', 4);");
-mysql_query("INSERT INTO `phpqa_cats` (`id`, `cat`, `displayorder`) VALUES(23, 'Testing', 22);");
+mysql_query("INSERT INTO `phpqa_cats` (`id`, `cat`, `displayorder`) VALUES(23, 'Testing', 23);");
+mysql_query("INSERT INTO `phpqa_cats` (`id`, `cat`, `displayorder`) VALUES(22, 'Testing', 22);");
 
 // data for table `phpqa_emotes`
 mysql_query("INSERT INTO `phpqa_emotes` VALUES(1, '1.gif', ':)', 'basic smiley', 1);");

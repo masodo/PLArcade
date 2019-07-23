@@ -46,6 +46,7 @@ if (isset($_GET['action']) && $_GET['action'] == "forgotpass") require "./Forgot
 if (isset($_GET['play']) && $_GET['play']) require "./PlayOption.php"; // Playing?
 if (isset($_GET['action']) && $_GET['action'] == "forgotpass") require "./ForgotPassOption.php";
 elseif (isset($_GET['action']) && $_GET['action'] == "members") require "./MembersOption.php";
+elseif (isset($_GET['action']) && $_GET['action'] == "forum") require "./ForumGate.php";
 elseif (isset($_GET['action']) && $_GET['action'] == "register") require "./RegisterOption.php";
 elseif (isset($_GET['action']) && $_GET['action'] == "Online") require "./OnlineOption.php";
 elseif (isset($_GET['action']) && $_GET['action'] == "profile") require "./ProfileOption.php";
