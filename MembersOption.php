@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 1.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,112 +11,20 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: members - Control Panel   Modified: 6/27/2019   By: MaSoDo
-//require('exportuserstoforum.php');
-{
-message("View Only: <br /><a href='?cpiarea=members&act=Admin'>Admins</a> &middot; <a href='?cpiarea=members&act=Moderator'>Moderators</a> &middot; <a href='?cpiarea=members&act=Affiliate'>Affiliate</a> &middot; <a href='?cpiarea=members&act=Member'>Members</a> &middot; <a href='?cpiarea=members&act=Banned'>Banned</a> &middot; <a href='?cpiarea=members&act=Validating'>Validating</a>");
-if(isset($_POST['members_selected'])) {
-vsess();
-$gselect=$_POST['members_selected'];
-for($x=0;$x<=count($gselect)-1;$x++){
-$f=htmlspecialchars($gselect[$x], ENT_QUOTES);
-run_query("DELETE FROM `phpqa_scores` WHERE `username`='".$f."'");
-run_query("DELETE FROM `phpqa_leaderboard` WHERE `username`='".$f."'");
-run_query("DELETE FROM `phpqa_accounts` WHERE `name`='".$f."'");
-run_query("UPDATE `phpqa_games` SET `Champion_score` = '' WHERE `Champion_name`='".$f."'");
-run_query("UPDATE `phpqa_games` SET `Champion_name` = '' WHERE `Champion_name`='".$f."'");
-run_query("UPDATE `phpqa_games` SET `HOF_score` = '' WHERE `HOF_name`='".$f."'");
-run_query("UPDATE `phpqa_games` SET `HOF_name` = '' WHERE `HOF_name`='".$f."'");
-run_query("DELETE FROM `phpqa_leaderboard` WHERE `username`='".$f."'");
-}
-}
-/* ################## Start of change name ################## */
+# Section: MembersOption.php  Function: Show the Members List   Modified: 6/21/2019   By: MaSoDo
 
-if (isset($_GET['change'])) {
-$n=htmlspecialchars($_GET['change'], ENT_QUOTES);
-	vsess();
-if(isset($_POST['new_name'])){
-$new_name=htmlspecialchars($_POST['new_name'], ENT_QUOTES);
+$q=run_query("SELECT `name`,`group`,`skin`,`vtstamp` FROM phpqa_accounts ORDER BY name ASC");
+echo "<table class='tableborder' style='width:1000px;'><tr><td class='headertableblock'>Username</td><td class='headertableblock'>Group</td><td class='headertableblock'>Skin</td><td class='headertableblock'>Last On <span style='font-weight:normal'>( &larr; <i>today</i> )</span></td></tr>";
+$LastOn='';
+$indicate='';
+$thisday=date('jS F Y');
+while ($f=mysql_fetch_array($q)){ 
+if($f[3]!=0){
+$LastOn=date($datestamp,$f[3]);
+(date('jS F Y',$f[3])==$thisday)?$indicate='&larr;':$indicate='';
+} else { $LastOn=''; $indicate='';}
+echo "<tr><td class='arcade1'><a href='?action=profile&amp;user=".$f[0]."' class='".$f[1]."Look'>".$f[0]."</a></td><td class='arcade1'>".$f[1]."</td><td class='arcade1'>".$f[2]."</td><td class='arcade1'>".$LastOn." ".$indicate."</td></tr>";
 }
-$checkexistance = mysql_fetch_array(run_query("SELECT name FROM phpqa_accounts WHERE name = '".$new_name."'"));
-if($checkexistance) { 
-message("The name, &quot;".$new_name."&quot; is already being used by another person."); 
-} else {
-run_query("UPDATE `phpqa_games` SET `Champion_name` = '".$new_name."' WHERE `Champion_name`='".$n."'");
-run_query("UPDATE `phpqa_games` SET `HOF_name` = '".$new_name."' WHERE `HOF_name`='".$n."'");
-run_query("UPDATE `phpqa_leaderboard` SET `username` = '".$new_name."' WHERE `username`='".$n."'");
-run_query("UPDATE `phpqa_scores` SET `username` = '".$new_name."' WHERE `username`='".$n."'");
-run_query("UPDATE `phpqa_accounts` SET `name` = '".$new_name."' WHERE `name`='".$n."'");
-}
-}
-if (isset($_GET['changename'])) {
-	$_GET['changename']=htmlspecialchars($_GET['changename']);
-echo "<div class='tableborder'><table width=100% cellpadding='4' cellspacing='1'><td width=30% align=center class=headertableblock>Change Name</td><tr><td class=arcade1><div align=center><form action='?cpiarea=members&change=".$_GET['changename']."' method='POST'><input type='hidden' name='akey' value='".$key."'><input type=text name=new_name value=\"".$_GET['changename']."\"><input type=submit value='Change Name'></form><br /><br />";
-echo "</td></tr></table></div><br>";
-}
-/* ################## end of change name ################## */
-/* ########### PASS CHANGE ################ */
-$new_pass = '';
-if (isset($_GET['changepass'])) {
-		$_GET['changepass']=htmlspecialchars($_GET['changepass']);
-echo "<div class='tableborder'><table width=100% cellpadding='4' cellspacing='1'><td width=30% align=center class=headertableblock>Change Password</td><tr><td class=arcade1><div align=center><form action='?cpiarea=members&changepwd=".$_GET['changepass']."' method='POST'><input type='hidden' name='akey' value='".$key."'><input type=text name='new_pass' value=''><br /><input type=submit value='Change Password'></form><br /><br />Enter a new password for ".$_GET['changepass']."";
-echo "</td></tr></table></div><br>";
-}
-if(isset($_POST['new_pass'])) {
-$new_pass=md5(sha1($_POST['new_pass']));
-if(isset($_GET['changepwd'])) { 
-$n=htmlspecialchars($_GET['changepwd'], ENT_QUOTES);
-vsess();
-run_query("UPDATE `phpqa_accounts` SET `pass` = '".$new_pass."' WHERE name='".$n."'", 1); 
-}}
-if(isset($_GET['validate'])) { vsess();
-	$n=htmlspecialchars($_GET['validate'], ENT_QUOTES);
-	run_query("UPDATE `phpqa_accounts` SET `group` = 'Member' WHERE name='".$n."'");
-}
-
-if(isset($_GET['deleteav'])) { 
-$a=htmlspecialchars($_GET['deleteav'], ENT_QUOTES);
-	vsess();
-	run_query("UPDATE `phpqa_accounts` SET `avatar` = '' WHERE name='".$a."'"); }
-if(isset($_GET['changegroupgo'])) {
-$cg=htmlspecialchars($_GET['changegroupgo'], ENT_QUOTES);
-$fg=htmlspecialchars($_POST['chosengroup'], ENT_QUOTES);
-	vsess();
-	run_query("UPDATE `phpqa_accounts` SET `group` = '".$fg."' WHERE name='".$cg."'"); }
-if (isset($_GET['changegroup'])) {
-echo "<div class='tableborder'><table width=100% cellpadding='4' cellspacing='1'><td width=30% align=center class=headertableblock>Change Usergroup of: ".$_GET['changegroup']." </td><tr><td class=arcade1><div align=center><form action='?cpiarea=members&changegroupgo=".htmlspecialchars($_GET['changegroup'])."' method='POST'><input type='hidden' name='akey' value='".$key."'>";
-?>
-About: <a href='javascript:alert("As an admin, a user has FULL control of the arcade. Including the ability to add games, make new admins and moderators, and more. Only make admins you trust, proceed with caution.");'>Admin [?]</a> &middot; <a href='javascript:alert("As a moderator, basic access is given. A user has the ability to delete scores, lookup IP addresses, and IP ban users. They are also able to moderate the shoutbox.");'>Moderator [?]</a>  &middot; <a href='javascript:alert("An Affiliate has the ability to download the game files. ");'>Affiliate [?]</a>&middot; <a href='javascript:alert("A member is the basic group. They can only use the arcade related features such as playing games and using the shoutbox.");'>Member [?]</a> &middot; <a href='javascript:alert("Validating users are members awaiting manual validation. They are blocked from using any means of communication in the arcade, and submitting their highscores.");'>Validating [?]</a> &middot; <a href='javascript:alert("A banned member no longer has access to the arcade. ");'>Banned [?]</a>
-<select name='chosengroup'>
-<option value='Admin'>Admin</option>
-<option value='Moderator'>Moderator</option>
-<option value='Affiliate'>Afiliate</option>
-<option value='Member'>Member</option>
-<option value='Validating'>Validating</option>
-<option value='Banned'>Banned</option>
-</select>
-<input type=submit value='Change UserGroup'></form></td></tr></table></div><br>
-<?php
-}
-if(!isset($_GET['act'])) { 
-$memberdata=run_query("SELECT * FROM phpqa_accounts"); 
-} else {
-$picked=htmlspecialchars($_GET['act'], ENT_QUOTES);
-$memberdata=run_query("SELECT * FROM phpqa_accounts WHERE `group`='$picked'"); 
-}
-?>
-<form action='' method='POST'>
-<?php echo "<input type='hidden' name='akey' value='$key'>"; ?>
-<div class='tableborder'><table width=100% cellpadding='4' cellspacing='1'><td width=30% align=center class=headertableblock>Name</td><td width=70% align=center class=headertableblock>Edit</td><td width=20% align=center class=headertableblock>Email</td><td width=20% align=center class=headertableblock>IP</td><td width=60% align=center class=headertableblock><input type='checkbox' onclick="s=document.getElementsByTagName('input');for(x=0;x<s.length;x++) if (s[x].type=='checkbox') s[x].checked=this.checked" /></td>
-<?php
-	while($g=mysql_fetch_array($memberdata)){ 
-?>
-<tr><td class=arcade1 alighn='left'><?php echo $g[1]; ?> (<i><?php echo $g['group']; ?></i>)
-</td><td class=arcade1><div align=center><A href='?cpiarea=members&changegroup=<?php echo $g[1]; ?>'>[ Edit Group ]</a> <A href='?cpiarea=members&deleteav=<?php echo $g[1]; ?>&akey=<?php echo $key; ?>'>[ Delete Avatar ]</a> <A href='?cpiarea=members&changepass=<?php echo $g[1]; ?>'>[ Change Pass ]</a><A href='?cpiarea=members&changename=<?php echo $g[1]; ?>'>[ Change Name ]</a> <?php if(isset($_GET['act'])&&$_GET['act']=="Validating") { echo "<A href='?cpiarea=members&validate=$g[1]&act=Validating&akey=$key'>[ Validate ]</a>"; } ?></div></td><td class=arcade1 align='left'><?php echo $g['email']; ?></td><td class=arcade1><?php echo $g['ipaddress']; ?></td><td class=arcade1><input type='checkbox' name='members_selected[]' value='<?php echo $g[1]; ?>'></td></tr>
-<?php } ?>
-<tr><td class='headertableblock' colspan='5'><div align=center><input type='Submit' name='deleteaccounts' value='Delete Account(s)'></div></td></tr>
-</table></div><br>
-</form>
-<?php
-}
+$total=mysql_num_rows($q);
+echo "<br /><table style='width:1000px;' cellpadding='4' cellspacing='1'class='tableborder'><tr><td class='arcade1'>Total Registered Members: $total</td></tr></table><br /></table><div align='center'>";
 ?>
