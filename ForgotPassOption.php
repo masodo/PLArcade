@@ -26,8 +26,8 @@ die();
 $u=htmlspecialchars($_POST['sendto_user']);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #1
-$getmailuser = @mysql_fetch_array(run_query("SELECT name,pass,email FROM phpqa_accounts WHERE name='$u'", 1));
+//Updated Function Block #1
+$getmailuser = @mysqli_fetch_array(run_iquery("SELECT name,pass,email FROM phpqa_accounts WHERE name='$u'", 1));
 if (!$getmailuser) { 
 message("The user, $u is not registered here."); 
 die();
@@ -35,7 +35,7 @@ die();
 if (strtolower($_POST['sendto_email']) != strtolower($getmailuser['email'])) {
 message("The email on file for $u, does not match the email you inputted. Please try again.");
 die();
-//END Incompatible Function Block #1
+//END Updated Function Block #1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 } else {
