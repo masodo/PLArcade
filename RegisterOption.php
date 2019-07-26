@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: RegisterOption.php  Function: Register for the Arcade   Modified: 7/23/2019   By: MaSoDo
+# Section: RegisterOption.php  Function: Register for the Arcade   Modified: 7/26/2019   By: MaSoDo
 if (isset($_POST['usernamesign']) && $_POST['usernamesign'] != "" && isset($_POST['postpassword']) && $_POST['postpassword'] !="") {
 $name = htmlspecialchars($_POST['usernamesign'], ENT_QUOTES);
 $pass = md5(sha1(htmlspecialchars($_POST['postpassword'])));
@@ -32,8 +32,15 @@ die();
 }
 $senttext = "";
 $senttext = str_replace("'", "&amp;#39;", $senttext);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #1
 $query = run_query("SELECT * FROM phpqa_accounts WHERE name='$name' OR email='$email'");
 $exist = @mysql_fetch_array($query);
+//END Incompatible Function Block #1
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 if ($exist) { 	// M&Ms commcerial - He DOES exist! D'Ooh
 if($name==$exist['name']) { message("Sorry, that username, <b>$name</b>  already exists. Please choose another."); }
 if($email==$exist['email']) { message("Sorry, that email, <b>$email</b>  already exists on another account. Please choose another."); }
