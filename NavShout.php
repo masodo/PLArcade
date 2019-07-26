@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 7/1/2019   By: MaSoDo
+# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 7/26/2019   By: MaSoDo
 ?>
 <div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><tr><td class='arcade1' align='left'>
 <?php
@@ -76,7 +76,12 @@ $favslist.="'$v', ";
 $favslist = substr($favslist, 0, -2);    
 $fav_quer="WHERE gameid IN($favslist)";
 }}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #1
 $countquer = run_query("SELECT gamecat FROM phpqa_games ".$fav_quer."".(isset($_GET['cat'])?" WHERE gamecat='".$_GET['cat']."'":""));
+//END Incompatible Function Block #1
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Patch - 06/01/09
 if(isset($_GET['search'])){
@@ -99,6 +104,9 @@ if(isset($_GET['searchcat']) && $_GET['searchcat'] != 'All' ){
 if (isset($_GET['action'])&&$_GET['action']=="search") {
 //below added for testing M*S*D
 ////echo "<script>alert('Finding: WHERE ".$_GET['by']." LIKE \'%".$_GET['search']."%\'');</script>";
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #2
 $catquer = run_query("(SELECT * FROM phpqa_games ORDER BY rand() LIMIT 1) UNION ALL (SELECT * FROM `phpqa_games` WHERE ".$_GET['by']." LIKE '%".$_GET['search']."%' ORDER BY `id` DESC)", 1);
 } 
 if (!isset($_GET['action'])||isset($_GET['action'])&&$_GET['action']!="search") {
@@ -121,6 +129,8 @@ $findNG = run_query("SELECT `gameid` FROM phpqa_games WHERE `gamecat` != '2' AND
 $FNG = mysql_fetch_array($findNG);
 $playrang = $FNG[0];
 }
+//END Incompatible Function Block #2
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////Game List Display Logic
 if(isset($settings['enable_24hr'])&&$settings['enable_24hr']==1){
