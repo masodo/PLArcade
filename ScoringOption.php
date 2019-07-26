@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 6/26/2019  By: MaSoDo
+# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 7/26/2019  By: MaSoDo
 if (isset($_POST['thescore']))$thescore = $_POST['thescore'];
 if (isset($_GET['autocom'])) {
 $id=htmlspecialchars($_COOKIE['gname'], ENT_QUOTES);
@@ -38,6 +38,9 @@ $thescore = $_POST['gscore'];
  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  //	Get highscores list of a game when on the id= page
  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #1
  $gameinfo = mysql_fetch_array(run_query("SELECT gameid,game,about,Champion_name,Champion_score,times_played,gamecat,exclusiv FROM phpqa_games WHERE gameid = '$id'"));
  if (!$gameinfo) {
 header("Location: index.php");
@@ -50,6 +53,9 @@ die();
  else {
  $showcat=mysql_fetch_array(run_query("SELECT cat FROM phpqa_cats WHERE id='{$gameinfo['gamecat']}'"));	
  }
+//END Incompatible Function Block #1
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
  ?>
  <div class='tableborder'>
  <a name='playzone'></a>
@@ -103,6 +109,9 @@ global $adminplayas;
 $post_user_cookie = $adminplayas;
 }
 //End Admin Play As
+ 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #2
   run_query("UPDATE `phpqa_scores` SET `comment` = '".$senttext."' WHERE gameidname='".$id."' && username='".$post_user_cookie."'"); 
 }
  if(isset($_GET['do']) || isset($_POST['thescore'])) $commentthing =  "<form name='postbox' action='index.php?id=$id&amp;c=1' method='POST'><input type='hidden' name='akey' value='".$key."'><div class='tableborder'><table width='100%'><td class='arcade1' width='100%' align='center'>Congratulations, new best score, your final score was: <b>".$thescore."</b>.<br /><br /><input type='text' name='senttext'><input type='submit' name='gocomment' value='Send Comment'></form><br/>".displayemotes()."</td></table></div><br /><br />";
@@ -180,13 +189,22 @@ $post_user_cookie = $adminplayas;
  $WINNERTAG = ' HALL OF FAME ';
  run_query("UPDATE `phpqa_games` SET `HOF_name` = '".$post_user_cookie."',`HOF_score` = '".$thescore."' WHERE gameid='".$id."'");   
  }
+//END Incompatible Function Block #2
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // ---------------
 // Email the loser
 // ---------------
 if(isset($settings['email_scores'])&&$settings['email_scores']=='1') {
 if($checkTOPscore['username'] !="") {
 if($checkTOPscore['username'] != $post_user_cookie) {
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #3
 $person_to_mail=mysql_fetch_array(run_query("SELECT email,settings FROM phpqa_accounts WHERE name='".$checkTOPscore['username']."'"));
+//END Incompatible Function Block #3
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 $psettings = explode("|", $person_to_mail['settings']);
 if($psettings[4] != "No" && $person_to_mail['email'] !=$exist['email']) { 
 $SiteDomain = "http://".htmlspecialchars($_SERVER['HTTP_HOST']).htmlspecialchars($_SERVER['PHP_SELF'])."?id={$gameidname}";
@@ -209,11 +227,17 @@ $post_user_cookie = $adminplayas;
 }
 //End Admin Play As
 echo "<div class='tableborder'><table width='100%'><td class='arcade1' width='100%' align='center'><h2>Congratulations, you are the NEW " . $WINNERTAG . "Champion!</h2></td></table></div><br /><br />";
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #4
    run_query("DELETE FROM `phpqa_leaderboard` WHERE `gamename`='".$id."'");
    run_query("INSERT INTO phpqa_leaderboard (username,thescore,gamename) VALUES ('".$post_user_cookie."','".$thescore."','".$id."')"); 
    run_query("UPDATE `phpqa_games` SET `Champion_name` = '".$post_user_cookie."',`Champion_score` = '".$thescore."' WHERE gameid='".$id."'");
    // Update the date and IP
   run_query("UPDATE `phpqa_scores` SET `ip` = '".$ipa."',`phpdate` = '".$time."' WHERE gameidname='".$id."' && username='".$post_user_cookie."'");
+//END Incompatible Function Block #4
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   }
  }
  // end set check
@@ -236,6 +260,9 @@ echo "<td width='20%' class='headertableblock' align='center'>IP Address</td><td
 echo "</td>";
 }
 echo "</tr>";
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #5
 $selectfrom=run_query("SELECT * FROM phpqa_scores WHERE gameidname='$id' ORDER BY thescore DESC,phpdate ASC");
 	while($g=mysql_fetch_array($selectfrom)){ 
 $parse_stamp = date($datestamp, $g[5]);
@@ -251,6 +278,8 @@ while($smils=mysql_fetch_array($emotesdata)){
 $postsofsomething = bbcodeHtml($postsofsomething);
 if (isset($smils['code'])) $postsofsomething = str_replace(rtrim($smils['code']), "<img src='".$smiliesloc."/".$smils['filename']."' />", $postsofsomething);
 }
+//END Incompatible Function Block #5
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 global $tb;
