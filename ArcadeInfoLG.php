@@ -24,21 +24,21 @@ if (isset($_COOKIE['phpqa_user_c'])) {
 $MyMess = $_COOKIE['phpqa_user_c'];
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #1
-$checkmessages=run_query("SELECT `id` FROM `PLA_users` where `username` = '".$MyMess."'"); 
-$checkmess= mysql_fetch_array($checkmessages);
+//Updated Function Block #1
+$checkmessages=run_iquery("SELECT `id` FROM `PLA_users` where `username` = '".$MyMess."'"); 
+$checkmess= mysqli_fetch_array($checkmessages);
 $checkmess_for = $checkmess['id'];
-$anysent=mysql_num_rows(run_query("SELECT `status` FROM `PLA_pun_pm_messages` WHERE `receiver_id` = '".$checkmess_for."' AND `status` = 'sent'"));
+$anysent=mysqli_num_rows(run_iquery("SELECT `status` FROM `PLA_pun_pm_messages` WHERE `receiver_id` = '".$checkmess_for."' AND `status` = 'sent'"));
 if($anysent > 0){ $AlertMe='yes'; $alertstyle='border:lime dotted;'; $alertlink='color:lime;'; $forumnote=' (<b>PM</b>)'; }
 if ($_COOKIE['phpqa_user_c'] == 'Admin') {
-$checkOmessages=run_query("SELECT `id` FROM `PLA_users` where `username` = '".$adminplayas."'"); 
-$checkOmess= mysql_fetch_array($checkOmessages);
+$checkOmessages=run_iquery("SELECT `id` FROM `PLA_users` where `username` = '".$adminplayas."'"); 
+$checkOmess= mysqli_fetch_array($checkOmessages);
 $checkOmess_for = $checkOmess['id'];
-$anyOsent=mysql_num_rows(run_query("SELECT `status` FROM `PLA_pun_pm_messages` WHERE `receiver_id` = '".$checkOmess_for."' AND `status` = 'sent'"));
+$anyOsent=mysqli_num_rows(run_iquery("SELECT `status` FROM `PLA_pun_pm_messages` WHERE `receiver_id` = '".$checkOmess_for."' AND `status` = 'sent'"));
 if($anyOsent > 0){ $AlertMe='yes'; $alertstyle='border:solid orange;'; $alertlink='color:orange;'; $forumnote=' (<b>PM</b> alt)'; }
 }
 }
-//END Incompatible Function Block #1
+//END Updated Function Block #1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ?>
@@ -55,10 +55,10 @@ if (!isset($_COOKIE['phpqa_user_c'])) {
 } else {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #2
-$checkChamps = mysql_num_rows(run_query("SELECT username FROM phpqa_leaderboard WHERE username = '$phpqa_user_cookie'"));
+//Updated Function Block #2
+$checkChamps = mysqli_num_rows(run_iquery("SELECT username FROM phpqa_leaderboard WHERE username = '$phpqa_user_cookie'"));
 echo "<div style='width: 100%; text-align: center; margin-left: auto; margin-right: auto;'><div  class='navigation'>Logged in: <A href='index.php?action=profile&amp;user=$phpqa_user_cookie'>$phpqa_user_cookie</a> Total Wins: $checkChamps </div><div class='navigation'><a href='index.php?action=settings'>Settings</a>";
-//END Incompatible Function Block #2
+//END Updated Function Block #2
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if ($exist[6]=="Admin") {
@@ -76,9 +76,9 @@ echo"</div><div  class='navigation'>[ <a href='index.php?action=logout'>Log Out<
 <div style="display:none; width:250px; margin-left:auto; margin-right:auto;" class='tableborder' id="search" name="tog_collect"><br />Search The Arcade<br /><br /><form method="get">Term: <input type="text" name="search" value="" /><br />Search By: <select name="by"><?php foreach(Array('game'=>'Game Name','gameid'=>'Game ID','about'=>'Game desc','Champion_name'=>'Champion Name') as $k=>$v) echo "<option value='$k'>$v</option>";?></select><br />In Category: <select size="1" name="searchcat"><option value='All' selected="selected">All</option><?php 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #3
+//Updated Function Block #3
 $catquery=run_query("SELECT * FROM phpqa_cats ORDER BY `displayorder`");while ($catlist= mysql_fetch_array($catquery)) echo  "<option value='$catlist[0]'>$catlist[1]</option>"; 
-//END Incompatible Function Block #3
+//END Updated Function Block #3
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ?></select><br /><input type="submit" value="search" name="action" /></form></div>
@@ -127,11 +127,11 @@ if (!isset($acct_setting[3]) || $acct_setting[3] !="No") {
 <?php
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #4
-$newgames = run_query("SELECT `gameid`,`game`,`id`,`gamecat` FROM `phpqa_games` ORDER by `id` DESC LIMIT 0,".$ngnum."");
-	while($g=mysql_fetch_array($newgames)){ 
+//Updated Function Block #4
+$newgames = run_iquery("SELECT `gameid`,`game`,`id`,`gamecat` FROM `phpqa_games` ORDER by `id` DESC LIMIT 0,".$ngnum."");
+	while($g=mysqli_fetch_array($newgames)){ 
 	if (($g[3] != '23')&&($g[3] != '2')){
-//END Incompatible Function Block #4
+//END Updated Function Block #4
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 echo "<img height='20' width='20' src='arcade/pics/$g[0].gif' alt='$g[1]' /><a href=\"index.php?play=$g[0]#playzone\">$g[1]</a><br />";
@@ -144,19 +144,19 @@ echo "<img height='20' width='20' src='arcade/pics/$g[0].gif' alt='$g[1]' /><a h
 <?php
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #4
-$scoreboard = run_query("SELECT phpqa_accounts.name,phpqa_accounts.avatar,phpqa_accounts.group, COUNT(phpqa_leaderboard.username) AS champions FROM phpqa_accounts
+//Updated Function Block #4
+$scoreboard = run_iquery("SELECT phpqa_accounts.name,phpqa_accounts.avatar,phpqa_accounts.group, COUNT(phpqa_leaderboard.username) AS champions FROM phpqa_accounts
 LEFT JOIN phpqa_leaderboard ON phpqa_accounts.name = phpqa_leaderboard.username
 GROUP BY phpqa_leaderboard.username
 ORDER BY champions DESC LIMIT 0,".$bpnum."");
-$scoresC=mysql_fetch_array($scoreboard);
+$scoresC=mysqli_fetch_array($scoreboard);
 if (!$scoresC['avatar'])$scoresC['avatar']=$avatarloc.'/man.gif';
 echo "<div><table width='100%' cellpadding='5' cellspacing='1'>";
 
 echo "<td class='arcade1'><div align='center' style='border:dotted gold;padding:5px;'><i><span style='font-size: 14px; line-height:175%'><a href=\"index.php?action=profile&amp;user=".$scoresC['name']."\"><img src='".$scoresC['avatar']."' height='60px' /><br /><img alt='image' src='$crowndir/crown1.gif'   style='margin-left:8px;margin-right:8px;' /><span class='".$scoresC['group']."Look'>".$scoresC['name']."</span><img alt='image' src='$crowndir/crown1.gif'  style='margin-left:8px;margin-right:8px;' /></a></i><br /><div padding:3px; background-color:navy;' align='center'>with <b>".$scoresC['champions']."</b> wins!</div></div></td>";
 echo "</table><div style='position:absolute;display:none;margin-top:-100px;margin-left:-110px;' id='champboxpopup'><img /></div></div>";
 $trop = 1;
-while($scores=mysql_fetch_array($scoreboard)){
+while($scores=mysqli_fetch_array($scoreboard)){
 $trophy = '';
 $trop = $trop + 1;
 if ($trop == 2) { $trophy = "<img src='$crowndir/crown2.gif' style='margin-left:8px;margin-right:8px;' />"; }
@@ -164,7 +164,7 @@ if ($trop == 3) { $trophy = "<img src='$crowndir/crown3.gif' style='margin-left:
 if ($scores['avatar'] == ''){ $scores['avatar'] = $avatarloc.'/man.gif'; }
 echo "<td class='arcade1'><div align='center'><i><span style='font-size: 14px; line-height:175%'><a href=\"index.php?action=profile&amp;user=".$scores['name']."\"><img src='".$scores['avatar']."' height='60px' /><br />" . $trophy . "<span class='".$scores['group']."Look'>".$scores['name']."</span>" . $trophy . "</a></i><br /><div padding:3px; background-color:navy;' align='center'>with <b>".$scores['champions']."</b> wins!</div></div></td>";
 }
-//END Incompatible Function Block #4
+//END Updated Function Block #4
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ?>
@@ -180,27 +180,27 @@ echo "<td class='arcade1'><div align='center'><i><span style='font-size: 14px; l
 echo "";
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #5
-	$selectfrom = run_query("SELECT * FROM `phpqa_scores` ORDER BY `phpdate` DESC LIMIT 0,$lsnum");
-	while($s=mysql_fetch_array($selectfrom)){ 
+//Updated Function Block #5
+	$selectfrom = run_iquery("SELECT * FROM `phpqa_scores` ORDER BY `phpdate` DESC LIMIT 0,$lsnum");
+	while($s=mysqli_fetch_array($selectfrom)){ 
   $VstatG = "";
   $bigname = "";
   $bigtag = "";
-  $gameinfo = run_query("SELECT Champion_name,Champion_score FROM phpqa_games WHERE gameid = '$s[6]'");
-  $g=mysql_fetch_array($gameinfo);
+  $gameinfo = run_iquery("SELECT Champion_name,Champion_score FROM phpqa_games WHERE gameid = '$s[6]'");
+  $g=mysqli_fetch_array($gameinfo);
     if ($s[2]==$g[1]) {
         $VstatG = "<img src='$imgloc/rd_star.gif' height='10' width='10' alt='*' style='margin-left:50px;' /><b>";
         $bigname = "Y";
         $bigtag = "</b>";
 } else {$VstatG = "<div style='display:inline-block;width:10px;height:10px;margin-left:50px;'></div>";}
 $thisGuy = $s[1];
-$findGroup = run_query("SELECT `group` FROM `phpqa_accounts` WHERE `name` = '".$thisGuy."'");
-$thisGroup = mysql_fetch_array($findGroup);
+$findGroup = run_iquery("SELECT `group` FROM `phpqa_accounts` WHERE `name` = '".$thisGuy."'");
+$thisGroup = mysqli_fetch_array($findGroup);
 //$parse_stamp = gmdate($datestamp, $s[5]+3600*$settings['timezone']);
 $parse_stamp = date($datestamp, $s[5]);
 echo "$VstatG<a href='index.php?action=profile&amp;user=".$s[1]."' class='".$thisGroup[0]."Look'>".$s[1]."</a>" . $bigtag . " scored <i>" . str_replace('-', '', $s[2]) . "</i> in <a href='index.php?id=".$s[6]."#playzone'><i>$s[7]</i></a> on ".$parse_stamp."<hr>";
 }
-//END Incompatible Function Block #5
+//END Updated Function Block #5
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ?>
@@ -208,13 +208,13 @@ echo "$VstatG<a href='index.php?action=profile&amp;user=".$s[1]."' class='".$thi
 <?php
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #6
-$hotgames = run_query("SELECT `gameid`,`game`,`id`,`gamecat`,`times_played`  FROM `phpqa_games` ORDER by `times_played` DESC LIMIT $lsnum");
-	while($hg=mysql_fetch_array($hotgames)){ 
+//Updated Function Block #6
+$hotgames = run_iquery("SELECT `gameid`,`game`,`id`,`gamecat`,`times_played`  FROM `phpqa_games` ORDER by `times_played` DESC LIMIT $lsnum");
+	while($hg=mysqli_fetch_array($hotgames)){ 
 	if ($hg[3] != '2') {
 echo "<img height='20' width='20' src='arcade/pics/$hg[0].gif' alt='$hg[1]' style='margin-left:5px;' /><a href=\"index.php?play=$hg[0]#playzone\">$hg[1]</a> (".$hg['times_played'].")<br />";
 }}
-//END Incompatible Function Block #6
+//END Updated Function Block #6
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
