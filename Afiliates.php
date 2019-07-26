@@ -15,13 +15,13 @@
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #1
-$getaffil = run_query("SELECT * FROM `phpqa_affiliate` ORDER BY `sort` ASC");
+//Updated Function Block #1
+$getaffil = run_iquery("SELECT * FROM `phpqa_affiliate` ORDER BY `sort` ASC");
 echo '<div style="width:80%; height:85px; background-color:black; border:inset; margin-left: auto; margin-right:auto; padding-top: 5px; margin-bottom:25px; color:navy;">';
 echo '<marquee BEHAVIOR="ALTERNATE">';
 
-while($useaffil = mysql_fetch_array($getaffil)) {
-//END Incompatible Function Block #1
+while($useaffil = mysqli_fetch_array($getaffil)) {
+//END Updated Function Block #1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if ($useaffil['active'] == 1){
