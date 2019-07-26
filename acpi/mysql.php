@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: mysql - Administrator Control Panel   Modified: 6/22/2019   By: MaSoDo
+# Section: acpi Place: mysql - Administrator Control Panel   Modified: 7/26/2019   By: MaSoDo
 
 {
 $goquery1 = '';
@@ -23,6 +23,9 @@ $goquery4 = '';
 if(isset($_POST['HOFwipe'])&&$_POST['HOFwipe']=='1'){
 if(isset($_POST['RESETH'])&&isset($_POST['RESETH'])=='yes'){
 vsess();
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #1
 $goquery1=run_query("UPDATE `phpqa_games` set `HOF_name` = '', `HOF_score` = '' WHERE `HOF_score` > 0;");
 if($goquery1) { 
 echo '<script>alert(\'Hall of Fame has been RESET\');</script>'; 
@@ -31,12 +34,18 @@ echo mysql_error();
 }}else {
 echo '<script>alert(\'You Must Check the Confirmation Box to Reset HOF Scores!\');</script>';
 }}
+//END Incompatible Function Block #1
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 //Game champion scores reset
 if(isset($_POST['CHAMPwipe'])&&$_POST['CHAMPwipe']=='1'){
 if(isset($_POST['RESETC'])&&isset($_POST['RESETC'])=='yes'){
 vsess();
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #2
 $goquery2=run_query("UPDATE `phpqa_games` set `Champion_name` = '', `Champion_score` = '' WHERE `Champion_score` > 0;");
 if($goquery2){
 sleep(15); 
@@ -84,6 +93,9 @@ if(isset($_POST['querymysql'])) {
 if($goquery) { echo "Query Executed Successfully"; } else { echo "Query failed."; 
 echo mysql_error();
 }
+//END Incompatible Function Block #2
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
 ?>
 </td></table></div><br />
@@ -133,6 +145,9 @@ header("Content-type:text/plain");
 header("Content-disposition:attachment;filename=\"phpqa_mysql_dump.sql\"");
 ob_clean();
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #3
 $q=run_query("SHOW TABLES LIKE 'phpqa_%'");
 while($s=mysql_fetch_array($q)) $tables[]=$s[0];
 foreach($tables as $v){
@@ -164,6 +179,9 @@ if ($_POST[$v]) {
 $optcheck = mysql_fetch_array(run_query("CHECK TABLE `$v`"));
 if ($optcheck) { message("Table <b>$v</b> Checked. Status: $optcheck[Msg_text]"); } else { message("Table <b>$v</b> failed to be checked."); }
 }
+//END Incompatible Function Block #3
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
 }
 echo "<div class='tableborder'><form action='' method='POST'><table width='100%' cellpadding='5' cellspacing='1'><tr><td class='headertableblock' align='center' colspan=9>Epoch Converter</td></tr><tr><td class='arcade1' align='center'><iframe src='acpi/epoch.php' width='535' height='180' scrollbars='no'></iframe></td></tr></table></div><br />";
