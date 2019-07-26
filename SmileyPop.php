@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,10 +11,13 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: SmileyPop.php  Function: Emoticon Picker Popup   Modified: 6/21/2019   By: MaSoDo
+# Section: SmileyPop.php  Function: Emoticon Picker Popup   Modified: 6/29/2019   By: MaSoDo
 
 if(isset($_GET['action']) && $_GET['action']=="emotes") {
 echo "<div class='tableborder' width='75%' style='margin-top: 10px; margin-right: auto; margin-left: auto;'><table width='100%' cellpadding='4' cellspacing='1'><tr><td width='60%' align='center' class='headertableblock'>Emote</td><td width='60%' align='center' class='headertableblock'>Symbol</td></tr><tr>";
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #1
 $emotesdata = run_query("SELECT * FROM `phpqa_emotes`");
 while($smils=mysql_fetch_array($emotesdata)){ 
 echo "\n<tr onclick=\"window.opener.document.forms['boxform'].elements['senttext'].value+='".$smils['code']."'\"><td class='arcade1' align='left'><a title='".$smils['description']."'><img src=\"".$smiliesloc."/".$smils['filename']."\"></a><br /></td><td class='arcade1' align='center'>".$smils['code']."</td></tr>";
@@ -22,10 +25,17 @@ echo "\n<tr onclick=\"window.opener.document.forms['boxform'].elements['senttext
 echo "</table></div>";
 die();
 }
+//END Incompatible Function Block #1
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 if(isset($_GET['action']) && $_GET['action']=="allshouts") {
 $badwords= file($textloc."/badwords.txt");
 $tb=count($badwords);
 echo "<div class='tableborder' width='75%' style='margin-top: 10px; margin-right: auto; margin-left: auto;'><table width='100%' cellpadding='4' cellspacing='1'><tr><td width='60%' align='center' class='headertableblock'>Shout Scrollback</td></tr><tr><td>";
+
+//All Shouts Display
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #2
 $selectshouts = run_query("SELECT `name`,`shout`,`id`,`ipa`,`tstamp` FROM `phpqa_shoutbox` ORDER BY id DESC");
 while($shts=mysql_fetch_array($selectshouts)){ 
 $emotesdata = run_query("SELECT * FROM `phpqa_emotes`");
@@ -46,4 +56,7 @@ echo "<a title='".$parse_stamp."'><img src='".$imgloc."/clockin.png' alt='posted
 echo "</td></tr></table></div>";
 die();
 }
+//END Incompatible Function Block #2
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 ?>
