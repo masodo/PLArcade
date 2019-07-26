@@ -19,16 +19,16 @@ $phpqa_user_cookie = $_COOKIE['phpqa_user_c'];
 $w="Visiting the Forums";}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #1
-$areyouthere=@mysql_fetch_array(run_query("SELECT name FROM phpqa_sessions WHERE name='".$phpqa_user_cookie."'"));
+//Updated Function Block #1
+$areyouthere=@mysqli_fetch_array(run_iquery("SELECT name FROM phpqa_sessions WHERE name='".$phpqa_user_cookie."'"));
 if(!$areyouthere) {
 global $w; 
-run_query("INSERT INTO phpqa_sessions (name,time,location) VALUES ('$phpqa_user_cookie','$time','$w')"); 
+run_iquery("INSERT INTO phpqa_sessions (name,time,location) VALUES ('$phpqa_user_cookie','$time','$w')"); 
 } else {
 global $w; 
-$areyouthere=run_query("UPDATE `phpqa_sessions` SET `time` = '$time', `location` = '$w' WHERE name='$phpqa_user_cookie'");
+$areyouthere=run_iquery("UPDATE `phpqa_sessions` SET `time` = '$time', `location` = '$w' WHERE name='$phpqa_user_cookie'");
 }
-//END Incompatible Function Block #1
+//END Updated Function Block #1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 header("Location: /FORUM/");
 ?>
