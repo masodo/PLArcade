@@ -18,11 +18,11 @@ $addup = '';
 $fullplay = htmlspecialchars($_GET['fullscreen'], ENT_QUOTES);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #1
-$bg = mysql_fetch_array(run_query("SELECT * FROM `phpqa_games` WHERE `gameid`='".$fullplay."'"));
+//Updated Function Block #1
+$bg = mysqli_fetch_array(run_iquery("SELECT * FROM `phpqa_games` WHERE `gameid`='".$fullplay."'"));
 $addup = ++$bg['times_played'];
-run_query("UPDATE `phpqa_games` SET `times_played`=".$addup." WHERE `gameid`='".$fullplay."'");
-//END Incompatible Function Block #1
+run_iquery("UPDATE `phpqa_games` SET `times_played`=".$addup." WHERE `gameid`='".$fullplay."'");
+//END Updated Function Block #1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if (isset($bg['remotelink']) && $bg['remotelink'] == "") {
