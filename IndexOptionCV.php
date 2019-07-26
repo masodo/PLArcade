@@ -21,8 +21,8 @@ vsess();
 $_GET['game'] = htmlspecialchars($_GET['game'], ENT_QUOTES);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #1
-$game_exist=mysql_fetch_array(run_query("SELECT `id` FROM phpqa_games WHERE gameid='{$_GET['game']}'"));
+//Updated Function Block #1
+$game_exist=mysqli_fetch_array(run_iquery("SELECT id FROM phpqa_games WHERE gameid='{$_GET['game']}'"));
 if($game_exist[0]) {
 //Adding?
 if(isset($_GET['favtype']) && $_GET['favtype'] == "add") { 
@@ -35,12 +35,12 @@ global $acct_setting;
 message("Removed game from favorites. Refresh to see changes.");
 $acct_setting[5]=str_replace("{$_GET['game']},", "", $acct_setting[5]); 
 }
-run_query("UPDATE `phpqa_accounts` SET `settings` = '$acct_setting[0]|$acct_setting[1]|$acct_setting[2]|$acct_setting[3]|$acct_setting[4]|$acct_setting[5]' WHERE name='$phpqa_user_cookie'");
+run_iquery("UPDATE phpqa_accounts SET settings = '$acct_setting[0]|$acct_setting[1]|$acct_setting[2]|$acct_setting[3]|$acct_setting[4]|$acct_setting[5]' WHERE name='$phpqa_user_cookie'");
 } else {
 message("Game not found.");
 }
 }
-//END Incompatible Function Block #1
+//END Updated Function Block #1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -53,16 +53,16 @@ if (!empty($catquer)) {
 //Begin Collapse #4
 echo "<div style='text-align:center; margin-bottom: 5px; margin-top: 5px;'><a title='Open/Close The Games Index'><img id='btn4' src='" . $imgloc . "/" . $collimg4 . "' type='button' alt='&#8595; Games: Collapse/Expand &#8595;' onclick='return CollapseExpand4()' style='font-size:16px; font-weight:bold; color:silver;' /></a></div><div id='MyDiv4' class='" . $collapset4 . "'>";
 require "./PageMakerT.php";
-	while($g=mysql_fetch_array($catquer)){ 
+	while($g=mysqli_fetch_array($catquer)){ 
 	
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #2
-	$CHMP = run_query("SELECT `avatar`,`group` FROM `phpqa_accounts` WHERE `name` = '" . $g['Champion_name'] . "'");
-        $CHMPimg=mysql_fetch_array($CHMP);
+//Updated Function Block #2
+	$CHMP = run_iquery("SELECT avatar,group FROM phpqa_accounts WHERE `name` = '" . $g['Champion_name'] . "'");
+        $CHMPimg=mysqli_fetch_array($CHMP);
 	// Select from the scores table....
 $CheckScoring = $g['scoring'];
-$showcat=mysql_fetch_array(run_query("SELECT cat FROM phpqa_cats WHERE id='{$g['gamecat']}'"));	
-//END Incompatible Function Block #2
+$showcat=mysqli_fetch_array(run_iquery("SELECT cat FROM phpqa_cats WHERE id='{$g['gamecat']}'"));	
+//END Updated Function Block #2
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if ($g['gamecat'] != '2' || (isset($exist[6])&&$exist[6] == "Admin")) {
