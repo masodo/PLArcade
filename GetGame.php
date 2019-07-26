@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: GetGame.php - Download Game Script   Modified: 3/21/2019   By: MaSoDo
+# Section: GetGame.php - Download Game Script   Modified: 7/26/2019   By: MaSoDo
 
 if (isset($_COOKIE['PHPSESSID'])) {
 $key=htmlspecialchars($_COOKIE['PHPSESSID'], ENT_QUOTES);
@@ -20,6 +20,9 @@ function vsess() {
 global $key;
 if(isset($_REQUEST['akey']) && $_REQUEST['akey'] != $key) { die("Authorization Mismatch"); }
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #1
 function run_query($sql=false, $no_inj_protect=""){
 static $queries=Array();
 if ($sql) $queries[]=$sql;
@@ -42,6 +45,8 @@ alert('Query used: ".$sql."');
 }
 return $sql?$r_q:$queries;
 }
+//END Incompatible Function Block #1
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function recurse_copy($src,$dst) { 
     $dir = opendir($src); 
@@ -74,7 +79,9 @@ function rrmdir($dirgone) {
  }
 $mtime=explode(" ",microtime());
 require("./arcade_conf.php");
- 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #2
 $connect = @mysql_connect($dbhost,$dbuser,$dbpass);
 $selection = @mysql_select_db($dbname);
 $h=mysql_error();
@@ -82,6 +89,8 @@ if (!$connect || !$selection) {
 echo "There was an error with the database. A detailed report of the error is available below.<br /><br /><textarea cols=70 rows=20>$h</textarea><br /><br />You should check your password and database details. If you find that they are correct, but your <br />arcade is still not functioning please contact your hosting provider."; 
 die();
 }
+//END Incompatible Function Block #2
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  
 try {
 vsess();
@@ -90,8 +99,12 @@ vsess();
   ini_set('set_time_limit', '0');
 $gameid = isset($_GET['GID']) ? htmlspecialchars($_GET['GID'], ENT_QUOTES) : '';
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #3
 $g = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gameid='".$gameid."'")); 
-  
+//END Incompatible Function Block #3
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 $gcat = $g['gamecat'];
 $gheight = $g['gameheight'];
 $gname = $g['gameid'];
