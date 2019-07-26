@@ -18,12 +18,12 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #1
-$scoreboard = run_query("SELECT phpqa_accounts.name,phpqa_accounts.avatar,phpqa_accounts.group, COUNT(phpqa_games.HOF_name) AS HOF_champ FROM phpqa_accounts
+//Updated Function Block #1
+$scoreboard = run_iquery("SELECT phpqa_accounts.name,phpqa_accounts.avatar,phpqa_accounts.group, COUNT(phpqa_games.HOF_name) AS HOF_champ FROM phpqa_accounts
 LEFT JOIN phpqa_games ON phpqa_accounts.name = phpqa_games.HOF_name
 GROUP BY phpqa_games.HOF_name
 ORDER BY HOF_champ DESC LIMIT 1,50000");
-$scoreboardc = mysql_fetch_array(run_query("SELECT phpqa_accounts.name,phpqa_accounts.avatar,phpqa_accounts.group, COUNT(phpqa_games.HOF_name) AS HOF_champ FROM phpqa_accounts
+$scoreboardc = mysqli_fetch_array(run_iquery("SELECT phpqa_accounts.name,phpqa_accounts.avatar,phpqa_accounts.group, COUNT(phpqa_games.HOF_name) AS HOF_champ FROM phpqa_accounts
 LEFT JOIN phpqa_games ON phpqa_accounts.name = phpqa_games.HOF_name
 GROUP BY phpqa_games.HOF_name
 ORDER BY HOF_champ DESC LIMIT 0,3"));
@@ -34,13 +34,13 @@ echo "<tr><td class='arcade1'><div style='font-size:16px; color: gold;' align='c
 echo "</table></div><div style='position:absolute;display:none;margin-top:-100px;margin-left:110px;' id='leadboxpopup'><img /></div><br />";
  echo "<div class='tableborder'><table width='100%' cellpadding='5' cellspacing='1'>";
  echo "<td width='2%' align=left class='headertableblock'>UsersName</td><td width='30%' align=center class='headertableblock'>Totals</td>";
-while($scores=mysql_fetch_array($scoreboard)){ 
+while($scores=mysqli_fetch_array($scoreboard)){ 
 if ($scores['avatar'] == ''){ $scores['avatar'] = $avatarloc.'/man.gif'; }
 if ($scores['HOF_champ'] > 0) {
 // avatar popup here "leadboxpopup"
 echo"<tr><td class='arcade1'><div align='center'><A href='index.php?action=profile&amp;user=".$scores['name']."' onmouseover=\"s=document.getElementById('leadboxpopup');s.style.display='';s.getElementsByTagName('img')[0].src='" . $scores['avatar'] . "';\" onmousemove=\"s=document.getElementById('leadboxpopup').style;s.top=document.body.scrollTop+2+event.clientY;s.left=document.body.scrollLeft+event.clientX;\" onmouseout=\"document.getElementById('leadboxpopup').style.display='none'\"><b><span class='".$scores['group']."Look'>".$scores['name']."</span></b></a></div></td><td class='arcade1'><div align='center'>".$scores['HOF_champ']." Games</div></td></td></tr>";
 }}
-//END Incompatible Function Block #1
+//END Updated Function Block #1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 echo "</table></div><br />";
@@ -54,12 +54,12 @@ echo "<div style='height:450px; padding-bottom:20px;'>";
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #2
-$Wyears = run_query("SELECT DISTINCT `Wyear` FROM `phpqa_wall` ORDER BY `Wyear` ASC");
-while($WYsee = mysql_fetch_array($Wyears)) {
+//Updated Function Block #2
+$Wyears = run_iquery("SELECT DISTINCT `Wyear` FROM `phpqa_wall` ORDER BY `Wyear` ASC");
+while($WYsee = mysqli_fetch_array($Wyears)) {
 $ShowYear = $WYsee['Wyear'];
-$Wscoreboard = run_query("SELECT * FROM `phpqa_wall` WHERE `Wyear` = $ShowYear ORDER BY `Wplace` ASC LIMIT 0,3");
-$Wscores=mysql_fetch_array($Wscoreboard);
+$Wscoreboard = run_iquery("SELECT * FROM `phpqa_wall` WHERE `Wyear` = $ShowYear ORDER BY `Wplace` ASC LIMIT 0,3");
+$Wscores=mysqli_fetch_array($Wscoreboard);
 if ($Wscores['Wavatar'] == ''){ $Wscores['Wavatar'] = $avatarloc.'/man.gif'; }
 $Wyear = $ShowYear;
 $WLyear = $Wyear - 1;
@@ -72,7 +72,7 @@ echo "<tr><td colspan='2' class='arcade1'>1st Place <img src='$crowndir/crown1.g
 echo "<tr><td colspan='2' class='arcade1'><a href=\"index.php?action=profile&amp;user=".$Wname."\"><img src='$Wavatar' height='150' alt='" . $Wname . "' /></a></td></tr>";
 echo "<tr><td colspan='2' class='arcade1'><a href=\"index.php?action=profile&amp;user=".$Wname."\"><b>". $Wname ."</b></a><hr /></td></tr>";
 
-while($Wscores=mysql_fetch_array($Wscoreboard)){
+while($Wscores=mysqli_fetch_array($Wscoreboard)){
 if ($Wscores['Wavatar'] == ''){ $Wscores['Wavatar'] = $avatarloc.'/man.gif'; }
 $plaque = '';
 $Wplace = $Wscores['Wplace'];
@@ -85,7 +85,7 @@ echo "<td class='arcade1' width='50%'><table style='text-align:center;' width='1
 echo "<tr><td><a href=\"index.php?action=profile&amp;user=".$Wname."\"><img src='$Wavatar' alt='" . $Wname . "' height='70' /></a></td></tr>";
 echo "<tr><td><a href=\"index.php?action=profile&amp;user=".$Wname."\"><b>". $Wname ."</b></a></td></tr></table></td>";
 }
-//END Incompatible Function Block #1
+//END Updated Function Block #1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 echo "</div></table></div>";
