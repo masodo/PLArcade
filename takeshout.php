@@ -13,10 +13,12 @@
 // ---------------------------------------------------------------------------------/
 # Section: takeshout.php  Function: ajax receiver page for shouts   Modified: 7/26/2019   By: MaSoDo
 //-----------------------------------------------------------------------------------/
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #1
-function run_query($sql=false, $no_inj_protect=""){
+function run_iquery($sql=false, $no_inj_protect=""){
+require("./arcade_conf.php");
+$iconnect = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
+if (mysqli_connect_errno()){
+  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+  }
 static $queries=Array();
 if ($sql) $queries[]=$sql;
 // Inject protection, filters queries to stop injections
@@ -27,8 +29,8 @@ $sql=preg_replace("/UNION/i", "", $sql);
 $sql=preg_replace("/concat/i", "", $sql);
 $sql=preg_replace("/pass/i", "", $sql);
 }
-if($sql !="") $r_q=mysql_query($sql);
-$h=htmlspecialchars(mysql_error(), ENT_QUOTES);
+if($sql !="") $r_q=mysqli_query($iconnect,$sql);
+$h=htmlspecialchars(mysqli_connect_errno(), ENT_QUOTES);
 if($h) { 
 $sql=htmlspecialchars($sql, ENT_QUOTES);	
 echo "<script language='Javascript'>
@@ -38,17 +40,6 @@ alert('Query used: ".$sql."');
 }
 return $sql?$r_q:$queries;
 }
-require("./arcade_conf.php");
-$connect = @mysql_connect($dbhost,$dbuser,$dbpass);
-$selection = @mysql_select_db($dbname);
-$h=mysql_error();
-if (!$connect || !$selection) { 
-echo "There was an error with the database. A detailed report of the error is available below.<br /><br /><textarea cols=70 rows=20>$h</textarea><br /><br />You should check your password and database details. If you find that they are correct, but your <br />arcade is still not functioning please contact your hosting provider."; 
-die();
-}
-//END Incompatible Function Block #1
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 if (isset($_COOKIE['PHPSESSID'])) {
 $key=htmlspecialchars($_COOKIE['PHPSESSID'], ENT_QUOTES);
 }
@@ -65,12 +56,6 @@ Global $ipa, $phpqa_user_cookie;
 $senttext = $_POST['senttext'];
 vsess();
 $time = time();
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #2
-run_query("INSERT INTO `phpqa_shoutbox` (`name`,`shout`,`ipa`,`tstamp`) VALUES ('".$phpqa_user_cookie."','".$senttext."','".$ipa."','".$time."')", 1);
-//END Incompatible Function Block #1
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+run_iquery("INSERT INTO `phpqa_shoutbox` (`name`,`shout`,`ipa`,`tstamp`) VALUES ('".$phpqa_user_cookie."','".$senttext."','".$ipa."','".$time."')", 1);
 }
 ?>
