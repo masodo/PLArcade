@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: tar_import - Administrator Control Panel   Modified: 6/26/2019   By: MaSoDo
+# Section: acpi Place: tar_import - Administrator Control Panel   Modified: 7/26/2019   By: MaSoDo
 
 {
 $plattype = 'FL';
@@ -96,6 +96,9 @@ if ($scoretype == 'low')$scoretype='LO';
 $scoretype = 'HI';
 }
 $idname = htmlspecialchars($idname, ENT_QUOTES);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #1
 $addedalready = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
 if (!$addedalready) {
 $champ = '';
@@ -134,6 +137,9 @@ $idname=str_replace("game_", "", $tarfile_name);
 <?php
 $catquery=run_query("SELECT * FROM phpqa_cats");
  while ($catlist= mysql_fetch_array($catquery)) {
+//END Incompatible Function Block #1
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
 if( $_GET['cat'] == $catlist[0] ) {
 echo  "<option value='$catlist[0]' selected='selected'>$catlist[1]</option>";
 } else {
@@ -150,6 +156,4 @@ echo  "<option value='$catlist[0]'>$catlist[1]</option>";
 <br />
 <?php
 } 
-
-
 ?>
