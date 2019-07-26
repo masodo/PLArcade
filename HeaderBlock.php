@@ -18,10 +18,10 @@ $CPF = 1;
 $CPD = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #1
-$catquer2 = run_query("(SELECT platform,gamecat FROM phpqa_games)");
-$cp=@mysql_fetch_array($catquer2);
-while($cp=@mysql_fetch_array($catquer2)){
+//Updated Function Block #1
+$catquer2 = run_iquery("(SELECT platform,gamecat FROM phpqa_games)");
+$cp=@mysqli_fetch_array($catquer2);
+while($cp=@mysqli_fetch_array($catquer2)){
 if ($cp['platform'] == 'H5') { 
 $CPH = $CPH+1;
 if ($cp['gamecat'] == '2') {
@@ -39,7 +39,7 @@ $CPF = $CPF-1;
 } 
 }
 }
-//END Incompatible Function Block #1
+//END Updated Function Block #1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if(isset($settings['enable_logo'])) {
