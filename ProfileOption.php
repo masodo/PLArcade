@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,8 +11,11 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ProfileOption.php  Function: View User Profile Page   Modified: 6/19/2019   By: MaSoDo
+# Section: ProfileOption.php  Function: View User Profile Page   Modified: 7/26/2019   By: MaSoDo
 if (isset($_COOKIE['phpqa_user_c'])) {
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #1
 $profiledata=@mysql_fetch_array(run_query("SELECT * FROM phpqa_accounts WHERE name='".$user."'"));
 $ggggg=explode("|",$profiledata['settings']);
 if (!isset($profiledata)) {
@@ -91,5 +94,9 @@ while($getHstats=mysql_fetch_array($Hq)){
 ?>
 </tr></table></div><br /><br />
 <?php
-}} else {message("Sorry, guests may not view profiles!<br />Please <a href='index.php?action=register#registration'>Register</a> or <a href='index.php#Login'>Login</a>");}
+}
+//END Incompatible Function Block #1
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+} else {message("Sorry, guests may not view profiles!<br />Please <a href='index.php?action=register#registration'>Register</a> or <a href='index.php#Login'>Login</a>");}
 ?>
