@@ -1,18 +1,21 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: takeshout.php  Function: ajax receiver page for shouts   Modified: 6/18/2019   By: MaSoDo
+# Section: takeshout.php  Function: ajax receiver page for shouts   Modified: 7/26/2019   By: MaSoDo
 //-----------------------------------------------------------------------------------/
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #1
 function run_query($sql=false, $no_inj_protect=""){
 static $queries=Array();
 if ($sql) $queries[]=$sql;
@@ -43,6 +46,9 @@ if (!$connect || !$selection) {
 echo "There was an error with the database. A detailed report of the error is available below.<br /><br /><textarea cols=70 rows=20>$h</textarea><br /><br />You should check your password and database details. If you find that they are correct, but your <br />arcade is still not functioning please contact your hosting provider."; 
 die();
 }
+//END Incompatible Function Block #1
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 if (isset($_COOKIE['PHPSESSID'])) {
 $key=htmlspecialchars($_COOKIE['PHPSESSID'], ENT_QUOTES);
 }
@@ -59,6 +65,12 @@ Global $ipa, $phpqa_user_cookie;
 $senttext = $_POST['senttext'];
 vsess();
 $time = time();
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #2
 run_query("INSERT INTO `phpqa_shoutbox` (`name`,`shout`,`ipa`,`tstamp`) VALUES ('".$phpqa_user_cookie."','".$senttext."','".$ipa."','".$time."')", 1);
+//END Incompatible Function Block #1
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
 ?>
