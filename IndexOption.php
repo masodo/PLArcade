@@ -20,8 +20,8 @@ vsess();
 $_GET['game'] = htmlspecialchars($_GET['game'], ENT_QUOTES);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #1
-$game_exist=mysql_fetch_array(run_query("SELECT `id` FROM phpqa_games WHERE gameid='{$_GET['game']}'"));
+//Updated Function Block #1
+$game_exist=mysqli_fetch_array(run_iquery("SELECT `id` FROM phpqa_games WHERE gameid='{$_GET['game']}'"));
 if($game_exist[0]) {
 //Adding?
 if(isset($_GET['favtype']) && $_GET['favtype'] == "add") { 
@@ -39,7 +39,7 @@ run_query("UPDATE `phpqa_accounts` SET `settings` = '$acct_setting[0]|$acct_sett
 message("Game not found.");
 }
 }
-//END Incompatible Function Block #1
+//END Updated Function Block #1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -55,17 +55,17 @@ echo "<div style='text-align:center; margin-bottom: 5px; margin-top: 5px;'><a ti
 require "./PageMakerT.php";
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #2
-	while($g=mysql_fetch_array($catquer)){ 
+//Updated Function Block #2
+	while($g=mysqli_fetch_array($catquer)){ 
 	// Select from the scores table....
 	
 $CheckScoring = $g['scoring'];
-$showcat=mysql_fetch_array(run_query("SELECT cat FROM phpqa_cats WHERE id='{$g['gamecat']}'"));
+$showcat=mysqli_fetch_array(run_iquery("SELECT cat FROM phpqa_cats WHERE id='{$g['gamecat']}'"));
 
 if (($g['gamecat'] != '2' && $g['gamecat'] != '23') || (isset($exist[6])&&$exist[6] == "Admin")) {	
-$CHMP = run_query("SELECT `avatar`,`group` FROM `phpqa_accounts` WHERE `name` = '" . $g['Champion_name'] . "'");
-$CHMPimg=mysql_fetch_array($CHMP);
-//END Incompatible Function Block #2
+$CHMP = run_iquery("SELECT `avatar`,`group` FROM `phpqa_accounts` WHERE `name` = '" . $g['Champion_name'] . "'");
+$CHMPimg=mysqli_fetch_array($CHMP);
+//END Updated Function Block #2
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
