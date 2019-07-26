@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 7/19/2019   By: MaSoDo
+# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 7/26/2019   By: MaSoDo
 session_start();
 if($_GET['captcha']){
 $im = imagecreatefrompng("captchabg.png");
@@ -133,6 +133,8 @@ $f = substr($num,-1);
 if ($long && $f == "0" || $long && substr($num,-2,1) == "1" || substr($num,-1,1) > 3) return $num."th"; elseif ($f=="1") return $num."st"; elseif ($f=="2") return $num."nd"; elseif($f==3) return $num."rd";
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #1
 function displayemotes() { 
 $g = "";
 global $textloc;
@@ -144,6 +146,7 @@ $g.= "<a title='".$smils['description']."'><img src=\"".$smiliesloc."/".$smils['
 }
 return $g;
 }
+
 function run_query($sql=false, $no_inj_protect=""){
 static $queries=Array();
 if ($sql) $queries[]=$sql;
@@ -166,6 +169,9 @@ alert('Query used: ".$sql."');
 }
 return $sql?$r_q:$queries;
 }
+//END Incompatible Function Block #1
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 if (isset($_GET['id'])) $id = htmlspecialchars($_GET['id'], ENT_QUOTES);
 if (isset($_GET['user'])) $user = htmlspecialchars ($_GET['user'], ENT_QUOTES);
 if (isset($_GET['cat'])&&!is_numeric($_GET['cat'])) die();
@@ -188,7 +194,8 @@ if (isset($_POST['senttext'])) $senttext = htmlspecialchars($_POST['senttext'], 
 function message($info) {
 echo "<div align='center'><div class='tableborder'><table width=100% cellpadding='4' cellspacing='1'><td width=60% align=center class=headertableblock>Message:</td><tr><td class=arcade1 valign=top><div align='center' style='background-color:gray; color:white; font-size:20px; padding:20px;'>$info</div></td></table></div><br />";
 }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #2
 $connect = @mysql_connect($dbhost,$dbuser,$dbpass);
 $selection = @mysql_select_db($dbname);
 $h=mysql_error();
@@ -196,13 +203,16 @@ if (!$connect || !$selection) {
 echo "There was an error with the database. A detailed report of the error is available below.<br /><br /><textarea cols=70 rows=20>$h</textarea><br /><br />You should check your password and database details. If you find that they are correct, but your <br />arcade is still not functioning please contact your hosting provider."; 
 die();
 }
+//Incompatible Function Block #2
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // 	Rather than do 10 million checks, this check is run always 
 //	at the top of the page.
 //	Never take this out or move this!
 //                   NEVER!
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ReportID = 1; //set to topic id for game reports
+$ReportID = 2;
 $exist='';
 //declare some variables would be nice
 $plat = "";
@@ -233,6 +243,10 @@ if (!isset($collapset1)) $collapset1 = "";
 if (!isset($collapset2)) $collapset2 = "";
 if (!isset($collapset3)) $collapset3 = "";
 if (!isset($collapset4)) $collapset4 = "";
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #3
 if (isset($_COOKIE['phpqa_user_c'])) { // Is the username cookie set...
 $query = run_query("SELECT * FROM phpqa_accounts WHERE name='$phpqa_user_cookie'");
 $exist = mysql_fetch_array($query);
@@ -279,6 +293,9 @@ echo "You are now logged out. This has occurred due to a username/password misma
 die();
 }
 }
+//Incompatible Function Block #3
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 if (isset($exist[6]) && $exist[6]=="Moderator" || isset($exist[6]) && $exist[6]=="Admin") {
 if(!isset($_GET['modcparea'])) {
 require("acpmoderate.php");
@@ -341,8 +358,13 @@ $userID = htmlspecialchars(($_POST['userID']), ENT_QUOTES);
 $pword = htmlspecialchars(($_POST['pword']), ENT_QUOTES);
 $name = $userID;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #4
 $query = run_query("SELECT * FROM phpqa_accounts WHERE name='$userID'");
 $exist = mysql_fetch_array($query);
+//Incompatible Function Block #4
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if ($exist) { 	// M&Ms commercial - He DOES exist! D'Ooh
 if(isset($exist[6]) && $exist[6]=='Banned') { message("You have been banned from this arcade.<br />Contact ".$siteemail." if you feel this to be in error.");
@@ -363,12 +385,23 @@ setcookie("phpqa_user_p", $thepassword_in_db, time()+99999, ""."; HttpOnly");
 }
 // Count the logins here:
 $time = time();
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #5
 run_query("UPDATE `phpqa_accounts` SET `logins`=".++$exist['logins'].", `vtstamp`=".$time." WHERE name='" . $userID ."'"); 
+//Incompatible Function Block #5
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if (isset($exist['logins'])&&$exist['logins'] =='1' ) {
 header("Location: index.php");
 $welcometext = "[color=green][i]Welcome to[/i] [b]".$settings['arcade_title']."[/b][/color] [url=".$arcurl."/index.php?action=profile&user=".$exist['name']."][size=18][b]".$exist['name']."[/b][/size][/url] [wavey] [i]Thanks for joining us![/i]";
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #6
 run_query("INSERT INTO phpqa_shoutbox (`name`,`shout`,`ipa`,`tstamp`) VALUES ('Admin','" . $welcometext . "','localhost','" . $time ."')", 1);
+//Incompatible Function Block #6
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
 //then load the page:
 header("Location: index.php");
