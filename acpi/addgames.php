@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi place: addgames Administrator Control Panel   Modified: 6/26/2019   By: MaSoDo
+# Section: acpi place: addgames Administrator Control Panel   Modified: 7/26/2019   By: MaSoDo
 {
 // The different methods
 if (!isset($_GET['method'])) {
@@ -129,6 +129,9 @@ $preid='';
 $pretimes=0;
 if (isset($_GET['method'])&&$_GET['method']=="edit") {
 global $game;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #1
 $editgame = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
 $champ=$editgame['Champion_name'];
 $champs=$editgame['Champion_score'];
@@ -143,6 +146,9 @@ $swf_ok = 'Yes';
 $gif_ok = 'Yes';
 $found_swf = 'Yes';
 }
+//END Incompatible Function Block #1
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 if ($remoteurl == '') {
 global $idname;
 if (file_exists('./arcade/'.$idname.'.swf')) { 
@@ -157,6 +163,9 @@ if ($gif_ok == 'Yes' && $swf_ok == 'Yes' && $found_swf == 'Yes') {
 global $idname;
 if (!isset($plattype))$plattype='FL';
 $idname = htmlspecialchars($idname, ENT_QUOTES);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #2
 $addedalready = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
 if (empty($addedalready)) {
 $atime = '';
@@ -173,6 +182,9 @@ message("This game is already added, or the idname conflicts with an existing ga
 }
 }
 }
+//END Incompatible Function Block #2
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 ?>
 <div class='tableborder'><table width=100% cellpadding='4' cellspacing='1'><td width='60%' align='center' class='headertableblock' colspan='2'> Adding Game</td><tr>
 <form action='' method='POST' enctype="multipart/form-data">
@@ -211,7 +223,13 @@ if (isset($_GET['method'])&&$_GET['method'] == "upload") {
 } elseif(isset($_GET['method'])&&$_GET['method']== "edit") {
 $what = "Edit";
 $game=htmlspecialchars($_GET['game'], ENT_QUOTES);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #3
 $editgame = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gameid='$game'"));
+//END Incompatible Function Block #3
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 if ($editgame['remotelink'] != "") {
 ?>
 <tr><td class='arcade1' align='left'><b>Game File Location (URL): <a href="javascript:alert('This is the link location for the HTML5 index.html for the game');">[?]</a></b></td>
@@ -296,8 +314,14 @@ echo "<input type='hidden' name='idname' value='".$editgame['gameid']."'> ".$edi
 <tr><td class='arcade1' align='center' colspan='2'><b>Choose A Category</b></td>
 <tr><td class='arcade1' align='left'><b>Category Options :</b></td><td class='arcade1' align='center'><select name='gamecat'>
 <?php
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #4
 $catquery=run_query("SELECT * FROM phpqa_cats");
 while ($catlist=mysql_fetch_array($catquery)) {
+//END Incompatible Function Block #4
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 if( isset($editgame['gamecat']) && $editgame['gamecat'] == $catlist[0] ) {
 echo  "<option value='".$catlist[0]."' selected='selected'>".$catlist[1]."</option>";
 } else {
