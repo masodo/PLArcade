@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,9 +11,15 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Categories.php  Function: Display Categories w/Icons   Modified: 7/3/2019   By: MaSoDo
+# Section: Categories.php  Function: Display Categories w/Icons   Modified: 7/26/2019   By: MaSoDo
 global $catquery;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #1
 $c=@mysql_data_seek($catquery,0);
+//END Incompatible Function Block #1
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 $catcell = '';
 $caticon = '';
 $catcnt = '';
@@ -26,6 +32,9 @@ if($c) {
  //Begin Collapse #3
  echo "<a title='Open/Close The Category Selections'><img id='btn3' src='$imgloc/$collimg3' type='button' alt='&#8595; Categories: Collapse/Expand &#8595;' onclick='return CollapseExpand3()' style='font-size:16px; font-weight:bold; color:silver;' /></a></div><div id='MyDiv3' class='" . $collapset3 . "'>";
  echo "<table width='100%' cellpadding='4' cellspacing='1' class='tableborder'><tr><td class='headertableblock' style='font-weight:bold; text-align:center;'>Categories:</td><tr><td><div style='width:100%;height:auto;'>";
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Incompatible Function Block #2
 while ($c = mysql_fetch_array($catquery)) {
 $catcnt = run_query("(SELECT COUNT(*) as total FROM `phpqa_games` WHERE `gamecat` = ".$c[0].")");
 $dcat=mysql_fetch_assoc($catcnt);
@@ -37,6 +46,8 @@ echo  "<div style='width: ".$catcell."px; height: ".$catcell."px; padding: 10px;
 if (isset($exist[6])&&$exist[6] == "Admin") {
 echo  "<div style='width: ".$catcell."px; height: ".$catcell."px; padding: 10px; float: left; margin-right: 5px; margin-bottom: 5px; text-align:center;' class='arcade1'><a href='index.php?cat=2' title='Dead (".$deadC.")'><img src='".$catloc."/Dead.png' style='width:".$caticon."px; height:".$caticon."px;' /><br />Dead</a><br /><span style='font-size:9px; color:#000;'>(".$deadC.")</span></div>";
 echo  "<div style='width: ".$catcell."px; height: ".$catcell."px; padding: 10px; float: left; margin-right: 5px; margin-bottom: 5px; text-align:center;' class='arcade1'><a href='index.php?cat=23' title='Testing (".$testC.")'><img src='".$catloc."/Testing.png' style='width:".$caticon."px; height:".$caticon."px;' /><br />Testing</a><br /><span style='font-size:9px; color:#000;'>(".$testC.")</span></div>";
+//END Incompatible Function Block #2
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
 echo"</div></td></tr></div></table><br />";
