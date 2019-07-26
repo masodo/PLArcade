@@ -133,20 +133,19 @@ $f = substr($num,-1);
 if ($long && $f == "0" || $long && substr($num,-2,1) == "1" || substr($num,-1,1) > 3) return $num."th"; elseif ($f=="1") return $num."st"; elseif ($f=="2") return $num."nd"; elseif($f==3) return $num."rd";
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #1
 function displayemotes() { 
 $g = "";
 global $textloc;
 global $smiliesloc;
-$emotesdata = run_query("SELECT * FROM `phpqa_emotes`");
-while($smils=mysql_fetch_array($emotesdata)){ 
+$emotesdata = run_iquery("SELECT * FROM `phpqa_emotes`");
+while($smils=mysqli_fetch_array($emotesdata)){ 
 $trim = rtrim($smils['code']);
 $g.= "<a title='".$smils['description']."'><img src=\"".$smiliesloc."/".$smils['filename']."\" onclick=\"document.forms['postbox'].elements['senttext'].value=document.forms['postbox'].elements['senttext'].value+&#39;".$trim."&#39;\"></a> ";
 }
 return $g;
 }
 
+//depreciated function - incompatible with php7
 function run_query($sql=false, $no_inj_protect=""){
 static $queries=Array();
 if ($sql) $queries[]=$sql;
@@ -169,8 +168,37 @@ alert('Query used: ".$sql."');
 }
 return $sql?$r_q:$queries;
 }
-//END Incompatible Function Block #1
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//END depreciated function - incompatible with php7
+
+//Replacement function for php7 compatibility
+function run_iquery($sql=false, $no_inj_protect=""){
+require("./arcade_conf.php");
+$iconnect = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
+if (mysqli_connect_errno()){
+  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+  }
+static $queries=Array();
+if ($sql) $queries[]=$sql;
+// Inject protection, filters queries to stop injections
+// don't want it / need something here? Then set the flag to 1.
+$sql=preg_replace("/--/i", "", $sql);
+if(!$no_inj_protect) {
+$sql=preg_replace("/UNION/i", "", $sql);
+$sql=preg_replace("/concat/i", "", $sql);
+$sql=preg_replace("/pass/i", "", $sql);
+}
+if($sql !="") $r_q=mysqli_query($iconnect,$sql);
+$h=htmlspecialchars(mysqli_connect_errno(), ENT_QUOTES);
+if($h) { 
+$sql=htmlspecialchars($sql, ENT_QUOTES);	
+echo "<script language='Javascript'>
+alert('Database Error: ".$h."');
+alert('Query used: ".$sql."');
+</script>"; 
+}
+return $sql?$r_q:$queries;
+}
+//Replacement function for php7 compatibility
 
 if (isset($_GET['id'])) $id = htmlspecialchars($_GET['id'], ENT_QUOTES);
 if (isset($_GET['user'])) $user = htmlspecialchars ($_GET['user'], ENT_QUOTES);
@@ -195,7 +223,7 @@ function message($info) {
 echo "<div align='center'><div class='tableborder'><table width=100% cellpadding='4' cellspacing='1'><td width=60% align=center class=headertableblock>Message:</td><tr><td class=arcade1 valign=top><div align='center' style='background-color:gray; color:white; font-size:20px; padding:20px;'>$info</div></td></table></div><br />";
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #2
+//Updated Function Block #2
 $connect = @mysql_connect($dbhost,$dbuser,$dbpass);
 $selection = @mysql_select_db($dbname);
 $h=mysql_error();
@@ -203,7 +231,7 @@ if (!$connect || !$selection) {
 echo "There was an error with the database. A detailed report of the error is available below.<br /><br /><textarea cols=70 rows=20>$h</textarea><br /><br />You should check your password and database details. If you find that they are correct, but your <br />arcade is still not functioning please contact your hosting provider."; 
 die();
 }
-//Incompatible Function Block #2
+//Updated Function Block #2
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -246,10 +274,10 @@ if (!isset($collapset4)) $collapset4 = "";
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #3
+//Updated Function Block #3
 if (isset($_COOKIE['phpqa_user_c'])) { // Is the username cookie set...
-$query = run_query("SELECT * FROM phpqa_accounts WHERE name='$phpqa_user_cookie'");
-$exist = mysql_fetch_array($query);
+$query = run_iquery("SELECT * FROM phpqa_accounts WHERE name='$phpqa_user_cookie'");
+$exist = mysqli_fetch_array($query);
 $acct_setting = explode("|", $exist[8]);
 //Collapse 1 happens in "ArcadeInfo.php"
 $collapset1 = isset($acct_setting[6]) ? $acct_setting[6] : null;
@@ -293,7 +321,7 @@ echo "You are now logged out. This has occurred due to a username/password misma
 die();
 }
 }
-//Incompatible Function Block #3
+//Updated Function Block #3
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if (isset($exist[6]) && $exist[6]=="Moderator" || isset($exist[6]) && $exist[6]=="Admin") {
@@ -360,10 +388,10 @@ $name = $userID;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #4
-$query = run_query("SELECT * FROM phpqa_accounts WHERE name='$userID'");
-$exist = mysql_fetch_array($query);
-//Incompatible Function Block #4
+//Updated Function Block #4
+$query = run_iquery("SELECT * FROM phpqa_accounts WHERE name='$userID'");
+$exist = mysqli_fetch_array($query);
+//Updated Function Block #4
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if ($exist) { 	// M&Ms commercial - He DOES exist! D'Ooh
@@ -387,9 +415,9 @@ setcookie("phpqa_user_p", $thepassword_in_db, time()+99999, ""."; HttpOnly");
 $time = time();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #5
-run_query("UPDATE `phpqa_accounts` SET `logins`=".++$exist['logins'].", `vtstamp`=".$time." WHERE name='" . $userID ."'"); 
-//Incompatible Function Block #5
+//Updated Function Block #5
+run_iquery("UPDATE `phpqa_accounts` SET `logins`=".++$exist['logins'].", `vtstamp`=".$time." WHERE name='" . $userID ."'"); 
+//Updated Function Block #5
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if (isset($exist['logins'])&&$exist['logins'] =='1' ) {
@@ -397,9 +425,9 @@ header("Location: index.php");
 $welcometext = "[color=green][i]Welcome to[/i] [b]".$settings['arcade_title']."[/b][/color] [url=".$arcurl."/index.php?action=profile&user=".$exist['name']."][size=18][b]".$exist['name']."[/b][/size][/url] [wavey] [i]Thanks for joining us![/i]";
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #6
-run_query("INSERT INTO phpqa_shoutbox (`name`,`shout`,`ipa`,`tstamp`) VALUES ('Admin','" . $welcometext . "','localhost','" . $time ."')", 1);
-//Incompatible Function Block #6
+//Updated Function Block #6
+run_iquery("INSERT INTO phpqa_shoutbox (`name`,`shout`,`ipa`,`tstamp`) VALUES ('Admin','" . $welcometext . "','localhost','" . $time ."')", 1);
+//Updated Function Block #6
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
@@ -410,7 +438,6 @@ echo "Sorry, the password you entered for the account, <b>$userID</b> is incorre
 die();
 }
 } else {
-echo "<script language='Javascript'>alert('hello\nworld')</script>";
 echo "Sorry, that username, <b>".$name."</b>  doesn't appear to exist. <a href='index.php'>Please go back and try again</a><br /><br />Did you mistype it? Are you <a href='index.php?action=register'>Registered?</a><br /><br /><a href='index.php?action=forgotpass'>Forgot Password?</a>";
 die();
 }
