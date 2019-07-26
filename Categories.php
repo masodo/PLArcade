@@ -15,9 +15,9 @@
 global $catquery;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #1
-$c=@mysql_data_seek($catquery,0);
-//END Incompatible Function Block #1
+//Updated Function Block #1
+$c=@mysqli_data_seek($catquery,0);
+//END Updated Function Block #1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $catcell = '';
@@ -34,10 +34,10 @@ if($c) {
  echo "<table width='100%' cellpadding='4' cellspacing='1' class='tableborder'><tr><td class='headertableblock' style='font-weight:bold; text-align:center;'>Categories:</td><tr><td><div style='width:100%;height:auto;'>";
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #2
-while ($c = mysql_fetch_array($catquery)) {
-$catcnt = run_query("(SELECT COUNT(*) as total FROM `phpqa_games` WHERE `gamecat` = ".$c[0].")");
-$dcat=mysql_fetch_assoc($catcnt);
+//Updated Function Block #2
+while ($c = mysqli_fetch_array($catquery)) {
+$catcnt = run_iquery("(SELECT COUNT(*) as total FROM `phpqa_games` WHERE `gamecat` = ".$c[0].")");
+$dcat=mysqli_fetch_assoc($catcnt);
 if($c[0]==23)$testC=$dcat['total'];
 if($c[0]==2)$deadC=$dcat['total'];
 if (($c[0] != '2')&&($c[0] != '23')) {
@@ -46,7 +46,7 @@ echo  "<div style='width: ".$catcell."px; height: ".$catcell."px; padding: 10px;
 if (isset($exist[6])&&$exist[6] == "Admin") {
 echo  "<div style='width: ".$catcell."px; height: ".$catcell."px; padding: 10px; float: left; margin-right: 5px; margin-bottom: 5px; text-align:center;' class='arcade1'><a href='index.php?cat=2' title='Dead (".$deadC.")'><img src='".$catloc."/Dead.png' style='width:".$caticon."px; height:".$caticon."px;' /><br />Dead</a><br /><span style='font-size:9px; color:#000;'>(".$deadC.")</span></div>";
 echo  "<div style='width: ".$catcell."px; height: ".$catcell."px; padding: 10px; float: left; margin-right: 5px; margin-bottom: 5px; text-align:center;' class='arcade1'><a href='index.php?cat=23' title='Testing (".$testC.")'><img src='".$catloc."/Testing.png' style='width:".$caticon."px; height:".$caticon."px;' /><br />Testing</a><br /><span style='font-size:9px; color:#000;'>(".$testC.")</span></div>";
-//END Incompatible Function Block #2
+//END Updated Function Block #2
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
