@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 7/26/2019   By: MaSoDo
+# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 7/27/2019   By: MaSoDo
 session_start();
 if($_GET['captcha']){
 $im = imagecreatefrompng("captchabg.png");
@@ -146,28 +146,28 @@ return $g;
 }
 
 //depreciated function - incompatible with php7
-function run_query($sql=false, $no_inj_protect=""){
-static $queries=Array();
-if ($sql) $queries[]=$sql;
-// Inject protection, filters queries to stop injections
-// don't want it / need something here? Then set the flag to 1.
-$sql=preg_replace("/--/i", "", $sql);
-if(!$no_inj_protect) {
-$sql=preg_replace("/UNION/i", "", $sql);
-$sql=preg_replace("/concat/i", "", $sql);
-$sql=preg_replace("/pass/i", "", $sql);
-}
-if($sql !="") $r_q=mysql_query($sql);
-$h=htmlspecialchars(mysql_error(), ENT_QUOTES);
-if($h) { 
-$sql=htmlspecialchars($sql, ENT_QUOTES);	
-echo "<script language='Javascript'>
-alert('Database Error: ".$h."');
-alert('Query used: ".$sql."');
-</script>"; 
-}
-return $sql?$r_q:$queries;
-}
+//function run_query($sql=false, $no_inj_protect=""){
+///static $queries=Array();
+//if ($sql) $queries[]=$sql;
+//// Inject protection, filters queries to stop injections
+//// don't want it / need something here? Then set the flag to 1.
+//$sql=preg_replace("/--/i", "", $sql);
+//if(!$no_inj_protect) {
+//$sql=preg_replace("/UNION/i", "", $sql);
+//$sql=preg_replace("/concat/i", "", $sql);
+//$sql=preg_replace("/pass/i", "", $sql);
+//}
+//if($sql !="") $r_q=mysql_query($sql);
+//$h=htmlspecialchars(mysql_error(), ENT_QUOTES);
+//if($h) { 
+//$sql=htmlspecialchars($sql, ENT_QUOTES);	
+//echo "<script language='Javascript'>
+//alert('Database Error: ".$h."');
+//alert('Query used: ".$sql."');
+//</script>"; 
+//}
+//return $sql?$r_q:$queries;
+//}
 //END depreciated function - incompatible with php7
 
 //Replacement function for php7 compatibility
@@ -198,7 +198,7 @@ alert('Query used: ".$sql."');
 }
 return $sql?$r_q:$queries;
 }
-//Replacement function for php7 compatibility
+//END Replacement function for php7 compatibility
 
 if (isset($_GET['id'])) $id = htmlspecialchars($_GET['id'], ENT_QUOTES);
 if (isset($_GET['user'])) $user = htmlspecialchars ($_GET['user'], ENT_QUOTES);
