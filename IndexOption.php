@@ -1,10 +1,10 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
@@ -21,7 +21,7 @@ $_GET['game'] = htmlspecialchars($_GET['game'], ENT_QUOTES);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Updated Function Block #1
-$game_exist=mysqli_fetch_array(run_iquery("SELECT `id` FROM phpqa_games WHERE gameid='{$_GET['game']}'"));
+$game_exist=mysqli_fetch_array(run_iquery("SELECT id FROM phpqa_games WHERE gameid='{$_GET['game']}'"));
 if($game_exist[0]) {
 //Adding?
 if(isset($_GET['favtype']) && $_GET['favtype'] == "add") { 
@@ -34,7 +34,7 @@ global $acct_setting;
 message("Removed game from favorites. Refresh to see changes.");
 $acct_setting[5]=str_replace("{$_GET['game']},", "", $acct_setting[5]); 
 }
-run_query("UPDATE `phpqa_accounts` SET `settings` = '$acct_setting[0]|$acct_setting[1]|$acct_setting[2]|$acct_setting[3]|$acct_setting[4]|$acct_setting[5]' WHERE name='$phpqa_user_cookie'");
+run_iquery("UPDATE phpqa_accounts SET settings = '$acct_setting[0]|$acct_setting[1]|$acct_setting[2]|$acct_setting[3]|$acct_setting[4]|$acct_setting[5]' WHERE name='$phpqa_user_cookie'");
 } else {
 message("Game not found.");
 }
@@ -58,13 +58,12 @@ require "./PageMakerT.php";
 //Updated Function Block #2
 	while($g=mysqli_fetch_array($catquer)){ 
 	// Select from the scores table....
-	
-$CheckScoring = $g['scoring'];
-$showcat=mysqli_fetch_array(run_iquery("SELECT cat FROM phpqa_cats WHERE id='{$g['gamecat']}'"));
+	$CheckScoring = $g['scoring'];
+	$showcat=mysqli_fetch_array(run_iquery("SELECT cat FROM phpqa_cats WHERE id='".$g['gamecat']."'"));
 
-if (($g['gamecat'] != '2' && $g['gamecat'] != '23') || (isset($exist[6])&&$exist[6] == "Admin")) {	
-$CHMP = run_iquery("SELECT `avatar`,`group` FROM `phpqa_accounts` WHERE `name` = '" . $g['Champion_name'] . "'");
-$CHMPimg=mysqli_fetch_array($CHMP);
+if ($g['gamecat'] != '2' || (isset($exist[6])&&$exist[6] == "Admin")) {
+	$CHMP = run_iquery("SELECT avatar,`group` FROM phpqa_accounts WHERE name = '" . $g['Champion_name'] . "'");
+        $CHMPimg=mysqli_fetch_array($CHMP);
 //END Updated Function Block #2
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
