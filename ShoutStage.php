@@ -11,17 +11,17 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ShoutStage.php  Function: Shout Box Display Mechanics   Modified: 7/26/2019   By: MaSoDo
+# Section: ShoutStage.php  Function: Shout Box Display Mechanics   Modified: 7/27/2019   By: MaSoDo
 //-----------------------------------------------------------------------------------/
 if(isset($_GET['shoutbox'])) $limit=0;
 if(isset($_GET['shoutbox'])) $show=$num_pages_of;
 if (isset($_COOKIE['phpqa_user_c'])) {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #1
-	$selectfrom = run_query("SELECT `name`,`shout`,`id`,`ipa`,`tstamp` FROM `phpqa_shoutbox` ORDER BY id DESC LIMIT 0,".$num_pages_of."");
-	$shouttotal = mysql_fetch_array(run_query("SHOW TABLE STATUS LIKE 'phpqa_shoutbox'"));
-//END Incompatible Function Block #1
+//UpdatedFunction Block #1
+	$selectfrom = run_iquery("SELECT name,shout,id,ipa,tstamp FROM phpqa_shoutbox ORDER BY id DESC LIMIT 0,".$num_pages_of."");
+	$shouttotal = mysqli_fetch_array(run_iquery("SHOW TABLE STATUS LIKE 'phpqa_shoutbox'"));
+//END UpdatedFunction Block #1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 echo "<div align='center'>";
@@ -37,13 +37,13 @@ $badwords= file($textloc."/badwords.txt");
 $tb=count($badwords);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #2
-while($f=@mysql_fetch_array($selectfrom)) $dataa[]=$f;
+//UpdatedFunction Block #2
+while($f=@mysqli_fetch_array($selectfrom)) $dataa[]=$f;
 if($dataa == "") die();
 foreach($dataa as $vv) $userss[]=$vv[0];
 $userss=array_flip(array_flip($userss));
-$qqq=run_query("SELECT `name`,`avatar`,`group` FROM `phpqa_accounts` WHERE `name`='".implode($userss,"' OR `name`='")."'");
-while($ggg=mysql_fetch_array($qqq)) { 
+$qqq=run_iquery("SELECT name,avatar,`group` FROM phpqa_accounts WHERE name='".implode($userss,"' OR `name`='")."'");
+while($ggg=mysqli_fetch_array($qqq)) { 
 $avatars[$ggg['name']]="$ggg[avatar]";
 $thisgroup[$ggg['name']]="$ggg[group]";
 }
@@ -51,9 +51,9 @@ $toppost = print_r($dataa[0], true);
 foreach($dataa as $qashoutbox){
 $postsofsomething = $qashoutbox[1];
 $i=-1;
-$emotesdata = run_query("SELECT * FROM `phpqa_emotes`");
-while($smils=mysql_fetch_array($emotesdata)){
-//END Incompatible Function Block #2
+$emotesdata = run_iquery("SELECT * FROM phpqa_emotes");
+while($smils=mysqli_fetch_array($emotesdata)){
+//END UpdatedFunction Block #2
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $postsofsomething = bbcodeHtml($postsofsomething);
