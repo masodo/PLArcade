@@ -11,9 +11,10 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi place: addgames Administrator Control Panel   Modified: 7/26/2019   By: MaSoDo
+# Section: acpi place: addgames Administrator Control Panel   Modified: 7/27/2019   By: MaSoDo
 {
 // The different methods
+
 if (!isset($_GET['method'])) {
 ?>
 <div class='tableborder' align='left'><table width=100% cellpadding='4' cellspacing='1'><td width='20%' align='center' class='headertableblock' colspan='2'>Adding a new game - Click on a method</td><tr>
@@ -131,8 +132,8 @@ if (isset($_GET['method'])&&$_GET['method']=="edit") {
 global $game;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #1
-$editgame = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
+//UpdatedFunction Block #1
+$editgame = mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
 $champ=$editgame['Champion_name'];
 $champs=$editgame['Champion_score'];
 $HOFn=$editgame['HOF_name'];
@@ -140,13 +141,13 @@ $HOFs=$editgame['HOF_score'];
 $preid=$editgame['id'];
 $pretimes=$editgame['times_played'];
 $plattype=$editgame['platform'];
-run_query("DELETE FROM phpqa_games WHERE gameid='$game'");
+run_iquery("DELETE FROM phpqa_games WHERE gameid='$game'");
 $remoteurl = $swf;
 $swf_ok = 'Yes';
 $gif_ok = 'Yes';
 $found_swf = 'Yes';
 }
-//END Incompatible Function Block #1
+//END UpdatedFunction Block #1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if ($remoteurl == '') {
@@ -165,24 +166,24 @@ if (!isset($plattype))$plattype='FL';
 $idname = htmlspecialchars($idname, ENT_QUOTES);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #2
-$addedalready = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
+//UpdatedFunction Block #2
+$addedalready = mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
 if (empty($addedalready)) {
 $atime = '';
 message("Game added/edited. <br>[ <a href='index.php?cpiarea=idx'>Arcade CP Home</a> | <a href='index.php?cpiarea=addgames&method=".$_GET['method']."'>Add Another</a> ]");
-run_query("INSERT INTO phpqa_games (id,game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring,exclusiv,HOF_name,HOF_score) VALUES ('$preid','$gamename','$idname','$gameheight','$gamewidth','$about','$gamecat','$remoteurl','$champ','$champs','$pretimes','$plattype','$scoretype','$exclusiv','$HOFn','$HOFs')");
+run_iquery("INSERT INTO phpqa_games (id,game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring,exclusiv,HOF_name,HOF_score) VALUES ('$preid','$gamename','$idname','$gameheight','$gamewidth','$about','$gamecat','$remoteurl','$champ','$champs','$pretimes','$plattype','$scoretype','$exclusiv','$HOFn','$HOFs')");
 if (!isset($_GET['game'])){
 global $gamecat;
 if ($gamecat != 23){ 
 $atime = time();
 $NewGtext = "[color=green][i]New Game Added![/i] [/color][img=".$arcurl."/arcade/pics/".$idname.".gif] [size=16][url=".$arcurl."/index.php?play=".$idname."#playzone][b]".$gamename."[/b][/url][/size]  [color=green][i]Enjoy![/i][/color] [:D]";
-run_query("INSERT INTO phpqa_shoutbox (`name`,`shout`,`ipa`,`tstamp`) VALUES ('Admin','" . $NewGtext . "','localhost','".$atime."')", 1);}
+run_iquery("INSERT INTO phpqa_shoutbox (name,shout,ipa,tstamp) VALUES ('Admin','" . $NewGtext . "','localhost','".$atime."')", 1);}
 }} else {
 message("This game is already added, or the idname conflicts with an existing game. Please delete the game, or change the idname to correct the problem.");
 }
 }
 }
-//END Incompatible Function Block #2
+//END UpdatedFunction Block #2
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ?>
@@ -225,9 +226,9 @@ $what = "Edit";
 $game=htmlspecialchars($_GET['game'], ENT_QUOTES);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #3
-$editgame = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gameid='$game'"));
-//END Incompatible Function Block #3
+//UpdatedFunction Block #3
+$editgame = mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_games WHERE gameid='$game'"));
+//END UpdatedFunction Block #3
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if ($editgame['remotelink'] != "") {
@@ -316,10 +317,10 @@ echo "<input type='hidden' name='idname' value='".$editgame['gameid']."'> ".$edi
 <?php
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #4
-$catquery=run_query("SELECT * FROM phpqa_cats");
-while ($catlist=mysql_fetch_array($catquery)) {
-//END Incompatible Function Block #4
+//UpdatedFunction Block #4
+$catquery=run_iquery("SELECT * FROM phpqa_cats");
+while ($catlist=mysqli_fetch_array($catquery)) {
+//END UpdatedFunction Block #4
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if( isset($editgame['gamecat']) && $editgame['gamecat'] == $catlist[0] ) {
@@ -341,4 +342,7 @@ echo  "<option value='".$catlist[0]."'>".$catlist[1]."</option>";
 <?php
 }
 }
+
+
+
 ?>
