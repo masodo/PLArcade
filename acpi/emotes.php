@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: emotes - Administrator Control Panel   Modified: 7/26/2019   By: MaSoDo
+# Section: acpi Place: emotes - Administrator Control Panel   Modified: 7/27/2019   By: MaSoDo
 
 { ?>
 <?php
@@ -20,24 +20,24 @@ vsess();
 $remove = $_GET['remove'];
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #1
-run_query("delete FROM `phpqa_emotes` where `filename`='".$remove."'");
+//UpdatedFunction Block #1
+run_iquery("delete FROM phpqa_emotes where filename='".$remove."'");
 }
 if (isset($_POST['face']))$face = $_POST['face'];
 if (isset($_POST['pic']))$pic = $_POST['pic'];
 if (isset($_POST['description']))$description = $_POST['description'];
 if (isset($_POST['face'])) {
 vsess();
-run_query("INSERT into `phpqa_emotes` (`id`,`filename`,`code`,`description`) VALUES ('','".$pic."','".$face."','".$description."')");
+run_iquery("INSERT into phpqa_emotes (id,filename,code,description) VALUES ('','".$pic."','".$face."','".$description."')");
 }
-$emotesdata = run_query("SELECT * FROM `phpqa_emotes`");
+$emotesdata = run_iquery("SELECT * FROM phpqa_emotes");
 ?>
 <br>
 <?php
 echo "<div class='tableborder'><table width=50% cellpadding='4' cellspacing='1'><td width=20% align=center class=headertableblock>Face</td><td width=500% align=center class=headertableblock>Description</td><td width=10% align=center class=headertableblock>Preview</td><td width=60% align=center class=headertableblock>Remove</td>";
 	// display
-while($smils=mysql_fetch_array($emotesdata)){
-//END Incompatible Function Block #1
+while($smils=mysqli_fetch_array($emotesdata)){
+//END UpdatedFunction Block #1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 echo "<tr><td class=arcade1>".$smils['code']."</td><td class=arcade1><div align=center>".$smils['description']."</div></td><td class=arcade1><div align=center><img src='".$smiliesloc."/".$smils['filename']."'></div></td><td class=arcade1><a href='?cpiarea=emotes&remove=".$smils['filename']."'>Remove</a></td></tr>";
