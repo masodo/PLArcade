@@ -11,15 +11,15 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: Email - Administrator Control Panel   Modified: 7/26/2019   By: MaSoDo
+# Section: acpi Place: Email - Administrator Control Panel   Modified: 7/27/2019   By: MaSoDo
 
 { 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #1
-$q=run_query("SELECT `email`,`settings` FROM phpqa_accounts");
-while($mailing=mysql_fetch_array($q)) {
-//END Incompatible Function Block #1
+//UpdatedFunction Block #1
+$q=run_iquery("SELECT email,settings FROM phpqa_accounts");
+while($mailing=mysqli_fetch_array($q)) {
+//END UpdatedFunction Block #1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $settings=explode("|", $mailing[1]);
