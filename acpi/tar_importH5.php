@@ -117,7 +117,7 @@ if ($handle = opendir('./tarsH5/')) {
        if ($file != "." && $file != ".." && $file != "gamedata") {
 $tarfile_name=str_replace(".tar", "", $file);
 $idname=str_replace("game_", "", $tarfile_name);
-       $addedalready = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
+       $addedalready = mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
 ?>
 <tr><td class='arcade1' align='center'><?php echo $file; ?></td><td class='arcade1' align='center'>[ <?php if(!$addedalready) { ?><a href='?cpiarea=tar_importH5&untar=<?php echo $file; ?>&cat=<?php echo $thecat; ?>&akey=<?php echo $key; ?>'>Install</a> <?php }  else { echo "Added"; } ?> | <a href='?cpiarea=tar_import&untar=<?php echo $file; ?>&cat=<?php echo $thecat; ?>&akey=<?php echo $key; ?>'>Reupload</a> ]</td></tr>
  <?php
@@ -151,6 +151,4 @@ echo  "<option value='$catlist[0]'>$catlist[1]</option>";
 <br />
 <?php
 } 
-
-
 ?>
