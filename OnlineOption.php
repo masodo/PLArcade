@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: OnlineOption.php  Function: Show User Activity   Modified: 7/26/2019   By: MaSoDo
+# Section: OnlineOption.php  Function: Show User Activity   Modified: 7/27/2019   By: MaSoDo
 ?>
 <div class='tableborder'><table width=100% cellpadding='4' cellspacing='1'><td width=30% align=center class=headertableblock>User</td><td width=40% align=center class=headertableblock>Last Refresh</td><td width=50% align=center class=headertableblock>Location</td>
 <?php
@@ -19,11 +19,11 @@ $how='name';
 if(isset($_GET['method']) && $_GET['method'] != "name") $how='time';
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #1
-$online=run_query("SELECT * FROM phpqa_sessions ORDER by $how DESC");
-while($g=mysql_fetch_array($online)){ 
-	$onnow = run_query("SELECT `group` FROM `phpqa_accounts` WHERE `name` = '" . $g['name'] . "'");
-        $onnowGrp=mysql_fetch_array($onnow);
+//UpdatedFunction Block #1
+$online=run_iquery("SELECT * FROM phpqa_sessions ORDER by $how DESC");
+while($g=mysqli_fetch_array($online)){ 
+	$onnow = run_iquery("SELECT `group` FROM `phpqa_accounts` WHERE `name` = '" . $g['name'] . "'");
+        $onnowGrp=mysqli_fetch_array($onnow);
 if($g['location']=="") $g['location']="Viewing Arcade Index";
 $parse_stamp = date($datestamp, $g['time']);
 echo "<tr><td class=arcade1><a href='?action=profile&user=$g[name]' title='' class='".$onnowGrp['group']."Look'>$g[name]</a></td><td class=arcade1><div align=center>".$parse_stamp."</div></td><td class=arcade1>";
@@ -36,7 +36,7 @@ echo $g['location'];
 }
 echo "</td></tr>";
 }
-//END Incompatible Function Block #1
+//END UpdatedFunction Block #1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ?>
