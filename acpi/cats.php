@@ -11,15 +11,15 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: cats - Administrator Control Panel   Modified: 7/26/2019   By: MaSoDo
+# Section: acpi Place: cats - Administrator Control Panel   Modified: 7/27/2019   By: MaSoDo
 { 
 if(isset($_GET['do'])&&$_GET['do']=="delete") {
 vsess();
 if(!is_numeric($_POST['gamecat'])) die ();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #1
-run_query("DELETE FROM `phpqa_cats` WHERE id = '$_POST[gamecat]'");
+//UpdatedFunction Block #1
+run_iquery("DELETE FROM phpqa_cats WHERE id = '$_POST[gamecat]'");
 }
 ?>
 <div align='center'><div class='tableborder'><table width=100%% cellpadding='5' cellspacing='1'><tr><td class=headertableblock colspan=9><b><font size=-5>Categories</font></b></td></tr><td class=arcade1 align='center'>
@@ -35,9 +35,9 @@ echo "<script>alert('New: ".$newcatname."')</script>";
 	vsess();
 	run_query("INSERT INTO phpqa_cats (cat) VALUES ('$newcatname')");
 }
-$catquery=run_query("SELECT * FROM phpqa_cats");
- while ($catlist= mysql_fetch_array($catquery)) {
-//END Incompatible Function Block #1
+$catquery=run_iquery("SELECT * FROM phpqa_cats");
+ while ($catlist= mysqli_fetch_array($catquery)) {
+//END UpdatedFunction Block #1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  
 echo  "<option value='$catlist[0]'>$catlist[1]</option>";
