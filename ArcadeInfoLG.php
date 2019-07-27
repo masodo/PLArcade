@@ -25,16 +25,16 @@ $MyMess = $_COOKIE['phpqa_user_c'];
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Updated Function Block #1
-$checkmessages=run_iquery("SELECT `id` FROM `PLA_users` where `username` = '".$MyMess."'"); 
+$checkmessages=run_iquery("SELECT id FROM PLA_users where username = '".$MyMess."'"); 
 $checkmess= mysqli_fetch_array($checkmessages);
 $checkmess_for = $checkmess['id'];
-$anysent=mysqli_num_rows(run_iquery("SELECT `status` FROM `PLA_pun_pm_messages` WHERE `receiver_id` = '".$checkmess_for."' AND `status` = 'sent'"));
+$anysent=mysqli_num_rows(run_iquery("SELECT status FROM PLA_pun_pm_messages WHERE receiver_id = '".$checkmess_for."' AND status = 'sent'"));
 if($anysent > 0){ $AlertMe='yes'; $alertstyle='border:lime dotted;'; $alertlink='color:lime;'; $forumnote=' (<b>PM</b>)'; }
 if ($_COOKIE['phpqa_user_c'] == 'Admin') {
-$checkOmessages=run_iquery("SELECT `id` FROM `PLA_users` where `username` = '".$adminplayas."'"); 
+$checkOmessages=run_iquery("SELECT id FROM PLA_users where username = '".$adminplayas."'"); 
 $checkOmess= mysqli_fetch_array($checkOmessages);
 $checkOmess_for = $checkOmess['id'];
-$anyOsent=mysqli_num_rows(run_iquery("SELECT `status` FROM `PLA_pun_pm_messages` WHERE `receiver_id` = '".$checkOmess_for."' AND `status` = 'sent'"));
+$anyOsent=mysqli_num_rows(run_iquery("SELECT status FROM PLA_pun_pm_messages WHERE receiver_id = '".$checkOmess_for."' AND status = 'sent'"));
 if($anyOsent > 0){ $AlertMe='yes'; $alertstyle='border:solid orange;'; $alertlink='color:orange;'; $forumnote=' (<b>PM</b> alt)'; }
 }
 }
@@ -77,7 +77,7 @@ echo"</div><div  class='navigation'>[ <a href='index.php?action=logout'>Log Out<
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Updated Function Block #3
-$catquery=run_query("SELECT * FROM phpqa_cats ORDER BY `displayorder`");while ($catlist= mysql_fetch_array($catquery)) echo  "<option value='$catlist[0]'>$catlist[1]</option>"; 
+$catquery=run_iquery("SELECT * FROM phpqa_cats ORDER BY displayorder");while ($catlist= mysqli_fetch_array($catquery)) echo  "<option value='$catlist[0]'>$catlist[1]</option>"; 
 //END Updated Function Block #3
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -128,7 +128,7 @@ if (!isset($acct_setting[3]) || $acct_setting[3] !="No") {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Updated Function Block #4
-$newgames = run_iquery("SELECT `gameid`,`game`,`id`,`gamecat` FROM `phpqa_games` ORDER by `id` DESC LIMIT 0,".$ngnum."");
+$newgames = run_iquery("SELECT gameid,game,id,gamecat FROM phpqa_games ORDER by id DESC LIMIT 0,".$ngnum."");
 	while($g=mysqli_fetch_array($newgames)){ 
 	if (($g[3] != '23')&&($g[3] != '2')){
 //END Updated Function Block #4
@@ -181,7 +181,7 @@ echo "";
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Updated Function Block #5
-	$selectfrom = run_iquery("SELECT * FROM `phpqa_scores` ORDER BY `phpdate` DESC LIMIT 0,$lsnum");
+	$selectfrom = run_iquery("SELECT * FROM phpqa_scores ORDER BY phpdate DESC LIMIT 0,$lsnum");
 	while($s=mysqli_fetch_array($selectfrom)){ 
   $VstatG = "";
   $bigname = "";
@@ -194,7 +194,7 @@ echo "";
         $bigtag = "</b>";
 } else {$VstatG = "<div style='display:inline-block;width:10px;height:10px;margin-left:50px;'></div>";}
 $thisGuy = $s[1];
-$findGroup = run_iquery("SELECT `group` FROM `phpqa_accounts` WHERE `name` = '".$thisGuy."'");
+$findGroup = run_iquery("SELECT `group` FROM phpqa_accounts WHERE name = '".$thisGuy."'");
 $thisGroup = mysqli_fetch_array($findGroup);
 //$parse_stamp = gmdate($datestamp, $s[5]+3600*$settings['timezone']);
 $parse_stamp = date($datestamp, $s[5]);
@@ -209,7 +209,7 @@ echo "$VstatG<a href='index.php?action=profile&amp;user=".$s[1]."' class='".$thi
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Updated Function Block #6
-$hotgames = run_iquery("SELECT `gameid`,`game`,`id`,`gamecat`,`times_played`  FROM `phpqa_games` ORDER by `times_played` DESC LIMIT $lsnum");
+$hotgames = run_iquery("SELECT gameid,game,id,gamecat,times_played  FROM phpqa_games ORDER by times_played DESC LIMIT $lsnum");
 	while($hg=mysqli_fetch_array($hotgames)){ 
 	if ($hg[3] != '2') {
 echo "<img height='20' width='20' src='arcade/pics/$hg[0].gif' alt='$hg[1]' style='margin-left:5px;' /><a href=\"index.php?play=$hg[0]#playzone\">$hg[1]</a> (".$hg['times_played'].")<br />";
