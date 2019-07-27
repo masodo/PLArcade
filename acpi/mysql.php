@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: mysql - Administrator Control Panel   Modified: 7/26/2019   By: MaSoDo
+# Section: acpi Place: mysql - Administrator Control Panel   Modified: 7/27/2019   By: MaSoDo
 
 {
 $goquery1 = '';
@@ -25,8 +25,8 @@ if(isset($_POST['RESETH'])&&isset($_POST['RESETH'])=='yes'){
 vsess();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #1
-$goquery1=run_query("UPDATE `phpqa_games` set `HOF_name` = '', `HOF_score` = '' WHERE `HOF_score` > 0;");
+//UpdatedFunction Block #1
+$goquery1=run_iquery("UPDATE phpqa_games set HOF_name = '', HOF_score = '' WHERE HOF_score > 0;");
 if($goquery1) { 
 echo '<script>alert(\'Hall of Fame has been RESET\');</script>'; 
 } else { echo '<script>alert(\'Query Failed!\');</script>';; 
@@ -34,7 +34,7 @@ echo mysql_error();
 }}else {
 echo '<script>alert(\'You Must Check the Confirmation Box to Reset HOF Scores!\');</script>';
 }}
-//END Incompatible Function Block #1
+//END UpdatedFunction Block #1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -45,14 +45,14 @@ if(isset($_POST['RESETC'])&&isset($_POST['RESETC'])=='yes'){
 vsess();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #2
-$goquery2=run_query("UPDATE `phpqa_games` set `Champion_name` = '', `Champion_score` = '' WHERE `Champion_score` > 0;");
+//UpdatedFunction Block #2
+$goquery2=run_iquery("UPDATE phpqa_games set Champion_name = '', Champion_score = '' WHERE Champion_score > 0;");
 if($goquery2){
 sleep(15); 
-$goquery3=run_query("TRUNCATE TABLE `phpqa_scores`");
+$goquery3=run_iiquery("TRUNCATE TABLE phpqa_scores");
 if($goquery3){
 sleep(3);
-$goquery4=run_query("TRUNCATE TABLE `phpqa_leaderboard`");
+$goquery4=run_iquery("TRUNCATE TABLE phpqa_leaderboard");
 if($goquery4){
 echo '<script>alert(\'Arcade has been RESET\');</script>';
 }}} else { 
@@ -68,7 +68,7 @@ if(isset($_POST['dowhat']) && $_POST['dowhat'] == "WipeShout") {
 	vsess();
 	if(isset($_POST['WipeShouts']) && $_POST['WipeShouts'] == "yes")
 	 {
-	 $goquery=run_query('TRUNCATE TABLE phpqa_shoutbox;');
+	 $goquery=run_iquery('TRUNCATE TABLE phpqa_shoutbox;');
 	 if($goquery) { echo '<script>alert(\'Shoutbox Cleared!\');</script>'; } else { echo '<script>alert(\'Query Failed!\');</script>';; 
 	 echo mysql_error();
 }
@@ -79,7 +79,7 @@ echo '<script>alert(\'You Must Check the Confirmation Box to Clear Shouts!\');</
 if(isset($_POST['querymysql']) && $_POST['querymysql'] == "Run Query") {
 $thequery=$_POST['thequery'];
 	vsess();
-$goquery=run_query($thequery);
+$goquery=run_iquery($thequery);
 }
 echo "<a href='".$phpmyadminloc."' target='_blank' title='phpMyAdmin database access'><img src='".$imgloc."/phpMyAdmin.gif' alt='phpMyAdmin' style='margin-bottom:20px; margin-top:-20px;' /></a>";
 ?>
@@ -91,9 +91,9 @@ echo "<a href='".$phpmyadminloc."' target='_blank' title='phpMyAdmin database ac
 <?php
 if(isset($_POST['querymysql'])) {
 if($goquery) { echo "Query Executed Successfully"; } else { echo "Query failed."; 
-echo mysql_error();
+echo mysqli_error();
 }
-//END Incompatible Function Block #2
+//END UpdatedFunction Block #2
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
@@ -147,39 +147,39 @@ ob_clean();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #3
-$q=run_query("SHOW TABLES LIKE 'phpqa_%'");
-while($s=mysql_fetch_array($q)) $tables[]=$s[0];
+//UpdatedFunction Block #3
+$q=run_iquery("SHOW TABLES LIKE 'phpqa_%'");
+while($s=mysqli_fetch_array($q)) $tables[]=$s[0];
 foreach($tables as $v){
-$q=mysql_fetch_array(run_query("SHOW CREATE TABLE $v"));
+$q=mysqli_fetch_array(run_iquery("SHOW CREATE TABLE $v"));
 echo "\n\n--$v's Table Structure:\n".$q[1]."\n\n";
-$q=run_query("SELECT * FROM $v");
+$q=run_iquery("SELECT * FROM $v");
 echo "--$v's Dump:\n";
-while($r=mysql_fetch_assoc($q)) echo "INSERT INTO $v(`".implode("`,`",array_keys($r))."`) VALUES ('".implode("','",$r)."')\n";
+while($r=mysqli_fetch_assoc($q)) echo "INSERT INTO $v(`".implode("`,`",array_keys($r))."`) VALUES ('".implode("','",$r)."')\n";
 }
 if (isset($_GET['dowhat'])&&$_GET['dowhat']=="downloaddump") die();
 echo "</textarea></td></table></div><br />";
 } elseif($dowhat=="optimize") {
 foreach ($dbs as $k=>$v){
 if (isset($_POST[$v])) {
-$optcheck = mysql_fetch_array(run_query("OPTIMIZE TABLE `$v`"));
+$optcheck = mysqli_fetch_array(run_iquery("OPTIMIZE TABLE `$v`"));
 if ($optcheck) { message("Table <b>$v</b> optimized. Status: $optcheck[Msg_text]"); } else { message("Table <b>$v</b> failed to be optimized. Try repairing it. $optcheck[Msg_text]"); }
 }
 }
 } elseif($dowhat=="repair") {
 foreach ($dbs as $k=>$v){
 if ($_POST[$v]) {
-$optcheck = mysql_fetch_array(run_query("REPAIR TABLE `$v`"));
+$optcheck = mysqli_fetch_array(run_iquery("REPAIR TABLE `$v`"));
 if ($optcheck) { message("Table <b>$v</b> Repaired. Status: $optcheck[Msg_text]"); } else { message("Table <b>$v</b> failed to be repaired."); }
 }
 }
 } elseif($dowhat=="check") {
 foreach ($dbs as $k=>$v){
 if ($_POST[$v]) {
-$optcheck = mysql_fetch_array(run_query("CHECK TABLE `$v`"));
+$optcheck = mysqli_fetch_array(run_iquery("CHECK TABLE `$v`"));
 if ($optcheck) { message("Table <b>$v</b> Checked. Status: $optcheck[Msg_text]"); } else { message("Table <b>$v</b> failed to be checked."); }
 }
-//END Incompatible Function Block #3
+//END UpdatedFunction Block #3
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
