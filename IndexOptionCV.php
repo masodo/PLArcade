@@ -53,19 +53,19 @@ if (!empty($catquer)) {
 //Begin Collapse #4
 echo "<div style='text-align:center; margin-bottom: 5px; margin-top: 5px;'><a title='Open/Close The Games Index'><img id='btn4' src='" . $imgloc . "/" . $collimg4 . "' type='button' alt='&#8595; Games: Collapse/Expand &#8595;' onclick='return CollapseExpand4()' style='font-size:16px; font-weight:bold; color:silver;' /></a></div><div id='MyDiv4' class='" . $collapset4 . "'>";
 require "./PageMakerT.php";
-	while($g=mysqli_fetch_array($catquer)){ 
-	
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Updated Function Block #2
-	$CHMP = run_iquery("SELECT avatar,group FROM phpqa_accounts WHERE `name` = '" . $g['Champion_name'] . "'");
-        $CHMPimg=mysqli_fetch_array($CHMP);
+	while($g=mysqli_fetch_array($catquer)){ 
 	// Select from the scores table....
-$CheckScoring = $g['scoring'];
-$showcat=mysqli_fetch_array(run_iquery("SELECT cat FROM phpqa_cats WHERE id='{$g['gamecat']}'"));	
-//END Updated Function Block #2
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	$CheckScoring = $g['scoring'];
+	$showcat=mysqli_fetch_array(run_iquery("SELECT cat FROM phpqa_cats WHERE id='".$g['gamecat']."'"));
 
 if ($g['gamecat'] != '2' || (isset($exist[6])&&$exist[6] == "Admin")) {
+	$CHMP = run_iquery("SELECT avatar,`group` FROM phpqa_accounts WHERE name = '" . $g['Champion_name'] . "'");
+        $CHMPimg=mysqli_fetch_array($CHMP);
+//END Updated Function Block #2
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if ($g['platform'] == 'H5') { 
 echo "<div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1' class='gameview'><tr><td width='5%' align='center' class='headertableblock'></td><td width='60%' align='center' class='headertableblock'>$g[1]</td>";
