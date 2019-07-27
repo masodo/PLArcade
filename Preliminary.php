@@ -224,13 +224,13 @@ echo "<div align='center'><div class='tableborder'><table width=100% cellpadding
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Updated Function Block #2
-$connect = @mysql_connect($dbhost,$dbuser,$dbpass);
-$selection = @mysql_select_db($dbname);
-$h=mysql_error();
-if (!$connect || !$selection) { 
-echo "There was an error with the database. A detailed report of the error is available below.<br /><br /><textarea cols=70 rows=20>$h</textarea><br /><br />You should check your password and database details. If you find that they are correct, but your <br />arcade is still not functioning please contact your hosting provider."; 
-die();
-}
+//$connect = @mysql_connect($dbhost,$dbuser,$dbpass);
+//$selection = @mysql_select_db($dbname);
+//$h=mysql_error();
+//if (!$connect || !$selection) { 
+//echo "There was an error with the database. A detailed report of the error is available below.<br /><br /><textarea cols=70 rows=20>$h</textarea><br /><br />You should check your password and database details. If you find that they are correct, but your <br />arcade is still not functioning please contact your hosting provider."; 
+//die();
+//}
 //Updated Function Block #2
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
