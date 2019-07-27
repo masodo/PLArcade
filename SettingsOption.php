@@ -11,8 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: SettingsOption.php  Function: User Definable Configuration   Modified: 7/26/2019   By: MaSoDo
-echo "<!-- SettingsOption.php --------------------------------------------------------------------------------------------------------------------------------------------- -->";
+# Section: SettingsOption.php  Function: User Definable Configuration   Modified: 7/27/2019   By: MaSoDo
 if (isset($_COOKIE['phpqa_user_c'])) {
 if($exist[6] == "Validating") {
 message("!ALERT!: Sorry, your account is still in validation. This means you cannot: submit your highscores, shout on the shoutbox, or edit your profile. Please wait for an admin to validate your account, then you'll be ready to play.");
@@ -46,13 +45,13 @@ if ($_GET['action']=="settings" && isset($_GET['p'])=="") {
 echo "<div align='center'>Welcome to your arcade controls. Your last 10 scores:<hr>";
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #1
-	$selectfrom = run_query("SELECT * FROM phpqa_scores WHERE username='$phpqa_user_cookie' ORDER BY phpdate DESC LIMIT 0,10");
-while($s=mysql_fetch_array($selectfrom)){ 
+//UpdatedFunction Block #1
+	$selectfrom = run_iquery("SELECT * FROM phpqa_scores WHERE username='$phpqa_user_cookie' ORDER BY phpdate DESC LIMIT 0,10");
+while($s=mysqli_fetch_array($selectfrom)){ 
 $parse_stamp = date($datestamp, $s[5]);
 echo "<i>$s[2]</i> in <a href='index.php?id=$s[6]'><i>$s[7]</i></a> on $parse_stamp <br />";
 }
-//END Incompatible Function Block #1
+//END UpdatedFunction Block #1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 echo "</div>";
@@ -89,9 +88,9 @@ if(!isset($uploadavatar)) $problem.="Failed to upload your avatar to the server.
 if(!isset($problem)) { 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #2
-	run_query("UPDATE `phpqa_accounts` SET `avatar` = '".$message."' WHERE name='".$phpqa_user_cookie."'"); 
-//END Incompatible Function Block #2
+//UpdatedFunction Block #2
+	run_iquery("UPDATE phpqa_accounts SET avatar = '".$message."' WHERE name='".$phpqa_user_cookie."'"); 
+//END UpdatedFunction Block #2
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	echo "Avatar Updated."; 
@@ -158,10 +157,10 @@ $UpDated = md5(sha1($_POST['newpass']));
 vsess();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #3
-run_query("UPDATE `phpqa_accounts` SET `pass` = '$UpDated' WHERE `name`='$phpqa_user_cookie'", 1);
-run_query("UPDATE `PLA_users` SET `password` = '$UpDated' WHERE `username`='$phpqa_user_cookie'", 1);
-//END Incompatible Function Block #3
+//UpdatedFunction Block #3
+run_iquery("UPDATE phpqa_accounts SET pass = '$UpDated' WHERE name='$phpqa_user_cookie'", 1);
+run_iquery("UPDATE PLA_users SET password = '$UpDated' WHERE username='$phpqa_user_cookie'", 1);
+//END UpdatedFunction Block #3
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 echo "Password updated. You must now login again.";
@@ -182,9 +181,9 @@ $UpDated = htmlspecialchars($_POST['newemail'], ENT_QUOTES);
 vsess();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #4
-run_query("UPDATE `phpqa_accounts` SET `email` = '$UpDated' WHERE name='$phpqa_user_cookie'");
-//END Incompatible Function Block #4
+//UpdatedFunction Block #4
+run_iquery("UPDATE phpqa_accounts SET email = '$UpDated' WHERE name='$phpqa_user_cookie'");
+//END UpdatedFunction Block #4
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 echo "Email updated.";
@@ -218,9 +217,9 @@ if (isset($_POST['sortord']))$sortord = htmlspecialchars($_POST['sortord'], ENT_
 vsess();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #5
-run_query("UPDATE `phpqa_accounts` SET `settings` = '$viewavatars|$viewshoutbox|$numberofgamesperpage|$viewtop|$allowmemoradmin|$acct_setting[5]|$showinfo|$showshout|$showcats|$showindex|$idxview|$sortord' WHERE name='$phpqa_user_cookie'");
-//END Incompatible Function Block #5
+//UpdatedFunction Block #5
+run_iquery("UPDATE phpqa_accounts SET settings = '$viewavatars|$viewshoutbox|$numberofgamesperpage|$viewtop|$allowmemoradmin|$acct_setting[5]|$showinfo|$showshout|$showcats|$showindex|$idxview|$sortord' WHERE name='$phpqa_user_cookie'");
+//END UpdatedFunction Block #5
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 echo "Settings updated! <a href='index.php?action=settings&amp;p=display'>Reload</a> to see changes...";
@@ -364,9 +363,9 @@ $updateskin=htmlspecialchars($_POST['updateskin'], ENT_QUOTES);
 vsess();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #6
-run_query("UPDATE `phpqa_accounts` SET `skin` = '$updateskin' WHERE name='$phpqa_user_cookie'");
-//END Incompatible Function Block #6
+//UpdatedFunction Block #6
+run_iquery("UPDATE phpqa_accounts SET skin = '$updateskin' WHERE name='$phpqa_user_cookie'");
+//END UpdatedFunction Block #6
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 echo "Skin Updated";
