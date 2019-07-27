@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: tar_importH5 - Administrator Control Panel   Modified: 7/26/2019   By: MaSoDo
+# Section: acpi Place: tar_importH5 - Administrator Control Panel   Modified: 7/27/2019   By: MaSoDo
 
 {
 $plattype = 'H5';
@@ -93,18 +93,18 @@ $remoteurl = './arcade/gamedata/'.$idname.'/';
 $idname = htmlspecialchars($idname, ENT_QUOTES);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #1
-$addedalready = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
+//UpdatedFunction Block #1
+$addedalready = mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
 if (!$addedalready) {
 $champ = '';
 $champs = '';
 $atime = '';
 if($idname !="") {
-run_query("INSERT INTO phpqa_games (game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring) VALUES ('$gamename','$idname','$gameheight','$gamewidth','$about','$thecat','$remoteurl','$champ','$champs','','$plattype','$scoretype')");
+run_iquery("INSERT INTO phpqa_games (game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring) VALUES ('$gamename','$idname','$gameheight','$gamewidth','$about','$thecat','$remoteurl','$champ','$champs','','$plattype','$scoretype')");
 if ($thecat != 23){ 
 $atime = time();
 $NewGtext = "[color=green][i]New Game Added![/i] [/color][size=16] [url=".$arcurl."/index.php?play=".$idname."#playzone][b]".$gamename."[/b][/url][/size]  [color=green][i]Enjoy![/i][/color] [:D]";
-run_query("INSERT INTO phpqa_shoutbox (`name`,`shout`,`ipa`,`tstamp`) VALUES ('Admin','" . $NewGtext . "','localhost','" . $atime . "')", 1);
+run_iquery("INSERT INTO phpqa_shoutbox (name,shout,ipa,tstamp) VALUES ('Admin','" . $NewGtext . "','localhost','" . $atime . "')", 1);
 }}
 } else {
 }
@@ -130,9 +130,9 @@ $idname=str_replace("game_", "", $tarfile_name);
 <form action='' method='GET' enctype="multipart/form-data">
 <tr><td class='arcade1' align='left'><b>Category Option:</b></td><td class='arcade1' align='center'><select name='cat'>
 <?php
-$catquery=run_query("SELECT * FROM phpqa_cats");
- while ($catlist= mysql_fetch_array($catquery)) {
-//END Incompatible Function Block #1
+$catquery=run_iquery("SELECT * FROM phpqa_cats");
+ while ($catlist= mysqli_fetch_array($catquery)) {
+//END UpdatedFunction Block #1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if( $_GET['cat'] == $catlist[0] ) {
@@ -151,4 +151,6 @@ echo  "<option value='$catlist[0]'>$catlist[1]</option>";
 <br />
 <?php
 } 
+
+
 ?>
