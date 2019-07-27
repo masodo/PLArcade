@@ -18,12 +18,12 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #1
-$scoreboard = run_query("SELECT phpqa_accounts.name,phpqa_accounts.avatar,phpqa_accounts.group, COUNT(phpqa_leaderboard.username) AS champions FROM phpqa_accounts
+//UpdatedFunction Block #1
+$scoreboard = run_iquery("SELECT phpqa_accounts.name,phpqa_accounts.avatar,phpqa_accounts.group, COUNT(phpqa_leaderboard.username) AS champions FROM phpqa_accounts
 LEFT JOIN phpqa_leaderboard ON phpqa_accounts.name = phpqa_leaderboard.username
 GROUP BY phpqa_leaderboard.username
 ORDER BY champions DESC LIMIT 1,50000");
-$scoreboardc = mysql_fetch_array(run_query("SELECT phpqa_accounts.name,phpqa_accounts.avatar,phpqa_accounts.group, COUNT(phpqa_leaderboard.username) AS champions FROM phpqa_accounts
+$scoreboardc = mysqli_fetch_array(run_iquery("SELECT phpqa_accounts.name,phpqa_accounts.avatar,phpqa_accounts.group, COUNT(phpqa_leaderboard.username) AS champions FROM phpqa_accounts
 LEFT JOIN phpqa_leaderboard ON phpqa_accounts.name = phpqa_leaderboard.username
 GROUP BY phpqa_leaderboard.username
 ORDER BY champions DESC LIMIT 0,3"));
@@ -34,13 +34,13 @@ echo "<tr><td class='arcade1'><div style='font-size:16px; color: gold;' align='c
 echo "</table></div><div style='position:absolute;display:none;margin-top:-100px;margin-left:110px;' id='leadboxpopup'><img /></div><br />";
  echo "<div class='tableborder'><table width='100%' cellpadding='5' cellspacing='1'>";
  echo "<td width='2%' align=left class='headertableblock'>UsersName</td><td width='30%' align=center class='headertableblock'>Totals</td>";
-while($scores=mysql_fetch_array($scoreboard)){ 
+while($scores=mysqli_fetch_array($scoreboard)){ 
 if ($scores['avatar'] == ''){ $scores['avatar'] = $avatarloc.'/man.gif'; }
 if ($scores['champions'] > 0) {
 // avatar popup here "leadboxpopup"
 echo"<tr><td class='arcade1'><div align='center'><A href='index.php?action=profile&amp;user=".$scores['name']."' onmouseover=\"s=document.getElementById('leadboxpopup');s.style.display='';s.getElementsByTagName('img')[0].src='" . $scores['avatar'] . "';\" onmousemove=\"s=document.getElementById('leadboxpopup').style;s.top=document.body.scrollTop+2+event.clientY;s.left=document.body.scrollLeft+event.clientX;\" onmouseout=\"document.getElementById('leadboxpopup').style.display='none'\"><b><span class='".$scores['group']."Look'>".$scores['name']."</span></b></a></div></td><td class='arcade1'><div align='center'>".$scores['champions']." wins</div></td></td></tr>";
 }}
-//END Incompatible Function Block #1
+//END UpdatedFunction Block #1
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 echo "</table></div><br />";
