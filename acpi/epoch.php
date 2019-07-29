@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: epoch - Administrator Control Panel   Modified: 7/26/2019   By: MaSoDo
+# Section: acpi Place: epoch - Administrator Control Panel   Modified: 7/29/2019   By: MaSoDo
 $epoch = '';
 $showepoch = time();
 if (isset($_GET['hh'])) {
@@ -44,3 +44,4 @@ $epoch = mktime ( $hour, $minute, $second, $month, $day, $year );
 <div style="color: green; margin-bottom: 15px; font-size:12px;">Requested EPOCH STAMP:<br /><span style="font-size:42px;"><?php echo($epoch); ?></span></div>
 </div>
 </form>
+
