@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acp.php  Function: (Experimental) Administrator Control Panel   Modified: 7/26/2019   By: MaSoDo
+# Section: acp.php  Function: (Experimental) Administrator Control Panel   Modified: 7/29/2019   By: MaSoDo
 $place = htmlspecialchars($_GET['cpiarea']); 
 if (isset($_REQUEST['acpcheck'])) die();
 if (isset($_COOKIE['acpcheck'])) die();
