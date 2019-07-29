@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,16 +11,12 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: Email - Administrator Control Panel   Modified: 7/27/2019   By: MaSoDo
+# Section: acpi Place: Email - Administrator Control Panel   Modified: 7/29/2019   By: MaSoDo
 
 { 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UpdatedFunction Block #1
 $q=run_iquery("SELECT email,settings FROM phpqa_accounts");
 while($mailing=mysqli_fetch_array($q)) {
-//END UpdatedFunction Block #1
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $settings=explode("|", $mailing[1]);
 if(isset($settings[4]) &&  $settings[4] != "No") {
