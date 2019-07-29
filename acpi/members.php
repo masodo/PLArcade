@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: members - Control Panel   Modified: 7/27/2019   By: MaSoDo
+# Section: acpi Place: members - Control Panel   Modified: 7/29/2019   By: MaSoDo
 //require('exportuserstoforum.php');
 {
 message("View Only: <br /><a href='?cpiarea=members&act=Admin'>Admins</a> &middot; <a href='?cpiarea=members&act=Moderator'>Moderators</a> &middot; <a href='?cpiarea=members&act=Affiliate'>Affiliate</a> &middot; <a href='?cpiarea=members&act=Member'>Members</a> &middot; <a href='?cpiarea=members&act=Banned'>Banned</a> &middot; <a href='?cpiarea=members&act=Validating'>Validating</a>");
@@ -21,8 +21,6 @@ $gselect=$_POST['members_selected'];
 for($x=0;$x<=count($gselect)-1;$x++){
 $f=htmlspecialchars($gselect[$x], ENT_QUOTES);
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UpdatedFunction Block #1
 run_iquery("DELETE FROM phpqa_scores WHERE username='".$f."'");
 run_iquery("DELETE FROM phpqa_leaderboard WHERE username='".$f."'");
 run_iquery("DELETE FROM phpqa_accounts WHERE name='".$f."'");
@@ -31,8 +29,6 @@ run_iquery("UPDATE phpqa_games SET Champion_name = '' WHERE Champion_name='".$f.
 run_iquery("UPDATE phpqa_games SET HOF_score = '' WHERE HOF_name='".$f."'");
 run_iquery("UPDATE phpqa_games SET HOF_name = '' WHERE HOF_name='".$f."'");
 run_iquery("DELETE FROM phpqa_leaderboard WHERE username='".$f."'");
-//END UpdatedFunction Block #1
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
 }
@@ -45,8 +41,6 @@ if(isset($_POST['new_name'])){
 $new_name=htmlspecialchars($_POST['new_name'], ENT_QUOTES);
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UpdatedFunction Block #2
 $checkexistance = mysqli_fetch_array(run_iquery("SELECT name FROM phpqa_accounts WHERE name = '".$new_name."'"));
 if($checkexistance) { 
 message("The name, &quot;".$new_name."&quot; is already being used by another person."); 
@@ -57,8 +51,6 @@ run_iquery("UPDATE phpqa_leaderboard SET username = '".$new_name."' WHERE userna
 run_iquery("UPDATE phpqa_scores SET username = '".$new_name."' WHERE username='".$n."'");
 run_iquery("UPDATE phpqa_accounts SET name = '".$new_name."' WHERE name='".$n."'");
 }
-//END UpdatedFunction Block #2
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
 if (isset($_GET['changename'])) {
@@ -80,8 +72,6 @@ if(isset($_GET['changepwd'])) {
 $n=htmlspecialchars($_GET['changepwd'], ENT_QUOTES);
 vsess();
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UpdatedFunction Block #3
 run_iquery("UPDATE phpqa_accounts SET pass = '".$new_pass."' WHERE name='".$n."'", 1); 
 run_iquery("UPDATE PLA_users SET password = '".$new_pass."' WHERE username='".$n."'", 1);
 }}
@@ -99,8 +89,6 @@ $cg=htmlspecialchars($_GET['changegroupgo'], ENT_QUOTES);
 $fg=htmlspecialchars($_POST['chosengroup'], ENT_QUOTES);
 	vsess();
 	run_iquery("UPDATE phpqa_accounts SET `group` = '".$fg."' WHERE name='".$cg."'"); }
-//END UpdatedFunction Block #3
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 if (isset($_GET['changegroup'])) {
 echo "<div class='tableborder'><table width=100% cellpadding='4' cellspacing='1'><td width=30% align=center class=headertableblock>Change Usergroup of: ".$_GET['changegroup']." </td><tr><td class=arcade1><div align=center><form action='?cpiarea=members&changegroupgo=".htmlspecialchars($_GET['changegroup'])."' method='POST'><input type='hidden' name='akey' value='".$key."'>";
