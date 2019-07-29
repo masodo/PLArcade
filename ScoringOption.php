@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 7/27/2019  By: MaSoDo
+# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 7/29/2019  By: MaSoDo
 
 if (isset($_POST['thescore']))$thescore = $_POST['thescore'];
 if (isset($_GET['autocom'])) {
@@ -39,9 +39,6 @@ $thescore = $_POST['gscore'];
  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  //	Get highscores list of a game when on the id= page
  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UpdatedFunction Block #1
  $gameinfo = mysqli_fetch_array(run_iquery("SELECT gameid,game,about,Champion_name,Champion_score,times_played,gamecat,exclusiv FROM phpqa_games WHERE gameid = '$id'"));
  if (!$gameinfo) {
 header("Location: index.php");
@@ -54,10 +51,7 @@ die();
  else {
  $showcat=mysqli_fetch_array(run_iquery("SELECT cat FROM phpqa_cats WHERE id='{$gameinfo['gamecat']}'"));	
  }
-//END UpdatedFunction Block #1
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
- ?>
+?>
  <div class='tableborder'>
  <a name='playzone'></a>
  <table width='100%' cellpadding='4' cellspacing='1'>
@@ -110,9 +104,6 @@ global $adminplayas;
 $post_user_cookie = $adminplayas;
 }
 //End Admin Play As
- 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UpdatedFunction Block #2
   run_iquery("UPDATE phpqa_scores SET comment = '".$senttext."' WHERE gameidname='".$id."' && username='".$post_user_cookie."'"); 
 }
  if(isset($_GET['do']) || isset($_POST['thescore'])) $commentthing =  "<form name='postbox' action='index.php?id=$id&amp;c=1' method='POST'><input type='hidden' name='akey' value='".$key."'><div class='tableborder'><table width='100%'><td class='arcade1' width='100%' align='center'>Congratulations, new best score, your final score was: <b>".$thescore."</b>.<br /><br /><input type='text' name='senttext'><input type='submit' name='gocomment' value='Send Comment'></form><br/>".displayemotes()."</td></table></div><br /><br />";
@@ -120,20 +111,6 @@ $post_user_cookie = $adminplayas;
  $gameidname = $id;
   if (isset($thescore)) {
    if(!is_numeric($thescore)) die();
- /*
-  if($settings['use_cheat_protect']) {
-   $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
-   if($_GET['do']) $url=str_replace("index.php","index.php", $url);
-   $refer=explode("?", $_SERVER[HTTP_REFERER]);
-   if($_SERVER['HTTP_REFERER'] != "") {
-    if($refer[0] != $url) {
-     message("Error: Your attempt to submit a highscore was detected as cheating.! NOTE: ! This does not necessarily mean you WERE cheating! A record of this event has been sent to the Admin(s) to verify your score.<br /><br />If you weren't cheating, the most common reason why your computer would be picked up by our cheating protect would be if your firewall settings are too high. For information about what to adjust for <a href='http://service1.symantec.com/SUPPORT/nip.nsf/735050b77b1fcece88256bc7005c3bc6/b9b47ad7eddd343b88256c6b006a85a8'>Norton Personal Firewall</a> click there. For other firewall please talk to your software vendor. Thank you.<br /><br /><br />But if you were cheating, the attempt has been logged and will be dealt with shortly.");
-     run_query("INSERT INTO phpqa_logs (log_type,username,thescore,ip,comment,phpdate,gameidname,cheaturl) VALUES ('Cheating','$phpqa_user_cookie','$thescore','$ipa','','$time','$gameidname','$_SERVER[HTTP_REFERER]')");
-     die();
-    }
-   }
-  }
-*/
    if($exist[6] == "Validating") {
    echo "<div class='tableborder'><table width='100%'><td class='arcade1' width='100%' align='center'>Your score score was: <b>" . str_replace('-', '', $thescore) . "</b>... <br /><br /></td></table></div><br /><br />";
    message("!ALERT!: Sorry, your account is still in validation. This means you cannot: submit your highscores, shout on the shoutbox, or edit your profile. Please wait for an admin to validate your account, then you'll be ready to play.");
@@ -190,8 +167,6 @@ $post_user_cookie = $adminplayas;
  $WINNERTAG = ' HALL OF FAME ';
  run_iquery("UPDATE phpqa_games SET HOF_name = '".$post_user_cookie."',HOF_score = '".$thescore."' WHERE gameid='".$id."'");   
  }
-//END UpdatedFunction Block #2
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // ---------------
 // Email the loser
@@ -199,13 +174,7 @@ $post_user_cookie = $adminplayas;
 if(isset($settings['email_scores'])&&$settings['email_scores']=='1') {
 if($checkTOPscore['username'] !="") {
 if($checkTOPscore['username'] != $post_user_cookie) {
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UpdatedFunction Block #3
 $person_to_mail=mysqli_fetch_array(run_iquery("SELECT email,settings FROM phpqa_accounts WHERE name='".$checkTOPscore['username']."'"));
-//END UpdatedFunction Block #3
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 $psettings = explode("|", $person_to_mail['settings']);
 if($psettings[4] != "No" && $person_to_mail['email'] !=$exist['email']) { 
 $SiteDomain = "http://".htmlspecialchars($_SERVER['HTTP_HOST']).htmlspecialchars($_SERVER['PHP_SELF'])."?id={$gameidname}";
@@ -228,17 +197,11 @@ $post_user_cookie = $adminplayas;
 }
 //End Admin Play As
 echo "<div class='tableborder'><table width='100%'><td class='arcade1' width='100%' align='center'><h2>Congratulations, you are the NEW " . $WINNERTAG . "Champion!</h2></td></table></div><br /><br />";
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UpdatedFunction Block #4
    run_iquery("DELETE FROM phpqa_leaderboard WHERE gamename='".$id."'");
    run_iquery("INSERT INTO phpqa_leaderboard (username,thescore,gamename) VALUES ('".$post_user_cookie."','".$thescore."','".$id."')"); 
    run_iquery("UPDATE phpqa_games SET Champion_name = '".$post_user_cookie."',Champion_score = '".$thescore."' WHERE gameid='".$id."'");
    // Update the date and IP
   run_iquery("UPDATE phpqa_scores SET ip = '".$ipa."',phpdate = '".$time."' WHERE gameidname='".$id."' && username='".$post_user_cookie."'");
-//END UpdatedFunction Block #4
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
   }
  }
  // end set check
@@ -261,9 +224,6 @@ echo "<td width='20%' class='headertableblock' align='center'>IP Address</td><td
 echo "</td>";
 }
 echo "</tr>";
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UpdatedFunction Block #5
 $selectfrom=run_iquery("SELECT * FROM phpqa_scores WHERE gameidname='$id' ORDER BY thescore DESC,phpdate ASC");
 	while($g=mysqli_fetch_array($selectfrom)){ 
 $parse_stamp = date($datestamp, $g[5]);
@@ -272,17 +232,11 @@ $i=-1;
 $thisGuy = $g['username'];
 $findGroup = run_iquery("SELECT `group` FROM phpqa_accounts WHERE name = '".$thisGuy."'");
 $thisGroup = mysqli_fetch_array($findGroup);
-
-
 $emotesdata = run_iquery("SELECT * FROM phpqa_emotes");
 while($smils=mysqli_fetch_array($emotesdata)){
 $postsofsomething = bbcodeHtml($postsofsomething);
 if (isset($smils['code'])) $postsofsomething = str_replace(rtrim($smils['code']), "<img src='".$smiliesloc."/".$smils['filename']."' />", $postsofsomething);
 }
-//END UpdatedFunction Block #5
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 global $tb;
 for($gx=-1;$gx<$tb;$gx++) {
 if(isset($badwords[$gx]) && $badwords[$gx] != "") {
