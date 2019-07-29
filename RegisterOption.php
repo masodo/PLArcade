@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: RegisterOption.php  Function: Register for the Arcade   Modified: 7/27/2019   By: MaSoDo
+# Section: RegisterOption.php  Function: Register for the Arcade   Modified: 7/29/2019   By: MaSoDo
 if (isset($_POST['usernamesign']) && $_POST['usernamesign'] != "" && isset($_POST['postpassword']) && $_POST['postpassword'] !="") {
 $name = htmlspecialchars($_POST['usernamesign'], ENT_QUOTES);
 $pass = md5(sha1(htmlspecialchars($_POST['postpassword'])));
@@ -32,20 +32,11 @@ die();
 }
 $senttext = "";
 $senttext = str_replace("'", "&amp;#39;", $senttext);
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UpdatedFunction Block #1
 $query = run_iquery("SELECT * FROM phpqa_accounts WHERE name='$name' OR email='$email'");
 $exist = @mysqli_fetch_array($query);
-//END UpdatedFunction Block #1
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 if ($exist) { 	// M&Ms commcerial - He DOES exist! D'Ooh
 if($name==$exist['name']) { message("Sorry, that username, <b>$name</b>  already exists. Please choose another."); }
 if($email==$exist['email']) { message("Sorry, that email, <b>$email</b>  already exists on another account. Please choose another."); }
-
-
 // Security code
 } elseif(isset($settings['use_seccode']) && isset($_SESSION['captcha']) != isset($_POST['capcode'])) {
 message("The security code entered was wrong. Please try again."); 
