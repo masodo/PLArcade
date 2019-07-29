@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,20 +11,15 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: FullScreen.php  Function: Play Game Full Screen   Modified: 7/26/2019   By: MaSoDo
+# Section: FullScreen.php  Function: Play Game Full Screen   Modified: 7/29/2019   By: MaSoDo
 
 if (isset($_GET['fullscreen'])) {
 $addup = '';
 $fullplay = htmlspecialchars($_GET['fullscreen'], ENT_QUOTES);
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Updated Function Block #1
-$bg = mysqli_fetch_array(run_iquery("SELECT * FROM `phpqa_games` WHERE `gameid`='".$fullplay."'"));
+$bg = mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_games WHERE gameid='".$fullplay."'"));
 $addup = ++$bg['times_played'];
-run_iquery("UPDATE `phpqa_games` SET `times_played`=".$addup." WHERE `gameid`='".$fullplay."'");
-//END Updated Function Block #1
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+run_iquery("UPDATE phpqa_games SET times_played=".$addup." WHERE gameid='".$fullplay."'");
 if (isset($bg['remotelink']) && $bg['remotelink'] == "") {
 global $bg;
 $BigGame = $fullplay.".swf"; 
