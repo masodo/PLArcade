@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,9 +11,9 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: MembersOption.php  Function: Show the Members List   Modified: 7/27/2019   By: MaSoDo
+# Section: MembersOption.php  Function: Show the Members List   Modified: 7/29/2019   By: MaSoDo
 
-$q=run_iquery("SELECT name,group,skin,vtstamp FROM phpqa_accounts ORDER BY name ASC");
+$q=run_iquery("SELECT name,`group`,skin,vtstamp FROM phpqa_accounts ORDER BY name ASC");
 echo "<table class='tableborder' style='width:1000px;'><tr><td class='headertableblock'>Username</td><td class='headertableblock'>Group</td><td class='headertableblock'>Skin</td><td class='headertableblock'>Last On <span style='font-weight:normal'>( &larr; <i>today</i> )</span></td></tr>";
 $LastOn='';
 $indicate='';
