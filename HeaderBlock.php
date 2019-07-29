@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,14 +11,12 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: HeaderBlock.php  Function: Top of the Page   Modified: 7/26/2019   By: MaSoDo
+# Section: HeaderBlock.php  Function: Top of the Page   Modified: 7/29/2019   By: MaSoDo
 
 $CPH = 1;
 $CPF = 1;
 $CPD = 0;
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Updated Function Block #1
 $catquer2 = run_iquery("(SELECT platform,gamecat FROM phpqa_games)");
 $cp=@mysqli_fetch_array($catquer2);
 while($cp=@mysqli_fetch_array($catquer2)){
@@ -39,9 +37,6 @@ $CPF = $CPF-1;
 } 
 }
 }
-//END Updated Function Block #1
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 if(isset($settings['enable_logo'])) {
 if(isset($_GET['action']) && ($_GET['action'] =='emotes'||$_GET['action'] =='allshouts')) {}  else {
 if($settings['enable_timer']==1) {$timershow = '<hr /><b>Countdown to Arcade Score Reset:<br /><div id=\'countbox\'></div>';} else {$timershow = '';}
