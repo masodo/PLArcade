@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: privacy.php  Function: documentation   Modified: 7/26/2019   By: MaSoDo
+# Section: privacy.php  Function: documentation   Modified: 7/29/2019   By: MaSoDo
 echo "<div style='margin-top:30px; width:850px; height:auto; background-color:white; color:black; text-align: justify; margin-left:auto; margin-right:auto; opacity: 0.8; padding:10px; font-size:14px;'>";
 echo $settings['arcade_title'];
 echo "<br /><h1>Privacy</h1>";
