@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: games - Administrator Control Panel   Modified: 7/27/2019   By: MaSoDo
+# Section: acpi Place: games - Administrator Control Panel   Modified: 7/29/2019   By: MaSoDo
 
 
 {
@@ -20,14 +20,10 @@
 <?php
 echo "<br /><br />";
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UpdatedFunction Block #1
 $catquery=run_iquery("SELECT * FROM phpqa_cats");
  while ($catlist= mysqli_fetch_array($catquery)) {
 echo  "[ <a href='?cpiarea=games&cat=$catlist[0]'>$catlist[1]</a> ]";
 } 
-//END UpdatedFunction Block #1
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ?> 
 <a href='?cpiarea=games&showall=1'>Show All</a> &middot; <a href='?cpiarea=games&hotlink=1'>Check Hotlinked</a><br /><br />
@@ -65,8 +61,6 @@ rrmdir("./arcade/gamedata/$gselect[$x]");
 @unlink("./arcade/pics/$gselect[$x].gif");
 $f=htmlspecialchars($gselect[$x], ENT_QUOTES);
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UpdatedFunction Block #2
 run_iquery("DELETE FROM phpqa_games WHERE gameid='$f'");
 }
 }
@@ -88,8 +82,6 @@ $f=htmlspecialchars($gselect[$x], ENT_QUOTES);
 run_iquery("UPDATE phpqa_games SET gamecat = '$dowhat' WHERE gameid='$f'");
 }
 }
-//END UpdatedFunction Block #2
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//		  Game index display
@@ -101,8 +93,6 @@ if(is_numeric($_GET['cat']))$glist = run_iquery("SELECT gameid,game,about,gameca
 } elseif(isset($_GET['search'])) {
 $search=htmlspecialchars($_GET['search'], ENT_QUOTES);
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UpdatedFunction Block #3
 $glist = run_iquery("SELECT gameid,game,about,gamecat,Champion_name,Champion_score from phpqa_games WHERE game like \"%$search%\"  
   order by id");
 } elseif(isset($_GET['showall'])) {
@@ -112,8 +102,6 @@ $glist = run_iquery("SELECT gameid,game,about,gamecat,Champion_name,Champion_sco
 } else {
 	$glist = run_iquery("SELECT gameid,game,about,gamecat,remotelink,Champion_name,Champion_score FROM phpqa_games ORDER BY id DESC LIMIT 0,10");
 }
-//END UpdatedFunction Block #3
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // games function
 function displaygames() {
@@ -125,16 +113,12 @@ if ($g['Champion_name']==""){
 $g['Champion_name'] = "--------";
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UpdatedFunction Block #4
 	$cname = mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_cats WHERE id ='$g[3]'"));
 	echo "<div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1' class='gameview'><tr><td width='5%' align='center' class='headertableblock'></td><td width='60%' align='center' class='headertableblock'>$g[1]</td><td width='20%' align='center' class='headertableblock'>Top Score</td><td width='15%' align='center' class='headertableblock'>In Category: </td><td width='2%' align='center' class='headertableblock'></td></tr><tr><td class='arcade1' valign='top' align='center'>
 <a href='index.php?play=$g[0]'><img height='50' width='50' alt='$g[0]' border='0' src='arcade/pics/$g[0].gif' /></a><br /></td><td class='arcade1'  align='center'>$g[2]<br /><br /><a href='index.php?play=$g[0]'>[Play]</a> <a href='?cpiarea=addgames&method=edit&game=$g[0]'>[Edit Game]</a></td><td class='arcade1' valign='top' align='center'><img alt='image' src='skins/Default/crown1.gif' /><br /><b>$g[Champion_score]</b><br /><a href='index.php?action=profile&amp;user=$g[Champion_name]'>$g[Champion_name]</a><br /><a href='index.php?id=$g[0]'>View Highscores</a></td><td class='arcade1' valign='top' align='center'><a href='index.php?cpiarea=games&cat=$g[3]'>$cname[cat]</a></td><td class='arcade1' valign='top' align='center'><input type='checkbox' name=gselect[] value='$g[0]'></td></tr></table></div><br />";
 }
 // games function
 	while($g=mysqli_fetch_array($glist)){ 	
-//END UpdatedFunction Block #4
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	// Select from the scores table....
 if (isset($_GET['hotlink'])) {
@@ -161,12 +145,8 @@ Move to/Perform:<select size="1" name="dowhat">
 <optgroup label="Place Game(s) In Category:">
 <?php
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UpdatedFunction Block #5
 $catquery=run_iquery("SELECT * FROM phpqa_cats");
  while ($catlist= mysqli_fetch_array($catquery)) {
-//END UpdatedFunction Block #5
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  
 echo  "<option value='$catlist[0]'>$catlist[1]</option>";
 } 
