@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,19 +11,13 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ShoutStage.php  Function: Shout Box Display Mechanics   Modified: 7/27/2019   By: MaSoDo
+# Section: ShoutStage.php  Function: Shout Box Display Mechanics   Modified: 7/29/2019   By: MaSoDo
 //-----------------------------------------------------------------------------------/
 if(isset($_GET['shoutbox'])) $limit=0;
 if(isset($_GET['shoutbox'])) $show=$num_pages_of;
 if (isset($_COOKIE['phpqa_user_c'])) {
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UpdatedFunction Block #1
 	$selectfrom = run_iquery("SELECT name,shout,id,ipa,tstamp FROM phpqa_shoutbox ORDER BY id DESC LIMIT 0,".$num_pages_of."");
 	$shouttotal = mysqli_fetch_array(run_iquery("SHOW TABLE STATUS LIKE 'phpqa_shoutbox'"));
-//END UpdatedFunction Block #1
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 echo "<div align='center'>";
 if ($shouttotal['Rows'] != 0){
 echo "Viewing ".$num_pages_of." Shouts :: Total Shouts: " . $shouttotal['Rows'] . " :: <a title='Open PopUp Archive' href=\"javascript:window.open('index.php?action=allshouts', 'Shouts Archive', 'width=800,height=800,directories=no,location=no,menubar=no,resizable=no,scrollbars=yes,status=no,toolbar=no');void(0);\">See All</a>";
@@ -35,14 +29,11 @@ echo "<hr /></div>";
 if($shouttotal['Rows'] > 0) {
 $badwords= file($textloc."/badwords.txt");
 $tb=count($badwords);
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UpdatedFunction Block #2
 while($f=@mysqli_fetch_array($selectfrom)) $dataa[]=$f;
 if($dataa == "") die();
 foreach($dataa as $vv) $userss[]=$vv[0];
 $userss=array_flip(array_flip($userss));
-$qqq=run_iquery("SELECT name,avatar,`group` FROM phpqa_accounts WHERE name='".implode($userss,"' OR `name`='")."'");
+$qqq=run_iquery("SELECT name,avatar,`group` FROM phpqa_accounts WHERE name='".implode($userss,"' OR name='")."'");
 while($ggg=mysqli_fetch_array($qqq)) { 
 $avatars[$ggg['name']]="$ggg[avatar]";
 $thisgroup[$ggg['name']]="$ggg[group]";
@@ -53,9 +44,6 @@ $postsofsomething = $qashoutbox[1];
 $i=-1;
 $emotesdata = run_iquery("SELECT * FROM phpqa_emotes");
 while($smils=mysqli_fetch_array($emotesdata)){
-//END UpdatedFunction Block #2
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 $postsofsomething = bbcodeHtml($postsofsomething);
 if (isset($smils['code'])) $postsofsomething = str_replace(rtrim($smils['code']), "<img src='".$smiliesloc."/".$smils['filename']."' />", $postsofsomething);
 }
