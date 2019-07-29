@@ -112,7 +112,7 @@ $lsnum = '';
 $bpnum = '';
 $useTZ = $settings['timezone'];
 date_default_timezone_set("$useTZ");
-if($notinstalled) die("<a href='PLArcade_v1.0-Install.php'>Begin installation</a>");
+if($notinstalled) die("<a href='PLArcade_v2.0-Install.php'>Begin installation</a>");
 if($maintenance) die("<h1>Down for maintenance - We'll be back up and running soon!</h1>");
 $datestamp=$settings['datestamp'];
 $modcpcheck=$acpcheck='ok';
