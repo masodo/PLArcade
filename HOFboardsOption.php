@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,14 +11,12 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Leaderboards.php  Function: Display of Hall of Fame   Modified: 7/26/2019   By: MaSoDo
+# Section: Leaderboards.php  Function: Display of Hall of Fame   Modified: 7/29/2019   By: MaSoDo
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //		  Leaderboards
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Updated Function Block #1
 $scoreboard = run_iquery("SELECT phpqa_accounts.name,phpqa_accounts.avatar,phpqa_accounts.group, COUNT(phpqa_games.HOF_name) AS HOF_champ FROM phpqa_accounts
 LEFT JOIN phpqa_games ON phpqa_accounts.name = phpqa_games.HOF_name
 GROUP BY phpqa_games.HOF_name
@@ -40,9 +38,6 @@ if ($scores['HOF_champ'] > 0) {
 // avatar popup here "leadboxpopup"
 echo"<tr><td class='arcade1'><div align='center'><A href='index.php?action=profile&amp;user=".$scores['name']."' onmouseover=\"s=document.getElementById('leadboxpopup');s.style.display='';s.getElementsByTagName('img')[0].src='" . $scores['avatar'] . "';\" onmousemove=\"s=document.getElementById('leadboxpopup').style;s.top=document.body.scrollTop+2+event.clientY;s.left=document.body.scrollLeft+event.clientX;\" onmouseout=\"document.getElementById('leadboxpopup').style.display='none'\"><b><span class='".$scores['group']."Look'>".$scores['name']."</span></b></a></div></td><td class='arcade1'><div align='center'>".$scores['HOF_champ']." Games</div></td></td></tr>";
 }}
-//END Updated Function Block #1
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 echo "</table></div><br />";
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -53,12 +48,10 @@ echo "<div class='tableborder' ><table width='100%' cellpadding='5' cellspacing=
 echo "<div style='height:450px; padding-bottom:20px;'>";
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Updated Function Block #2
-$Wyears = run_iquery("SELECT DISTINCT `Wyear` FROM `phpqa_wall` ORDER BY `Wyear` ASC");
+$Wyears = run_iquery("SELECT DISTINCT Wyear FROM phpqa_wall ORDER BY Wyear ASC");
 while($WYsee = mysqli_fetch_array($Wyears)) {
 $ShowYear = $WYsee['Wyear'];
-$Wscoreboard = run_iquery("SELECT * FROM `phpqa_wall` WHERE `Wyear` = $ShowYear ORDER BY `Wplace` ASC LIMIT 0,3");
+$Wscoreboard = run_iquery("SELECT * FROM phpqa_wall WHERE Wyear = $ShowYear ORDER BY Wplace ASC LIMIT 0,3");
 $Wscores=mysqli_fetch_array($Wscoreboard);
 if ($Wscores['Wavatar'] == ''){ $Wscores['Wavatar'] = $avatarloc.'/man.gif'; }
 $Wyear = $ShowYear;
@@ -85,9 +78,6 @@ echo "<td class='arcade1' width='50%'><table style='text-align:center;' width='1
 echo "<tr><td><a href=\"index.php?action=profile&amp;user=".$Wname."\"><img src='$Wavatar' alt='" . $Wname . "' height='70' /></a></td></tr>";
 echo "<tr><td><a href=\"index.php?action=profile&amp;user=".$Wname."\"><b>". $Wname ."</b></a></td></tr></table></td>";
 }
-//END Updated Function Block #1
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 echo "</div></table></div>";
 }
 echo "</div>";
