@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: settings.php  Function: Set Global Arcade Variables   Modified: 7/26/2019   By: MaSoDo
+# Section: settings.php  Function: Set Global Arcade Variables   Modified: 7/29/2019   By: MaSoDo
 
 { ?>
 <br />
@@ -22,7 +22,7 @@
 <div class='tableborder'><table width=100% cellpadding='4' cellspacing='1'><td width=60% align=center class=headertableblock>Settings</td><td width=60% align=center class=headertableblock>Current setting</td><tr>
 <?php
 $in='';
-$collectstuff="<?php\n//-----------------------------------------------------------------------------------/        \n//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA based on PHP-Quick-Arcade 3.0 © Jcink.com\n//JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design\n//Michael S. DeBurger [DeBurger Photo Image & Design]\n//-----------------------------------------------------------------------------------/\n//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        \n//\n//  Version: 3.0.23 Final. Released: Sunday, May 02, 2010\n//-----------------------------------------------------------------------------------/\n// Thanks to (Sean) http://seanj.jcink.com \n// for: JS and more\n// ---------------------------------------------------------------------------------/\n# These Settings Last Generated: ".date("F j, Y, g:i a")."\n\n\$maintenance = '0';\n\$notinstalled = '0';\n";
+$collectstuff="<?php\n//-----------------------------------------------------------------------------------/        \n//Practical-Lightning-Arcade [PLA] 2.0 (BETA based on PHP-Quick-Arcade 3.0 © Jcink.com\n//JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design\n//Michael S. DeBurger [DeBurger Photo Image & Design]\n//-----------------------------------------------------------------------------------/\n//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        \n//\n//  Version: 3.0.23 Final. Released: Sunday, May 02, 2010\n//-----------------------------------------------------------------------------------/\n// Thanks to (Sean) http://seanj.jcink.com \n// for: JS and more\n// ---------------------------------------------------------------------------------/\n# These Settings Last Generated: ".date("F j, Y, g:i a")."\n\n\$maintenance = '0';\n\$notinstalled = '0';\n";
 // Questions with a Yes/No answer.
 $settingsarray=Array(
 'Arcade Clock Use 24 hour Format? (def=No)'=>'enable_24hr',
