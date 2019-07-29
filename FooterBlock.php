@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: FooterBlock.php  Function: Bottom of Pages   Modified: 7/28/2019   By: MaSoDo
+# Section: FooterBlock.php  Function: Bottom of Pages   Modified: 7/29/2019   By: MaSoDo
 if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){}else{
 if(isset($settings['enable_onlinelist'])) {
 require "./OnlineListOption.php";
