@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: tar_importH5 - Administrator Control Panel   Modified: 7/27/2019   By: MaSoDo
+# Section: acpi Place: tar_importH5 - Administrator Control Panel   Modified: 7/29/2019   By: MaSoDo
 
 {
 $plattype = 'H5';
@@ -92,8 +92,6 @@ $scoretype = 'HI';
 $remoteurl = './arcade/gamedata/'.$idname.'/';
 $idname = htmlspecialchars($idname, ENT_QUOTES);
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UpdatedFunction Block #1
 $addedalready = mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
 if (!$addedalready) {
 $champ = '';
@@ -132,8 +130,6 @@ $idname=str_replace("game_", "", $tarfile_name);
 <?php
 $catquery=run_iquery("SELECT * FROM phpqa_cats");
  while ($catlist= mysqli_fetch_array($catquery)) {
-//END UpdatedFunction Block #1
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if( $_GET['cat'] == $catlist[0] ) {
 echo  "<option value='$catlist[0]' selected='selected'>$catlist[1]</option>";
