@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,14 +11,12 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Leaderboards.php  Function: Display of Hall of Fame   Modified: 7/27/2019   By: MaSoDo
+# Section: Leaderboards.php  Function: Display of Hall of Fame   Modified: 7/29/2019   By: MaSoDo
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //		  SnapShot
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UpdatedFunction Block #1
 $Wyears = run_iquery("SELECT DISTINCT Wyear FROM phpqa_wall ORDER BY Wyear ASC");
 
 
@@ -51,8 +49,6 @@ $Wname = $Wscores['name'];
 $Wavatar = $Wscores['avatar'];
 run_iquery("INSERT INTO phpqa_wall (Wyear,Wplace,Wgames,Wname,Wavatar) VALUES (".$Wyear.",".$Wplace.",".$Wgames.",'".$Wname."','".$Wavatar."')");
 }
-//END UpdatedFunction Block #1
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //		End SnapShot
