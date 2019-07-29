@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 7/28/2019   By: MaSoDo
+# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 7/29/2019   By: MaSoDo
 ?>
 <div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><tr><td class='arcade1' align='left'>
 <?php
@@ -99,7 +99,7 @@ if(isset($_GET['searchcat']) && $_GET['searchcat'] != 'All' ){
 if (isset($_GET['action'])&&$_GET['action']=="search") {
 //below added for testing M*S*D
 ////echo "<script>alert('Finding: WHERE ".$_GET['by']." LIKE \'%".$_GET['search']."%\'');</script>";
-$catquer = run_iquery("(SELECT * FROM phpqa_games ORDER BY rand() LIMIT 1) UNION ALL (SELECT * FROM `phpqa_games` WHERE ".$_GET['by']." LIKE '%".$_GET['search']."%' ORDER BY `id` DESC)", 1);
+$catquer = run_iquery("(SELECT * FROM phpqa_games ORDER BY rand() LIMIT 1) UNION ALL (SELECT * FROM phpqa_games WHERE ".$_GET['by']." LIKE '%".$_GET['search']."%' ORDER BY id DESC)", 1);
 } 
 if (!isset($_GET['action'])||isset($_GET['action'])&&$_GET['action']!="search") {
 //below added for testing M*S*D
@@ -108,7 +108,7 @@ global $SortOrd, $SortDir;
 $catquer = run_iquery("(SELECT * FROM phpqa_games ORDER BY rand() LIMIT 1) UNION ALL (SELECT * FROM phpqa_games ".$fav_quer."".
 (isset($_GET['cat'])?"WHERE gamecat='".$_GET['cat']."' ":"").
 (isset($_GET['plat'])?"WHERE platform='".$_GET['plat']."' ":"").
-"ORDER BY `".$SortOrd."` ".$SortDir." LIMIT ".$limit.",".$show.")", 1);
+"ORDER BY ".$SortOrd." ".$SortDir." LIMIT ".$limit.",".$show.")", 1);
 }
 $arcadetotalcat = mysqli_num_rows($countquer);
 $f = @mysqli_fetch_array($catquer);
@@ -117,7 +117,7 @@ $findNG = '';
 if (($f['gamecat'] != 2)&&($f['gamecat'] != 2)){
 $playrang = $f['gameid'];
 } else { 
-$findNG = run_iquery("SELECT `gameid` FROM phpqa_games WHERE `gamecat` != '2' AND `gamecat` != '23' ORDER by id DESC LIMIT 0,1");
+$findNG = run_iquery("SELECT gameid FROM phpqa_games WHERE gamecat != '2' AND gamecat != '23' ORDER by id DESC LIMIT 0,1");
 $FNG = mysqli_fetch_array($findNG);
 $playrang = $FNG[0];
 }
