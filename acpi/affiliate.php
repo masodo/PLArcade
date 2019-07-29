@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,13 +11,11 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: affiliates - Control Panel   Modified: 7/27/2019   By: MaSoDo
+# Section: acpi Place: affiliates - Control Panel   Modified: 7/29/2019   By: MaSoDo
 
 if (isset($_GET['act'])&&$_GET['act']=='edit'){
 for($i=1;$i<=$_POST['RecNo'];$i++){
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//UpdatedFunction Block #1
 $strSQL = "UPDATE phpqa_affiliate SET url='".$_POST["url$i"]."', tag='".$_POST["tag$i"]."', img='".$_POST["file$i"]."', sort=".$_POST["sort$i"].", active = ".$_POST["active$i"]." WHERE id=".$_POST["EdId$i"]." ";
 run_iquery($strSQL);
 }
@@ -38,8 +36,6 @@ $affiliatedata=run_iquery("SELECT * FROM phpqa_affiliate ORDER BY sort ASC");
 <?php
 $i = 0;
 	while($A=mysqli_fetch_array($affiliatedata)){
-//END UpdatedFunction Block #1
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	$i = $i + 1; 
 ?>
