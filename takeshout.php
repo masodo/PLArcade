@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: takeshout.php  Function: ajax receiver page for shouts   Modified: 7/26/2019   By: MaSoDo
+# Section: takeshout.php  Function: ajax receiver page for shouts   Modified: 7/29/2019   By: MaSoDo
 //-----------------------------------------------------------------------------------/
 function run_iquery($sql=false, $no_inj_protect=""){
 require("./arcade_conf.php");
@@ -56,6 +56,6 @@ Global $ipa, $phpqa_user_cookie;
 $senttext = $_POST['senttext'];
 vsess();
 $time = time();
-run_iquery("INSERT INTO `phpqa_shoutbox` (`name`,`shout`,`ipa`,`tstamp`) VALUES ('".$phpqa_user_cookie."','".$senttext."','".$ipa."','".$time."')", 1);
+run_iquery("INSERT INTO phpqa_shoutbox (name,shout,ipa,tstamp) VALUES ('".$phpqa_user_cookie."','".$senttext."','".$ipa."','".$time."')", 1);
 }
 ?>
