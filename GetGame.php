@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: GetGame.php - Download Game Script   Modified: 7/26/2019   By: MaSoDo
+# Section: GetGame.php - Download Game Script   Modified: 7/29/2019   By: MaSoDo
 
 if (isset($_COOKIE['PHPSESSID'])) {
 $key=htmlspecialchars($_COOKIE['PHPSESSID'], ENT_QUOTES);
@@ -21,8 +21,6 @@ global $key;
 if(isset($_REQUEST['akey']) && $_REQUEST['akey'] != $key) { die("Authorization Mismatch"); }
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Updated Function Block #1
 //Replacement function for php7 compatibility
 function run_iquery($sql=false, $no_inj_protect=""){
 require("./arcade_conf.php");
@@ -52,9 +50,6 @@ alert('Query used: ".$sql."');
 return $sql?$r_q:$queries;
 }
 //END Replacement function for php7 compatibility
-//END Updated Function Block #1
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 function recurse_copy($src,$dst) { 
     $dir = opendir($src); 
     @mkdir($dst); 
@@ -95,12 +90,7 @@ vsess();
   ini_set('set_time_limit', '0');
 $gameid = isset($_GET['GID']) ? htmlspecialchars($_GET['GID'], ENT_QUOTES) : '';
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Updated Function Block #3
 $g = mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_games WHERE gameid='".$gameid."'")); 
-//END Updated Function Block #3
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 $gcat = $g['gamecat'];
 $gheight = $g['gameheight'];
 $gname = $g['gameid'];
