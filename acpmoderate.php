@@ -11,7 +11,9 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
+
 # Section: acpmoderate.php  Function: Moderator Control Panel   Modified: 7/29/2019   By: MaSoDo
+
 if(isset($_REQUEST['modcpcheck'])) {
 echo "<script type='text/javascript'>alert('Die Request')</script>"; 
 die();
@@ -38,6 +40,7 @@ global $score_m;
 for($x=0;$x<=count($score_m)-1;$x++){
 if(!is_numeric($score_m[$x])) die();
 vsess();
+
 run_iquery("UPDATE phpqa_scores SET comment = '' WHERE id='".$score_m[$x]."'");
 }
 }
@@ -48,8 +51,10 @@ for($x=0;$x<=count($score_m)-1;$x++){
 if(!is_numeric($score_m[$x])) die();
 $id = htmlspecialchars($_GET['id'], ENT_QUOTES);
 // Is this person a champ?
+
 $whoischamp = mysqli_fetch_array(run_iquery("SELECT Champion_name,Champion_score FROM phpqa_games WHERE gameid = '".$id."'"));
 $score_being_deleted = mysqli_fetch_array(run_iquery("SELECT username,thescore FROM phpqa_scores WHERE id = '".$score_m[$x]."'"));
+
 	// Erase them from the scoreboards, the games, and leaderboard for this game 	if thats true.
 	if($whoischamp['Champion_name'] == $score_being_deleted['username'] && $whoischamp['Champion_score'] == $score_being_deleted['thescore']) {
 	$yeahchamphappened='yes';
@@ -70,6 +75,9 @@ run_iquery("INSERT INTO phpqa_leaderboard (username,thescore,gamename) VALUES ('
 }
 }
 }
+//END Incompatible Function Block #3
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 if(isset($_GET['modcparea'])) {
 // =================================== \\
 // 		Visuals
@@ -99,8 +107,10 @@ $choice = htmlspecialchars(isset($_POST['choice']), ENT_QUOTES);
 $choice = str_replace(" ", "___", $choice);
 $tool=htmlspecialchars(isset($_POST['tool']), ENT_QUOTES);
 if(isset($_POST['tool'])) {
+
 $selectfrom=run_iquery("SELECT * FROM phpqa_scores WHERE ".$choice."='".$tool."' ORDER BY phpdate DESC");
 	while($g=mysqli_fetch_array($selectfrom)){ 
+
 $parse_stamp = date($datestamp, "".$g[5]."");
 echo "<div class='tableborder'><table width='100%' cellpadding='5' cellspacing='1' class='highscore'><tr><td width='2%' class='headertableblock' align='center'>Username</td><td width='15%' class='headertableblock' align='center'>Score</td><td width='30%' class='headertableblock' align='center'>Comments</td><td width='30%' class='headertableblock' align='center'>Time &amp; Date</td><td width='20%' class='headertableblock' align='center'>IP Address</td><td width='10%' class='headertableblock' align='center'>ScoreBoard</td>";
 echo "<tr><td class='arcade1' align='center'><a href='index.php?action=profile&amp;user=".$g[1]."'>".$g[1]."</a></td><td class='arcade1' align='center'>".$g[2]."</td><td class='arcade1' width='40%' align='center'>".$g['comment']."</td><td class='arcade1' width='20%' align='center'>".$parse_stamp."</td>";
