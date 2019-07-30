@@ -65,7 +65,7 @@ $dbpass = $_POST['mysqli_dbpass'];
 $dbname = $_POST['mysqli_dbname'];
 $SiteURL = $_POST['SiteURL'];
 $ForumURL = $_POST['ForumURL'];
-$iconnect = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
+$iconnect = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 if (mysqli_connect_errno()){
   echo "Failed to connect to MySQL: " . mysqli_connect_error();
   }
