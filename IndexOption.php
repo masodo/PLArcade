@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,14 +11,15 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: IndexOption.php  Function: Display Games Index   Modified: 7/9/2019   By: MaSoDo
+# Section: IndexOption.php  Function: Display Games Index   Modified: 7/29/2019   By: MaSoDo
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//		  Favorites
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 if (isset($_GET['action']) && $_GET['action'] == "fav") {
 vsess();
 $_GET['game'] = htmlspecialchars($_GET['game'], ENT_QUOTES);
-$game_exist=mysql_fetch_array(run_query("SELECT `id` FROM phpqa_games WHERE gameid='{$_GET['game']}'"));
+
+$game_exist=mysqli_fetch_array(run_iquery("SELECT id FROM phpqa_games WHERE gameid='{$_GET['game']}'"));
 if($game_exist[0]) {
 //Adding?
 if(isset($_GET['favtype']) && $_GET['favtype'] == "add") { 
@@ -31,7 +32,7 @@ global $acct_setting;
 message("Removed game from favorites. Refresh to see changes.");
 $acct_setting[5]=str_replace("{$_GET['game']},", "", $acct_setting[5]); 
 }
-run_query("UPDATE `phpqa_accounts` SET `settings` = '$acct_setting[0]|$acct_setting[1]|$acct_setting[2]|$acct_setting[3]|$acct_setting[4]|$acct_setting[5]' WHERE name='$phpqa_user_cookie'");
+run_iquery("UPDATE phpqa_accounts SET settings = '$acct_setting[0]|$acct_setting[1]|$acct_setting[2]|$acct_setting[3]|$acct_setting[4]|$acct_setting[5]' WHERE name='$phpqa_user_cookie'");
 } else {
 message("Game not found.");
 }
@@ -47,15 +48,16 @@ if (!empty($catquer)) {
 //Begin Collapse #4
 echo "<div style='text-align:center; margin-bottom: 5px; margin-top: 5px;'><a title='Open/Close The Games Index'><img id='btn4' src='" . $imgloc . "/" . $collimg4 . "' type='button' alt='&#8595; Games: Collapse/Expand &#8595;' onclick='return CollapseExpand4()' style='font-size:16px; font-weight:bold; color:silver;' /></a></div><div id='MyDiv4' class='" . $collapset4 . "'>";
 require "./PageMakerT.php";
-	while($g=mysql_fetch_array($catquer)){ 
-	// Select from the scores table....
-	
-$CheckScoring = $g['scoring'];
-$showcat=mysql_fetch_array(run_query("SELECT cat FROM phpqa_cats WHERE id='{$g['gamecat']}'"));
 
-if (($g['gamecat'] != '2' && $g['gamecat'] != '23') || (isset($exist[6])&&$exist[6] == "Admin")) {	
-$CHMP = run_query("SELECT `avatar`,`group` FROM `phpqa_accounts` WHERE `name` = '" . $g['Champion_name'] . "'");
-$CHMPimg=mysql_fetch_array($CHMP);
+	while($g=mysqli_fetch_array($catquer)){ 
+	// Select from the scores table....
+	$CheckScoring = $g['scoring'];
+	$showcat=mysqli_fetch_array(run_iquery("SELECT cat FROM phpqa_cats WHERE id='".$g['gamecat']."'"));
+
+if ($g['gamecat'] != '2' || (isset($exist[6])&&$exist[6] == "Admin")) {
+	$CHMP = run_iquery("SELECT avatar,`group` FROM phpqa_accounts WHERE name = '" . $g['Champion_name'] . "'");
+        $CHMPimg=mysqli_fetch_array($CHMP);
+
 if (!$CHMPimg['avatar'])$CHMPimg['avatar'] = $avatarloc.'/man.gif';
 if ($g['platform'] == 'H5') { 
 $PlatWord = 'HTML5';

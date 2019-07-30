@@ -1,6 +1,6 @@
 <?php 
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ShoutBox.php  Function: ShoutBox Block   Modified: 6/21/2019   By: MaSoDo
+# Section: ShoutBox.php  Function: ShoutBox Block   Modified: 7/29/2019   By: MaSoDo
 
 if($settings['enable_shoutbox']) {
 if (!isset($acct_setting[1]) || $acct_setting[1] !="No") {
@@ -25,7 +25,8 @@ if($exist[6] != "Validating") {
 if ($_POST['senttext'] != "") {
 vsess();
 $time = time();
-run_query("INSERT INTO `phpqa_shoutbox` (`name`,`shout`,`ipa`,`tstamp`) VALUES ('".$phpqa_user_cookie."','".$senttext."','".$ipa."','".$time."')", 1);
+run_iquery("INSERT INTO phpqa_shoutbox (name,shout,ipa,tstamp) VALUES ('".$phpqa_user_cookie."','".$senttext."','".$ipa."','".$time."')", 1);
+
 }
 }
 }

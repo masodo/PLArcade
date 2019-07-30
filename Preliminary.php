@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 7/19/2019   By: MaSoDo
+# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 7/29/2019   By: MaSoDo
 session_start();
 if($_GET['captcha']){
 $im = imagecreatefrompng("captchabg.png");
@@ -110,10 +110,10 @@ require("./arcade_conf.php");
 $ngnum = '';
 $lsnum = '';
 $bpnum = '';
+if($notinstalled) die("<a href='PLArcade_v2.0-Install.php'>Begin installation</a>");
+if($maintenance) die("<h1>Down for maintenance - We'll be back up and running soon!</h1>");
 $useTZ = $settings['timezone'];
 date_default_timezone_set("$useTZ");
-if($notinstalled) die("<a href='PLArcade_v1.0-Install.php'>Begin installation</a>");
-if($maintenance) die("<h1>Down for maintenance - We'll be back up and running soon!</h1>");
 $datestamp=$settings['datestamp'];
 $modcpcheck=$acpcheck='ok';
 function is_email($text) { 
@@ -137,14 +137,19 @@ function displayemotes() {
 $g = "";
 global $textloc;
 global $smiliesloc;
-$emotesdata = run_query("SELECT * FROM `phpqa_emotes`");
-while($smils=mysql_fetch_array($emotesdata)){ 
+$emotesdata = run_iquery("SELECT * FROM phpqa_emotes");
+while($smils=mysqli_fetch_array($emotesdata)){ 
 $trim = rtrim($smils['code']);
 $g.= "<a title='".$smils['description']."'><img src=\"".$smiliesloc."/".$smils['filename']."\" onclick=\"document.forms['postbox'].elements['senttext'].value=document.forms['postbox'].elements['senttext'].value+&#39;".$trim."&#39;\"></a> ";
 }
 return $g;
 }
-function run_query($sql=false, $no_inj_protect=""){
+function run_iquery($sql=false, $no_inj_protect=""){
+require("./arcade_conf.php");
+$iconnect = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
+if (mysqli_errno()){
+  echo "Failed to connect to MySQL: " . mysqli_error();
+  }
 static $queries=Array();
 if ($sql) $queries[]=$sql;
 // Inject protection, filters queries to stop injections
@@ -155,8 +160,8 @@ $sql=preg_replace("/UNION/i", "", $sql);
 $sql=preg_replace("/concat/i", "", $sql);
 $sql=preg_replace("/pass/i", "", $sql);
 }
-if($sql !="") $r_q=mysql_query($sql);
-$h=htmlspecialchars(mysql_error(), ENT_QUOTES);
+if($sql !="") $r_q=mysqli_query($iconnect,$sql);
+$h=htmlspecialchars(mysqli_connect_errno(), ENT_QUOTES);
 if($h) { 
 $sql=htmlspecialchars($sql, ENT_QUOTES);	
 echo "<script language='Javascript'>
@@ -166,6 +171,7 @@ alert('Query used: ".$sql."');
 }
 return $sql?$r_q:$queries;
 }
+
 if (isset($_GET['id'])) $id = htmlspecialchars($_GET['id'], ENT_QUOTES);
 if (isset($_GET['user'])) $user = htmlspecialchars ($_GET['user'], ENT_QUOTES);
 if (isset($_GET['cat'])&&!is_numeric($_GET['cat'])) die();
@@ -188,21 +194,14 @@ if (isset($_POST['senttext'])) $senttext = htmlspecialchars($_POST['senttext'], 
 function message($info) {
 echo "<div align='center'><div class='tableborder'><table width=100% cellpadding='4' cellspacing='1'><td width=60% align=center class=headertableblock>Message:</td><tr><td class=arcade1 valign=top><div align='center' style='background-color:gray; color:white; font-size:20px; padding:20px;'>$info</div></td></table></div><br />";
 }
-
-$connect = @mysql_connect($dbhost,$dbuser,$dbpass);
-$selection = @mysql_select_db($dbname);
-$h=mysql_error();
-if (!$connect || !$selection) { 
-echo "There was an error with the database. A detailed report of the error is available below.<br /><br /><textarea cols=70 rows=20>$h</textarea><br /><br />You should check your password and database details. If you find that they are correct, but your <br />arcade is still not functioning please contact your hosting provider."; 
-die();
-}
+//require("integ.php") //call for custom website integration script (InfinitelyRemote.com use)
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // 	Rather than do 10 million checks, this check is run always 
 //	at the top of the page.
 //	Never take this out or move this!
 //                   NEVER!
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ReportID = 1; //set to topic id for game reports
+$ReportID = 2;
 $exist='';
 //declare some variables would be nice
 $plat = "";
@@ -233,9 +232,11 @@ if (!isset($collapset1)) $collapset1 = "";
 if (!isset($collapset2)) $collapset2 = "";
 if (!isset($collapset3)) $collapset3 = "";
 if (!isset($collapset4)) $collapset4 = "";
+
+
 if (isset($_COOKIE['phpqa_user_c'])) { // Is the username cookie set...
-$query = run_query("SELECT * FROM phpqa_accounts WHERE name='$phpqa_user_cookie'");
-$exist = mysql_fetch_array($query);
+$query = run_iquery("SELECT * FROM phpqa_accounts WHERE name='$phpqa_user_cookie'");
+$exist = mysqli_fetch_array($query);
 $acct_setting = explode("|", $exist[8]);
 //Collapse 1 happens in "ArcadeInfo.php"
 $collapset1 = isset($acct_setting[6]) ? $acct_setting[6] : null;
@@ -274,8 +275,7 @@ $collimg4 = 'closed.png';
 } else { $collimg4 = 'open.png'; }
 if($settings['override_userprefs']) $acct_setting='';
 if (!$exist) die("You are now logged out. This has occurred due to a username/password mismatch. <a href='index.php?action=logout'>Click here to reset.</a>.");
-if (rtrim($exist[2]) != $_COOKIE['phpqa_user_p']) { // Compare passwords - it does exist 
-echo "You are now logged out. This has occurred due to a username/password mismatch. <a href='index.php?action=logout'>Click here</a>.";
+    if (isset($_COOKIE['phpqa_user_p']) && ($_COOKIE['phpqa_user_p'] != rtrim($exist[2]))) { // Compare passwords - it does exist
 die();
 }
 }
@@ -341,14 +341,12 @@ $userID = htmlspecialchars(($_POST['userID']), ENT_QUOTES);
 $pword = htmlspecialchars(($_POST['pword']), ENT_QUOTES);
 $name = $userID;
 }
-$query = run_query("SELECT * FROM phpqa_accounts WHERE name='$userID'");
-$exist = mysql_fetch_array($query);
-
+$query = run_iquery("SELECT * FROM phpqa_accounts WHERE name='$userID'");
+$exist = mysqli_fetch_array($query);
 if ($exist) { 	// M&Ms commercial - He DOES exist! D'Ooh
 if(isset($exist[6]) && $exist[6]=='Banned') { message("You have been banned from this arcade.<br />Contact ".$siteemail." if you feel this to be in error.");
 die();
 }
-
 $thepassword_in_db = md5(sha1($pword));
 if(isset($_GET['recovery'])) $thepassword_in_db = $pword;
 if (rtrim($exist[2]) == $thepassword_in_db) {
@@ -363,12 +361,15 @@ setcookie("phpqa_user_p", $thepassword_in_db, time()+99999, ""."; HttpOnly");
 }
 // Count the logins here:
 $time = time();
-run_query("UPDATE `phpqa_accounts` SET `logins`=".++$exist['logins'].", `vtstamp`=".$time." WHERE name='" . $userID ."'"); 
+
+run_iquery("UPDATE phpqa_accounts SET logins=".++$exist['logins'].", vtstamp=".$time." WHERE name='" . $userID ."'"); 
 
 if (isset($exist['logins'])&&$exist['logins'] =='1' ) {
 header("Location: index.php");
 $welcometext = "[color=green][i]Welcome to[/i] [b]".$settings['arcade_title']."[/b][/color] [url=".$arcurl."/index.php?action=profile&user=".$exist['name']."][size=18][b]".$exist['name']."[/b][/size][/url] [wavey] [i]Thanks for joining us![/i]";
-run_query("INSERT INTO phpqa_shoutbox (`name`,`shout`,`ipa`,`tstamp`) VALUES ('Admin','" . $welcometext . "','localhost','" . $time ."')", 1);
+
+run_iquery("INSERT INTO phpqa_shoutbox (name,shout,ipa,tstamp) VALUES ('Admin','" . $welcometext . "','localhost','" . $time ."')", 1);
+
 }
 //then load the page:
 header("Location: index.php");
@@ -377,7 +378,6 @@ echo "Sorry, the password you entered for the account, <b>$userID</b> is incorre
 die();
 }
 } else {
-echo "<script language='Javascript'>alert('hello\nworld')</script>";
 echo "Sorry, that username, <b>".$name."</b>  doesn't appear to exist. <a href='index.php'>Please go back and try again</a><br /><br />Did you mistype it? Are you <a href='index.php?action=register'>Registered?</a><br /><br /><a href='index.php?action=forgotpass'>Forgot Password?</a>";
 die();
 }

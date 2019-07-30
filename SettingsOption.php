@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,8 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: SettingsOption.php  Function: User Definable Configuration   Modified: 6/27/2019   By: MaSoDo
-echo "<!-- SettingsOption.php --------------------------------------------------------------------------------------------------------------------------------------------- -->";
+# Section: SettingsOption.php  Function: User Definable Configuration   Modified: 7/29/2019   By: MaSoDo
 if (isset($_COOKIE['phpqa_user_c'])) {
 if($exist[6] == "Validating") {
 message("!ALERT!: Sorry, your account is still in validation. This means you cannot: submit your highscores, shout on the shoutbox, or edit your profile. Please wait for an admin to validate your account, then you'll be ready to play.");
@@ -44,8 +43,8 @@ if(!$settings['override_userprefs']) {
 <?php
 if ($_GET['action']=="settings" && isset($_GET['p'])=="") {
 echo "<div align='center'>Welcome to your arcade controls. Your last 10 scores:<hr>";
-	$selectfrom = run_query("SELECT * FROM phpqa_scores WHERE username='$phpqa_user_cookie' ORDER BY phpdate DESC LIMIT 0,10");
-while($s=mysql_fetch_array($selectfrom)){ 
+	$selectfrom = run_iquery("SELECT * FROM phpqa_scores WHERE username='$phpqa_user_cookie' ORDER BY phpdate DESC LIMIT 0,10");
+while($s=mysqli_fetch_array($selectfrom)){ 
 $parse_stamp = date($datestamp, $s[5]);
 echo "<i>$s[2]</i> in <a href='index.php?id=$s[6]'><i>$s[7]</i></a> on $parse_stamp <br />";
 }
@@ -81,7 +80,7 @@ if(!isset($uploadavatar)) $problem.="Failed to upload your avatar to the server.
 }
 }
 if(!isset($problem)) { 
-	run_query("UPDATE `phpqa_accounts` SET `avatar` = '".$message."' WHERE name='".$phpqa_user_cookie."'"); 
+	run_iquery("UPDATE phpqa_accounts SET avatar = '".$message."' WHERE name='".$phpqa_user_cookie."'"); 
 	echo "Avatar Updated."; 
 } else { 
 	echo $problem; 
@@ -144,9 +143,8 @@ if (isset($_POST['newpass'])) {
 if ($_POST['newpass'] != "") {
 $UpDated = md5(sha1($_POST['newpass']));
 vsess();
-run_query("UPDATE `phpqa_accounts` SET `pass` = '$UpDated' WHERE `name`='$phpqa_user_cookie'", 1);
-run_query("UPDATE `PLA_users` SET `password` = '$UpDated' WHERE `username`='$phpqa_user_cookie'", 1);
-
+run_iquery("UPDATE phpqa_accounts SET pass = '$UpDated' WHERE name='$phpqa_user_cookie'", 1);
+run_iquery("UPDATE PLA_users SET password = '$UpDated' WHERE username='$phpqa_user_cookie'", 1);
 echo "Password updated. You must now login again.";
 } else {
 echo "You didn't enter a new password. Please go back and fill out the input box.";
@@ -163,7 +161,7 @@ if ($_POST['newemail'] != "") {
 if(is_email($_POST['newemail'])) {
 $UpDated = htmlspecialchars($_POST['newemail'], ENT_QUOTES);
 vsess();
-run_query("UPDATE `phpqa_accounts` SET `email` = '$UpDated' WHERE name='$phpqa_user_cookie'");
+run_iquery("UPDATE phpqa_accounts SET email = '$UpDated' WHERE name='$phpqa_user_cookie'");
 echo "Email updated.";
 } else {
 echo "Invalid email address.";
@@ -193,7 +191,7 @@ if (isset($_POST['showindex']))$showindex = htmlspecialchars($_POST['showindex']
 if (isset($_POST['idxview']))$idxview = htmlspecialchars($_POST['idxview'], ENT_QUOTES);
 if (isset($_POST['sortord']))$sortord = htmlspecialchars($_POST['sortord'], ENT_QUOTES);
 vsess();
-run_query("UPDATE `phpqa_accounts` SET `settings` = '$viewavatars|$viewshoutbox|$numberofgamesperpage|$viewtop|$allowmemoradmin|$acct_setting[5]|$showinfo|$showshout|$showcats|$showindex|$idxview|$sortord' WHERE name='$phpqa_user_cookie'");
+run_iquery("UPDATE phpqa_accounts SET settings = '$viewavatars|$viewshoutbox|$numberofgamesperpage|$viewtop|$allowmemoradmin|$acct_setting[5]|$showinfo|$showshout|$showcats|$showindex|$idxview|$sortord' WHERE name='$phpqa_user_cookie'");
 echo "Settings updated! <a href='index.php?action=settings&amp;p=display'>Reload</a> to see changes...";
 } else {
 echo '<form action="index.php?action=settings&p=display" method="POST">';
@@ -333,7 +331,7 @@ echo '</form>';
 if (isset($_POST['skinsettings'])) {
 $updateskin=htmlspecialchars($_POST['updateskin'], ENT_QUOTES);
 vsess();
-run_query("UPDATE `phpqa_accounts` SET `skin` = '$updateskin' WHERE name='$phpqa_user_cookie'");
+run_iquery("UPDATE phpqa_accounts SET skin = '$updateskin' WHERE name='$phpqa_user_cookie'");
 echo "Skin Updated";
 } else {
 echo '<form action="index.php?action=settings&p=skin" method="POST">';

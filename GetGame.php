@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: GetGame.php - Download Game Script   Modified: 3/21/2019   By: MaSoDo
+# Section: GetGame.php - Download Game Script   Modified: 7/29/2019   By: MaSoDo
 
 if (isset($_COOKIE['PHPSESSID'])) {
 $key=htmlspecialchars($_COOKIE['PHPSESSID'], ENT_QUOTES);
@@ -20,7 +20,14 @@ function vsess() {
 global $key;
 if(isset($_REQUEST['akey']) && $_REQUEST['akey'] != $key) { die("Authorization Mismatch"); }
 }
-function run_query($sql=false, $no_inj_protect=""){
+
+//Replacement function for php7 compatibility
+function run_iquery($sql=false, $no_inj_protect=""){
+require("./arcade_conf.php");
+$iconnect = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
+if (mysqli_connect_errno()){
+  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+  }
 static $queries=Array();
 if ($sql) $queries[]=$sql;
 // Inject protection, filters queries to stop injections
@@ -31,8 +38,8 @@ $sql=preg_replace("/UNION/i", "", $sql);
 $sql=preg_replace("/concat/i", "", $sql);
 $sql=preg_replace("/pass/i", "", $sql);
 }
-if($sql !="") $r_q=mysql_query($sql);
-$h=htmlspecialchars(mysql_error(), ENT_QUOTES);
+if($sql !="") $r_q=mysqli_query($iconnect,$sql);
+$h=htmlspecialchars(mysqli_connect_errno(), ENT_QUOTES);
 if($h) { 
 $sql=htmlspecialchars($sql, ENT_QUOTES);	
 echo "<script language='Javascript'>
@@ -42,7 +49,7 @@ alert('Query used: ".$sql."');
 }
 return $sql?$r_q:$queries;
 }
-
+//END Replacement function for php7 compatibility
 function recurse_copy($src,$dst) { 
     $dir = opendir($src); 
     @mkdir($dst); 
@@ -74,14 +81,7 @@ function rrmdir($dirgone) {
  }
 $mtime=explode(" ",microtime());
 require("./arcade_conf.php");
- 
-$connect = @mysql_connect($dbhost,$dbuser,$dbpass);
-$selection = @mysql_select_db($dbname);
-$h=mysql_error();
-if (!$connect || !$selection) { 
-echo "There was an error with the database. A detailed report of the error is available below.<br /><br /><textarea cols=70 rows=20>$h</textarea><br /><br />You should check your password and database details. If you find that they are correct, but your <br />arcade is still not functioning please contact your hosting provider."; 
-die();
-}
+
  
 try {
 vsess();
@@ -90,8 +90,7 @@ vsess();
   ini_set('set_time_limit', '0');
 $gameid = isset($_GET['GID']) ? htmlspecialchars($_GET['GID'], ENT_QUOTES) : '';
 
-$g = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gameid='".$gameid."'")); 
-  
+$g = mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_games WHERE gameid='".$gameid."'")); 
 $gcat = $g['gamecat'];
 $gheight = $g['gameheight'];
 $gname = $g['gameid'];

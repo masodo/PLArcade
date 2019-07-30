@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (ALPHA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,16 +11,17 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ProfileOption.php  Function: View User Profile Page   Modified: 6/19/2019   By: MaSoDo
+# Section: ProfileOption.php  Function: View User Profile Page   Modified: 7/29/2019   By: MaSoDo
+
 if (isset($_COOKIE['phpqa_user_c'])) {
-$profiledata=@mysql_fetch_array(run_query("SELECT * FROM phpqa_accounts WHERE name='".$user."'"));
+$profiledata=@mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_accounts WHERE name='".$user."'"));
 $ggggg=explode("|",$profiledata['settings']);
 if (!isset($profiledata)) {
 message("Error: No username with the name, <b>$user</b> exists");
 } else {
-$lq=run_query("SELECT `gameid`,`game`,`about`,`Champion_score` FROM phpqa_games WHERE Champion_name='".$user."'");
-$Hq=run_query("SELECT `gameid`,`game`,`about`,`HOF_score` FROM phpqa_games WHERE HOF_name='".$user."'");
-$q=run_query("SELECT count(id) FROM phpqa_shoutbox WHERE name='".$user."'");
+$lq=run_iquery("SELECT gameid,game,about,Champion_score FROM phpqa_games WHERE Champion_name='".$user."'");
+$Hq=run_iquery("SELECT gameid,game,about,HOF_score FROM phpqa_games WHERE HOF_name='".$user."'");
+$q=run_iquery("SELECT count(id) FROM phpqa_shoutbox WHERE name='".$user."'");
 $LastOn = '';
 if($profiledata['vtstamp']!=0){
 $LastOn=date($datestamp,$profiledata['vtstamp']);
@@ -34,8 +35,8 @@ $LastOn=date($datestamp,$profiledata['vtstamp']);
 <tr><td class='arcade1' align='left'><b>Last Login</b><br /></td><td class='arcade1' align='left'><?php echo $LastOn; ?></td></tr>
 <tr><td class='arcade1' align='left'><b>Group</b></td><td class='arcade1' align='left'><?php echo $profiledata['group']; ?></td></tr>
 <tr><td class='arcade1' align='left'><b>Skin</b><br /></td><td class='arcade1' align='left'><?php echo $profiledata['skin']; ?></td></tr>
-<tr><td class='arcade1' align='left'><b>Total Shouts</b><br /></td><td class='arcade1' align='left'><?php echo mysql_result($q,0); ?></td></tr>
-<tr><td class='arcade1' align='left'><b>Total Champions</b></td><td class='arcade1' align='left'><?php echo mysql_num_rows($lq); ?></td></tr>
+<tr><td class='arcade1' align='left'><b>Total Shouts</b><br /></td><td class='arcade1' align='left'><?php echo mysqli_result($q,0,0); ?></td></tr>
+<tr><td class='arcade1' align='left'><b>Total Champions</b></td><td class='arcade1' align='left'><?php echo mysqli_num_rows($lq); ?></td></tr>
 <tr><td class='arcade1' align='left'><b>Contact</b></td><td class='arcade1' align='left'>[ <?php 
 if($ggggg[0] != 'No') { // F-ZERO LOL
 echo $profiledata['email'];
@@ -49,12 +50,12 @@ echo "Private";
 </div>
 <br /> <br />
 <?php
-$scoreboardc = run_query("SELECT phpqa_accounts.name, COUNT(phpqa_leaderboard.username) AS champions FROM phpqa_accounts
+$scoreboardc = run_iquery("SELECT phpqa_accounts.name, COUNT(phpqa_leaderboard.username) AS champions FROM phpqa_accounts
 LEFT JOIN phpqa_leaderboard ON phpqa_accounts.name = phpqa_leaderboard.username
 GROUP BY phpqa_leaderboard.username
 ORDER BY champions DESC LIMIT 0,10000");
 $x=1;
-while($checkpos=mysql_fetch_array($scoreboardc)){
+while($checkpos=mysqli_fetch_array($scoreboardc)){
 IF(isset($_GET['user']) && $_GET['user'] == "$checkpos[name]") {
  echo "<div class='tableborder'><table width='100%' cellpadding='5' cellspacing='1'>";
  echo "<td width='2%' align=center class='headertableblock'>UsersName</td><td width='30%' align=center class='headertableblock'>";
@@ -72,7 +73,7 @@ $x++;
 <br /><br />
 <div align='center'><div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><td width='100%' align='center' class='headertableblock' colspan='3'>Games that <?php echo $user; ?> is champion.</td><tr>
 <?php
-while($getstats=mysql_fetch_array($lq)){
+while($getstats=mysqli_fetch_array($lq)){
 ?>
 <tr>
 <td class='arcade1' width=2%><img width='20' height='20' src='<?php echo $gamesloc; ?>/pics/<?php echo $getstats['gameid']; ?>.gif' /></td><td class='arcade1' align='left'><b><a href='index.php?play=<?php echo $getstats['gameid']; ?>#playzone'><?php echo $getstats['game']; ?></a></b> - <?php echo $getstats['about']; ?></b><br /></td><td class='arcade1' width='20%' align='center'>Score to beat: <br /><b><?php echo str_replace('-', '', $getstats['Champion_score']); ?></b></td>
@@ -82,7 +83,7 @@ while($getstats=mysql_fetch_array($lq)){
 </tr></table></div><br /><br />
 <div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><td width='100%' align='center' class='headertableblock' colspan='3'>Games that <?php echo $user; ?> is <b>Hall of Fame Champion.</b></td><tr>
 <?php
-while($getHstats=mysql_fetch_array($Hq)){
+while($getHstats=mysqli_fetch_array($Hq)){
 ?>
 <tr>
 <td class='arcade1' width=2%><img width='20' height='20' src='<?php echo $gamesloc; ?>/pics/<?php echo $getHstats['gameid']; ?>.gif' /></td><td class='arcade1' align='left'><b><a href='index.php?play=<?php echo $getHstats['gameid']; ?>#playzone'><?php echo $getHstats['game']; ?></a></b> - <?php echo $getHstats['about']; ?></b><br /></td><td class='arcade1' width='20%' align='center'>Score to beat: <br /><b><?php echo str_replace('-', '', $getHstats['HOF_score']); ?></b></td>
@@ -91,5 +92,6 @@ while($getHstats=mysql_fetch_array($Hq)){
 ?>
 </tr></table></div><br /><br />
 <?php
-}} else {message("Sorry, guests may not view profiles!<br />Please <a href='index.php?action=register#registration'>Register</a> or <a href='index.php#Login'>Login</a>");}
+}
+} else {message("Sorry, guests may not view profiles!<br />Please <a href='index.php?action=register#registration'>Register</a> or <a href='index.php#Login'>Login</a>");}
 ?>

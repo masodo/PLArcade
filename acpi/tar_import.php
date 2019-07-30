@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: tar_import - Administrator Control Panel   Modified: 6/26/2019   By: MaSoDo
+# Section: acpi Place: tar_import - Administrator Control Panel   Modified: 7/29/2019   By: MaSoDo
 
 {
 $plattype = 'FL';
@@ -96,17 +96,18 @@ if ($scoretype == 'low')$scoretype='LO';
 $scoretype = 'HI';
 }
 $idname = htmlspecialchars($idname, ENT_QUOTES);
-$addedalready = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
+
+$addedalready = mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
 if (!$addedalready) {
 $champ = '';
 $champs = '';
 $atime = '';
 if($idname !="") {
-run_query("INSERT INTO phpqa_games (game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring) VALUES ('$gamename','$idname','$gameheight','$gamewidth','$about','$thecat','$remoteurl','$champ','$champs','','$plattype','$scoretype')");
+run_iquery("INSERT INTO phpqa_games (game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring) VALUES ('$gamename','$idname','$gameheight','$gamewidth','$about','$thecat','$remoteurl','$champ','$champs','','$plattype','$scoretype')");
 if ($thecat != 23){ 
 $atime = time();
 $NewGtext = "[color=green][i]New Game Added![/i] [/color][size=16] [url=".$arcurl."/index.php?play=".$idname."#playzone][b]".$gamename."[/b][/url][/size]  [color=green][i]Enjoy![/i][/color] [:D]";
-run_query("INSERT INTO phpqa_shoutbox (`name`,`shout`,`ipa`,`tstamp`) VALUES ('Admin','" . $NewGtext . "','localhost','" . $atime . "')", 1);
+run_iquery("INSERT INTO phpqa_shoutbox (name,shout,ipa,tstamp) VALUES ('Admin','" . $NewGtext . "','localhost','" . $atime . "')", 1);
 }}
 } else {
 }
@@ -119,7 +120,7 @@ if ($handle = opendir('./tars/')) {
        if ($file != "." && $file != ".." && $file != "gamedata") {
 $tarfile_name=str_replace(".tar", "", $file);
 $idname=str_replace("game_", "", $tarfile_name);
-       $addedalready = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
+       $addedalready = mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
 ?>
 <tr><td class='arcade1' align='center'><?php echo $file; ?></td><td class='arcade1' align='center'>[ <?php if(!$addedalready) { ?><a href='?cpiarea=tar_import&untar=<?php echo $file; ?>&cat=<?php echo $thecat; ?>&akey=<?php echo $key; ?>'>Install</a> <?php }  else { echo "Added"; } ?> | <a href='?cpiarea=tar_import&untar=<?php echo $file; ?>&cat=<?php echo $thecat; ?>&akey=<?php echo $key; ?>'>Reupload</a> ]</td></tr>
  <?php
@@ -132,8 +133,9 @@ $idname=str_replace("game_", "", $tarfile_name);
 <form action='' method='GET' enctype="multipart/form-data">
 <tr><td class='arcade1' align='left'><b>Category Option:</b></td><td class='arcade1' align='center'><select name='cat'>
 <?php
-$catquery=run_query("SELECT * FROM phpqa_cats");
- while ($catlist= mysql_fetch_array($catquery)) {
+$catquery=run_iquery("SELECT * FROM phpqa_cats");
+ while ($catlist= mysqli_fetch_array($catquery)) {
+ 
 if( $_GET['cat'] == $catlist[0] ) {
 echo  "<option value='$catlist[0]' selected='selected'>$catlist[1]</option>";
 } else {
@@ -150,6 +152,4 @@ echo  "<option value='$catlist[0]'>$catlist[1]</option>";
 <br />
 <?php
 } 
-
-
 ?>

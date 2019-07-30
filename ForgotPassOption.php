@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ForgotPassOption.php  Function: Password Recovery   Modified: 6/7/2019   By: MaSoDo
+# Section: ForgotPassOption.php  Function: Password Recovery   Modified: 7/29/2019   By: MaSoDo
 
 if($settings['enable_passrecovery']) {
 if (isset($_POST['sendto_user'])) {
@@ -24,7 +24,8 @@ message("You left the username line blank.");
 die();
 }
 $u=htmlspecialchars($_POST['sendto_user']);
-$getmailuser = @mysql_fetch_array(run_query("SELECT name,pass,email FROM phpqa_accounts WHERE name='$u'", 1));
+
+$getmailuser = @mysqli_fetch_array(run_iquery("SELECT name,pass,email FROM phpqa_accounts WHERE name='$u'", 1));
 if (!$getmailuser) { 
 message("The user, $u is not registered here."); 
 die();

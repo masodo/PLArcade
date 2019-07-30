@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: games - Administrator Control Panel   Modified: 6/13/2019   By: MaSoDo
+# Section: acpi Place: games - Administrator Control Panel   Modified: 7/29/2019   By: MaSoDo
 
 
 {
@@ -19,10 +19,12 @@
 <div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><tr><td class='arcade1' align='center'>Sort: 
 <?php
 echo "<br /><br />";
-$catquery=run_query("SELECT * FROM phpqa_cats");
- while ($catlist= mysql_fetch_array($catquery)) {
+
+$catquery=run_iquery("SELECT * FROM phpqa_cats");
+ while ($catlist= mysqli_fetch_array($catquery)) {
 echo  "[ <a href='?cpiarea=games&cat=$catlist[0]'>$catlist[1]</a> ]";
 } 
+
 ?> 
 <a href='?cpiarea=games&showall=1'>Show All</a> &middot; <a href='?cpiarea=games&hotlink=1'>Check Hotlinked</a><br /><br />
 <form action='' method='GET'><input type='hidden' name='cpiarea' value='games'><input type='text' name='search' value=''><input type='Submit' value='Search'></form>
@@ -58,17 +60,18 @@ rrmdir("./arcade/gamedata/$gselect[$x]");
 @unlink("./arcade/$gselect[$x].swf");
 @unlink("./arcade/pics/$gselect[$x].gif");
 $f=htmlspecialchars($gselect[$x], ENT_QUOTES);
-run_query("DELETE FROM phpqa_games WHERE gameid='$f'");
+
+run_iquery("DELETE FROM phpqa_games WHERE gameid='$f'");
 }
 }
 if ($dowhat == 'clearscores') {
 vsess();
 for($x=0;$x<=count($gselect)-1;$x++){
 $f=htmlspecialchars($gselect[$x], ENT_QUOTES);
-run_query("DELETE FROM phpqa_scores WHERE gameidname = '$f'");
-run_query("DELETE FROM phpqa_leaderboard WHERE gamename = '$f'");
-run_query("UPDATE `phpqa_games` SET `Champion_name` = '' WHERE gameid='$f'");
-run_query("UPDATE `phpqa_games` SET `Champion_score` = '' WHERE gameid='$f'");
+run_iquery("DELETE FROM phpqa_scores WHERE gameidname = '$f'");
+run_iquery("DELETE FROM phpqa_leaderboard WHERE gamename = '$f'");
+run_iquery("UPDATE phpqa_games SET Champion_name = '' WHERE gameid='$f'");
+run_iquery("UPDATE phpqa_games SET Champion_score = '' WHERE gameid='$f'");
 }
 }
 
@@ -76,27 +79,30 @@ run_query("UPDATE `phpqa_games` SET `Champion_score` = '' WHERE gameid='$f'");
 vsess();
 for($x=0;$x<=count($gselect)-1;$x++){
 $f=htmlspecialchars($gselect[$x], ENT_QUOTES);
-run_query("UPDATE `phpqa_games` SET `gamecat` = '$dowhat' WHERE gameid='$f'");
+run_iquery("UPDATE phpqa_games SET gamecat = '$dowhat' WHERE gameid='$f'");
 }
 }
+
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//		  Game index display
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 if (isset($_GET['cat'])) {
 $choice = htmlspecialchars($_GET['cat'], ENT_QUOTES);
-if(is_numeric($_GET['cat']))$glist = run_query("SELECT gameid,game,about,gamecat,Champion_name,Champion_score FROM phpqa_games WHERE gamecat ='$choice' ORDER BY id DESC");
+if(is_numeric($_GET['cat']))$glist = run_iquery("SELECT gameid,game,about,gamecat,Champion_name,Champion_score FROM phpqa_games WHERE gamecat ='$choice' ORDER BY id DESC");
 } elseif(isset($_GET['search'])) {
 $search=htmlspecialchars($_GET['search'], ENT_QUOTES);
-$glist = run_query("SELECT gameid,game,about,gamecat,Champion_name,Champion_score from phpqa_games WHERE game like \"%$search%\"  
+
+$glist = run_iquery("SELECT gameid,game,about,gamecat,Champion_name,Champion_score from phpqa_games WHERE game like \"%$search%\"  
   order by id");
 } elseif(isset($_GET['showall'])) {
-	$glist = run_query("SELECT gameid,game,about,gamecat,remotelink,Champion_name,Champion_score FROM phpqa_games ORDER BY id DESC");
+	$glist = run_iquery("SELECT gameid,game,about,gamecat,remotelink,Champion_name,Champion_score FROM phpqa_games ORDER BY id DESC");
 } elseif(isset($_GET['hotlink'])) {
-	$glist = run_query("SELECT gameid,game,about,gamecat,remotelink,Champion_name,Champion_score FROM phpqa_games ORDER BY id DESC");
+	$glist = run_iquery("SELECT gameid,game,about,gamecat,remotelink,Champion_name,Champion_score FROM phpqa_games ORDER BY id DESC");
 } else {
-	$glist = run_query("SELECT gameid,game,about,gamecat,remotelink,Champion_name,Champion_score FROM phpqa_games ORDER BY id DESC LIMIT 0,10");
+	$glist = run_iquery("SELECT gameid,game,about,gamecat,remotelink,Champion_name,Champion_score FROM phpqa_games ORDER BY id DESC LIMIT 0,10");
 }
+
 // games function
 function displaygames() {
 global $g;
@@ -106,12 +112,14 @@ $g['Champion_score'] = "------------";
 if ($g['Champion_name']==""){
 $g['Champion_name'] = "--------";
 }
-	$cname = mysql_fetch_array(run_query("SELECT * FROM phpqa_cats WHERE id ='$g[3]'"));
+
+	$cname = mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_cats WHERE id ='$g[3]'"));
 	echo "<div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1' class='gameview'><tr><td width='5%' align='center' class='headertableblock'></td><td width='60%' align='center' class='headertableblock'>$g[1]</td><td width='20%' align='center' class='headertableblock'>Top Score</td><td width='15%' align='center' class='headertableblock'>In Category: </td><td width='2%' align='center' class='headertableblock'></td></tr><tr><td class='arcade1' valign='top' align='center'>
 <a href='index.php?play=$g[0]'><img height='50' width='50' alt='$g[0]' border='0' src='arcade/pics/$g[0].gif' /></a><br /></td><td class='arcade1'  align='center'>$g[2]<br /><br /><a href='index.php?play=$g[0]'>[Play]</a> <a href='?cpiarea=addgames&method=edit&game=$g[0]'>[Edit Game]</a></td><td class='arcade1' valign='top' align='center'><img alt='image' src='skins/Default/crown1.gif' /><br /><b>$g[Champion_score]</b><br /><a href='index.php?action=profile&amp;user=$g[Champion_name]'>$g[Champion_name]</a><br /><a href='index.php?id=$g[0]'>View Highscores</a></td><td class='arcade1' valign='top' align='center'><a href='index.php?cpiarea=games&cat=$g[3]'>$cname[cat]</a></td><td class='arcade1' valign='top' align='center'><input type='checkbox' name=gselect[] value='$g[0]'></td></tr></table></div><br />";
 }
 // games function
-	while($g=mysql_fetch_array($glist)){ 	
+	while($g=mysqli_fetch_array($glist)){ 	
+	
 	// Select from the scores table....
 if (isset($_GET['hotlink'])) {
 if ($g['remotelink'] != "") {
@@ -136,8 +144,10 @@ Move to/Perform:<select size="1" name="dowhat">
 <option value='deletegame'>Delete</option>
 <optgroup label="Place Game(s) In Category:">
 <?php
-$catquery=run_query("SELECT * FROM phpqa_cats");
- while ($catlist= mysql_fetch_array($catquery)) {
+
+$catquery=run_iquery("SELECT * FROM phpqa_cats");
+ while ($catlist= mysqli_fetch_array($catquery)) {
+ 
 echo  "<option value='$catlist[0]'>$catlist[1]</option>";
 } 
 ?>
@@ -146,4 +156,5 @@ echo  "<option value='$catlist[0]'>$catlist[1]</option>";
 </td><td width='1px' class='arcade1'><input type='checkbox' onclick="c=document.getElementsByTagName('input');for(x=0;x<c.length;x++) if (c[x].type.toLowerCase()=='checkbox') c[x].checked=this.checked"></td></tr></table></div><br /></form>
 <?php
 	}
+
 ?>

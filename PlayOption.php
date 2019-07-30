@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,16 +11,17 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: PlayOption.php  Function: Game Play Block   Modified: 7/19/2019   By: MaSoDo
+# Section: PlayOption.php  Function: Game Play Block   Modified: 7/29/2019   By: MaSoDo
 //modified to play HTML5 Games
 $play = htmlspecialchars($_GET['play'], ENT_QUOTES);
-	$g = mysql_fetch_array(run_query("SELECT * FROM phpqa_games WHERE gameid='".$play."'")); 
+
+	$g = mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_games WHERE gameid='".$play."'")); 
 	// Patch - 06/01/09
 	if($g['game'] == "")  { 
 	message("This game doesn't exist / has been deleted."); 
 	die(); 
 	}
-    run_query("UPDATE phpqa_games SET `times_played`=".++$g['times_played']." WHERE gameid='".$play."'");
+    run_iquery("UPDATE phpqa_games SET times_played=".++$g['times_played']." WHERE gameid='".$play."'");
 ?>
 <br />
 <div class='tableborder'><a name='playzone'></a>
@@ -41,12 +42,11 @@ $swf_resource = "arcade/".$play.".swf";
 $swf_resource = $g['remotelink'];
 }
 global $phpqa_user_cookie;
-$yourscore=mysql_fetch_row(run_query("SELECT thescore FROM phpqa_scores WHERE gameidname='".$play."' AND username='".$phpqa_user_cookie."'"));
+$yourscore=mysqli_fetch_row(run_iquery("SELECT thescore FROM phpqa_scores WHERE gameidname='".$play."' AND username='".$phpqa_user_cookie."'"));
 $yourscore=$yourscore[0];
-$CHMP = run_query("SELECT `avatar` FROM `phpqa_accounts` WHERE `name` = '" . $g['Champion_name'] . "'");
-$CHMPimg=mysql_fetch_array($CHMP);
+$CHMP = run_iquery("SELECT avatar FROM phpqa_accounts WHERE name = '" . $g['Champion_name'] . "'");
+$CHMPimg=mysqli_fetch_array($CHMP);
 if (!$CHMPimg['avatar'])$CHMPimg['avatar'] = $avatarloc.'/man.gif';
-
 ?>
 <a name="game"></a>
 <?php 
@@ -68,8 +68,8 @@ echo "<iframe src='" . $g['remotelink'] . "' scrolling='no' style='overflow: hid
 <center><b>Highscores</b></center><br />
 <ol style="text-align:left">
 <?php
-$q=run_query("SELECT username,thescore FROM phpqa_scores WHERE gameidname='".$play."' ORDER BY thescore DESC LIMIT 0,10");
-while($f=mysql_fetch_array($q)) echo "<li><b>".$f[0]."</b>: ".$f[1]."</li>";
+$q=run_iquery("SELECT username,thescore FROM phpqa_scores WHERE gameidname='".$play."' ORDER BY thescore DESC LIMIT 0,10");
+while($f=mysqli_fetch_array($q)) echo "<li><b>".$f[0]."</b>: ".$f[1]."</li>";
 ?>
 </ol></div>
 <a href="index.php?id=<?php echo $g['gameid']; ?>" onmouseover="document.getElementById('popup').style.display=''" onmouseout="document.getElementById('popup').style.display='none'" onmousemove="s=document.getElementById('popup').style;s.top=document.body.scrollTop+event.clientY+2;s.left=document.body.scrollLeft+event.clientX-152;">
@@ -94,7 +94,7 @@ $fav_action="<br /><a href='index.php?action=fav&game=".$g['gameid']."&favtype=a
 }
 $CheckPlatform = $g['platform'];
 $CheckScoring = $g['scoring'];
-$showcat=mysql_fetch_array(run_query("SELECT cat FROM phpqa_cats WHERE id='{$g['gamecat']}'"));	
+$showcat=mysqli_fetch_array(run_iquery("SELECT cat FROM phpqa_cats WHERE id='{$g['gamecat']}'"));	
 if ($CheckPlatform == 'H5') { 
 $PlatWord = 'HTML5';
 }
@@ -119,8 +119,8 @@ echo "<a href='GetGame.php?GID=".$play."' title='Download Game TAR'><img src='".
 }}
 echo "</div>";
 if ($g['gamecat'] != '20' && $g['gamecat'] != '16') {
-$HOF = run_query("SELECT `avatar` FROM `phpqa_accounts` WHERE `name` = '" . $g['HOF_name'] . "'");
-$HOFimg=mysql_fetch_array($HOF);
+$HOF = run_iquery("SELECT avatar FROM phpqa_accounts WHERE name = '" . $g['HOF_name'] . "'");
+$HOFimg=mysqli_fetch_array($HOF);
 if (!$HOFimg['avatar'])$HOFimg['avatar'] = $avatarloc.'/man.gif';
 echo "<div class='navigation' style='background-color: black; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px; padding: -5px 10px 5px 10px;'><i>Hall of Fame</i><br /><img alt='image' src='" . $HOFimg['avatar'] . "' height='' width='75' alt='" . $g['HOF_name'] . "' style='width:75px ; margin-left:auto; margin-right:auto; margin-top:5px; margin-bottom:5px;'  /><br /><img alt='image' src='" . $crowndir ."/crown1.gif' />&nbsp;<b style='color: white;'>" . $g['HOF_name'] . "</b>&nbsp;<img alt='image' src=' " . $crowndir . "/crown1.gif' /><br /><span style='color:black;'>" . str_replace('-', '', $g['HOF_score']) ."</span></div>";
 }} else { 

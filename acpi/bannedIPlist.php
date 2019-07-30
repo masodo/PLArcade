@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: bannedIPlist - Administrator Control Panel   Modified: 6/26/2019   By: MaSoDo
+# Section: acpi Place: bannedIPlist - Administrator Control Panel   Modified: 7/29/2019   By: MaSoDo
 
 { 
 message("Ban one IP below per line. You can also range ban by only putting part of the IP, e.g. 123.45.67.89 -> 123.45");
@@ -28,13 +28,11 @@ fputs($ArcadeBAN,htmlspecialchars($_POST['cssforarcade'], ENT_QUOTES));
 	<?php echo "<input type='hidden' name='akey' value='$key'>"; ?>
 <textarea rows="40" cols="60" name="cssforarcade">
 <?php
-// Implode
+// Implode CSS
 print (implode("",file("./".$textloc."/banned.txt")));
 ?>
 </textarea><br /><input type="submit" value="Edit Banned IPs" name="editban">
 	</form></td></tr></table></div><br />
 <?php 
 } 
-
-
 ?>

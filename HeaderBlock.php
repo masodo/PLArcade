@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,14 +11,15 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: HeaderBlock.php  Function: Top of the Page   Modified: 6/27/2019   By: MaSoDo
+# Section: HeaderBlock.php  Function: Top of the Page   Modified: 7/29/2019   By: MaSoDo
 
 $CPH = 1;
 $CPF = 1;
 $CPD = 0;
-$catquer2 = run_query("(SELECT platform,gamecat FROM phpqa_games)");
-$cp=@mysql_fetch_array($catquer2);
-while($cp=@mysql_fetch_array($catquer2)){
+
+$catquer2 = run_iquery("(SELECT platform,gamecat FROM phpqa_games)");
+$cp=@mysqli_fetch_array($catquer2);
+while($cp=@mysqli_fetch_array($catquer2)){
 if ($cp['platform'] == 'H5') { 
 $CPH = $CPH+1;
 if ($cp['gamecat'] == '2') {

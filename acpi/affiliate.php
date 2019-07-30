@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,30 +11,32 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: affiliates - Control Panel   Modified: 7/19/2019   By: MaSoDo
+# Section: acpi Place: affiliates - Control Panel   Modified: 7/29/2019   By: MaSoDo
 
 if (isset($_GET['act'])&&$_GET['act']=='edit'){
 for($i=1;$i<=$_POST['RecNo'];$i++){
-$strSQL = "UPDATE `phpqa_affiliate` SET `url`='".$_POST["url$i"]."', `tag`='".$_POST["tag$i"]."', `img`='".$_POST["file$i"]."', `sort`=".$_POST["sort$i"].", `active` = ".$_POST["active$i"]." WHERE `id`=".$_POST["EdId$i"]." ";
-run_query($strSQL);
+
+$strSQL = "UPDATE phpqa_affiliate SET url='".$_POST["url$i"]."', tag='".$_POST["tag$i"]."', img='".$_POST["file$i"]."', sort=".$_POST["sort$i"].", active = ".$_POST["active$i"]." WHERE id=".$_POST["EdId$i"]." ";
+run_iquery($strSQL);
 }
 } 
 if (isset($_GET['act'])&&$_GET['act']=='add'){
-$strSQLadd = "INSERT INTO `phpqa_affiliate` VALUES('', '".$_POST['addFILE']."', '".$_POST['addURL']."', '".$_POST['addTAG']."', '".$_POST['addSORT']."', '".$_POST['addKEY']."', 0, 1);";
-run_query($strSQLadd);
+$strSQLadd = "INSERT INTO phpqa_affiliate VALUES('', '".$_POST['addFILE']."', '".$_POST['addURL']."', '".$_POST['addTAG']."', '".$_POST['addSORT']."', '".$_POST['addKEY']."', 0, 1);";
+run_iquery($strSQLadd);
 }
 
 {
 message("Affiliate Manager:");
 }
-$affiliatedata=run_query("SELECT * FROM `phpqa_affiliate` ORDER BY `sort` ASC"); 
+$affiliatedata=run_iquery("SELECT * FROM phpqa_affiliate ORDER BY sort ASC"); 
 ?>
 
 <div class="tableborder"><table width="100%" cellpadding="4" cellspacing="1"><tr><td width="2" align="center" class="headertableblock">Use</td><td width="10%" align="center" class="headertableblock">BANNER</td><td width="20%" align="center" class="headertableblock">URL</td><td width="20%" align="center" class="headertableblock">TAG</td><td width=5% align="center" class="headertableblock">IMAGE FILENAME</td><td width=5% align="center" class="headertableblock">SORT</td><td width="5%" align="center" class="headertableblock">HITS</td><td width="5%" align="center" class="headertableblock">KEY</td></tr>
 <form action="?cpiarea=affiliates&act=edit" method="post" name="affiliatable">
 <?php
 $i = 0;
-	while($A=mysql_fetch_array($affiliatedata)){
+	while($A=mysqli_fetch_array($affiliatedata)){
+	
 	$i = $i + 1; 
 ?>
 

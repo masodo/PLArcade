@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 1.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 7/1/2019   By: MaSoDo
+# Section: NavShout.php  Function: Cookie-Crumb Trail Navigation   Modified: 7/29/2019   By: MaSoDo
 ?>
 <div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><tr><td class='arcade1' align='left'>
 <?php
@@ -29,7 +29,7 @@ echo "<div class='navigation'>&#187; <b>Viewing Leaders</b></div>";
 } elseif (isset($_GET['action']) && $_GET['action'] == "HOF") { // At the HOF boards
 echo "<div class='navigation'>&#187; <b>Viewing Hall of Fame</b></div>";
 } elseif (isset($_GET['cparea'])||isset($_GET['cpiarea'])) {
-$cparea_info='';
+$cparea_info=array();
 $cparea_info['tar_import']="*.tar import new FL games";
 $cparea_info['tar_importH5']="*.tar import new H5 games";
 $cparea_info['addgames']="Add new games";
@@ -76,7 +76,7 @@ $favslist.="'$v', ";
 $favslist = substr($favslist, 0, -2);    
 $fav_quer="WHERE gameid IN($favslist)";
 }}
-$countquer = run_query("SELECT gamecat FROM phpqa_games ".$fav_quer."".(isset($_GET['cat'])?" WHERE gamecat='".$_GET['cat']."'":""));
+$countquer = run_iquery("SELECT gamecat FROM phpqa_games ".$fav_quer."".(isset($_GET['cat'])?" WHERE gamecat='".$_GET['cat']."'":""));
 
     // Patch - 06/01/09
 if(isset($_GET['search'])){
@@ -99,26 +99,26 @@ if(isset($_GET['searchcat']) && $_GET['searchcat'] != 'All' ){
 if (isset($_GET['action'])&&$_GET['action']=="search") {
 //below added for testing M*S*D
 ////echo "<script>alert('Finding: WHERE ".$_GET['by']." LIKE \'%".$_GET['search']."%\'');</script>";
-$catquer = run_query("(SELECT * FROM phpqa_games ORDER BY rand() LIMIT 1) UNION ALL (SELECT * FROM `phpqa_games` WHERE ".$_GET['by']." LIKE '%".$_GET['search']."%' ORDER BY `id` DESC)", 1);
+$catquer = run_iquery("(SELECT * FROM phpqa_games ORDER BY rand() LIMIT 1) UNION ALL (SELECT * FROM phpqa_games WHERE ".$_GET['by']." LIKE '%".$_GET['search']."%' ORDER BY id DESC)", 1);
 } 
 if (!isset($_GET['action'])||isset($_GET['action'])&&$_GET['action']!="search") {
 //below added for testing M*S*D
 //echo "<script>alert('Not Search: ".$_GET['action']."');</script>";
 global $SortOrd, $SortDir;
-$catquer = run_query("(SELECT * FROM phpqa_games ORDER BY rand() LIMIT 1) UNION ALL (SELECT * FROM phpqa_games ".$fav_quer."".
+$catquer = run_iquery("(SELECT * FROM phpqa_games ORDER BY rand() LIMIT 1) UNION ALL (SELECT * FROM phpqa_games ".$fav_quer."".
 (isset($_GET['cat'])?"WHERE gamecat='".$_GET['cat']."' ":"").
 (isset($_GET['plat'])?"WHERE platform='".$_GET['plat']."' ":"").
-"ORDER BY `".$SortOrd."` ".$SortDir." LIMIT ".$limit.",".$show.")", 1);
+"ORDER BY ".$SortOrd." ".$SortDir." LIMIT ".$limit.",".$show.")", 1);
 }
-$arcadetotalcat = mysql_num_rows($countquer);
-$f = @mysql_fetch_array($catquer);
+$arcadetotalcat = mysqli_num_rows($countquer);
+$f = @mysqli_fetch_array($catquer);
 $playrandg = '';
 $findNG = '';
 if (($f['gamecat'] != 2)&&($f['gamecat'] != 2)){
 $playrang = $f['gameid'];
 } else { 
-$findNG = run_query("SELECT `gameid` FROM phpqa_games WHERE `gamecat` != '2' AND `gamecat` != '23' ORDER by id DESC LIMIT 0,1");
-$FNG = mysql_fetch_array($findNG);
+$findNG = run_iquery("SELECT gameid FROM phpqa_games WHERE gamecat != '2' AND gamecat != '23' ORDER by id DESC LIMIT 0,1");
+$FNG = mysqli_fetch_array($findNG);
 $playrang = $FNG[0];
 }
 
