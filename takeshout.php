@@ -11,13 +11,13 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: takeshout.php  Function: ajax receiver page for shouts   Modified: 7/29/2019   By: MaSoDo
+# Section: takeshout.php  Function: ajax receiver page for shouts   Modified: 7/30/2019   By: MaSoDo
 //-----------------------------------------------------------------------------------/
 function run_iquery($sql=false, $no_inj_protect=""){
 require("./arcade_conf.php");
-$iconnect = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
-if (mysqli_connect_errno()){
-  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+$iconnect = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
+if (mysqli_errno()){
+  echo "Failed to connect to MySQL: " . mysqli_error();
   }
 static $queries=Array();
 if ($sql) $queries[]=$sql;
