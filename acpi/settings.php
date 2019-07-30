@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: settings.php  Function: Set Global Arcade Variables   Modified: 7/29/2019   By: MaSoDo
+# Section: settings.php  Function: Set Global Arcade Variables   Modified: 7/30/2019   By: MaSoDo
 
 { ?>
 <br />
@@ -100,7 +100,8 @@ $settingsarray3=Array(
 'Site CSS Themes folder? (def=skins)'=>'themesloc',
 'Default CSS Theme? (def=BlackDefault)'=>'defCSS',
 'Games root folder? (def=arcade)'=>'gamesloc',
-'Site complete URL? (example: http://deburger.com/ARCADE)'=>'arcurl',
+'ARCADE complete URL? (example: http://deburger.com/ARCADE)'=>'arcurl',
+'FORUM complete URL? (example: http://deburger.com/FORUM)'=>'ForumURL',
 'Arcade Greeting? (def=Welcome to the Practical Lightning Arcade)'=>'arcgreet',
 'Countdown Target Time? (yyyy,mo,dd,hh,mm,se)'=>'ResetTime',
 'Footer Image? (stored in image file folder)'=>'toetag',
