@@ -7,7 +7,7 @@ echo "<div align='center'><div class='tableborder'><table width=100% cellpadding
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/2002/REC-xhtml1-20020801/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title> Practical-Lightning-Arcade [PLA] 2.0 (ALPHA) Install Wizard</title>
+<title> Practical-Lightning-Arcade [PLA] 2.0 (BETA) Install Wizard</title>
 <meta http-equiv="content-type" content="text/html; charset=iso-8859-15" /> 
 <link rel='stylesheet' type='text/css' href='./skins/Default.css'>
 </head>
@@ -22,11 +22,11 @@ $checkcol = 'red';
 } else { $checkcol = 'green'; }
 message("<div align='left'><font color='".$checkcol."'>- PHP 4 or higher</font> (installed: v<b>".$tryvers."</b>)<br />- MySQL 4 or higher<br />-UNIX/Win NT OS/FreeBSD</DIV><br /><BR />The above software is needed to install your PHPQA.","System Requirements");
 
-message("Step 1: CHMOD 777 your:<br /> arcade_conf.php<br />/arcade/ folder <br /> /pics/ folder<br /> /tmp/ folder.<br />flat/announce.php","Install Start...");
+message("Step 1: CHMOD 777 your:<br /> arcade_conf.php<br />/arcade/ folder <br /> /pics/ folder<br /> /tmp/ folder.<br />flat/announce.php<br />/FORUM/config.php","Install Start...");
 
 echo "<div align='center'><div class='tableborder'><table width=100% cellpadding='4' cellspacing='1'><td width=60% align=center class=headertableblock>Permissions check</td><tr><td class=arcade1 valign=top><div align=center>";
 
-$files=Array('skins/BlackDefault.css','skins/GrayDefault.css','skins/Default.css','skins/','arcade_conf.php','flat/announce.php','arcade','arcade/pics','arcade/gamedata');
+$files=Array('skins/BlackDefault.css','skins/GrayDefault.css','skins/Default.css','skins/','arcade_conf.php','flat/announce.php','arcade','arcade/pics','arcade/gamedata','../FORUM/config.php');
 
 
 if ($_SERVER['WINDIR']) {
@@ -57,9 +57,6 @@ echo"</div></td></table></div><br>";
 } elseif (isset($_GET['step'])&&$_GET['step'] == '2') {
 message("Enter your MySQL database details below. They will be tested; then written to the config file.", "Database Check");
 //########################################################################################
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Incompatible Function Block #1
 if(isset($_POST['mysqli_dbuser'])) {
 echo "<script>alert('Checking Database Connection!');</script>";
 $dbhost = $_POST['mysqli_host'];
@@ -67,6 +64,7 @@ $dbuser = $_POST['mysqli_dbuser'];
 $dbpass = $_POST['mysqli_dbpass'];
 $dbname = $_POST['mysqli_dbname'];
 $SiteURL = $_POST['SiteURL'];
+$ForumURL = $_POST['ForumURL'];
 $iconnect = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
 if (mysqli_connect_errno()){
   echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -616,7 +614,7 @@ mysqli_query($iconnect,"INSERT INTO `PLA_config` VALUES('o_show_dot', '0');");
 mysqli_query($iconnect,"INSERT INTO `PLA_config` VALUES('o_topic_views', '1');");
 mysqli_query($iconnect,"INSERT INTO `PLA_config` VALUES('o_quickjump', '1');");
 mysqli_query($iconnect,"INSERT INTO `PLA_config` VALUES('o_gzip', '0');");
-mysqli_query($iconnect,"INSERT INTO `PLA_config` VALUES('o_additional_navlinks', '1 = <a href=\"/ARCADE/\">ARCADE</a>');");
+mysqli_query($iconnect,"INSERT INTO `PLA_config` VALUES('o_additional_navlinks', '1 = <a href=\"../ARCADE/\">ARCADE</a>');");
 mysqli_query($iconnect,"INSERT INTO `PLA_config` VALUES('o_report_method', '0');");
 mysqli_query($iconnect,"INSERT INTO `PLA_config` VALUES('o_regs_report', '0');");
 mysqli_query($iconnect,"INSERT INTO `PLA_config` VALUES('o_default_email_setting', '1');");
@@ -666,7 +664,7 @@ mysqli_query($iconnect,"INSERT INTO `PLA_config` VALUES('o_pun_pm_show_global_li
 mysqli_query($iconnect,"INSERT INTO `PLA_config` VALUES('attach_always_deny', 'html,htm,php,php3,php4,exe,com,bat');");
 mysqli_query($iconnect,"INSERT INTO `PLA_config` VALUES('attach_basefolder', 'extensions/pun_attachment/attachments/');");
 mysqli_query($iconnect,"INSERT INTO `PLA_config` VALUES('attach_create_orphans', '1');");
-mysqli_query($iconnect,"INSERT INTO `PLA_config` VALUES('attach_icon_folder', '/FORUM/extensions/pun_attachment/img/');");
+mysqli_query($iconnect,"INSERT INTO `PLA_config` VALUES('attach_icon_folder', 'extensions/pun_attachment/img/');");
 mysqli_query($iconnect,"INSERT INTO `PLA_config` VALUES('attach_icon_extension', 'txt,doc,pdf,wav,mp3,ogg,avi,mpg,mpeg,png,jpg,jpeg,gif');");
 mysqli_query($iconnect,"INSERT INTO `PLA_config` VALUES('attach_icon_name', 'text.png,doc.png,doc.png,audio.png,audio.png,audio.png,video.png,video.png,video.png,image.png,image.png,image.png,image.png');");
 mysqli_query($iconnect,"INSERT INTO `PLA_config` VALUES('attach_subfolder', '7e72976a5a799fec1ef6e246f8cbb17b');");
@@ -1030,22 +1028,28 @@ mysqli_query($iconnect,"INSERT INTO `PLA_users` VALUES(1, 2, 'Guest', '68f32b5f0
 mysqli_query($iconnect,"INSERT INTO `PLA_users` VALUES(2, 1, 'Admin', '0c7540eb7e65b553ec1ba6b20de79608', NULL, 'arcade@MyDomain.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 0, 1, 1, 0, 1, 1, 0, -5, 1, 0, 0, 'English', 'Oxygen', 4, 1561823556, NULL, NULL, 1561663153, '127.0.0.1', 1564407011, NULL, NULL, NULL, 1, 60, 60, 1, 1);");
 mysqli_query($iconnect,"INSERT INTO `PLA_users` VALUES(3, 3, 'user', '68f32b5f0943904f5eac13096f25d756', NULL, 'arcade@MyDomain.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 'English', 'Oxygen', 4, 1562273690, NULL, NULL, 1561663153, '127.0.0.1', 1564352562, NULL, NULL, NULL, 2, 60, 60, NULL, 1);");
 
+//Write the FORUM config
+$Fconf=@fopen('../FORUM/config.php', 'w');
+$Fgoforit = @fwrite($Fconf,"<?php\n\$db_type = 'mysqli';\n\$db_host = '".$dbhost."';\n\$db_name = '".$dbname."';\n\$db_username = '".$dbuser."';\n\$db_password = '".$dbpass."';\n\$db_prefix = 'PLA_';\n\$p_connect = false;\n\$base_url = '".$ForumURL."';\n\$cookie_name = 'PLArcade_FORUM';\n\$cookie_domain = '';\n\$cookie_path = '/';\n\$cookie_secure = 0;\ndefine('FORUM', 1);\nrequire 'cfg.php';\n?>");
+if(!$Fgoforit) { 
+message("FORUM/config.php could not be opened for writing. Please check the permissions.","Failed to write to Forum Config");
+}else{
 // Writing to the conf.
 $conf=@fopen('arcade_conf.php', 'w');
 
-$goforit = @fwrite($conf,"<?php\n\$maintenance='0';\n\$notinstalled='0';\n\$settings['enable_onlinelist']='1';\n\$settings['enable_passrecovery']='1';\n\$settings['enable_shoutbox']='1';\n\$settings['enable_logo']='0';\n\$settings['enable_timer']='0';\n\$settings['allow_comments']='1';\n\$settings['show_announcement']='0';\n\$settings['show_stats_table']='1';\n\$settings['disable_reg']='0';\n\$settings['enable_validation']='0';\n\$settings['use_cheat_protect']='0';\n\$settings['upload_av_max_size']='0';\n\$settings['use_seccode']='1';\n\$settings['allow_guests']='1';\n\$settings['override_userprefs']='0';\n\$settings['arcade_title']='Practical Lightning Arcade [PLA v1.0 beta]';\n\$settings['datestamp']='jS F Y - h:i A';\n\$settings['online_list_dur']='60';\n\$settings['timezone']='America/New_York';\n\$settings['num_pages_of']='10';\n\$settings['ng_num']='20';\n\$settings['ls_num']='14';\n\$settings['bp_num']='10';\n\$settings['catdiv']='80';\n\$settings['catimg']='60';\n\$settings['banned_mails']='';\n\$settings['banned_usernames']='Tasos,TasosP13';\n\$settings['upload_av_max_size']='200000';\n\$phpmyadminloc='';\n\$textloc='flat';\n\$AnnounceFile='announce.php';\n\$imgloc='images';\n\$catloc='categories';\n\$avatarloc='avatars';\n\$useravasloc='useravatars';\n\$smiliesloc='emoticons';\n\$bannerloc='images/banners';\n\$themesloc='skins';\n\$gamesloc='arcade';\n\$arcurl='".$SiteURL."';\n\$arcgreet='Welcome to the Practical Lightning Arcade (BETA)';\n\$ResetTime ='2025,02,31,20,01,0';\n\$toetag='mornoovening-sm.gif';\n\$adminplayas='admin';\n\$siteemail='arcade@MyNewArcade.tld';\n\$BCCcatchall='ArcadeMember@MyNewArcade.tld';\n\$dbhost='".$dbhost."';\n\$dbuser='".$dbuser."';\n\$dbpass='".$dbpass."';\n\$dbname='".$dbname."';\n?>");
+$goforit = @fwrite($conf,"<?php\n\$maintenance='0';\n\$notinstalled='0';\n\$settings['enable_onlinelist']='1';\n\$settings['enable_passrecovery']='1';\n\$settings['enable_shoutbox']='1';\n\$settings['enable_logo']='0';\n\$settings['enable_timer']='0';\n\$settings['allow_comments']='1';\n\$settings['show_announcement']='0';\n\$settings['show_stats_table']='1';\n\$settings['disable_reg']='0';\n\$settings['enable_validation']='0';\n\$settings['use_cheat_protect']='0';\n\$settings['upload_av_max_size']='0';\n\$settings['use_seccode']='1';\n\$settings['allow_guests']='1';\n\$settings['override_userprefs']='0';\n\$settings['arcade_title']='Practical Lightning Arcade [PLA v2.0 beta]';\n\$settings['datestamp']='jS F Y - h:i A';\n\$settings['online_list_dur']='60';\n\$settings['timezone']='America/New_York';\n\$settings['num_pages_of']='10';\n\$settings['ng_num']='20';\n\$settings['ls_num']='14';\n\$settings['bp_num']='10';\n\$settings['catdiv']='80';\n\$settings['catimg']='60';\n\$settings['banned_mails']='';\n\$settings['banned_usernames']='Tasos,TasosP13';\n\$settings['upload_av_max_size']='200000';\n\$phpmyadminloc='';\n\$textloc='flat';\n\$AnnounceFile='announce.php';\n\$imgloc='images';\n\$catloc='categories';\n\$avatarloc='avatars';\n\$useravasloc='useravatars';\n\$smiliesloc='emoticons';\n\$bannerloc='images/banners';\n\$themesloc='skins';\n\$defCSS='BlackDefault';\n\$gamesloc='arcade';\n\$arcurl='".$SiteURL."';\n\$ForumURL='".$ForumURL."';\n\$arcgreet='Welcome to the Practical Lightning Arcade (BETA)';\n\$ResetTime ='2025,02,31,20,01,0';\n\$toetag='mornoovening-sm.gif';\n\$adminplayas='admin';\n\$siteemail='arcade@MyNewArcade.tld';\n\$BCCcatchall='ArcadeMember@MyNewArcade.tld';\n\$dbhost='".$dbhost."';\n\$dbuser='".$dbuser."';\n\$dbpass='".$dbpass."';\n\$dbname='".$dbname."';\n?>");
 
 if(!$goforit) { 
-message("arcade_conf.php could not be opened for writing. Please check the permissions.","Failed to write to conf");
+message("arcade_conf.php could not be opened for writing. Please check the permissions.","Failed to write to Arcade Config");
 }else{
 message("Your new arcade is installed! Congratulations! <a href='index.php'>Click here to get started</a>. <br /><br /><br /><font color='red'>Login with the name: <u>admin</u> and password of: <u>admin</u>. <i>Change this password</i> when you login! You may also change your name if you like.</font><br /><br /><H1>DELETE THIS INSTALL.PHP NOW</H1>","Complete");
 }
 }
-
+}
 ?>
 <form action='PLArcade_v2.0-Install.php?step=2' method='POST'>
 <div class='tableborder'><table width='100%' cellpadding='4' cellspacing='1'><td width='60%' align='center' class='headertableblock'>Database Details</td><td width='60%' align='center' class='headertableblock'></td><tr>
-<tr><td class='arcade1' align='left'><b>Enter your database host:</b><br /></td><td class='arcade1' align='left'><input type='text' name='mysqli_host' value ='localhost' /></td></tr><tr><td class='arcade1' align='left'><b>Enter your database name:</b></td><td class='arcade1' align='left'><input type='text' name='mysqli_dbname' value='' /></td></tr><tr><td class='arcade1'><b>Enter your MySQL Username:</b></td><td class='arcade1'><input type='text' name='mysqli_dbuser' value='' /></td></tr><tr><td class='arcade1' align='left'><b>Password:</b></td><td class='arcade1' align='left'><input type='password' name='mysqli_dbpass' value='' /></td></tr><tr><td class='arcade1' align='left'><b>Site URL:</b> Web Address of your arcade (no trailing slash)</td><td class='arcade1' align='left'><input type='text' name='SiteURL' value='http://MySite.tld/PLArcade' /></td></tr></div></td>
+<tr><td class='arcade1' align='left'><b>Enter your database host:</b><br /></td><td class='arcade1' align='left'><input type='text' name='mysqli_host' value ='localhost' /></td></tr><tr><td class='arcade1' align='left'><b>Enter your database name:</b></td><td class='arcade1' align='left'><input type='text' name='mysqli_dbname' value='' /></td></tr><tr><td class='arcade1'><b>Enter your MySQL Username:</b></td><td class='arcade1'><input type='text' name='mysqli_dbuser' value='' /></td></tr><tr><td class='arcade1' align='left'><b>Password:</b></td><td class='arcade1' align='left'><input type='password' name='mysqli_dbpass' value='' /></td></tr><tr><td class='arcade1' align='left'><b>ARCADE URL:</b> Web Address of your arcade (no trailing slash)</td><td class='arcade1' align='left'><input type='text' name='SiteURL' value='http://MySite.tld/ARCADE' /></td></tr><tr><td class='arcade1' align='left'><b>FORUM URL:</b> Web Address of your FORUM (no trailing slash)</td><td class='arcade1' align='left'><input type='text' name='ForumURL' value='http://MySite.tld/FORUM' /></td></tr></div></td>
 
 <tr><td class=headertableblock colspan='2'><div align='center'><input type='submit' name='postDB' value='Install to Database' /></div></td></tr>
 
