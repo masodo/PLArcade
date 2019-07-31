@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 7/29/2019   By: MaSoDo
+# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 7/31/2019   By: MaSoDo
 session_start();
 if($_GET['captcha']){
 $im = imagecreatefrompng("captchabg.png");
@@ -146,10 +146,10 @@ return $g;
 }
 function run_iquery($sql=false, $no_inj_protect=""){
 require("./arcade_conf.php");
-$iconnect = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
-if (mysqli_errno()){
-  echo "Failed to connect to MySQL: " . mysqli_error();
-  }
+$iconnect = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
+if (mysqli_connect_errno()){
+  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+}
 static $queries=Array();
 if ($sql) $queries[]=$sql;
 // Inject protection, filters queries to stop injections
@@ -201,7 +201,7 @@ echo "<div align='center'><div class='tableborder'><table width=100% cellpadding
 //	Never take this out or move this!
 //                   NEVER!
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ReportID = 2;
+$ReportID = 11;
 $exist='';
 //declare some variables would be nice
 $plat = "";
