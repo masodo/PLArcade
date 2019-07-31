@@ -13,7 +13,7 @@
 // ---------------------------------------------------------------------------------/
 # Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 7/31/2019   By: MaSoDo
 session_start();
-if($_GET['captcha']){
+if(isset($_GET['captcha'])){
 $im = imagecreatefrompng("captchabg.png");
 $textcolor = imagecolorallocate($im, 333,333, 333);
 imagestring($im, 4,rand(0,240), rand(0,20), "{$_SESSION['captcha']}", $textcolor);
