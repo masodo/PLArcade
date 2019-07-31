@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ShoutStage.php  Function: Shout Box Display Mechanics   Modified: 7/29/2019   By: MaSoDo
+# Section: ShoutStage.php  Function: Shout Box Display Mechanics   Modified: 7/31/2019   By: MaSoDo
 //-----------------------------------------------------------------------------------/
 if(isset($_GET['shoutbox'])) $limit=0;
 if(isset($_GET['shoutbox'])) $show=$num_pages_of;
@@ -34,14 +34,16 @@ if($dataa == "") die();
 foreach($dataa as $vv) $userss[]=$vv[0];
 $userss=array_flip(array_flip($userss));
 $qqq=run_iquery("SELECT name,avatar,`group` FROM phpqa_accounts WHERE name='".implode($userss,"' OR name='")."'");
+$qashoutbox = array();
+$avatars = array();
+$thisgroup = array();
 while($ggg=mysqli_fetch_array($qqq)) { 
 $avatars[$ggg['name']]="$ggg[avatar]";
 $thisgroup[$ggg['name']]="$ggg[group]";
 }
 $toppost = print_r($dataa[0], true);
 foreach($dataa as $qashoutbox){
-$postsofsomething = $qashoutbox[1];
-$i=-1;
+$postsofsomething = $qashoutbox[1];$i=-1;
 $emotesdata = run_iquery("SELECT * FROM phpqa_emotes");
 while($smils=mysqli_fetch_array($emotesdata)){
 $postsofsomething = bbcodeHtml($postsofsomething);
@@ -56,11 +58,16 @@ $postsofsomething= preg_replace("/$checkbadwords/i", "@!&^*%", $postsofsomething
 if (isset($exist[6]) && $exist[6]=="Moderator" || isset($exist[6]) && $exist[6]=="Admin") {
 echo "<a href='javascript:if (confirm(\"Are you sure?\")) document.location=\"index.php?shoutdel=$qashoutbox[2]&akey=$key\"'>[x]</a><a href=\"?modcparea=IPscan&serv=$qashoutbox[3]\">[?]</a> ";
 }
-$qashoutbox[5]=$avatars[$qashoutbox[0]];
-$qashoutbox[6]=$thisgroup[$qashoutbox[0]];
+if (isset($qashoutbox[0])){
+$SBuser = $qashoutbox[0];
+} else { 
+$SBuser = '';
+}
+$qashoutbox[5]=$avatars[$SBuser];
+$qashoutbox[6]=$thisgroup[$SBuser];
 if ($qashoutbox[5] == ''){ $qashoutbox[5] = $avatarloc.'/man.gif'; }
 $parse_stamp = date($datestamp, $qashoutbox[4] );
-echo "<a title='".$parse_stamp."'><img src='".$imgloc."/clockin.png' alt='posted time' height='10' width='10' /></a>&nbsp; <u><b><a href='?action=profile&user=".$qashoutbox[0]."'".($qashoutbox[5]?" onmouseover=\"s=document.getElementById('shoutboxpopup');s.style.display='';s.getElementsByTagName('img')[0].src='".$qashoutbox[5]."';\" onmousemove=\"s=document.getElementById('shoutboxpopup').style;s.top=document.body.scrollTop+2+event.clientY;s.left=document.body.scrollLeft+event.clientX;\" onmouseout=\"document.getElementById('shoutboxpopup').style.display='none'":"")."\" class='".$qashoutbox[6]."Look'>".$qashoutbox[0]."</a></b></u>: ".$postsofsomething."<br /><hr />";
+echo "<a title='".$parse_stamp."'><img src='".$imgloc."/clockin.png' alt='posted time' height='10' width='10' /></a>&nbsp; <u><b><a href='?action=profile&user=".$SBuser."'".($qashoutbox[5]?" onmouseover=\"s=document.getElementById('shoutboxpopup');s.style.display='';s.getElementsByTagName('img')[0].src='".$qashoutbox[5]."';\" onmousemove=\"s=document.getElementById('shoutboxpopup').style;s.top=document.body.scrollTop+2+event.clientY;s.left=document.body.scrollLeft+event.clientX;\" onmouseout=\"document.getElementById('shoutboxpopup').style.display='none'":"")."\" class='".$qashoutbox[6]."Look'>".$qashoutbox[0]."</a></b></u>: ".$postsofsomething."<br /><hr />";
 }
 }} else {echo "<h2>Sorry, No Guest Shouts!</h2>Please <a href='index.php?action=register#registration'>Register</a> or <a href=\"javascript:tog('login_form')\">Login</a>";}
  ?>
