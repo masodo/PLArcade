@@ -1,4 +1,17 @@
 <?php
+//-----------------------------------------------------------------------------------/
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
+//Michael S. DeBurger [DeBurger Photo Image & Design]
+//-----------------------------------------------------------------------------------/
+//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//
+//  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
+//-----------------------------------------------------------------------------------/
+// Thanks to (Sean) http://seanj.jcink.com 
+// for: Tournies, JS, and more
+// ---------------------------------------------------------------------------------/
+# File: FORUM/include/parser.php   Modified: 8/12/2019   By: MaSoDo
 /**
  * Loads various functions used to parse posts.
  *
@@ -7,7 +20,8 @@
  * @package PunBB
  */
 
-
+//to silence depreciated error (for now)
+error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
 // Make sure no one attempts to run this script "directly"
 if (!defined('FORUM'))
 	exit;
@@ -636,7 +650,8 @@ function handle_url_tag($url, $link = '', $bbcode = false)
 			}
 		}
 
-		$link = ($link == '' || $link == $url) ? ((utf8_strlen($url) > 55) ? utf8_substr($url, 0 , 39).' … '.utf8_substr($url, -10) : $url) : stripslashes($link);
+		$link = ($link == '' || $link == $url) ? ((utf8_strlen($url) > 55) ? utf8_substr($url, 0 , 39).' 
+ '.utf8_substr($url, -10) : $url) : stripslashes($link);
 	}
 
 	$return = ($hook = get_hook('ps_handle_url_tag_end')) ? eval($hook) : null;
