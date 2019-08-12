@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: RegisterOption.php  Function: Register for the Arcade   Modified: 7/29/2019   By: MaSoDo
+# Section: RegisterOption.php  Function: Register for the Arcade   Modified: 8/12/2019   By: MaSoDo
 if (isset($_POST['usernamesign']) && $_POST['usernamesign'] != "" && isset($_POST['postpassword']) && $_POST['postpassword'] !="") {
 $name = htmlspecialchars($_POST['usernamesign'], ENT_QUOTES);
 $pass = md5(sha1(htmlspecialchars($_POST['postpassword'])));
@@ -66,7 +66,7 @@ $headers = "From: ".$hd."\nBcc: ".$siteemail."\n";
 @mail($email,$mailsub,$mailbody,$headers);
 }
 $regtime = time();
-run_iquery("INSERT INTO phpqa_accounts (name,pass,email,ipaddress,avatar,group,skin,settings) VALUES ('$name','$pass','$email','$ipa','','$status','$defCSS','$s_settings')", 1);
+run_iquery("INSERT INTO phpqa_accounts (name,pass,email,ipaddress,avatar,`group`,skin,settings) VALUES ('$name','$pass','$email','$ipa','','$status','$defCSS','$s_settings')", 1);
 run_iquery("INSERT INTO PLA_users (username,password,email,registration_ip,group_id,registered) VALUES ('$name','$pass','$email','$ipa','3','$regtime')", 1);
 if(isset($settings['enable_email_validation'])&&$settings['enable_email_validation'] != '1') { 
 	message("Welcome to the arcade, <b>$name</b>!<br /><br /> Click the '<i>Login</i>' link above, enter your name and password and login to begin playing!");
