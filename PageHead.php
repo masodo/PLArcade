@@ -14,7 +14,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: PageHead.php  Function: HTML Page Heading   Modified: 7/29/2019   By: MaSoDo
+# Section: PageHead.php  Function: HTML Page Heading   Modified: 8/12/2019   By: MaSoDo
 ?>
 
 <title> <?php echo $settings['arcade_title']; ?> </title>
@@ -36,7 +36,7 @@
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="msapplication-TileImage" content="/icon/ms-icon-144x144.png">
 <meta name="theme-color" content="#ffffff">
-<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <style type="text/css">
 .divVisible {display:block;}
 .divHidden{display:none;} 
