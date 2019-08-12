@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: members - Control Panel   Modified: 7/29/2019   By: MaSoDo
+# Section: acpi Place: members - Control Panel   Modified: 8/12/2019   By: MaSoDo
 //require('exportuserstoforum.php');
 {
 message("View Only: <br /><a href='?cpiarea=members&act=Admin'>Admins</a> &middot; <a href='?cpiarea=members&act=Moderator'>Moderators</a> &middot; <a href='?cpiarea=members&act=Affiliate'>Affiliate</a> &middot; <a href='?cpiarea=members&act=Member'>Members</a> &middot; <a href='?cpiarea=members&act=Banned'>Banned</a> &middot; <a href='?cpiarea=members&act=Validating'>Validating</a>");
@@ -77,7 +77,7 @@ run_iquery("UPDATE PLA_users SET password = '".$new_pass."' WHERE username='".$n
 }}
 if(isset($_GET['validate'])) { vsess();
 	$n=htmlspecialchars($_GET['validate'], ENT_QUOTES);
-	run_iquery("UPDATE phpqa_accounts SET group = 'Member' WHERE name='".$n."'");
+	run_iquery("UPDATE phpqa_accounts SET `group` = 'Member' WHERE name='".$n."'");
 }
 
 if(isset($_GET['deleteav'])) { 
