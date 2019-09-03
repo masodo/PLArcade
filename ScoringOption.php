@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 7/29/2019  By: MaSoDo
+# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 9/3/2019  By: MaSoDo
 
 if (isset($_POST['thescore']))$thescore = $_POST['thescore'];
 if (isset($_GET['autocom'])) {
@@ -174,6 +174,7 @@ $post_user_cookie = $adminplayas;
 if(isset($settings['email_scores'])&&$settings['email_scores']=='1') {
 if($checkTOPscore['username'] !="") {
 if($checkTOPscore['username'] != $post_user_cookie) {
+$psettings = array();
 $person_to_mail=mysqli_fetch_array(run_iquery("SELECT email,settings FROM phpqa_accounts WHERE name='".$checkTOPscore['username']."'"));
 $psettings = explode("|", $person_to_mail['settings']);
 if($psettings[4] != "No" && $person_to_mail['email'] !=$exist['email']) { 
