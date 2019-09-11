@@ -1,10 +1,10 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
@@ -121,12 +121,13 @@ if (((null !== $showcat[0] && $showcat[0] == "Testing") || (null !== $g['exclusi
 echo "<a href='GetGame.php?GID=".$play."' title='Download Game TAR'><img src='".$arcurl."/".$imgloc."/DL.png' height='25' width='25' alt='Download Game .tar' style='margin-left:auto; margin-right:auto; margin-top:15px;' /></a>";
 }}
 echo "</div>";
+if ($g['HOF_name'] != ''){
 if ($g['gamecat'] != '20' && $g['gamecat'] != '16') {
 $HOF = run_iquery("SELECT avatar FROM phpqa_accounts WHERE name = '" . $g['HOF_name'] . "'");
 $HOFimg=mysqli_fetch_array($HOF);
 if (!$HOFimg['avatar'])$HOFimg['avatar'] = $avatarloc.'/man.gif';
 echo "<div class='navigation' style='background-color: black; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px; padding: -5px 10px 5px 10px;'><i>Hall of Fame</i><br /><img alt='image' src='" . $HOFimg['avatar'] . "' height='' width='75' alt='" . $g['HOF_name'] . "' style='width:75px ; margin-left:auto; margin-right:auto; margin-top:5px; margin-bottom:5px;'  /><br /><img alt='image' src='" . $crowndir ."/crown1.gif' />&nbsp;<b style='color: white;'>" . $g['HOF_name'] . "</b>&nbsp;<img alt='image' src=' " . $crowndir . "/crown1.gif' /><br /><span style='color:black;'>" . Beautify(str_replace('-', '', $g['HOF_score'])) ."</span></div>";
-}} else { 
+}}} else { 
 echo "You must be logged in to play the arcade games. Register an account to play - it's free <a href='index.php?action=register'>Click here</a>!</td><td class='arcade1' valign='top' align='center'>";
 }
 ?>
