@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 9/3/2019  By: MaSoDo
+# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 9/11/2019  By: MaSoDo
 
 if (isset($_POST['thescore']))$thescore = $_POST['thescore'];
 if (isset($_GET['autocom'])) {
@@ -80,7 +80,7 @@ $DL_action="<a href='GetGame.php?GID=".$gameinfo['gameid']."' title='Download Ga
 }}
 ?>
 <?php echo $DL_action.$fav_action ?></div></td>
- <td class='arcade1' valign='top' align='center'><img alt='image' src='<?php echo $crowndir; ?>/crown1.gif' /><br /><b><?php echo $gameinfo['Champion_name']?$gameinfo['Champion_name']:""; ?></b><br /><?php echo $gameinfo['Champion_score']?str_replace('-', '', $gameinfo['Champion_score']):"-------------"; ?><br /><a href='index.php?id=<?php echo $id; ?>'>View Highscores</a>
+ <td class='arcade1' valign='top' align='center'><img alt='image' src='<?php echo $crowndir; ?>/crown1.gif' /><br /><b><?php echo $gameinfo['Champion_name']?$gameinfo['Champion_name']:""; ?></b><br /><?php echo $gameinfo['Champion_score']?Beautify(str_replace('-', '', $gameinfo['Champion_score'])):"-------------"; ?><br /><a href='index.php?id=<?php echo $id; ?>'>View Highscores</a>
  </td>
  </tr>
  </table>
@@ -245,7 +245,7 @@ $checkbadwords = rtrim($badwords[$gx]);
 $postsofsomething= preg_replace("/$checkbadwords/i", "@!&^*%", $postsofsomething);
 } 
 }
-echo "<tr><td class='arcade1' align='center'><a href='index.php?action=profile&amp;user=".$g[1]."' class='".$thisGroup['group']."Look'>".$g[1]."</a></td><td class='arcade1' align='center'>" . str_replace('-', '', $g[2]) . "</td><td class='arcade1' width='40%' align='center'>".$postsofsomething."</td><td class='arcade1' width='20%' align='center'>".$parse_stamp."</td>";
+echo "<tr><td class='arcade1' align='center'><a href='index.php?action=profile&amp;user=".$g[1]."' class='".$thisGroup['group']."Look'>".$g[1]."</a></td><td class='arcade1' align='center'>" . Beautify(str_replace('-', '', $g[2])) . "</td><td class='arcade1' width='40%' align='center'>".$postsofsomething."</td><td class='arcade1' width='20%' align='center'>".$parse_stamp."</td>";
 isset($exist[6]) ? $exist[6] : null;
 if(isset($exist[6]) && $exist[6] == "Moderator" || isset($exist[6]) && $exist[6] == "Admin") {
 echo "<td width='20%' class='arcade1' align='center'><a href='?modcparea=IPscan&serv=".$g[3]."'>".$g[3]."</a></td><td width='2%' class='arcade1' align='center'><input type='checkbox' name='score_m[]' value='".$g[0]."'></td>";
