@@ -1,17 +1,17 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ProfileOption.php  Function: View User Profile Page   Modified: 7/29/2019   By: MaSoDo
+# Section: ProfileOption.php  Function: View User Profile Page   Modified: 9/11/2019   By: MaSoDo
 
 if (isset($_COOKIE['phpqa_user_c'])) {
 $profiledata=@mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_accounts WHERE name='".$user."'"));
@@ -76,7 +76,7 @@ $x++;
 while($getstats=mysqli_fetch_array($lq)){
 ?>
 <tr>
-<td class='arcade1' width=2%><img width='20' height='20' src='<?php echo $gamesloc; ?>/pics/<?php echo $getstats['gameid']; ?>.gif' /></td><td class='arcade1' align='left'><b><a href='index.php?play=<?php echo $getstats['gameid']; ?>#playzone'><?php echo $getstats['game']; ?></a></b> - <?php echo $getstats['about']; ?></b><br /></td><td class='arcade1' width='20%' align='center'>Score to beat: <br /><b><?php echo str_replace('-', '', $getstats['Champion_score']); ?></b></td>
+<td class='arcade1' width=2%><img width='20' height='20' src='<?php echo $gamesloc; ?>/pics/<?php echo $getstats['gameid']; ?>.gif' /></td><td class='arcade1' align='left'><b><a href='index.php?play=<?php echo $getstats['gameid']; ?>#playzone'><?php echo $getstats['game']; ?></a></b> - <?php echo $getstats['about']; ?></b><br /></td><td class='arcade1' width='20%' align='center'>Score to beat: <br /><b><?php echo Beautify(str_replace('-', '', $getstats['Champion_score'])); ?></b></td>
 <?php
 }
 ?>
@@ -86,7 +86,7 @@ while($getstats=mysqli_fetch_array($lq)){
 while($getHstats=mysqli_fetch_array($Hq)){
 ?>
 <tr>
-<td class='arcade1' width=2%><img width='20' height='20' src='<?php echo $gamesloc; ?>/pics/<?php echo $getHstats['gameid']; ?>.gif' /></td><td class='arcade1' align='left'><b><a href='index.php?play=<?php echo $getHstats['gameid']; ?>#playzone'><?php echo $getHstats['game']; ?></a></b> - <?php echo $getHstats['about']; ?></b><br /></td><td class='arcade1' width='20%' align='center'>Score to beat: <br /><b><?php echo str_replace('-', '', $getHstats['HOF_score']); ?></b></td>
+<td class='arcade1' width=2%><img width='20' height='20' src='<?php echo $gamesloc; ?>/pics/<?php echo $getHstats['gameid']; ?>.gif' /></td><td class='arcade1' align='left'><b><a href='index.php?play=<?php echo $getHstats['gameid']; ?>#playzone'><?php echo $getHstats['game']; ?></a></b> - <?php echo $getHstats['about']; ?></b><br /></td><td class='arcade1' width='20%' align='center'>Score to beat: <br /><b><?php echo Beautify(str_replace('-', '', $getHstats['HOF_score'])); ?></b></td>
 <?php
 }
 ?>
