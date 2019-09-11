@@ -1,17 +1,17 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: IndexOption.php  Function: Display Games Index   Modified: 7/29/2019   By: MaSoDo
+# Section: IndexOption.php  Function: Display Games Index   Modified: 9/11/2019   By: MaSoDo
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	//		  Favorites
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -90,7 +90,7 @@ $DL_action="<a href='GetGame.php?GID=".$g['gameid']."' title='Download Game TAR'
 echo "</div><div class='viewedtimes' style='float: right;'>".$DL_action.$fav_action."</div></td>";
 if ($g['gamecat'] != '20' && $g['gamecat'] != '16') {
 echo "<tr><td align='center' height='20px' class='headertableblock'>Top Score</tr>";
-echo "<tr><td class='arcade1 fheight1' valign='top' align='center'><img alt='image' src='".$crowndir."/crown1.gif' /><br /><b>".str_replace('-', '', $g['Champion_score'])."</b><br /><div style='height:60px;'><img src='".$CHMPimg['avatar']."'  height='40' width='40' /><br /><b>".($g['Champion_name']?"<a href='index.php?action=profile&amp;user=".$g['Champion_name']."' class='".$CHMPimg['group']."Look'>".$g['Champion_name']."</a></b>":"------------</b>")."</div><p><a href='index.php?id=".$g['gameid']."'>View Highscores</a></p>";
+echo "<tr><td class='arcade1 fheight1' valign='top' align='center'><img alt='image' src='".$crowndir."/crown1.gif' /><br /><b>".Beautify(str_replace('-', '', $g['Champion_score']))."</b><br /><div style='height:60px;'><img src='".$CHMPimg['avatar']."'  height='40' width='40' /><br /><b>".($g['Champion_name']?"<a href='index.php?action=profile&amp;user=".$g['Champion_name']."' class='".$CHMPimg['group']."Look'>".$g['Champion_name']."</a></b>":"------------</b>")."</div><p><a href='index.php?id=".$g['gameid']."'>View Highscores</a></p>";
 } else {
 echo "<tr><td align='center' height='20px' class='headertableblock'>No Scores Recorded For This Game</tr>";
 echo "<tr><td class='arcade1 fheight1' valign='top' align='center'><div style='overflow:hidden; height:113px'><img alt='image' src='".$crowndir."/crown1.gif' />&nbsp;&nbsp;<img alt='image' src='".$crowndir."/crown2.gif' />&nbsp;&nbsp;<img alt='image' src='".$crowndir."/crown3.gif' /><br /><br /><i>Sorry, but this game does not record<br />your score in the arcade.</i><br /><b>Please enjoy this selection<br />just for the fun of it!</b><br /><div style='height:56px;'>&nbsp;</div></div>";
