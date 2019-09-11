@@ -1,17 +1,17 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: PlayOption.php  Function: Game Play Block   Modified: 8/27/2019   By: MaSoDo
+# Section: PlayOption.php  Function: Game Play Block   Modified: 9/11/2019   By: MaSoDo
 //modified to play HTML5 Games
 $play = htmlspecialchars($_GET['play'], ENT_QUOTES);
 
@@ -73,7 +73,7 @@ while($f=mysqli_fetch_array($q)) echo "<li><b>".$f[0]."</b>: ".$f[1]."</li>";
 ?>
 </ol></div>
 <a href="index.php?id=<?php echo $g['gameid']; ?>" onmouseover="document.getElementById('popup').style.display=''" onmouseout="document.getElementById('popup').style.display='none'" onmousemove="s=document.getElementById('popup').style;s.top=document.body.scrollTop+event.clientY+2;s.left=document.body.scrollLeft+event.clientX-152;">
-<div class="navigation" style="background-color: black; margin-left: 10px; margin-right: 10px; margin-top: 10px; padding: -5px 10px 5px 10px;"><p><i>Game Champion</i></p><p><img src='<?php echo $CHMPimg['avatar'] ?>'  width='50' /></p><img alt='image' src='<?php echo($crowndir) ?>/crown1.gif' />&nbsp;<b style='color: white;'><?php echo $g['Champion_name']; ?></b>&nbsp;<img alt='image' src='<?php echo($crowndir) ?>/crown1.gif' /><br /><?php echo str_replace('-', '', $g['Champion_score']); ?></div></a><p><?php echo $yourscore!=$g['Champion_score']&&$yourscore?"<i>Your Best:</i> " . str_replace('-', '', $yourscore) . "</p>":""; }?>
+<div class="navigation" style="background-color: black; margin-left: 10px; margin-right: 10px; margin-top: 10px; padding: -5px 10px 5px 10px;"><p><i>Game Champion</i></p><p><img src='<?php echo $CHMPimg['avatar'] ?>'  width='50' /></p><img alt='image' src='<?php echo($crowndir) ?>/crown1.gif' />&nbsp;<b style='color: white;'><?php echo $g['Champion_name']; ?></b>&nbsp;<img alt='image' src='<?php echo($crowndir) ?>/crown1.gif' /><br /><?php echo Beautify(str_replace('-', '', $g['Champion_score'])); ?></div></a><p><?php echo $yourscore!=$g['Champion_score']&&$yourscore?"<i>Your Best:</i> " . str_replace('-', '', $yourscore) . "</p>":""; }?>
 <br />
 <a href="index.php?fullscreen=<?php echo $_GET['play']; ?>" title="Fullscreen Mode" target="_blank"><img src="<?php echo $imgloc; ?>/FullScreen.gif" alt="Fullscreen Mode" /></a><br />
 <br />
@@ -125,7 +125,7 @@ if ($g['gamecat'] != '20' && $g['gamecat'] != '16') {
 $HOF = run_iquery("SELECT avatar FROM phpqa_accounts WHERE name = '" . $g['HOF_name'] . "'");
 $HOFimg=mysqli_fetch_array($HOF);
 if (!$HOFimg['avatar'])$HOFimg['avatar'] = $avatarloc.'/man.gif';
-echo "<div class='navigation' style='background-color: black; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px; padding: -5px 10px 5px 10px;'><i>Hall of Fame</i><br /><img alt='image' src='" . $HOFimg['avatar'] . "' height='' width='75' alt='" . $g['HOF_name'] . "' style='width:75px ; margin-left:auto; margin-right:auto; margin-top:5px; margin-bottom:5px;'  /><br /><img alt='image' src='" . $crowndir ."/crown1.gif' />&nbsp;<b style='color: white;'>" . $g['HOF_name'] . "</b>&nbsp;<img alt='image' src=' " . $crowndir . "/crown1.gif' /><br /><span style='color:black;'>" . str_replace('-', '', $g['HOF_score']) ."</span></div>";
+echo "<div class='navigation' style='background-color: black; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px; padding: -5px 10px 5px 10px;'><i>Hall of Fame</i><br /><img alt='image' src='" . $HOFimg['avatar'] . "' height='' width='75' alt='" . $g['HOF_name'] . "' style='width:75px ; margin-left:auto; margin-right:auto; margin-top:5px; margin-bottom:5px;'  /><br /><img alt='image' src='" . $crowndir ."/crown1.gif' />&nbsp;<b style='color: white;'>" . $g['HOF_name'] . "</b>&nbsp;<img alt='image' src=' " . $crowndir . "/crown1.gif' /><br /><span style='color:black;'>" . Beautify(str_replace('-', '', $g['HOF_score'])) ."</span></div>";
 }} else { 
 echo "You must be logged in to play the arcade games. Register an account to play - it's free <a href='index.php?action=register'>Click here</a>!</td><td class='arcade1' valign='top' align='center'>";
 }
