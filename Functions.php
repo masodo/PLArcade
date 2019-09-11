@@ -1,17 +1,17 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Functions.php  Function: Some Common Functions   Modified: 7/29/2019   By: MaSoDo
+# Section: Functions.php  Function: Some Common Functions   Modified: 9/11/2019   By: MaSoDo
 
 function mysqli_result($res,$row=0,$col=0){ 
     $numrows = mysqli_num_rows($res); 
@@ -25,6 +25,7 @@ function mysqli_result($res,$row=0,$col=0){
     return false;
 }
 
+
 function rangecheck($a){
 if (substr($a,-1)!=".") $a.=".";
 $ip=$_SERVER['REMOTE_ADDR'];
@@ -37,6 +38,42 @@ message("You have been banned from this arcade.");
 die();
 }
 } 
+
+function Beautify($n, $precision = 3) {
+    if ($n < 1000000) {
+        // Anything less than a Million
+        $n_format = number_format($n);
+    } else if ($n < 1000000000) {
+        // Anything less than a Billion
+        $n_format = number_format($n / 1000000, $precision) . ' Million';
+    } else if ($n < 1000000000000 ){
+        // Anything less than a Trillion
+        $n_format = number_format($n / 1000000000, $precision) . ' Billion';
+    } else if ($n < 1000000000000000 ) {  
+       // Anything less than a Quadrillion   
+       $n_format = number_format($n / 1000000000000, $precision) . ' Trillion';
+    } else if ($n < 1000000000000000000 ) {    
+       // Anything less than a  Quintillion
+       $n_format = number_format($n / 1000000000000000, $precision) . ' Quadrillion';
+    } else if ($n < 1000000000000000000000 ) {    
+       // Anything less than a  Sextillion
+       $n_format = number_format($n / 1000000000000000000, $precision) . ' Quintillion';
+    } else if ($n < 1000000000000000000000000 ) {    
+       // Anything less than a  Septillion
+       $n_format = number_format($n / 1000000000000000000000, $precision) . ' Sextillion';
+    } else if ($n < 1000000000000000000000000000 ) {    
+       // Anything less than a  Octtillion
+       $n_format = number_format($n / 1000000000000000000000000, $precision) . ' Septillion';
+    } else if ($n < 1000000000000000000000000000000 ) {    
+       // Anything less than a  Nonillion
+       $n_format = number_format($n / 1000000000000000000000000000, $precision) . ' Octillion';
+    } else if ($n < 1000000000000000000000000000000 ) {    
+       // Anything over an  Octillion
+       $n_format = 'Infinity';
+    }
+
+    return $n_format;
+}
 ?>
 <SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript">
 <!--
@@ -81,6 +118,7 @@ function GetCount(){
 
 
 window.onload=function(){GetCount();}//call when everything has loaded
+
 
 //-->
 </script>
