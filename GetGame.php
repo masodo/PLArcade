@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: GetGame.php - Download Game Script   Modified: 7/29/2019   By: MaSoDo
+# Section: GetGame.php - Download Game Script   Modified: 10/17/2019   By: MaSoDo
 
 if (isset($_COOKIE['PHPSESSID'])) {
 $key=htmlspecialchars($_COOKIE['PHPSESSID'], ENT_QUOTES);
@@ -20,7 +20,6 @@ function vsess() {
 global $key;
 if(isset($_REQUEST['akey']) && $_REQUEST['akey'] != $key) { die("Authorization Mismatch"); }
 }
-
 //Replacement function for php7 compatibility
 function run_iquery($sql=false, $no_inj_protect=""){
 require("./arcade_conf.php");
@@ -81,16 +80,27 @@ function rrmdir($dirgone) {
  }
 $mtime=explode(" ",microtime());
 require("./arcade_conf.php");
+//download limiter
+if (isset($_COOKIE['phpqa_user_c'])) { // Is the username cookie set...
+$phpqa_user_cookie = htmlspecialchars($_COOKIE['phpqa_user_c'], ENT_QUOTES);
+$query = run_iquery("SELECT * FROM phpqa_accounts WHERE name='$phpqa_user_cookie'");
+$exist = mysqli_fetch_array($query);
+} else { echo "Cheeters never prosper."; die; }
 
- 
+if ((isset($exist['group'])&&$exist['group'] == "Admin") || (isset($exist['group'])&&$exist['group'] ==  "Affiliate")) { 
+$gameid = isset($_GET['GID']) ? htmlspecialchars($_GET['GID'], ENT_QUOTES) : '';
+$g = mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_games WHERE gameid='".$gameid."'")); 
+if (((null !== $g['cat'] && $g['cat'] == "Testing") || (null !== $g['exclusiv']) && $g['exclusiv'] == 1) && ($exist[6] ==  "Affiliate")){
+        if($g['exclusiv'] == 1){ 
+        echo "Sorry, This Game Is Not Available For Download."; 
+        die;
+        }}
 try {
 vsess();
   //make sure the script has enough time to run (300 seconds  = 5 minutes)
   ini_set('max_execution_time', '300');
   ini_set('set_time_limit', '0');
-$gameid = isset($_GET['GID']) ? htmlspecialchars($_GET['GID'], ENT_QUOTES) : '';
-
-$g = mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_games WHERE gameid='".$gameid."'")); 
+ 
 $gcat = $g['gamecat'];
 $gheight = $g['gameheight'];
 $gname = $g['gameid'];
@@ -120,11 +130,13 @@ recurse_copy('arcade/gamedata/'.$gameid.'','tmp/TMP-'.$gameid.'/gamedata/'.$game
   $phar->addFromString($gameid.'1.gif',file_get_contents('arcade/pics/'.$gameid.'.gif'));
   
   rrmdir($dir);
+  
 } catch (Exception $e) {
   // handle errors
   echo 'An error has occured, details: ';
   echo $e->getMessage();
 }
+} else { echo "Sorry, you are not authorized to download the games."; }
 
       if(file_exists($target)) {
       
@@ -149,5 +161,5 @@ if ($fp = fopen($file, 'rb')) {
  
     @fclose($fp);
     unlink($target);
-} }
+}}
 ?>
