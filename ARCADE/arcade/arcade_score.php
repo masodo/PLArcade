@@ -1,10 +1,10 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
@@ -18,7 +18,7 @@
   $thescore = $_POST['gscore'];
 
   ?>
-<form id="myForm" action="http://deburger.com/ARCADE/index.php?act=Arcade&do=newscore" method="post">
+<form id="myForm" action="http://<YOUR SITE HERE>/index.php?act=Arcade&do=newscore" method="post">
 <?php
     foreach ($_POST as $a => $b) {
         echo '<input type="hidden" name="'.htmlentities($a).'" value="'.htmlentities($b).'">';
