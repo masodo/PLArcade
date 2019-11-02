@@ -1,17 +1,17 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi place: addgames Administrator Control Panel   Modified: 7/29/2019   By: MaSoDo
+# Section: acpi place: addgames Administrator Control Panel   Modified: 10/31/2019   By: MaSoDo
 {
 // The different methods
 
@@ -20,6 +20,8 @@ if (!isset($_GET['method'])) {
 <div class='tableborder' align='left'><table width=100% cellpadding='4' cellspacing='1'><td width='20%' align='center' class='headertableblock' colspan='2'>Adding a new game - Click on a method</td><tr>
 <tr><td class='arcade1' align='left'><b><a href='index.php?cpiarea=tar_importH5'>Import HTML5 from Tar Method</b><br></td><td class='arcade1'>Add HTML5 games using IbProArcade tars. <i>(must already be uploaded into &quot;tarsH5&quot; folder)</i></td></tr>
 <tr><td class='arcade1' align='left'><b><a href='index.php?cpiarea=tar_import'>Tar Method</b> FLASH<br></td><td class='arcade1'>Add FLASH games using IbProArcade tars.  <i>(must already be uploaded into &quot;tars&quot; folder)</i></td></tr>
+<tr><td class='arcade1' align='left'><hr /></td><td class='arcade1' align='left'><hr /></td></tr>
+<tr><td class='arcade1' align='left'><b><a href='index.php?cpiarea=tar_importRA'>Tar Method</b> RelaxArcade<br></td><td class='arcade1'>Add HTML5 games using RelaxArcade tars.  <i>(must already be uploaded into &quot;tarsRA&quot; folder)</i></td></tr>
 <tr><td class='arcade1' align='left'><hr /></td><td class='arcade1' align='left'><hr /></td></tr>
 <tr><td class='arcade1' align='left'><b><a href='index.php?cpiarea=addgames&method=upload'>Upload Method</b><br></td><td class='arcade1'>Attach the game files using upload from your browser.</td></tr>
 <tr><td class='arcade1' align='left'><b><a href='index.php?cpiarea=addgames&method=ftp'>FTP Method</b><br></td><td class='arcade1'>Use this method if you have uploaded the game files with "FTP" and now want to add the game.</td></tr>
