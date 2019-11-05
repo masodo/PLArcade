@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ArcadeInfoLG.php By: Legionaire Function: Latest Site Info Block   Modified: 9/11/2019   By: MaSoDo
+# Section: ArcadeInfoLG.php By: Legionaire Function: Latest Site Info Block   Modified: 11/5/2019   By: MaSoDo
 ?>
 <br />
 <?php
@@ -20,6 +20,7 @@ $MyMess = '';
 $alertstyle = '';
 $alertlink = '';
 $forumnote = '';
+$FClass = 'navigation';
 if (isset($_COOKIE['phpqa_user_c'])) {
 $MyMess = $_COOKIE['phpqa_user_c'];
 
@@ -34,6 +35,15 @@ $checkOmess= mysqli_fetch_array($checkOmessages);
 $checkOmess_for = $checkOmess['id'];
 $anyOsent=mysqli_num_rows(run_iquery("SELECT status FROM PLA_pun_pm_messages WHERE receiver_id = '".$checkOmess_for."' AND status = 'sent'"));
 if($anyOsent > 0){ $AlertMe='yes'; $alertstyle='border:solid orange;'; $alertlink='color:orange;'; $forumnote=' (<b>PM</b> alt)'; }
+}
+$checknew=run_iquery("SELECT last_visit FROM PLA_users where username = '".$MyMess."'");
+$checkN= mysqli_fetch_array($checknew);
+$LastVisit = $checkN['last_visit'];
+//echo "<script>alert('Sorry... Testing: ".$LastVisit."')</script>"; 
+$checknewP=run_iquery("SELECT posted FROM PLA_posts where posted > ".$LastVisit."");
+$checkP=mysqli_fetch_array($checknewP);
+if ($checkP['posted'] !== NULL){
+$FClass = 'ActNavigation';
 }
 }
 ?>
