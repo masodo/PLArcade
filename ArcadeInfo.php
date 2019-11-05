@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ArcadeInfo.php  Function: Latest Site Info Block   Modified: 9/11/2019   By: MaSoDo
+# Section: ArcadeInfo.php  Function: Latest Site Info Block   Modified: 11/5/2019   By: MaSoDo
 ?>
 <br />
 <?php
@@ -20,6 +20,7 @@ $MyMess = '';
 $alertstyle = '';
 $alertlink = '';
 $forumnote = '';
+$FClass = 'navigation';
 if (isset($_COOKIE['phpqa_user_c'])) {
 $MyMess = $_COOKIE['phpqa_user_c'];
 
@@ -34,6 +35,15 @@ $checkOmess= mysqli_fetch_array($checkOmessages);
 $checkOmess_for = $checkOmess['id'];
 $anyOsent=mysqli_num_rows(run_iquery("SELECT status FROM PLA_pun_pm_messages WHERE receiver_id = '".$checkOmess_for."' AND status = 'sent'"));
 if($anyOsent > 0){ $AlertMe='yes'; $alertstyle='border:solid orange;'; $alertlink='color:orange;'; $forumnote=' (<b>PM</b> alt)'; }
+}
+$checknew=run_iquery("SELECT last_visit FROM PLA_users where username = '".$MyMess."'");
+$checkN= mysqli_fetch_array($checknew);
+$LastVisit = $checkN['last_visit'];
+//echo "<script>alert('Sorry... Testing: ".$LastVisit."')</script>"; 
+$checknewP=run_iquery("SELECT posted FROM PLA_posts where posted > ".$LastVisit."");
+$checkP=mysqli_fetch_array($checknewP);
+if ($checkP['posted'] !== NULL){
+$FClass = 'ActNavigation';
 }
 }
 ?>
@@ -50,14 +60,14 @@ if (!isset($_COOKIE['phpqa_user_c'])) {
 } else {
 
 $checkChamps = mysqli_num_rows(run_iquery("SELECT username FROM phpqa_leaderboard WHERE username = '$phpqa_user_cookie'"));
-echo "<div style='width: 100%; text-align: center; margin-left: auto; margin-right: auto;'><div  class='navigation'>Logged in: <A href='index.php?action=profile&amp;user=$phpqa_user_cookie'>$phpqa_user_cookie</a> Total Wins: $checkChamps </div><div class='navigation'><a href='index.php?action=settings'>Settings</a>";
+echo "<div style='width: 100%; text-align: center; margin-left: auto; margin-right: auto;'><div class='navigation'>Logged in: <A href='index.php?action=profile&amp;user=$phpqa_user_cookie'>$phpqa_user_cookie</a> Total Wins: $checkChamps </div><div class='navigation'><a href='index.php?action=settings'>Settings</a>";
 if ($exist[6]=="Admin") {
 echo " (<a href='index.php?cpiarea=idx'><b>Admin CP</b></a>) &middot; (<a href='index.php?modcparea=idx'><b>Mod CP</b></a>)";
 }
 if ($exist[6]=="Moderator") {
 echo " (<a href='index.php?modcparea=idx'><b>Mod CP</b></a>)";
 }
-echo"</div><div  class='navigation'>[ <a href='index.php?action=logout'>Log Out</a> ]</div><div  class='navigation'><a href='index.php?fav=1'>Favorites</a></div><div  class='navigation'><a href='index.php?action=leaderboards'>Leaderboard</a></div><div  class='navigation'><a href='index.php?action=HOF'>Hall of Fame</a></div><div  class='navigation'><a href='javascript:tog(\"search\")'>Search</a></div><div  class='navigation'><a href='index.php?action=members'>Members</a></div><div  class='navigation' style='".$alertstyle."' ><a href='".$ForumURL."' style='".$alertlink."'>Forum$forumnote</a></div></div>";
+echo"</div><div  class='navigation'>[ <a href='index.php?action=logout'>Log Out</a> ]</div><div  class='navigation'><a href='index.php?fav=1'>Favorites</a></div><div  class='navigation'><a href='index.php?action=leaderboards'>Leaderboard</a></div><div  class='navigation'><a href='index.php?action=HOF'>Hall of Fame</a></div><div  class='navigation'><a href='javascript:tog(\"search\")'>Search</a></div><div class='navigation'><a href='index.php?action=members'>Members</a></div><div class='".$FClass."' style='".$alertstyle."' ><a href='".$ForumURL."' style='".$alertlink."'>Forum$forumnote</a></div></div>";
 }
 // end nav buttons
 ?>
