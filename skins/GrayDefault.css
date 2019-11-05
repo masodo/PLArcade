@@ -51,6 +51,18 @@ border:1px solid #b7b7b7; -webkit-border-radius: 3px; -moz-border-radius: 3px;bo
  margin-right:2px;
  font-size: 14px;
 }
+.ActNavigation {
+border:1px solid #7eb9d0; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:10px;font-family:arial, helvetica, sans-serif; padding: 5px 5px 5px 5px; text-decoration:none; display:inline-block;text-shadow: -1px -1px 0 rgba(0,0,0,0.3);font-weight:bold; color: #FFFFFF;
+ background-color: #a7cfdf; background-image: -webkit-gradient(linear, left top, left bottom, from(#a7cfdf), to(#23538a));
+ background-image: -webkit-linear-gradient(top, green,lightgreen);
+ background-image: -moz-linear-gradient(top, green,lightgreen);
+ background-image: -ms-linear-gradient(top, green,lightgreen);
+ background-image: -o-linear-gradient(top, green,lightgreen);
+ background-image: linear-gradient(to bottom, green,lightgreen);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#a7cfdf, endColorstr=#23538a);
+ margin-left: 2px;
+ margin-right:2px;
+ font-size: 14px;
+ }
 .navigation:hover {
 border:1px solid #a0a0a0;
  background-color: #bababa; background-image: -webkit-gradient(linear, left top, left bottom, from(#bababa), to(#575757));
@@ -68,28 +80,28 @@ padding-left:5px;
 padding-right:5px;
 }
 .memberLook{
-width: 85px;
+width: 75px;
 text-align: center;
 display:inline-block;
 padding:0,5,0,5;
 border:solid thin blue;
 }
 .adminLook{
-width: 85px;
+width: 75px;
 text-align: center;
 display:inline-block;
 padding:0,5,0,5;
 border:solid thin green;
 }
 .moderatorLook{
-width: 85px;
+width: 75px;
 text-align: center;
 display:inline-block;
 padding:0,5,0,5;
 border:solid thin purple;
 }
 .affiliateLook{
-width: 85px;
+width: 75px;
 text-align: center;
 display:inline-block;
 padding:0,5,0,5;
