@@ -1,17 +1,17 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Functions.php  Function: Some Common Functions   Modified: 9/11/2019   By: MaSoDo
+# Section: Functions.php  Function: Some Common Functions   Modified: 12/2/2019   By: MaSoDo
 
 function mysqli_result($res,$row=0,$col=0){ 
     $numrows = mysqli_num_rows($res); 
@@ -56,22 +56,33 @@ function Beautify($n, $precision = 3) {
        // Anything less than a  Quintillion
        $n_format = number_format($n / 1000000000000000, $precision) . ' Quadrillion';
     } else if ($n < 1000000000000000000000 ) {    
-       // Anything less than a  Sextillion
+       // Anything less than a Sextillion
        $n_format = number_format($n / 1000000000000000000, $precision) . ' Quintillion';
     } else if ($n < 1000000000000000000000000 ) {    
-       // Anything less than a  Septillion
+       // Anything less than a Septillion
        $n_format = number_format($n / 1000000000000000000000, $precision) . ' Sextillion';
     } else if ($n < 1000000000000000000000000000 ) {    
-       // Anything less than a  Octtillion
+       // Anything less than an Octtillion
        $n_format = number_format($n / 1000000000000000000000000, $precision) . ' Septillion';
     } else if ($n < 1000000000000000000000000000000 ) {    
-       // Anything less than a  Nonillion
+       // Anything less than a Nonillion
        $n_format = number_format($n / 1000000000000000000000000000, $precision) . ' Octillion';
-    } else if ($n < 1000000000000000000000000000000 ) {    
-       // Anything over an  Octillion
-       $n_format = 'Infinity';
+    } else if ($n < 1000000000000000000000000000000000 ) {    
+       // Anything less than a Decillion
+       $n_format = number_format($n / 1000000000000000000000000000000, $precision) . ' Nonillion';
+    } else if ($n < 1000000000000000000000000000000000000 ) {    
+       // Anything less than an Undecillion
+       $n_format = number_format($n / 1000000000000000000000000000000000, $precision) . ' Decillion';
+    } else if ($n < 1000000000000000000000000000000000000000 ) {    
+       // Anything less than a Duodecillion
+       $n_format = number_format($n / 1000000000000000000000000000000000000, $precision) . ' Undecillion';
+    } else if ($n < 1000000000000000000000000000000000000000000 ) {    
+       // Anything less than a Redecillion
+       $n_format = number_format($n / 1000000000000000000000000000000000000000, $precision) . ' Duodecillion';
+    } else if ($n > 9999999999999999999999999999999999999999999 ) {    
+       // Anything over a Duodecillion
+       $n_format = number_format($n / 10000000000000000000000000000000000000000, $precision) . ' Infinity';
     }
-
     return $n_format;
 }
 ?>
