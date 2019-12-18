@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Functions.php  Function: Some Common Functions   Modified: 12/2/2019   By: MaSoDo
+# Section: Functions.php  Function: Some Common Functions   Modified: 12/18/2019   By: MaSoDo
 
 function mysqli_result($res,$row=0,$col=0){ 
     $numrows = mysqli_num_rows($res); 
@@ -79,9 +79,30 @@ function Beautify($n, $precision = 3) {
     } else if ($n < 1000000000000000000000000000000000000000000 ) {    
        // Anything less than a Redecillion
        $n_format = number_format($n / 1000000000000000000000000000000000000000, $precision) . ' Duodecillion';
-    } else if ($n > 9999999999999999999999999999999999999999999 ) {    
-       // Anything over a Duodecillion
-       $n_format = number_format($n / 10000000000000000000000000000000000000000, $precision) . ' Infinity';
+    } else if ($n < 1000000000000000000000000000000000000000000000 ) {    
+       // Anything less than a Quattuordecillion
+       $n_format = number_format($n / 1000000000000000000000000000000000000000000, $precision) . ' Redecillion';
+    } else if ($n < 1000000000000000000000000000000000000000000000000 ) {    
+       // Anything less than a Quindecillion
+       $n_format = number_format($n / 1000000000000000000000000000000000000000000000, $precision) . ' Quattuordecillion';
+    } else if ($n < 1000000000000000000000000000000000000000000000000000 ) {    
+       // Anything less than a Sexdecillion
+       $n_format = number_format($n / 1000000000000000000000000000000000000000000000000, $precision) . ' Quindecillion';
+    } else if ($n < 1000000000000000000000000000000000000000000000000000000 ) {    
+       // Anything less than a Septendecillion
+       $n_format = number_format($n / 1000000000000000000000000000000000000000000000000000, $precision) . ' Sexdecillion';
+    } else if ($n < 1000000000000000000000000000000000000000000000000000000000 ) {    
+       // Anything less than a Octodecillion
+       $n_format = number_format($n / 1000000000000000000000000000000000000000000000000000000, $precision) . ' Septendecillion';
+    } else if ($n < 1000000000000000000000000000000000000000000000000000000000000 ) {    
+       // Anything less than a Novemdecillion
+       $n_format = number_format($n / 1000000000000000000000000000000000000000000000000000000000, $precision) . ' Octodecillion';
+    } else if ($n < 1000000000000000000000000000000000000000000000000000000000000000 ) {    
+       // Anything less than a Vigintillion
+       $n_format = number_format($n / 1000000000000000000000000000000000000000000000000000000000000, $precision) . ' Novemdecillion';
+    } else if ($n > 9999999999999999999999999999999999999999999999999999999999999999 ) {    
+       // Anything over a Novemdecillion
+       $n_format = ' Yadda-yadda-illion';
     }
     return $n_format;
 }
