@@ -1,0 +1,34 @@
+Installing is a little tricky working from this distribution zip file, but with a little perserverence you will be able to get it going using the following basic instructions:
+
+Create folder on remote system for root install site and have a blank mysql database available with known hostname, username, database name and password.
+
+If you have an existing website you will be creating the ARCADE and FORUM folders in the site's root.                                                                                                                       
+Copy "/ARCADE/" folder into site root (755)
+Copy "/FORUM/" folder into site root (755)
+
+(note: does not score properly if installed in a subfolder of the site's root; ex. http://Site.com/subfolder/ARCADE so it is not recommended.)
+
+Upload all remaining files and folders into site's /ARCADE/ folder (disregard *.zip files for now.)
+Upload contents of PLArcadeStarterGames.zip into site's /ARCADE folder as (arcade/*.) 
+Unpack "avatars.zip", "icon.zip", "images.zip", "emoticons.zip" & "categories.zip" to create those subfolders within site's /ARCADE folder.
+
+
+After uploading the files - CHMOD 777 your:
+  arcade_conf.php
+  /arcade/ folder
+  /arcade/pics/ folder
+  /tmp/ folder.
+  flat/announce.php
+  /FORUM/config.php
+  /skins/ folder (recurse into files and folders)
+  /arcade/gamedata folder
+
+visit the site/ARCADE and click the link for "Begin installation"
+
+After set-up please remember to change the category image name for "Dead" games from "categories/dead.gif" to "categories/Dead.gif"
+
+Thanks for trying this script and remember to visit http://practicallightning.com/ARCADE/ for a look at an example of the installed script.
+
+Michael "masodo" DeBurger
+
+
