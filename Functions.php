@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Functions.php  Function: Some Common Functions   Modified: 12/18/2019   By: MaSoDo
+# Section: Functions.php  Function: Some Common Functions   Modified: 1/15/2021   By: MaSoDo
 
 function mysqli_result($res,$row=0,$col=0){ 
     $numrows = mysqli_num_rows($res); 
@@ -77,11 +77,11 @@ function Beautify($n, $precision = 3) {
        // Anything less than a Duodecillion
        $n_format = number_format($n / 1000000000000000000000000000000000000, $precision) . ' Undecillion';
     } else if ($n < 1000000000000000000000000000000000000000000 ) {    
-       // Anything less than a Redecillion
+       // Anything less than a Tredecillion
        $n_format = number_format($n / 1000000000000000000000000000000000000000, $precision) . ' Duodecillion';
     } else if ($n < 1000000000000000000000000000000000000000000000 ) {    
        // Anything less than a Quattuordecillion
-       $n_format = number_format($n / 1000000000000000000000000000000000000000000, $precision) . ' Redecillion';
+       $n_format = number_format($n / 1000000000000000000000000000000000000000000, $precision) . ' Tredecillion';
     } else if ($n < 1000000000000000000000000000000000000000000000000 ) {    
        // Anything less than a Quindecillion
        $n_format = number_format($n / 1000000000000000000000000000000000000000000000, $precision) . ' Quattuordecillion';
@@ -107,6 +107,9 @@ function Beautify($n, $precision = 3) {
     return $n_format;
 }
 ?>
+
+<script src="http://YourSiteHere.com/ARCADE/ruffle/ruffle.js"></script>
+
 <SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript">
 <!--
 dateFuture = new Date(<?php echo($ResetTime);?>); //(yyyy,mo,dd,hh,mm,se)
