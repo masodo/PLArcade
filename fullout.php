@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: fullout.php  Function: Play Flash Games Fullscreen   Modified: 7/29/2019   By: MaSoDo
+# Section: fullout.php  Function: Play Flash Games Fullscreen   Modified: 3/19/2021   By: MaSoDo
 if (isset($_GET['dofull'])) 
 {
 $BigGame = $_GET['dofull'];
@@ -21,4 +21,5 @@ $H = ($H * 2);
 $W = ($W * 2);
 }
 ?>
+<script src="http://YourSiteHere.com/ARCADE/ruffle/ruffle.js"></script>
 <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" width="100%" height="100%" align="middle"> <param name="movie" value="arcade/<?php echo "". $BigGame ."" ?>"><param name="quality" value="high"> <param name="allowScriptAccess" value="sameDomain"> <param name="menu" value="false"> <embed src="<?php echo "arcade/". $BigGame ."" ?>" quality="high" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" menu="false" type="application/x-shockwave-flash" width="100%" height="100%" align="middle"></object>
