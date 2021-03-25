@@ -102,6 +102,7 @@ $settingsarray3=Array(
 'Games root folder? (def=arcade)'=>'gamesloc',
 'ARCADE complete URL? (example: http://deburger.com/ARCADE)'=>'arcurl',
 'FORUM complete URL? (example: http://deburger.com/FORUM)'=>'ForumURL',
+'FORUM Reports Category id #? (in FORUM)'=>'ReportID',
 'Arcade Greeting? (def=Welcome to the Practical Lightning Arcade)'=>'arcgreet',
 'Countdown Target Time? (yyyy,mo,dd,hh,mm,se)'=>'ResetTime',
 'Footer Image? (stored in image file folder)'=>'toetag',
