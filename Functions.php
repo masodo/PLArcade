@@ -40,6 +40,7 @@ die();
 } 
 
 function Beautify($n, $precision = 3) {
+    if ($n < 1) { $n = 0; }
     if ($n < 1000000) {
         // Anything less than a Million
         $n_format = number_format($n);
