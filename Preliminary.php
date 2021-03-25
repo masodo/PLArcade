@@ -201,7 +201,6 @@ echo "<div align='center'><div class='tableborder'><table width=100% cellpadding
 //	Never take this out or move this!
 //                   NEVER!
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ReportID = 4;
 $exist='';
 //declare some variables would be nice
 $plat = "";
