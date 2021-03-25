@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: settings.php  Function: Set Global Arcade Variables   Modified: 7/30/2019   By: MaSoDo
+# Section: settings.php  Function: Set Global Arcade Variables   Modified: 3/25/2021   By: MaSoDo
 
 { ?>
 <br />
