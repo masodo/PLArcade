@@ -27,6 +27,12 @@ visit the site/ARCADE and click the link for "Begin installation"
 
 After set-up please remember to change the category image name for "Dead" games from "categories/dead.gif" to "categories/Dead.gif"
 
+Also:
+Change line #112 of Functions.php to suit your setup:
+<script src="http://YourSiteHere.com/ARCADE/ruffle/ruffle.js"></script>
+Change line #24 of fullout.php to suit your setup:
+<script src="http://YourSiteHere.com/ARCADE/ruffle/ruffle.js"></script>
+
 Thanks for trying this script and remember to visit http://practicallightning.com/ARCADE/ for a look at an example of the installed script.
 
 Michael "masodo" DeBurger
