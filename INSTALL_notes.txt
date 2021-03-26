@@ -1,3 +1,5 @@
+Installation notes 3/25/2021:
+
 Installing is a little tricky working from this distribution zip file, but with a little perserverence you will be able to get it going using the following basic instructions:
 
 Create folder on remote system for root install site and have a blank mysql database available with known hostname, username, database name and password.
@@ -17,15 +19,14 @@ After uploading the files - CHMOD 777 your:
   arcade_conf.php
   /arcade/ folder
   /arcade/pics/ folder
-  /tmp/ folder.
-  flat/announce.php
-  /FORUM/config.php
-  /skins/ folder (recurse into files and folders)
+  /tmp/ folder
   /arcade/gamedata folder
+  /skins/ folder (recurse into files and folders)
+  /flat/announce.php
+  /FORUM/config.php
+  /FORUM/extensions/pun_attachment/attachments/ folder
 
-visit the site/ARCADE and click the link for "Begin installation"
-
-After set-up please remember to change the category image name for "Dead" games from "categories/dead.gif" to "categories/Dead.gif"
+Visit the site/ARCADE and click the link for "Begin installation"
 
 Also:
 Change line #112 of Functions.php to suit your setup:
@@ -33,10 +34,11 @@ Change line #112 of Functions.php to suit your setup:
 Change line #24 of fullout.php to suit your setup:
 <script src="http://YourSiteHere.com/ARCADE/ruffle/ruffle.js"></script>
 
-As admin in FORUM install all available extentions.
+As "admin" in FORUM install all available extentions & install the hotfix.
+
+The PunBB FORUM is having some issues as installed. Research continues on better performance in this area and GIT will be updated with any further developments. The new users seem to have better luck than "Admin" when posting to the FORUMs you should probably create a user in the arcade to manage Posting duties there.
 
 Thanks for trying this script and remember to visit http://practicallightning.com/ARCADE/ for a look at an example of the installed script.
 
 Michael "masodo" DeBurger
-
 
