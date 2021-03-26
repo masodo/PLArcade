@@ -33,6 +33,8 @@ Change line #112 of Functions.php to suit your setup:
 Change line #24 of fullout.php to suit your setup:
 <script src="http://YourSiteHere.com/ARCADE/ruffle/ruffle.js"></script>
 
+As admin in FORUM install all available extentions.
+
 Thanks for trying this script and remember to visit http://practicallightning.com/ARCADE/ for a look at an example of the installed script.
 
 Michael "masodo" DeBurger
