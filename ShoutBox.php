@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ShoutBox.php  Function: ShoutBox Block   Modified: 7/29/2019   By: MaSoDo
+# Section: ShoutBox.php  Function: ShoutBox Block   Modified: 8/30/2022   By: MaSoDo
 
 $phpqa_user_cookie = NULL;
 $key = NULL;
