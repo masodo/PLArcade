@@ -13,6 +13,9 @@
 // ---------------------------------------------------------------------------------/
 # Section: ShoutBox.php  Function: ShoutBox Block   Modified: 7/29/2019   By: MaSoDo
 
+$phpqa_user_cookie = NULL;
+$key = NULL;
+
 if($settings['enable_shoutbox']) {
 if (!isset($acct_setting[1]) || $acct_setting[1] !="No") {
 // Begin Collapse #2 ---
