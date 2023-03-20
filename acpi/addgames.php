@@ -1,17 +1,17 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi place: addgames Administrator Control Panel   Modified: 10/31/2019   By: MaSoDo
+# Section: acpi place: addgames Administrator Control Panel   Modified: 3/20/2023   By: MaSoDo
 {
 // The different methods
 
@@ -166,7 +166,7 @@ $idname = htmlspecialchars($idname, ENT_QUOTES);
 $addedalready = mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
 if (empty($addedalready)) {
 $atime = '';
-message("Game added/edited. <br>[ <a href='index.php?cpiarea=idx'>Arcade CP Home</a> | <a href='index.php?cpiarea=addgames&method=".$_GET['method']."'>Add Another</a> ]");
+message("Game added/edited. <br>[ <a href='index.php?cpiarea=idx'>Arcade CP Home</a> | <a href='index.php?cpiarea=addgames&method=".$_GET['method']."'>Add Another</a> ]<br>[ <a href='index.php?play=".$idname."#playzone'>Test It</a> ]");
 run_iquery("INSERT INTO phpqa_games (id,game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring,exclusiv,HOF_name,HOF_score) VALUES ('$preid','$gamename','$idname','$gameheight','$gamewidth','$about','$gamecat','$remoteurl','$champ','$champs','$pretimes','$plattype','$scoretype','$exclusiv','$HOFn','$HOFs')");
 if (!isset($_GET['game'])){
 global $gamecat;
