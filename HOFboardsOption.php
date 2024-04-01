@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Leaderboards.php  Function: Display of Hall of Fame   Modified: 7/29/2019   By: MaSoDo
+# Section: Leaderboards.php  Function: Display of Hall of Fame   Modified: 4/1/2024   By: MaSoDo
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //		  Leaderboards
@@ -43,9 +43,9 @@ echo "</table></div><br />";
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //		  Wall of Fame
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-echo "<div class='tableborder' ><table width='100%' cellpadding='5' cellspacing='1'><tr><td width='100%' align=center class='headertableblock' style='font-size:24px'>" . $settings['arcade_title'] ." Wall of Fame</td></tr></table>";
+echo "<a name=\"WallOfFame\"></a><div class='tableborder' ><table width='100%' cellpadding='5' cellspacing='1'><tr><td width='100%' align=center class='headertableblock' style='font-size:24px'>" . $settings['arcade_title'] ." Wall of Fame</td></tr></table>";
 // the height property below may need to be adjusted as the years go by...
-echo "<div style='height:450px; padding-bottom:20px;'>";
+echo "<div style='height:auto; padding-bottom:20px;'>";
 
 
 $Wyears = run_iquery("SELECT DISTINCT Wyear FROM phpqa_wall ORDER BY Wyear ASC");
@@ -60,7 +60,7 @@ $Wplace = $Wscores['Wplace'];
 $Wgames = $Wscores['Wgames'];
 $Wname = $Wscores['Wname'];
 $Wavatar = $Wscores['Wavatar'];
-echo "<div style='width:200px; height: 300px; float:left; margin-left:15px; margin-top:15px;'><table style='text-align:center;' width='100%' cellpadding='5' cellspacing='0'><tr><th colspan='2' class='headertableblock'>Season: ". $WLyear ." /  ". $Wyear ."</th></tr>";
+echo "<div style='width:200px; height: auto; float:left; margin-left:15px; margin-top:15px; margin-bottom:15px;'><table style='text-align:center;' width='100%' cellpadding='5' cellspacing='0'><tr><th colspan='2' class='headertableblock'>Season: ". $WLyear ." /  ". $Wyear ."</th></tr>";
 echo "<tr><td colspan='2' class='arcade1'>1st Place <img src='$crowndir/crown1.gif' /> ". $Wgames ." Games</td></tr>";
 echo "<tr><td colspan='2' class='arcade1'><a href=\"index.php?action=profile&amp;user=".$Wname."\"><img src='$Wavatar' height='150' alt='" . $Wname . "' /></a></td></tr>";
 echo "<tr><td colspan='2' class='arcade1'><a href=\"index.php?action=profile&amp;user=".$Wname."\"><b>". $Wname ."</b></a><hr /></td></tr>";
