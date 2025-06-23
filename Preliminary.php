@@ -11,17 +11,26 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 10/14/2019   By: MaSoDo
+# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 6/23/2025   By: MaSoDo w/ClaudAI
 session_start();
 if(isset($_GET['captcha'])){
-$im = imagecreatefrompng("captchabg.png");
-$textcolor = imagecolorallocate($im, 333,333, 333);
-imagestring($im, 4,rand(0,240), rand(0,20), "{$_SESSION['captcha']}", $textcolor);
-imagepng ($im);
-imagedestroy($im);
-header("Content-type: image/jpeg");
-imagepng($im);
-die();
+    // Set the correct content type header first
+    header("Content-type: image/png");
+    
+    $im = imagecreatefrompng("captchabg.png");
+    
+    // Fix the color allocation - values should be 0-255, not just 333
+    $textcolor = imagecolorallocate($im, 51, 51, 51); // Dark gray
+    
+    imagestring($im, 4, rand(0,240), rand(0,20), "{$_SESSION['captcha']}", $textcolor);
+    
+    // Output the image BEFORE destroying it
+    imagepng($im);
+    
+    // Clean up the resource
+    imagedestroy($im);
+    
+    die();
 }
 //uncomment below to report ALL errors
 error_reporting(E_ALL);
