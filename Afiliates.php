@@ -11,12 +11,12 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Afiliates.php  Function: Scrolling Afiliate Banner   Modified: 7/29/2019   By: MaSoDo
+# Section: Afiliates.php  Function: Scrolling Afiliate Banner   Modified: 6/26/2024   By: MaSoDo
 
 
 $getaffil = run_iquery("SELECT * FROM phpqa_affiliate ORDER BY sort ASC");
-echo '<div style="width:80%; height:85px; background-color:black; border:inset; margin-left: auto; margin-right:auto; padding-top: 5px; margin-bottom:25px; color:navy;">';
-echo '<marquee BEHAVIOR="ALTERNATE">';
+echo "<div style='width:80%; height:85px; background-color:black; border:inset; margin-left: auto; margin-right:auto; padding-top: 5px; margin-bottom:25px; color:navy;'>";
+echo "<div id='scroller_container4'><div class='jscroller2_left jscroller2_speed-40' style='white-space:nowrap; margin: 0;'>";
 
 while($useaffil = mysqli_fetch_array($getaffil)) {
 if ($useaffil['active'] == 1){
