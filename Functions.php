@@ -109,7 +109,10 @@ function Beautify($n, $precision = 3) {
 }
 ?>
 
-<script src="http://YourSiteHere.com/ARCADE/ruffle/ruffle.js"></script>
+<script src="//YourSiteHere.com/ARCADE/ruffle/ruffle.js"></script>
+<link rel="stylesheet" type="text/css" href="//YourSiteHere.com/ARCADE/jscript/jscroller2-1.1.css">
+<script type="text/javascript" src="//YourSiteHere.com/ARCADE/jscript/jscroller2-1.61.js"></script>
+<!-- source http://jscroller2.markusbordihn.de/ -->
 
 <SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript">
 <!--
