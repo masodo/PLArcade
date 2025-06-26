@@ -1,17 +1,17 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: 6/23/2025   By: MaSoDo w/ClaudAI
+# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: [6-26-25 working w/ClaudeAI] 10/14/2019   By: MaSoDo
 session_start();
 if(isset($_GET['captcha'])){
     // Set the correct content type header first
@@ -210,6 +210,7 @@ echo "<div align='center'><div class='tableborder'><table width=100% cellpadding
 //	Never take this out or move this!
 //                   NEVER!
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ReportID = 4;
 $exist='';
 //declare some variables would be nice
 $plat = "";
@@ -231,7 +232,8 @@ $SortDir = "";
 $acct_setting = "";
 empty($show);
 $name = "unregistered";
-$catquer = null;
+//$catquer = null;
+$catquer = ""; // try this fix
 $collimg1 = 'open.png';
 $collimg2 = 'open.png';
 $collimg3 = 'open.png';
@@ -315,8 +317,8 @@ $pgnm = 1;
 // ---------------------------
 if (isset($_GET['limit'])) $lim = $_GET['limit'];
 if (isset($limit)) {
-$limn = $limit + $num_pages_of; 
-$limnm = $limit - $num_pages_of; 
+$limn = ($limit) + ($num_pages_of); 
+$limnm = ($limit) - ($num_pages_of); 
 } else { 
 $limn = 1;
 $limnm = 1;
@@ -365,7 +367,8 @@ setcookie("phpqa_user_p", $thepassword_in_db, 0, ""."; HttpOnly'");
 } else {
 $authorized = true;
 setcookie("phpqa_user_c", "{$exist[1]}", time()+2592000);
-setcookie("phpqa_user_p", $thepassword_in_db, time()+2592000, ""."; HttpOnly");
+//setcookie("phpqa_user_p", $thepassword_in_db, time()+2592000, ""."; HttpOnly"); 
+setcookie("phpqa_user_p", $thepassword_in_db, time()+2592000, "/", "", false, true); // ClaudeAI fix MSD 6/26/2025
 }
 // Count the logins here:
 $time = time();
@@ -381,6 +384,7 @@ run_iquery("INSERT INTO phpqa_shoutbox (name,shout,ipa,tstamp) VALUES ('Admin','
 }
 //then load the page:
 header("Location: index.php");
+exit();
 } else {
 echo "Sorry, the password you entered for the account, <b>$userID</b> is incorrect. Please try again.<br /><br /><a href='index.php?action=forgotpass'>Forgot Password?</a>";
 die();
