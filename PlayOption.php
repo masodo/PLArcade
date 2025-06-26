@@ -1,17 +1,17 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: PlayOption.php  Function: Game Play Block   Modified: 9/11/2019   By: MaSoDo
+# Section: PlayOption.php  Function: Game Play Block   Modified: 6-26-2025 w/ ClaudeAI   By: MaSoDo
 //modified to play HTML5 Games
 $play = htmlspecialchars($_GET['play'], ENT_QUOTES);
 
@@ -42,15 +42,19 @@ $swf_resource = "arcade/".$play.".swf";
 $swf_resource = $g['remotelink'];
 }
 global $phpqa_user_cookie;
-$yourscore=mysqli_fetch_row(run_iquery("SELECT thescore FROM phpqa_scores WHERE gameidname='".$play."' AND username='".$phpqa_user_cookie."'"));
-$yourscore=$yourscore[0];
+$result = run_iquery("SELECT thescore FROM phpqa_scores WHERE gameidname='".$play."' AND username='".$phpqa_user_cookie."'");
+$yourscore = mysqli_fetch_row($result);
+
+if ($yourscore) {
+    $yourscore = $yourscore[0];
+}
 $CHMP = run_iquery("SELECT avatar FROM phpqa_accounts WHERE name = '" . $g['Champion_name'] . "'");
 $CHMPimg=mysqli_fetch_array($CHMP);
-if (!$CHMPimg['avatar'])$CHMPimg['avatar'] = $avatarloc.'/man.gif';
+if (!isset($CHMPimg['avatar']))$CHMPimg['avatar'] = $avatarloc.'/man.gif';
 ?>
 <a name="game"></a>
 <?php 
-//modified to play HTML5 Games
+//modified to play HTML5 Games 
 $CheckPlatform = $g['platform'];
 if ($CheckPlatform == 'H5') {
 echo "<iframe src='" . $g['remotelink'] . "' scrolling='no' style='overflow: hidden; outline: none; border: 0px; width: " . $g['gamewidth'] . "px; height: " . $g['gameheight'] . "px; overflow: hidden;' id='" . $g['id'] . "' data-id='" . $g['id'] . "' data-gname='" . $g['gameid'] . "'></iframe><div style='width:25px;float:left; margin-top:20px; margin-left:20px;'><a href='/FORUM/post.php?fid=".$ReportID."&REPORT_GAME_ID=".$g['gameid'] . "&REPORT_GAME_NAME=".$g['game'] . "' target='_blank' title='please report any trouble with this game'><img src='".$imgloc."/redflag.png' /></a></div>";
