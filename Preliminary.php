@@ -363,7 +363,8 @@ if (rtrim($exist[2]) == $thepassword_in_db) {
 if(!isset($_POST['cookiescheck'])) {
 $authorized = true;
 setcookie("phpqa_user_c", "".$exist[1]."");
-setcookie("phpqa_user_p", $thepassword_in_db, 0, ""."; HttpOnly'");
+//setcookie("phpqa_user_p", $thepassword_in_db, 0, ""."; HttpOnly'");
+setcookie("phpqa_user_p", $thepassword_in_db, 0, "/", "", false, true); // ClaudeAI fix MSD 6/26/2025
 } else {
 $authorized = true;
 setcookie("phpqa_user_c", "{$exist[1]}", time()+2592000);
