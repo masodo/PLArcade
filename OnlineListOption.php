@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: OnlineListOption.php  Function: Maintain Online User List   Modified: 7/29/2019   By: MaSoDo
+# Section: OnlineListOption.php  Function: Maintain Online User List   Modified: 6-26-2025 w/ClaudeAI   By: MaSoDo
 
 			// = = = = = = = = = = = = = = = = = = 
 			// 		Online List
@@ -54,13 +54,20 @@ $time = time();
 $lasttime = ($g['time']);
 $HowManyMinutes=round(abs($lasttime-$time) / 60,2);
 echo "</div>";
-if($HowManyMinutes > $settings['online_list_dur']) { 
-run_iquery("DELETE FROM phpqa_sessions WHERE name='".$g['name']."'");
-} else {
-$where=($g['location']);
-if ($where=='')$where="Viewing Arcade Index";
-echo "<a href='index.php?action=profile&user=".$g['name']."' title='".$where." (".$HowManyMinutes." mins ago)' class='".$onnowGrp['group']."Look'>".$g['name']."</a> ";  } 
+// Check all required variables first
+if (!isset($HowManyMinutes, $settings['online_list_dur'], $g['name'])) {
+    return; // or handle the error appropriately
 }
+
+if ($HowManyMinutes > $settings['online_list_dur']) { 
+    run_iquery("DELETE FROM phpqa_sessions WHERE name='".$g['name']."'");
+} else {
+    $where = $g['location'] ?? '';
+    if ($where == '') $where = "Viewing Arcade Index";
+    
+    $groupClass = $onnowGrp['group'] ?? 'default';
+    echo "<a href='index.php?action=profile&user=".$g['name']."' title='".$where." (".$HowManyMinutes." mins ago)' class='".$groupClass."Look'>".$g['name']."</a> ";  
+}}
 echo "</fieldset></td></tr></table></div><br />";
 echo "<div style='text-align:left; margin-bottom: 10px; margin-left:0px;'><input id='Button1' type='button' value='&#8593; Return to Top of Page &#8593;' onclick='anchorlink(\"top\");' style='font-size:16px; font-weight:bold; color:silver;' /></div>";
 ?>
