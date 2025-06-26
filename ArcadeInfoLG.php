@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ArcadeInfoLG.php By: Legionaire Function: Latest Site Info Block   Modified: 11/5/2019   By: MaSoDo
+# Section: ArcadeInfoLG.php By: Legionaire Function: Latest Site Info Block   Modified: 6/26/2025   By: MaSoDo
 ?>
 <br />
 <?php
@@ -21,6 +21,7 @@ $alertstyle = '';
 $alertlink = '';
 $forumnote = '';
 $FClass = 'navigation';
+$ForumURL = '';
 if (isset($_COOKIE['phpqa_user_c'])) {
 $MyMess = $_COOKIE['phpqa_user_c'];
 
