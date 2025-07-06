@@ -42,8 +42,8 @@ $LastVisit = $checkN['last_visit'];
 //echo "<script>alert('Sorry... Testing: ".$LastVisit."')</script>"; 
 $checknewP=run_iquery("SELECT posted FROM PLA_posts where posted > ".$LastVisit."");
 $checkP=mysqli_fetch_array($checknewP);
-if ($checkP['posted'] !== NULL){
-$FClass = 'ActNavigation';
+if (!empty($checkP['posted'])) {
+    $FClass = 'ActNavigation';
 }
 }
 ?>
@@ -67,7 +67,7 @@ echo " (<a href='index.php?cpiarea=idx'><b>Admin CP</b></a>) &middot; (<a href='
 if ($exist[6]=="Moderator") {
 echo " (<a href='index.php?modcparea=idx'><b>Mod CP</b></a>)";
 }
-echo"</div><div  class='navigation'>[ <a href='index.php?action=logout'>Log Out</a> ]</div><div  class='navigation'><a href='index.php?fav=1'>Favorites</a></div><div  class='navigation'><a href='index.php?action=leaderboards'>Leaderboard</a></div><div  class='navigation'><a href='index.php?action=HOF'>Hall of Fame</a></div><div  class='navigation'><a href='javascript:tog(\"search\")'>Search</a></div><div class='navigation'><a href='index.php?action=members'>Members</a></div><div class='".$FClass."' style='".$alertstyle."' ><a href='".$ForumURL."' style='".$alertlink."'>Forum$forumnote</a></div></div>";
+echo"</div><div  class='navigation'>[ <a href='index.php?action=logout'>Log Out</a> ]</div><div  class='navigation'><a href='index.php?fav=1'>Favorites</a></div><div  class='navigation'><a href='index.php?action=leaderboards'>Leaderboard</a></div><div  class='navigation'><a href='index.php?action=HOF'>Hall of Fame</a></div><div  class='navigation'><a href='javascript:tog(\"search\")'>Search</a></div><div class='navigation'><a href='index.php?action=members'>Members</a></div><div class='".$FClass."' style='".$alertstyle."' ><a href='/FORUM' style='".$alertlink."'>Forum$forumnote</a></div></div>";
 }
 // end nav buttons
 ?>
