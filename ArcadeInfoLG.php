@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ArcadeInfoLG.php By: Legionaire Function: Latest Site Info Block   Modified: 6/26/2025   By: MaSoDo
+# Section: ArcadeInfoLG.php By: Legionaire Function: Latest Site Info Block   Modified: 7/5/2025   By: MaSoDo
 ?>
 <br />
 <?php
@@ -43,8 +43,8 @@ $LastVisit = $checkN['last_visit'];
 //echo "<script>alert('Sorry... Testing: ".$LastVisit."')</script>"; 
 $checknewP=run_iquery("SELECT posted FROM PLA_posts where posted > ".$LastVisit."");
 $checkP=mysqli_fetch_array($checknewP);
-if ($checkP['posted'] !== NULL){
-$FClass = 'ActNavigation';
+if (!empty($checkP['posted'])) {
+    $FClass = 'ActNavigation';
 }
 }
 ?>
