@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 8/30/2022  By: MaSoDo
+# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 7/16/2025  By: MaSoDo
 $thescore = NULL;
 
 if (isset($_POST['thescore']))$thescore = $_POST['thescore'];
@@ -162,7 +162,7 @@ $post_user_cookie = $adminplayas;
    run_iquery("INSERT INTO phpqa_scores (username,thescore,ip,comment,phpdate,gameidname,gamename) VALUES ('".$post_user_cookie."','".$thescore."','".$ipa."','','".$time."','".$gameidname."','".$gameinfo['game']."')");
   if(null !== ($settings['allow_comments'])&&($settings['allow_comments']=='1')) echo $commentthing;
  }
- if ($thescore > $checkTOPscore[2]) { // We have a champion!
+ if ($thescore > isset($checkTOPscore[2])) { // We have a champion!
  $WINNERTAG = ' ';
  if ($thescore > $checkHOFscore['HOF_score']) { // We have a New HOF champion!
  $WINNERTAG = ' HALL OF FAME ';
@@ -173,7 +173,7 @@ $post_user_cookie = $adminplayas;
 // Email the loser
 // ---------------
 if(isset($settings['email_scores'])&&$settings['email_scores']=='1') {
-if($checkTOPscore['username'] !="") {
+if(isset($checkTOPscore['username']) !="") {
 if($checkTOPscore['username'] != $post_user_cookie) {
 $psettings = array();
 $person_to_mail=mysqli_fetch_array(run_iquery("SELECT email,settings FROM phpqa_accounts WHERE name='".$checkTOPscore['username']."'"));
