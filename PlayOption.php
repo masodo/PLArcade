@@ -11,13 +11,13 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: PlayOption.php  Function: Game Play Block   Modified: 6-26-2025 w/ ClaudeAI   By: MaSoDo
+# Section: PlayOption.php  Function: Game Play Block   Modified: 7-17-2025 line 20 w/ ClaudeAI   By: MaSoDo
 //modified to play HTML5 Games
 $play = htmlspecialchars($_GET['play'], ENT_QUOTES);
 
 	$g = mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_games WHERE gameid='".$play."'")); 
 	// Patch - 06/01/09
-	if($g['game'] == "")  { 
+	if(isset($g['game']) == "")  { 
 	message("This game doesn't exist / has been deleted."); 
 	die(); 
 	}
