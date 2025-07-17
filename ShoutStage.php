@@ -11,8 +11,11 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ShoutStage.php  Function: Shout Box Display Mechanics   Modified: 7/31/2019   By: MaSoDo
+# Section: ShoutStage.php  Function: Shout Box Display Mechanics   Modified: [7-17-25]    By: MaSoDo w/ClaudeAI
 //-----------------------------------------------------------------------------------/
+if (isset($_COOKIE['PHPSESSID'])) {
+$key=htmlspecialchars($_COOKIE['PHPSESSID'], ENT_QUOTES);
+}
 if(isset($_GET['shoutbox'])) $limit=0;
 if(isset($_GET['shoutbox'])) $show=$num_pages_of;
 if (isset($_COOKIE['phpqa_user_c'])) {
@@ -33,7 +36,11 @@ while($f=@mysqli_fetch_array($selectfrom)) $dataa[]=$f;
 if($dataa == "") die();
 foreach($dataa as $vv) $userss[]=$vv[0];
 $userss=array_flip(array_flip($userss));
-$qqq=run_iquery("SELECT name,avatar,`group` FROM phpqa_accounts WHERE name='".implode($userss,"' OR name='")."'");
+//$qqq=run_iquery("SELECT name,avatar,`group` FROM phpqa_accounts WHERE name='".implode($userss,"' OR name='")."'");
+//attempt to fix by Claude & MaSoDo
+//$escaped_users = array_map('mysql_real_escape_string', $userss);
+$user_list = "'" . implode("','", $userss) . "'";
+$qqq = run_iquery("SELECT name,avatar,`group` FROM phpqa_accounts WHERE name IN ($user_list)");
 $qashoutbox = array();
 $avatars = array();
 $thisgroup = array();
