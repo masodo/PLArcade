@@ -1,17 +1,17 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi place: addgames Administrator Control Panel   Modified: 3/20/2023   By: MaSoDo
+# Section: acpi place: addgames Administrator Control Panel   Modified: 7-17-2025 w/Claude   By: MaSoDo
 {
 // The different methods
 
@@ -124,10 +124,10 @@ message("The GIF file failed to upload. Make sure the pics folder <a href=\"arca
 // Start Edit
 // ============================
 $champ='';
-$champs='';
+$champs=0;
 $found_swf='';
 $HOFn='';
-$HOFs='';
+$HOFs=0;
 $preid='';
 $pretimes=0;
 if (isset($_GET['method'])&&$_GET['method']=="edit") {
@@ -135,9 +135,9 @@ global $game;
 
 $editgame = mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
 $champ=$editgame['Champion_name'];
-$champs=$editgame['Champion_score'];
+$champs=($editgame['Champion_score']) ?? 0;
 $HOFn=$editgame['HOF_name'];
-$HOFs=$editgame['HOF_score'];
+$HOFs=($editgame['HOF_score']) ?? 0;
 $preid=$editgame['id'];
 $pretimes=$editgame['times_played'];
 $plattype=$editgame['platform'];
