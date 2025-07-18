@@ -243,7 +243,11 @@ class DBLayer
 		if ($this->link_id)
 		{
 			if ($this->query_result)
-				@mysqli_free_result($this->query_result);
+// remove/replaced MaSoDo 7-18-2025				@mysqli_free_result($this->query_result);
+if (is_object($this->query_result)) {
+    @mysqli_free_result($this->query_result);
+}
+//end fix
 
 			return @mysqli_close($this->link_id);
 		}
