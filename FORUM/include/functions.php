@@ -874,7 +874,9 @@ function sef_friendly($str)
 		return $return;
 
 	$str = strtr($str, $lang_url_replace);
-	$str = strtolower(utf8_decode($str));
+	//remove/replace MaSoDo 7-18-2025 $str = strtolower(utf8_decode($str));
+	$str = mb_strtolower($str, 'UTF-8');
+	//end fix
 	$str = forum_trim(preg_replace(array('/[^a-z0-9\s]/', '/[\s]+/'), array('', '-'), $str), '-');
 
 	foreach ($forum_reserved_strings as $match => $replace)
@@ -1715,7 +1717,7 @@ function update_users_online()
 		}
 		else
 		{
-			// We have expired guest — delete it later
+			// We have expired guest â€” delete it later
 			$need_delete_expired_guest = true;
 		}
 	}
@@ -1820,7 +1822,9 @@ function get_tracked_topics()
 		{
 			case 'f': $type = 'forums'; break;
 			case 't': $type = 'topics'; break;
-			default: continue;
+//remove/replace MaSoDo 7-18-2025			default: continue;
+			default: continue 2;
+// end fix
 		}
 
 		$id = intval(substr($id_data, 1));
