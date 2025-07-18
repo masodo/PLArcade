@@ -38,7 +38,9 @@ if ( !defined('UTF8') ) {
 * encoding
 */
 if ( extension_loaded('mbstring')) {
-    if ( ini_get('mbstring.func_overload') & MB_OVERLOAD_STRING ) {
+//removed/replaced MaSoDo 7-18-2025    if ( ini_get('mbstring.func_overload') & MB_OVERLOAD_STRING ) {
+    if ( function_exists('ini_get') && ini_get('mbstring.func_overload') && (ini_get('mbstring.func_overload') & 2) ) {
+//end fix
         trigger_error('String functions are overloaded by mbstring',E_USER_ERROR);
     }
     mb_internal_encoding('UTF-8');
@@ -48,7 +50,7 @@ if ( extension_loaded('mbstring')) {
 * Check whether PCRE has been compiled with UTF-8 support
 */
 $UTF8_ar = array();
-if ( preg_match('/^.{1}$/u',"ñ",$UTF8_ar) != 1 ) {
+if ( preg_match('/^.{1}$/u',"Ã±",$UTF8_ar) != 1 ) {
     trigger_error('PCRE is not compiled with UTF-8 support',E_USER_ERROR);
 }
 unset($UTF8_ar);
