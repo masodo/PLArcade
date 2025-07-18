@@ -1,17 +1,17 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: tar_importRA - Administrator Control Panel   Modified: 11/2/2019   By: MaSoDo
+# Section: acpi Place: tar_importRA - Administrator Control Panel   Modified: 7/18/2025 w/Claude AI   By: MaSoDo
 
 {
 $plattype = 'H5';
@@ -78,8 +78,8 @@ $replaceVal = array("'gtitle'","'gname'","'gwidth'","'gheight'","'anti_triche'",
 $txt = str_replace($searchVal, $replaceVal, $subjVal);
 fwrite($BuildConf, $txt);
 }
-$txt = "'converted' => 'yes'\n";
-fwrite($BuildConf, $txt);
+//$txt = "'converted' => 'yes'\n";
+//fwrite($BuildConf, $txt);
 $txt = ");\n?>\n";
 fwrite($BuildConf, $txt);
 fclose($BuildConf);
@@ -117,10 +117,12 @@ $idname = htmlspecialchars($idname, ENT_QUOTES);
 $addedalready = mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
 if (!$addedalready) {
 $champ = '';
-$champs = '';
-$atime = '';
+//$champs = '';
+$champs=($addedalready['Champion_score']) ?? 0;
+//$atime = '';
+$atime=($addedalready['times_played']) ?? 0;
 if($idname !="") {
-run_iquery("INSERT INTO phpqa_games (game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring) VALUES ('$gamename','$idname','$gameheight','$gamewidth','$about','$thecat','$remoteurl','$champ','$champs','','$plattype','$scoretype')");
+run_iquery("INSERT INTO phpqa_games (game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring) VALUES ('$gamename','$idname','$gameheight','$gamewidth','$about','$thecat','$remoteurl','$champ','$champs','$atime','$plattype','$scoretype')");
 if ($thecat != 23){ 
 $atime = time();
 $NewGtext = "[color=green][i]New Game Added![/i] [/color][size=16] [url=".$arcurl."/index.php?play=".$idname."#playzone][b]".$gamename."[/b][/url][/size]  [color=green][i]Enjoy![/i][/color] [:D]";
