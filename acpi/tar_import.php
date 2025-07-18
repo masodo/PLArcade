@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: tar_import - Administrator Control Panel   Modified: 7/29/2019   By: MaSoDo
+# Section: acpi Place: tar_import - Administrator Control Panel   Modified: 7/18/2025 w/ Claude AI   By: MaSoDo
 
 {
 $plattype = 'FL';
@@ -100,10 +100,12 @@ $idname = htmlspecialchars($idname, ENT_QUOTES);
 $addedalready = mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
 if (!$addedalready) {
 $champ = '';
-$champs = '';
-$atime = '';
+//$champs = '';
+$champs=($addedalready['Champion_score']) ?? 0;
+//$atime = '';
+$atime=($addedalready['times_played']) ?? 0;
 if($idname !="") {
-run_iquery("INSERT INTO phpqa_games (game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring) VALUES ('$gamename','$idname','$gameheight','$gamewidth','$about','$thecat','$remoteurl','$champ','$champs','','$plattype','$scoretype')");
+run_iquery("INSERT INTO phpqa_games (game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring) VALUES ('$gamename','$idname','$gameheight','$gamewidth','$about','$thecat','$remoteurl','$champ','$champs','$atime','$plattype','$scoretype')");
 if ($thecat != 23){ 
 $atime = time();
 $NewGtext = "[color=green][i]New Game Added![/i] [/color][size=16] [url=".$arcurl."/index.php?play=".$idname."#playzone][b]".$gamename."[/b][/url][/size]  [color=green][i]Enjoy![/i][/color] [:D]";
@@ -134,14 +136,16 @@ $idname=str_replace("game_", "", $tarfile_name);
 <tr><td class='arcade1' align='left'><b>Category Option:</b></td><td class='arcade1' align='center'><select name='cat'>
 <?php
 $catquery=run_iquery("SELECT * FROM phpqa_cats");
- while ($catlist= mysqli_fetch_array($catquery)) {
+while ($catlist= mysqli_fetch_array($catquery)) {
  
-if( $_GET['cat'] == $catlist[0] ) {
-echo  "<option value='$catlist[0]' selected='selected'>$catlist[1]</option>";
-} else {
-echo  "<option value='$catlist[0]'>$catlist[1]</option>";
-}
-
+    // Fixed: Check if $_GET['cat'] exists before using it
+    $selectedCat = isset($_GET['cat']) ? $_GET['cat'] : '';
+    
+    if( $selectedCat == $catlist[0] ) {
+        echo  "<option value='$catlist[0]' selected='selected'>$catlist[1]</option>";
+    } else {
+        echo  "<option value='$catlist[0]'>$catlist[1]</option>";
+    }
 }
 ?>
 </select>
