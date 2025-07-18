@@ -13,23 +13,23 @@ if (!defined('FORUM_ROOT'))
 
 if (!defined('FORUM_ESSENTIALS_LOADED'))
 	require FORUM_ROOT.'include/essentials.php';
-
-// Turn off magic_quotes_runtime
-if (get_magic_quotes_runtime())
-	@ini_set('magic_quotes_runtime', false);
-
-// Strip slashes from GET/POST/COOKIE (if magic_quotes_gpc is enabled)
-if (get_magic_quotes_gpc())
-{
-	function stripslashes_array($array)
-	{
-		return is_array($array) ? array_map('stripslashes_array', $array) : stripslashes($array);
-	}
-
-	$_GET = stripslashes_array($_GET);
-	$_POST = stripslashes_array($_POST);
-	$_COOKIE = stripslashes_array($_COOKIE);
-}
+//removed MaSoDo 7/18/2025
+//// Turn off magic_quotes_runtime
+//if (get_magic_quotes_runtime())
+//	@ini_set('magic_quotes_runtime', false);
+//
+//// Strip slashes from GET/POST/COOKIE (if magic_quotes_gpc is enabled)
+//if (get_magic_quotes_gpc())
+//{
+//	function stripslashes_array($array)
+//	{
+//		return is_array($array) ? array_map('stripslashes_array', $array) : stripslashes($array);
+//	}
+//
+//	$_GET = stripslashes_array($_GET);
+//	$_POST = stripslashes_array($_POST);
+//	$_COOKIE = stripslashes_array($_COOKIE);
+//}
 
 // Strip out "bad" UTF-8 characters
 forum_remove_bad_characters();
@@ -61,8 +61,6 @@ $forum_page = array();
 // Login and fetch user info
 $forum_user = array();
 cookie_login($forum_user);
-//echo "<script>alert('".$forum_user[0]."')</script>";
-
 
 // Attempt to load the common language file
 if (file_exists(FORUM_ROOT.'lang/'.$forum_user['language'].'/common.php'))
