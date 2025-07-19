@@ -11,13 +11,15 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 7/16/2025  By: MaSoDo
+# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 10/10/2022  By: MaSoDo
 $thescore = NULL;
 
 if (isset($_POST['thescore']))$thescore = $_POST['thescore'];
 if (isset($_GET['autocom'])) {
 $id=htmlspecialchars($_COOKIE['gname'], ENT_QUOTES);
+if (isset($_POST['gscore'])) {
 $thescore = $_POST['gscore'];
+}
 }
 //if ($_GET['autocom'] && $_GET['do'] == "savescore") {
 //$id=htmlspecialchars($_COOKIE['gname'], ENT_QUOTES);
@@ -46,7 +48,7 @@ header("Location: index.php");
 die();
  } 
  if ($gameinfo['gamecat'] == '2' || $gameinfo['gamecat'] == '23') {
-message("<b>Successfully Submitted Score!</b><br />Game: ".$id."<br />Score: ".$thescore."<br />Player: ".$_COOKIE['phpqa_user_c']."");
+message("<b>Successfully Submitted Score!</b><br />Game: ".$id."<br />Score: ".$thescore."<br />Player: ".isset($_COOKIE['phpqa_user_c'])."");
 die();
  } 
  else {
@@ -68,6 +70,7 @@ die();
  <?php
 $fav_action='';
 $DL_action='';
+$key='';
 if(isset($_COOKIE['phpqa_user_c'])) {
 $fav_action="<a href='index.php?action=fav&game=".$gameinfo['gameid']."&favtype=add&akey=".$key."&fav=1' title='Add Game To Favorites'><img src='".$imgloc."/favorite.png' alt='[Add to favorites]' width='25' height='25' /></a>";
 if(isset($_GET['fav'])) $fav_action="<a href='index.php?action=fav&game=".$g['gameid']."&favtype=remove&akey=".$key."&fav=1' title='Remove Game From Favorites'><img src='".$imgloc."/remove.png' alt='[Remove favorite]' width='25' height='25' /></a>";
@@ -162,8 +165,10 @@ $post_user_cookie = $adminplayas;
    run_iquery("INSERT INTO phpqa_scores (username,thescore,ip,comment,phpdate,gameidname,gamename) VALUES ('".$post_user_cookie."','".$thescore."','".$ipa."','','".$time."','".$gameidname."','".$gameinfo['game']."')");
   if(null !== ($settings['allow_comments'])&&($settings['allow_comments']=='1')) echo $commentthing;
  }
- if ($thescore > isset($checkTOPscore[2])) { // We have a champion!
+ if (isset($checkTOPscore[2])) {
+ if ($thescore > $checkTOPscore[2]) { // We have a champion!
  $WINNERTAG = ' ';
+ 
  if ($thescore > $checkHOFscore['HOF_score']) { // We have a New HOF champion!
  $WINNERTAG = ' HALL OF FAME ';
  run_iquery("UPDATE phpqa_games SET HOF_name = '".$post_user_cookie."',HOF_score = '".$thescore."' WHERE gameid='".$id."'");   
@@ -173,7 +178,7 @@ $post_user_cookie = $adminplayas;
 // Email the loser
 // ---------------
 if(isset($settings['email_scores'])&&$settings['email_scores']=='1') {
-if(isset($checkTOPscore['username']) !="") {
+if($checkTOPscore['username'] !="") {
 if($checkTOPscore['username'] != $post_user_cookie) {
 $psettings = array();
 $person_to_mail=mysqli_fetch_array(run_iquery("SELECT email,settings FROM phpqa_accounts WHERE name='".$checkTOPscore['username']."'"));
@@ -205,7 +210,7 @@ echo "<div class='tableborder'><table width='100%'><td class='arcade1' width='10
    // Update the date and IP
   run_iquery("UPDATE phpqa_scores SET ip = '".$ipa."',phpdate = '".$time."' WHERE gameidname='".$id."' && username='".$post_user_cookie."'");
   }
- }
+ }}
  // end set check
 }
 //=================
