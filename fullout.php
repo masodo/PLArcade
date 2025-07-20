@@ -11,7 +11,8 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: fullout.php  Function: Play Flash Games Fullscreen   Modified: 3/19/2021   By: MaSoDo
+# Section: fullout.php  Function: Play Flash Games Fullscreen   Modified: 7-19-2025   By: MaSoDo
+$BigGame = '';
 if (isset($_GET['dofull'])) 
 {
 $BigGame = $_GET['dofull'];
