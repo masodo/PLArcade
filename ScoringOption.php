@@ -11,37 +11,69 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 10/10/2022  By: MaSoDo
-$thescore = NULL;
+# Section: ScoringOption.php  Function: Highscore Collection/Submission   Modified: 7-20-2025  By: MaSoDo
+//Major Overhaul thanks to Claude AI & MaSoDo
+// Initialize variables
+$thescore = '';
+$id = '';
 
-if (isset($_POST['thescore']))$thescore = $_POST['thescore'];
+// Consolidate score handling - check for all possible parameter names
+$thescore = $_POST['thescore'] ?? $_POST['gscore'] ?? $_POST['enscore'] ?? '';
+// Handle autocom submissions
 if (isset($_GET['autocom'])) {
-$id=htmlspecialchars($_COOKIE['gname'], ENT_QUOTES);
-if (isset($_POST['gscore'])) {
-$thescore = $_POST['gscore'];
+    $id = htmlspecialchars($_COOKIE['gname'] ?? '', ENT_QUOTES);
 }
+
+// Handle newscore submissions  
+if (isset($_GET['do']) && $_GET['do'] == 'newscore') {
+    if (isset($_POST['gname'])) {
+        $id = htmlspecialchars($_POST['gname'], ENT_QUOTES);
+    }
 }
-//if ($_GET['autocom'] && $_GET['do'] == "savescore") {
-//$id=htmlspecialchars($_COOKIE['gname'], ENT_QUOTES);
-//$thescore = $_POST['enscore'];
-//echo "<script>alert('Score (enscore): [" . $thescore . "]');</script>";
-//}
- if (isset($_GET['do']) == 'newscore') {
-  $id=htmlspecialchars($_POST['gname'], ENT_QUOTES);
-  $thescore = $_POST['gscore'];
-  //Play Sound at Game Over
+
+
+// Play sound for ANY score submission
+if (!empty($thescore)) {
 ?>
 <audio controls autoplay="true" style="display: none;">
-<source src="sounds/GameOverYeah.mp3" type="audio/mpeg">
-<source src="sounds/GameOverYeah.ogg" type="audio/ogg">
+    <source src="sounds/GameOverYeah.mp3" type="audio/mpeg">
+    <source src="sounds/GameOverYeah.ogg" type="audio/ogg">
 </audio> 
 <?php
- }
+}
  // highscores. UpGraded. ^.<;;
  // Architect : Don't do that gay wink <_> 
  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  //	Get highscores list of a game when on the id= page
  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+// Check if this is a new champion (either first score ever OR beats existing top score)
+if (!isset($checkTOPscore[2]) || $thescore > $checkTOPscore[2]) {
+    $WINNERTAG = ' ';
+    
+    
+    // BUILD and SHOW the exact SQL query
+    $champion_sql = "UPDATE phpqa_games SET Champion_name = '$safe_user', Champion_score = '$safe_score' WHERE gameid='$safe_id'";
+    
+    // Execute the query
+    $result = run_iquery($champion_sql);
+    
+    // Check if the update actually worked
+    
+    // VERIFY: Check if the update actually happened
+    $verify_query = "SELECT Champion_name, Champion_score FROM phpqa_games WHERE gameid='$safe_id'";
+    
+    $verify_result = @mysqli_fetch_array(run_iquery($verify_query));
+    
+    if (isset($checkHOFscore['HOF_score']) && $thescore > $checkHOFscore['HOF_score']) { 
+        $WINNERTAG = ' HALL OF FAME ';
+        run_iquery("UPDATE phpqa_games SET HOF_name = '$safe_user',HOF_score = '$safe_score' WHERE gameid='$safe_id'");   
+    }
+} else {
+//DEBUG     echo "<div style='background:red; color:white; padding:5px;'>CHAMPION UPDATE SKIPPED - Score $thescore not better than existing " . ($checkTOPscore[2] ?? 'none') . "</div>";
+}
+ 
+ //
  $gameinfo = mysqli_fetch_array(run_iquery("SELECT gameid,game,about,Champion_name,Champion_score,times_played,gamecat,exclusiv FROM phpqa_games WHERE gameid = '$id'"));
  if (!$gameinfo) {
 header("Location: index.php");
@@ -90,129 +122,229 @@ $DL_action="<a href='GetGame.php?GID=".$gameinfo['gameid']."' title='Download Ga
  </table>
  </div>
  <br />
- <?php
-	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	// 			Score Submission
-	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//////////////////////////////////////////////////////////////////////////////////////////
-// Removed Tourney Code 3/11/2019 MSD
-//////////////////////////////////////////////////////////////////////////////////////////
- if (isset($_COOKIE['phpqa_user_c'])) { // Only if the cookie is set....
-  if (isset($_GET['c']) == 1 && !isset($_POST['sb'])) { // Ah well, so what that anyone can edit their comment <_<
-  vsess();
-  global $senttext;
-// Admin Play As
- $post_user_cookie = $phpqa_user_cookie;
-if ($post_user_cookie == 'Admin') {
-global $adminplayas;
-$post_user_cookie = $adminplayas;
-}
-//End Admin Play As
-  run_iquery("UPDATE phpqa_scores SET comment = '".$senttext."' WHERE gameidname='".$id."' && username='".$post_user_cookie."'"); 
-}
- if(isset($_GET['do']) || isset($_POST['thescore'])) $commentthing =  "<form name='postbox' action='index.php?id=$id&amp;c=1' method='POST'><input type='hidden' name='akey' value='".$key."'><div class='tableborder'><table width='100%'><td class='arcade1' width='100%' align='center'>Congratulations, new best score, your final score was: <b>".$thescore."</b>.<br /><br /><input type='text' name='senttext'><input type='submit' name='gocomment' value='Send Comment'></form><br/>".displayemotes()."</td></table></div><br /><br />";
-  $time = time();
- $gameidname = $id;
-  if (isset($thescore)) {
-   if(!is_numeric($thescore)) die();
-   if($exist[6] == "Validating") {
-   echo "<div class='tableborder'><table width='100%'><td class='arcade1' width='100%' align='center'>Your score score was: <b>" . str_replace('-', '', $thescore) . "</b>... <br /><br /></td></table></div><br /><br />";
-   message("!ALERT!: Sorry, your account is still in validation. This means you cannot: submit your highscores, shout on the shoutbox, or edit your profile. Please wait for an admin to validate your account, then you'll be ready to play.");
-   die();
-   }
-   // Low Score Logic
-$checkscoring = @mysqli_fetch_array(run_iquery("SELECT scoring FROM phpqa_games WHERE gameid ='$id'"));
-if ($checkscoring['scoring'] == 'LO') {
-$thescore = -$thescore;
-}
-// Admin Play As
-$post_user_cookie = $phpqa_user_cookie;
-if ($post_user_cookie == 'Admin') {
-global $adminplayas, $post_user_cookie;
-$post_user_cookie = $adminplayas;
-}
-//End Admin Play As
-   $checkTOPscore = @mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_scores WHERE gameidname='".$id."' ORDER BY thescore DESC LIMIT 0,1"));
-   $checkHOFscore = @mysqli_fetch_array(run_iquery("SELECT HOF_score FROM phpqa_games WHERE gameid='".$id."'"));
-   $checkscore = @mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_scores WHERE gameidname='".$id."' && username='".$post_user_cookie."' ORDER BY thescore DESC"));
-   if ($checkscore) { // a score already exists by this person.
-    if ($checkscore['thescore'] < $thescore) { // if checkscore is greater than thescore....
-    //UpDated!
-    
-// Admin Play As
-$post_user_cookie = $phpqa_user_cookie;
-if ($post_user_cookie == 'Admin') {
-global $adminplayas, $post_user_cookie;
-$post_user_cookie = $adminplayas;
-}
-//End Admin Play As
-     run_iquery("UPDATE phpqa_scores SET thescore = '".$thescore."', gamename = '".$gameinfo['game']."', phpdate = '".$time."',ip = '".$ipa."' WHERE gameidname='".$id."' && username='".$post_user_cookie."'");
-     if($settings['allow_comments']) echo $commentthing;
-  } else {
-    echo "<div class='tableborder'><table width='100%'><td class='arcade1' width='100%' align='center'>Your score score was: <b>" . str_replace('-', '', $thescore) . "</b>...";
-   echo "<br /><br />Try again.</td></table></div><br /><br />";
-   }
- } else {
- 
-// Admin Play As
- $post_user_cookie = $phpqa_user_cookie;
-if ($post_user_cookie == 'Admin') {
-global $adminplayas, $post_user_cookie;
-$post_user_cookie = $adminplayas;
-}
-//End Admin Play As
-  // First time, submit it in.
-   run_iquery("INSERT INTO phpqa_scores (username,thescore,ip,comment,phpdate,gameidname,gamename) VALUES ('".$post_user_cookie."','".$thescore."','".$ipa."','','".$time."','".$gameidname."','".$gameinfo['game']."')");
-  if(null !== ($settings['allow_comments'])&&($settings['allow_comments']=='1')) echo $commentthing;
- }
- if (isset($checkTOPscore[2])) {
- if ($thescore > $checkTOPscore[2]) { // We have a champion!
- $WINNERTAG = ' ';
- 
- if ($thescore > $checkHOFscore['HOF_score']) { // We have a New HOF champion!
- $WINNERTAG = ' HALL OF FAME ';
- run_iquery("UPDATE phpqa_games SET HOF_name = '".$post_user_cookie."',HOF_score = '".$thescore."' WHERE gameid='".$id."'");   
- }
+<?php
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//          Score Submission - SECURE VERSION
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-// ---------------
-// Email the loser
-// ---------------
-if(isset($settings['email_scores'])&&$settings['email_scores']=='1') {
-if($checkTOPscore['username'] !="") {
-if($checkTOPscore['username'] != $post_user_cookie) {
-$psettings = array();
-$person_to_mail=mysqli_fetch_array(run_iquery("SELECT email,settings FROM phpqa_accounts WHERE name='".$checkTOPscore['username']."'"));
-$psettings = explode("|", $person_to_mail['settings']);
-if($psettings[4] != "No" && $person_to_mail['email'] !=$exist['email']) { 
-$SiteDomain = "http://".htmlspecialchars($_SERVER['HTTP_HOST']).htmlspecialchars($_SERVER['PHP_SELF'])."?id={$gameidname}";
-//$hd="admin@{$_SERVER[HTTP_HOST]}";
-$hd=$siteemail;
-$mailsub = "Message from ".$settings['arcade_title']." - Top {$gameinfo['game']} score defeated!";
-$mailbody = "Hello {$checkTOPscore['username']}, \n\r\n\r Oh no! Someone has taken your top score for the game: -- {$gameinfo['game']} -- at {$settings['arcade_title']}!\n\rBetter get back in there and take your score! \n\r\n\r Visit the link below to view the scoreboard for {$gameinfo['game']}: \n\r ----------------------------------------------- \n\r ".$SiteDomain." \n\r\n\r-----------------------------------------------\n\rThank you for your participation!\n\r{$settings['arcade_title']} Admin\n\r\n\r If you do not want to recieve these email notices:\n\rplease login, visit settings >> preferences >> and set Allow other members/the admin to contact you by Email? to NO.";
-$headers = "From: $hd\n";
-@mail($person_to_mail['email'],$mailsub,$mailbody,$headers);
+// Improved sanitization functions
+function safe_sql_string($input) {
+    if ($input === null) return '';
+    
+    // Use proper escaping if mysqli connection available
+    global $mysqli_connection;
+    if (isset($mysqli_connection) && $mysqli_connection) {
+        return mysqli_real_escape_string($mysqli_connection, trim($input));
+    }
+    
+    // Fallback sanitization
+    $input = str_replace(array("'", '"', "\\", "\0", "\n", "\r", "\x1a"), 
+                        array("''", '""', "\\\\", "\\0", "\\n", "\\r", "\\Z"), 
+                        trim($input));
+    return $input;
 }
+
+function safe_display($input) {
+    return htmlspecialchars($input ?? '', ENT_QUOTES, 'UTF-8');
 }
+
+function safe_number($input, $type = 'int') {
+    if (!is_numeric($input)) return 0;
+    return ($type === 'float') ? (float)$input : (int)$input;
 }
-				}
-				
-// Admin Play As
-$post_user_cookie = $phpqa_user_cookie;
-if ($post_user_cookie == 'Admin') {
-global $adminplayas;
-$post_user_cookie = $adminplayas;
+
+function safe_email($input) {
+    return filter_var($input, FILTER_SANITIZE_EMAIL);
 }
-//End Admin Play As
-echo "<div class='tableborder'><table width='100%'><td class='arcade1' width='100%' align='center'><h2>Congratulations, you are the NEW " . $WINNERTAG . "Champion!</h2></td></table></div><br /><br />";
-   run_iquery("DELETE FROM phpqa_leaderboard WHERE gamename='".$id."'");
-   run_iquery("INSERT INTO phpqa_leaderboard (username,thescore,gamename) VALUES ('".$post_user_cookie."','".$thescore."','".$id."')"); 
-   run_iquery("UPDATE phpqa_games SET Champion_name = '".$post_user_cookie."',Champion_score = '".$thescore."' WHERE gameid='".$id."'");
-   // Update the date and IP
-  run_iquery("UPDATE phpqa_scores SET ip = '".$ipa."',phpdate = '".$time."' WHERE gameidname='".$id."' && username='".$post_user_cookie."'");
-  }
- }}
- // end set check
-}
+
+// Only proceed if user is authenticated
+if (isset($_COOKIE['phpqa_user_c'])) {
+    
+    // Initialize variables early and safely
+    $time = time();
+    $id = safe_sql_string($_GET['id'] ?? $_POST['gname'] ?? '');
+    $key = safe_sql_string($_GET['key'] ?? $_POST['akey'] ?? '');
+    $thescore = $_POST['thescore'] ?? $_POST['gscore'] ?? '';
+    $ipa = safe_sql_string($_SERVER['REMOTE_ADDR'] ?? '');
+    
+    // Handle comment submission
+    if (isset($_GET['c']) && $_GET['c'] == '1' && !isset($_POST['sb'])) {
+        vsess();
+        global $senttext, $phpqa_user_cookie, $adminplayas;
+        
+        $safe_senttext = safe_sql_string($senttext ?? $_POST['senttext'] ?? '');
+        
+        // Admin Play As handling
+        $post_user_cookie = $phpqa_user_cookie;
+        if ($post_user_cookie == 'Admin' && isset($adminplayas)) {
+            $post_user_cookie = $adminplayas;
+        }
+        
+        $safe_user = safe_sql_string($post_user_cookie);
+        
+        run_iquery("UPDATE phpqa_scores SET comment = '$safe_senttext' WHERE gameidname='$id' AND username='$safe_user'"); 
+    }
+
+    // Score processing logic
+    if((isset($_GET['do']) || !empty($thescore)) && !empty($id)) {
+        $safe_id = safe_display($id);
+        $safe_key = safe_display($key);
+        $safe_score_display = safe_display($thescore);
+        
+        // Comment form for new high scores
+        $commentthing = "<form name='postbox' action='index.php?id=$safe_id&amp;c=1' method='POST'>
+    <input type='hidden' name='akey' value='$safe_key'>
+    <div class='tableborder'>
+        <table width='100%'>
+            <td class='arcade1' width='100%' align='center'>
+                Congratulations, new best score, your final score was: <b>$safe_score_display</b>.<br /><br />
+                <input type='text' name='senttext' maxlength='255'>
+                <input type='submit' name='gocomment' value='Send Comment'>
+            </td>
+        </table>
+    </div><br/>" . (function_exists('displayemotes') ? displayemotes() : '') . "</form><br /><br />";
+    
+        $gameidname = $id;
+        
+        if (isset($thescore) && !empty($thescore)) {
+            
+            // Check if account is still in validation
+            global $exist;
+            if (isset($exist[6]) && $exist[6] == "Validating") {
+                $display_score = safe_display(str_replace('-', '', $thescore));
+                echo "<div class='tableborder'><table width='100%'><td class='arcade1' width='100%' align='center'>Your score was: <b>$display_score</b>... <br /><br /></td></table></div><br /><br />";
+                message("!ALERT!: Sorry, your account is still in validation. This means you cannot: submit your highscores, shout on the shoutbox, or edit your profile. Please wait for an admin to validate your account, then you'll be ready to play.");
+                die();
+            }
+            
+            // Handle low score games
+            $checkscoring = @mysqli_fetch_array(run_iquery("SELECT scoring FROM phpqa_games WHERE gameid ='$id'"));
+            if (isset($checkscoring['scoring']) && $checkscoring['scoring'] == 'LO') {
+                $thescore = -abs($thescore); // Ensure negative for low score games
+            }
+            
+            // Admin Play As handling
+            global $phpqa_user_cookie, $adminplayas;
+            $post_user_cookie = $phpqa_user_cookie;
+            if ($post_user_cookie == 'Admin' && isset($adminplayas)) {
+                $post_user_cookie = $adminplayas;
+            }
+            
+            // Sanitize all variables for database operations
+            $safe_user = safe_sql_string($post_user_cookie);
+            $safe_score = safe_number($thescore, 'float');
+            $safe_time = safe_number($time);
+            
+            // Get current scores and game info
+            $checkTOPscore = @mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_scores WHERE gameidname='$id' ORDER BY thescore DESC LIMIT 0,1"));
+            $checkHOFscore = @mysqli_fetch_array(run_iquery("SELECT HOF_score FROM phpqa_games WHERE gameid='$id'"));
+            $checkscore = @mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_scores WHERE gameidname='$id' AND username='$safe_user' ORDER BY thescore DESC"));
+            
+            global $gameinfo;
+            $safe_game_name = safe_sql_string($gameinfo['game'] ?? '');
+            
+            if ($checkscore) { // User has existing score
+                if ($checkscore['thescore'] < $thescore) { // New score is better
+                    
+                    // Update existing score
+                    run_iquery("UPDATE phpqa_scores SET 
+                        thescore = '$safe_score', 
+                        gamename = '$safe_game_name', 
+                        phpdate = '$safe_time', 
+                        ip = '$ipa' 
+                        WHERE gameidname='$id' AND username='$safe_user'");
+                    
+                    $is_new_high_score = true;
+                    
+                } else {
+                    // Score not improved
+                    $display_score = safe_display(str_replace('-', '', $thescore));
+                    echo "<div class='tableborder'><table width='100%'><td class='arcade1' width='100%' align='center'>Your score was: <b>$display_score</b>...";
+                    echo "<br /><br />Try again.</td></table></div><br /><br />";
+                    $is_new_high_score = false;
+                }
+            } else {
+                // First time playing this game
+                $safe_gameidname = safe_sql_string($gameidname);
+                
+                run_iquery("INSERT INTO phpqa_scores (username, thescore, ip, comment, phpdate, gameidname, gamename) 
+                    VALUES ('$safe_user', '$safe_score', '$ipa', '', '$safe_time', '$safe_gameidname', '$safe_game_name')");
+                
+                $is_new_high_score = true;
+            }
+            
+            // Check if this is a new champion (only if score was improved/new)
+            if ($is_new_high_score && (!isset($checkTOPscore['thescore']) || $thescore > $checkTOPscore['thescore'])) {
+                
+                $WINNERTAG = ' ';
+                
+                // Update champion in games table
+                run_iquery("UPDATE phpqa_games SET Champion_name = '$safe_user', Champion_score = '$safe_score' WHERE gameid='$id'");
+                
+                // Update leaderboard
+                run_iquery("DELETE FROM phpqa_leaderboard WHERE gamename='$id'");
+                run_iquery("INSERT INTO phpqa_leaderboard (username, thescore, gamename) VALUES ('$safe_user', '$safe_score', '$id')");
+                
+                // Check for Hall of Fame
+                if (isset($checkHOFscore['HOF_score']) && $thescore > $checkHOFscore['HOF_score']) { 
+                    $WINNERTAG = ' HALL OF FAME ';
+                    run_iquery("UPDATE phpqa_games SET HOF_name = '$safe_user', HOF_score = '$safe_score' WHERE gameid='$id'");   
+                }
+                
+                // Email notification to previous champion
+                global $settings, $siteemail, $exist;
+                if(isset($settings['email_scores']) && $settings['email_scores']=='1') {
+                    if(isset($checkTOPscore['username']) && $checkTOPscore['username'] != "" && $checkTOPscore['username'] != $post_user_cookie) {
+                        
+                        $safe_top_user = safe_sql_string($checkTOPscore['username']);
+                        $person_to_mail = mysqli_fetch_array(run_iquery("SELECT email, settings FROM phpqa_accounts WHERE name='$safe_top_user'"));
+                        
+                        if ($person_to_mail && isset($person_to_mail['email'])) {
+                            $psettings = explode("|", $person_to_mail['settings'] ?? '');
+                            
+                            // Check if user wants email notifications
+                            if(isset($psettings[4]) && $psettings[4] != "No" && 
+                               $person_to_mail['email'] != ($exist['email'] ?? '')) { 
+                                
+                                // Construct secure email
+                                $safe_host = safe_display($_SERVER['HTTP_HOST']);
+                                $safe_self = safe_display($_SERVER['PHP_SELF']);
+                                $safe_gameid = urlencode($gameidname);
+                                $SiteDomain = "https://$safe_host$safe_self?id=$safe_gameid";
+                                
+                                $hd = safe_email($siteemail ?? ('noreply@' . $_SERVER['HTTP_HOST']));
+                                $safe_arcade_title = safe_display($settings['arcade_title'] ?? 'Arcade');
+                                $safe_game_name_display = safe_display($gameinfo['game'] ?? 'Game');
+                                $safe_username = safe_display($checkTOPscore['username']);
+                                
+                                $mailsub = "Message from $safe_arcade_title - Top $safe_game_name_display score defeated!";
+                                $mailbody = "Hello $safe_username,\n\nOh no! Someone has taken your top score for the game: $safe_game_name_display at $safe_arcade_title!\nBetter get back in there and reclaim your score!\n\nVisit the link below to view the scoreboard:\n$SiteDomain\n\nThank you for your participation!\n$safe_arcade_title Admin\n\nIf you do not want to receive these email notices, please login and update your email preferences.";
+                                
+                                $headers = "From: $hd\r\n";
+                                $headers .= "Reply-To: $hd\r\n";
+                                $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+                                $headers .= "X-Mailer: PHP/" . phpversion();
+                                
+                                @mail($person_to_mail['email'], $mailsub, $mailbody, $headers);
+                            }
+                        }
+                    }
+                }
+                
+                // Display congratulations message
+                echo "<div class='tableborder'><table width='100%'><td class='arcade1' width='100%' align='center'><h2>Congratulations, you are the NEW " . $WINNERTAG . "Champion!</h2></td></table></div><br /><br />";
+                
+            } // End champion check
+            
+            // Show comment form if appropriate
+            if ($is_new_high_score && isset($settings['allow_comments']) && $settings['allow_comments'] == '1') {
+                echo $commentthing;
+            }
+            
+        } // End thescore check
+    } // End score processing
+} // End cookie check
+
 //=================
 // 				comments
 //==================
