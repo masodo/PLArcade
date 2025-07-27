@@ -1,18 +1,25 @@
 <?php
 //-----------------------------------------------------------------------------------/
-//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 Â© Jcink.com
+//Practical-Lightning-Arcade [PLA] 2.0 (BETA) based on PHP-Quick-Arcade 3.0 © Jcink.com
 //Tournaments & JS By: SeanJ. - Heavily Modified by PracticalLightning Web Design
 //Michael S. DeBurger [DeBurger Photo Image & Design]
 //-----------------------------------------------------------------------------------/
-//  phpQuickArcade v3.0.x Â© Jcink 2005-2010 quickarcade.jcink.com                        
+//  phpQuickArcade v3.0.x © Jcink 2005-2010 quickarcade.jcink.com                        
 //
 //  Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
-// Thanks to (Sean) http://seanj.jcink.com 
+// Thanks to (Sean) http://seanj.jcink.com  
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi place: addgames Administrator Control Panel   Modified: 7-17-2025 w/Claude   By: MaSoDo
-{
+# Section: acpi place: addgames Administrator Control Panel   Modified: 7-27-2025 Major Redesign w/Claude   By: MaSoDo
+
+// Create database connection
+require("./arcade_conf.php");
+$iconnect = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
+if (mysqli_connect_errno()) {
+    die("Failed to connect to MySQL: " . mysqli_connect_error());
+}
+
 // The different methods
 
 if (!isset($_GET['method'])) {
@@ -40,9 +47,9 @@ if (!isset($_GET['method'])) {
 	// ===============================================================
 if(isset($_POST['addgame'])) {
 vsess();
-if (isset($_POST['swf']))$swf = $_POST['swf'];
-if (isset($_POST['gif']))$gif = $_POST['gif'];
-if (isset($_GET['game']))$game = $_GET['game'];
+if (isset($_POST['swf'])) $swf = $_POST['swf'];
+if (isset($_POST['gif'])) $gif = $_POST['gif'];
+if (isset($_GET['game'])) $game = $_GET['game'];
 if (isset($_POST['gamename'])&&$_POST['gamename']!='') { 
 // if they posted a game name make it take the info from the.
 // input rather than the importer file.
@@ -120,65 +127,127 @@ $gif_ok = "Yes";
 message("The GIF file failed to upload. Make sure the pics folder <a href=\"arcade/pics\" target='_new'>exists</a> and is CHMOD 777."); 
 }
 }
-// ============================
-// Start Edit
-// ============================
-$champ='';
-$champs=0;
-$found_swf='';
-$HOFn='';
-$HOFs=0;
-$preid='';
-$pretimes=0;
-if (isset($_GET['method'])&&$_GET['method']=="edit") {
-global $game;
 
-$editgame = mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
-$champ=$editgame['Champion_name'];
-$champs=($editgame['Champion_score']) ?? 0;
-$HOFn=$editgame['HOF_name'];
-$HOFs=($editgame['HOF_score']) ?? 0;
-$preid=$editgame['id'];
-$pretimes=$editgame['times_played'];
-$plattype=$editgame['platform'];
-run_iquery("DELETE FROM phpqa_games WHERE gameid='$game'");
-$remoteurl = $swf;
-$swf_ok = 'Yes';
-$gif_ok = 'Yes';
-$found_swf = 'Yes';
+// Initialize variables BEFORE any method processing
+$champ = '';
+$champs = 0;
+$found_swf = '';
+$HOFn = '';
+$HOFs = 0;
+$preid = '';
+$pretimes = 0;
+
+// Only run the edit/add processing when form is submitted
+if (isset($_GET['method'])&&$_GET['method']=="edit" && isset($_POST['addgame'])) {
+    // This section only runs when editing a game AND the form has been submitted
+    if (!isset($game) || empty($game)) {
+        die("Error: Game ID not provided for edit operation");
+    }
+    
+    // Use prepared statement for security  
+    $stmt = mysqli_prepare($iconnect, "SELECT * FROM phpqa_games WHERE gameid=?");
+    if (!$stmt) {
+        die("Prepare failed: " . mysqli_error($iconnect));
+    }
+    
+    mysqli_stmt_bind_param($stmt, "s", $game);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $editgame = mysqli_fetch_array($result);
+    mysqli_stmt_close($stmt);
+    
+    if ($editgame !== false && !empty($editgame)) {
+        // Set variables from existing game data
+        $champ = $editgame['Champion_name'] ?? '';
+        $champs = $editgame['Champion_score'] ?? 0;
+        $HOFn = $editgame['HOF_name'] ?? '';
+        $HOFs = $editgame['HOF_score'] ?? 0;
+        $preid = $editgame['id'] ?? '';
+        $pretimes = $editgame['times_played'] ?? 0;
+        $plattype = $editgame['platform'] ?? 'FL';
+        
+        // Use prepared statement for delete
+        $delete_stmt = mysqli_prepare($iconnect, "DELETE FROM phpqa_games WHERE gameid=?");
+        if ($delete_stmt) {
+            mysqli_stmt_bind_param($delete_stmt, "s", $game);
+            mysqli_stmt_execute($delete_stmt);
+            mysqli_stmt_close($delete_stmt);
+        }
+        
+        $remoteurl = $swf ?? '';
+        $swf_ok = 'Yes';
+        $gif_ok = 'Yes';
+        $found_swf = 'Yes';
+    }
+}
+
+// Check if $remoteurl is defined
+if (!isset($remoteurl)) {
+    $remoteurl = '';
 }
 
 if ($remoteurl == '') {
-global $idname;
-if (file_exists('./arcade/'.$idname.'.swf')) { 
-$found_swf = "Yes";
-} else { 
-message("The .swf file couldn't be found. You may have uploaded it successfully, but got the games idname wrong."); 
-}
+    if (isset($idname) && file_exists('./arcade/'.$idname.'.swf')) { 
+        $found_swf = "Yes";
+    } else { 
+        if (isset($idname)) {
+            message("The .swf file couldn't be found. You may have uploaded it successfully, but got the games idname wrong."); 
+        }
+    }
 } else {
-$found_swf = 'Yes';
+    $found_swf = 'Yes';
 }
-if ($gif_ok == 'Yes' && $swf_ok == 'Yes' && $found_swf == 'Yes') {
-global $idname;
-if (!isset($plattype))$plattype='FL';
-$idname = htmlspecialchars($idname, ENT_QUOTES);
 
-$addedalready = mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_games WHERE gameid='$idname'"));
-if (empty($addedalready)) {
-$atime = '';
-message("Game added/edited. <br>[ <a href='index.php?cpiarea=idx'>Arcade CP Home</a> | <a href='index.php?cpiarea=addgames&method=".$_GET['method']."'>Add Another</a> ]<br>[ <a href='index.php?play=".$idname."#playzone'>Test It</a> ]");
-run_iquery("INSERT INTO phpqa_games (id,game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring,exclusiv,HOF_name,HOF_score) VALUES ('$preid','$gamename','$idname','$gameheight','$gamewidth','$about','$gamecat','$remoteurl','$champ','$champs','$pretimes','$plattype','$scoretype','$exclusiv','$HOFn','$HOFs')");
-if (!isset($_GET['game'])){
-global $gamecat;
-if ($gamecat != 23){ 
-$atime = time();
-$NewGtext = "[color=green][i]New Game Added![/i] [/color][size=16][url=".$arcurl."/index.php?play=".$idname."#playzone][b]".$gamename."[/b][/url][/size]  [color=green][i]Enjoy![/i][/color] [:D]";
-run_iquery("INSERT INTO phpqa_shoutbox (name,shout,ipa,tstamp) VALUES ('Admin','" . $NewGtext . "','localhost','".$atime."')", 1);}
-}} else {
-message("This game is already added, or the idname conflicts with an existing game. Please delete the game, or change the idname to correct the problem.");
+if (($gif_ok ?? '') == 'Yes' && ($swf_ok ?? '') == 'Yes' && $found_swf == 'Yes') {
+    if (!isset($plattype)) $plattype='FL';
+    
+    $idname = htmlspecialchars($idname ?? '', ENT_QUOTES);
+    
+    // Check if game already exists using prepared statement
+    $check_stmt = mysqli_prepare($iconnect, "SELECT * FROM phpqa_games WHERE gameid=?");
+    mysqli_stmt_bind_param($check_stmt, "s", $idname);
+    mysqli_stmt_execute($check_stmt);
+    $check_result = mysqli_stmt_get_result($check_stmt);
+    $addedalready = mysqli_fetch_array($check_result);
+    mysqli_stmt_close($check_stmt);
+    
+    if (empty($addedalready)) {
+        $atime = '';
+        
+        message("Game added/edited. <br>[ <a href='index.php?cpiarea=idx'>Arcade CP Home</a> | <a href='index.php?cpiarea=addgames&method=".$_GET['method']."'>Add Another</a> ]<br>[ <a href='index.php?play=".$idname."#playzone'>Test It</a> ]");
+        
+        // Use prepared statement for insert
+        $insert_stmt = mysqli_prepare($iconnect, "INSERT INTO phpqa_games (id,game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring,exclusiv,HOF_name,HOF_score) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        
+        if ($insert_stmt) {
+            mysqli_stmt_bind_param($insert_stmt, "sssssssssissssss", 
+                $preid, $gamename, $idname, $gameheight, $gamewidth, $about, 
+                $gamecat, $remoteurl, $champ, $champs, $pretimes, $plattype, 
+                $scoretype, $exclusiv, $HOFn, $HOFs);
+            mysqli_stmt_execute($insert_stmt);
+            mysqli_stmt_close($insert_stmt);
+        }
+        
+        if (!isset($_GET['game'])){
+            if (($gamecat ?? 0) != 23){ 
+                $atime = time();
+                $NewGtext = "[color=green][i]New Game Added![/i] [/color][size=16][url=".($arcurl ?? '')."/index.php?play=".$idname."#playzone][b]".($gamename ?? '')."[/b][/url][/size]  [color=green][i]Enjoy![/i][/color] [:D]";
+                
+                $shout_stmt = mysqli_prepare($iconnect, "INSERT INTO phpqa_shoutbox (name,shout,ipa,tstamp) VALUES (?,?,?,?)");
+                if ($shout_stmt) {
+                    $admin_name = 'Admin';
+                    $localhost = 'localhost';
+                    mysqli_stmt_bind_param($shout_stmt, "ssss", $admin_name, $NewGtext, $localhost, $atime);
+                    mysqli_stmt_execute($shout_stmt);
+                    mysqli_stmt_close($shout_stmt);
+                }
+            }
+        }
+    } else {
+        message("This game is already added, or the idname conflicts with an existing game. Please delete the game, or change the idname to correct the problem.");
+    }
 }
-}
-}
+} // End of if(isset($_POST['addgame']))
 
 ?>
 <div class='tableborder'><table width=100% cellpadding='4' cellspacing='1'><td width='60%' align='center' class='headertableblock' colspan='2'> Adding Game</td><tr>
@@ -187,6 +256,7 @@ message("This game is already added, or the idname conflicts with an existing ga
 <tr><td class='arcade1' align='center' colspan='2'><b>Method: <?php echo $_GET['method']; ?></b></td>
 <?php
 $what="Add";
+
 //
 // What method?
 //
@@ -219,9 +289,87 @@ if (isset($_GET['method'])&&$_GET['method'] == "upload") {
 $what = "Edit";
 $game=htmlspecialchars($_GET['game'], ENT_QUOTES);
 
-$editgame = mysqli_fetch_array(run_iquery("SELECT * FROM phpqa_games WHERE gameid='$game'"));
+// Initialize editgame array to prevent undefined errors
+$editgame = array();
 
-if ($editgame['remotelink'] != "") {
+// Only run query if we're displaying the form (not processing it)
+if (!isset($_POST['addgame'])) {
+    // Check if connection exists
+    if (isset($iconnect)) {
+        try {
+            $stmt = mysqli_prepare($iconnect, "SELECT * FROM phpqa_games WHERE gameid=?");
+            if ($stmt) {
+                mysqli_stmt_bind_param($stmt, "s", $game);
+                mysqli_stmt_execute($stmt);
+                $result = mysqli_stmt_get_result($stmt);
+                $editgame = mysqli_fetch_array($result, MYSQLI_ASSOC);
+                mysqli_stmt_close($stmt);
+                
+                if (!$editgame || empty($editgame)) {
+                    // Initialize with empty values if game not found
+                    $editgame = array(
+                        'game' => '',
+                        'gameid' => $game,
+                        'gameheight' => '400',
+                        'gamewidth' => '550',
+                        'about' => '',
+                        'remotelink' => '',
+                        'scoring' => 'HI',
+                        'exclusiv' => '0',
+                        'gamecat' => '1',
+                        'HOF_name' => '',
+                        'HOF_score' => '0'
+                    );
+                }
+            } else {
+                // Initialize empty array
+                $editgame = array(
+                    'game' => '',
+                    'gameid' => $game,
+                    'gameheight' => '400',
+                    'gamewidth' => '550',
+                    'about' => '',
+                    'remotelink' => '',
+                    'scoring' => 'HI',
+                    'exclusiv' => '0',
+                    'gamecat' => '1',
+                    'HOF_name' => '',
+                    'HOF_score' => '0'
+                );
+            }
+        } catch (Exception $e) {
+            $editgame = array(
+                'game' => '',
+                'gameid' => $game,
+                'gameheight' => '400',
+                'gamewidth' => '550',
+                'about' => '',
+                'remotelink' => '',
+                'scoring' => 'HI',
+                'exclusiv' => '0',
+                'gamecat' => '1',
+                'HOF_name' => '',
+                'HOF_score' => '0'
+            );
+        }
+    } else {
+        $editgame = array(
+            'game' => '',
+            'gameid' => $game,
+            'gameheight' => '400',
+            'gamewidth' => '550',
+            'about' => '',
+            'remotelink' => '',
+            'scoring' => 'HI',
+            'exclusiv' => '0',
+            'gamecat' => '1',
+            'HOF_name' => '',
+            'HOF_score' => '0'
+        );
+    }
+}
+
+if (isset($editgame['remotelink']) && $editgame['remotelink'] != "") {
 ?>
 <tr><td class='arcade1' align='left'><b>Game File Location (URL): <a href="javascript:alert('This is the link location for the HTML5 index.html for the game');">[?]</a></b></td>
 <td class='arcade1' align='center'><input type='text' name='swf' value='<?php echo $editgame['remotelink']; ?>'></td></tr>
@@ -237,19 +385,17 @@ echo "<font color='green'>OK:</font> The swf file is found on your server.";
 } else {
 echo "<font color='red'>BAD:</font> The swf file is not found on your server. Please try reuploading it, or correct the idname.";
 }
-//do we even need this? vvVVvv
 ?>
 <tr><td class='arcade1' align='left'><b>.SWF file URL Hotlink? (do you EVER use this option? addgames.php line: 220) <a href="javascript:alert('Hotlinking means to loads a game from a remote server. If you wish to start hotlinking from another host rather than use the hosting the arcade is on, paste the URL in the box.');">[?]</a></b></td>
-<td class='arcade1' align='center'><input type='text' name='swf' value='<?php echo $editgame['remotelink']; ?>'></td></tr>
+<td class='arcade1' align='center'><input type='text' name='swf' value='<?php echo ($editgame['remotelink'] ?? ''); ?>'></td></tr>
 </td></tr>
 <?php
-//do we even need this? ''^^``
 }
 }
 ?>
 <?php
 if(isset($_GET['method']) && $_GET['method'] != 'edit') {
-global $editgame;
+$what="Add";
 ?>
 <tr><td class='arcade1' align='center' colspan='2'><b>Attach Importer</b></td>
 <tr><td class='arcade1' align='left'><b>Game .PHP file:</b></td>
@@ -260,21 +406,21 @@ global $editgame;
 ?>
 <tr>
 <td class='arcade1' align='left'><b>Game Name:</b></td>
-<td class='arcade1' align='center'><input type='text' name='gamename' value='<?php echo $editgame['game']; ?>'></td></tr>
+<td class='arcade1' align='center'><input type='text' name='gamename' value='<?php echo htmlspecialchars($editgame['game'] ?? '', ENT_QUOTES); ?>'></td></tr>
 <tr><td class='arcade1' align='left'><b>Height:</b></td>
-<td class='arcade1' align='center'><input type='text' name='height' value='<?php echo $editgame['gameheight']; ?>'></td></tr>
+<td class='arcade1' align='center'><input type='text' name='height' value='<?php echo htmlspecialchars($editgame['gameheight'] ?? '', ENT_QUOTES); ?>'></td></tr>
 <tr><td class='arcade1' align='left'><b>Width:</b></td>
-<td class='arcade1' align='center'><input type='text' name='width' value='<?php echo $editgame['gamewidth']; ?>'></td></tr>
+<td class='arcade1' align='center'><input type='text' name='width' value='<?php echo htmlspecialchars($editgame['gamewidth'] ?? '', ENT_QUOTES); ?>'></td></tr>
 <tr><td class='arcade1' align='left'><b>Idname:</b></td>
 <td class='arcade1' align='center'>
-<?php if($editgame['gameid']  == '') { 
+<?php if(($editgame['gameid'] ?? '') == '') { 
 echo "<input type='text' name='idname' value=''>";
 } else { 
-echo "<input type='hidden' name='idname' value='".$editgame['gameid']."'> ".$editgame['gameid']."";
+echo "<input type='hidden' name='idname' value='".htmlspecialchars($editgame['gameid'] ?? '', ENT_QUOTES)."'> ".htmlspecialchars($editgame['gameid'] ?? '', ENT_QUOTES)."";
 } ?>
 </td></tr>
 <tr><td class='arcade1' align='left'><b>Description:</b></td>
-<td class='arcade1' align='center'><textarea rows='5' cols='60' name='desc'><?php echo $editgame['about']; ?></textarea></td></tr>
+<td class='arcade1' align='center'><textarea rows='5' cols='60' name='desc'><?php echo htmlspecialchars($editgame['about'] ?? '', ENT_QUOTES); ?></textarea></td></tr>
 <!-- added for LO score MOD -->
 <tr><td class='arcade1' align='left'><b>Scoring Type:</b></td>
 <td class='arcade1' align='center'>
@@ -318,14 +464,18 @@ echo  "<option value='".$catlist[0]."'>".$catlist[1]."</option>";
 ?>
 </select>
 </td></tr>
-<input type='hidden' name='HOFname' value='<?php echo $editgame['HOF_name'] ?>'>
-<input type='hidden' name='HOFscore' value='<?php echo $editgame['HOF_score'] ?>'>
+<input type='hidden' name='HOFname' value='<?php echo ($editgame['HOF_name'] ?? '') ?>'>
+<input type='hidden' name='HOFscore' value='<?php echo ($editgame['HOF_score'] ?? '') ?>'>
 <tr><td class='headertableblock' colspan='2'><div align=center><input type='Submit' name='addgame' value='<?php echo $what; ?> Game'></div></td></tr>
 </form>
 </table>
 </div>
 <br>
 <?php
-}
+} // End of elseif(isset($_GET['method']))
+
+// Close database connection
+if (isset($iconnect)) {
+    mysqli_close($iconnect);
 }
 ?>
