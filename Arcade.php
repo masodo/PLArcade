@@ -11,64 +11,100 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Arcade.php  Function: Main Organization Page   Modified: 7/29/2019   By: MaSoDo
+# Section: Arcade.php  Function: Main Organization Page   Modified: 9/4/2025   By: MaSoDo
 //-----------------------------------------------------------------------------------/
+
+// FIX: Include PATH_INFO fix before any other processing
+// This prevents URL routing issues that cause styling problems
+if (file_exists("./PathInfoFix.php")) {
+    require_once "./PathInfoFix.php";
+}
+
+// Original includes continue here
 require "./Preliminary.php";
 require "./Functions.php";
 require "./PageHead.php";
 require "./HeaderBlock.php";
+
+// Handle specific page requests
 if (isset($_GET['contact'])) {
-require "./contact.php";
+    require "./contact.php";
 }
 if (isset($_GET['privacy'])) {
-require "./privacy.php";
+    require "./privacy.php";
 }
 if (isset($_GET['disclosure'])) {
-require "./disclosure.php";
+    require "./disclosure.php";
 }
+
 require "./AddStyle.php";
 require "./JavaScript.php";
 require "./SmileyPop.php";
 require "./FullScreen.php";
+
 if (!isset($_GET['do'])) {
-if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){require "./LimitedArcadeInfo.php";}else{$IDXV=='GV'?require './ArcadeInfoLG.php':require './ArcadeInfo.php';}
-if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){if (isset($_GET['action']) && $_GET['action'] == "register") require "./RegisterOption.php";}else{ require "./ShoutBox.php";}
-if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){}else{require "./Categories.php";}
-if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){}else{require "./NavShout.php";}
+    if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){
+        require "./LimitedArcadeInfo.php";
+    } else {
+        $IDXV=='GV' ? require './ArcadeInfoDB.php' : require './ArcadeInfoLG.php';
+    }
+    
+    if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){
+        if (isset($_GET['action']) && $_GET['action'] == "register") require "./RegisterOption.php";
+    } else { 
+        require "./ShoutBox.php";
+    }
+    
+    if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){
+        // Closed arcade - skip categories
+    } else {
+        require "./Categories.php";
+    }
+    
+    if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){
+        // Closed arcade - skip nav
+    } else {
+        require "./NavShout.php";
+    }
 } else {
-echo "<br />"; message("Game Over!"); 
-require "./NavShout.php";
+    echo "<br />"; 
+    message("Game Over!"); 
+    require "./NavShout.php";
 }
+
 if(isset($settings['closed_arcade']) && $settings['closed_arcade'] == 1 && !isset($_COOKIE['phpqa_user_c'])){
-require "./FooterBlock.php";
-if (isset($_GET['action']) && $_GET['action'] == "forgotpass") require "./ForgotPassOption.php";
+    require "./FooterBlock.php";
+    if (isset($_GET['action']) && $_GET['action'] == "forgotpass") require "./ForgotPassOption.php";
 } else {
-if (isset($_GET['play']) && $_GET['play']) require "./PlayOption.php"; // Playing?
-if (isset($_GET['action']) && $_GET['action'] == "forgotpass") require "./ForgotPassOption.php";
-elseif (isset($_GET['action']) && $_GET['action'] == "members") require "./MembersOption.php";
-elseif (isset($_GET['action']) && $_GET['action'] == "forum") require "./ForumGate.php";
-elseif (isset($_GET['action']) && $_GET['action'] == "register") require "./RegisterOption.php";
-elseif (isset($_GET['action']) && $_GET['action'] == "Online") require "./OnlineOption.php";
-elseif (isset($_GET['action']) && $_GET['action'] == "profile") require "./ProfileOption.php";
-elseif (isset($_GET['action']) && $_GET['action'] == "leaderboards") require "./LeaderboardsOption.php";
-elseif (isset($_GET['action']) && $_GET['action'] == "HOF") require "./HOFboardsOption.php";
-elseif (isset($_GET["action"]) && $_GET['action'] == "settings") require "./SettingsOption.php";
-if (isset($id) || isset($_GET['do']) && $_GET['do'] == "newscore" || isset($_GET['autocom'])) { 
-require "./ScoringOption.php";
+    if (isset($_GET['play']) && $_GET['play']) require "./PlayOption.php"; // Playing?
+    if (isset($_GET['action']) && $_GET['action'] == "forgotpass") require "./ForgotPassOption.php";
+    elseif (isset($_GET['action']) && $_GET['action'] == "members") require "./MembersOption.php";
+    elseif (isset($_GET['action']) && $_GET['action'] == "forum") require "./ForumGate.php";
+    elseif (isset($_GET['action']) && $_GET['action'] == "register") require "./RegisterOption.php";
+    elseif (isset($_GET['action']) && $_GET['action'] == "Online") require "./OnlineOption.php";
+    elseif (isset($_GET['action']) && $_GET['action'] == "profile") require "./ProfileOption.php";
+    elseif (isset($_GET['action']) && $_GET['action'] == "leaderboards") require "./LeaderboardsOption.php";
+    elseif (isset($_GET['action']) && $_GET['action'] == "HOF") require "./HOFboardsOption.php";
+    elseif (isset($_GET["action"]) && $_GET['action'] == "settings") require "./SettingsOption.php";
+    
+    if (isset($id) || isset($_GET['do']) && $_GET['do'] == "newscore" || isset($_GET['autocom'])) { 
+        require "./ScoringOption.php";
+    }
+    
+    if(isset($_GET['cpiarea'])) {
+        require "./AdminOption.php";
+    } elseif(isset($_GET['modcparea'])) {
+        require "./ModOption.php";
+    } else {
+        if ($IDXV == 'GV'){  				// You"re on the index. OK.
+            require "./IndexOption.php";
+        } else {
+            require "./IndexOptionCV.php";
+        }
+        if (!isset($_GET['do'])) {
+            require "./PageMakerB.php";
+        }
+        require "./FooterBlock.php";
+    }
 }
-if(isset($_GET['cpiarea'])) {
-require "./AdminOption.php";
-} elseif(isset($_GET['modcparea'])) {
-require "./ModOption.php";
-} else {
-if ($IDXV == 'GV'){  				// You"re on the index. OK.
-require "./IndexOption.php";
-} else {
-require "./IndexOptionCV.php";
-}
-if (!isset($_GET['do'])) {
-require "./PageMakerB.php";
-}
-require "./FooterBlock.php";
-}}
 ?>
