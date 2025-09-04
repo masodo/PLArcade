@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: [6-26-25 working w/ClaudeAI] 10/14/2019   By: MaSoDo
+# Section: Preliminary.php  Function: Session Start and Loading Preliminary Functions   Modified: w/ClaudeAI ] 9/4/2025  By: MaSoDo 
 session_start();
 if(isset($_GET['captcha'])){
     // Set the correct content type header first
@@ -21,16 +21,16 @@ if(isset($_GET['captcha'])){
     
     // Fix the color allocation - values should be 0-255, not just 333
     $textcolor = imagecolorallocate($im, 51, 51, 51); // Dark gray
-    
+    if (isset($_SESSION['captcha'])) {
     imagestring($im, 4, rand(0,240), rand(0,20), "{$_SESSION['captcha']}", $textcolor);
-    
+ 
     // Output the image BEFORE destroying it
     imagepng($im);
     
     // Clean up the resource
     imagedestroy($im);
-    
-    die();
+    }   
+    die(); 
 }
 //uncomment below to report ALL errors
 error_reporting(E_ALL);
@@ -99,8 +99,10 @@ if (isset($_COOKIE['PHPSESSID'])) {
 $key=htmlspecialchars($_COOKIE['PHPSESSID'], ENT_QUOTES);
 }
 function vsess() {
-global $key;
-if(isset($_REQUEST['akey']) && $_REQUEST['akey'] != $key) { die("Authorization Mismatch"); }
+    global $key;
+    if (!isset($_REQUEST['akey']) || $_REQUEST['akey'] != $key) { 
+        die("Authorization Mismatch"); 
+    }
 }
 // for compatibility?
 if(isset($_GET['do']) && $_GET['do'] == "verifyscore") {
@@ -153,34 +155,39 @@ $g.= "<a title='".$smils['description']."'><img src=\"".$smiliesloc."/".$smils['
 }
 return $g;
 }
-function run_iquery($sql=false, $no_inj_protect=""){
-require("./arcade_conf.php");
-$iconnect = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
-if (mysqli_connect_errno()){
-  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+function run_iquery($sql = false) {
+    require("./arcade_conf.php");
+    
+    $iconnect = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
+    if (mysqli_connect_errno()) {
+        die("Failed to connect to MySQL: " . mysqli_connect_error());
+    }
+    
+    static $queries = [];
+//rebuilt M4SoDo 7-20-2025    
+    if ($sql && $sql != "") {
+        $queries[] = $sql;  // Log the query
+        
+        $r_q = mysqli_query($iconnect, $sql);
+        
+        if (!$r_q) {
+            $error = mysqli_error($iconnect);
+            echo "<script>
+                console.error('Database Error:', " . json_encode($error) . ");
+                console.error('Query:', " . json_encode($sql) . ");
+            </script>";
+            mysqli_close($iconnect);
+            return false;
+        }
+        
+        mysqli_close($iconnect);
+        return $r_q;  // Return the actual query result
+    }
+    
+    mysqli_close($iconnect);
+    return $queries;  // Return logged queries if no SQL provided
 }
-static $queries=Array();
-if ($sql) $queries[]=$sql;
-// Inject protection, filters queries to stop injections
-// don't want it / need something here? Then set the flag to 1.
-$sql=preg_replace("/--/i", "", $sql);
-if(!$no_inj_protect) {
-$sql=preg_replace("/UNION/i", "", $sql);
-$sql=preg_replace("/concat/i", "", $sql);
-$sql=preg_replace("/pass/i", "", $sql);
-}
-if($sql !="") $r_q=mysqli_query($iconnect,$sql);
-$h=htmlspecialchars(mysqli_connect_errno(), ENT_QUOTES);
-if($h) { 
-$sql=htmlspecialchars($sql, ENT_QUOTES);	
-echo "<script language='Javascript'>
-alert('Database Error: ".$h."');
-alert('Query used: ".$sql."');
-</script>"; 
-}
-return $sql?$r_q:$queries;
-}
-
+//end new
 if (isset($_GET['id'])) $id = htmlspecialchars($_GET['id'], ENT_QUOTES);
 if (isset($_GET['user'])) $user = htmlspecialchars ($_GET['user'], ENT_QUOTES);
 if (isset($_GET['cat'])&&!is_numeric($_GET['cat'])) die();
@@ -317,11 +324,11 @@ $pgnm = 1;
 // ---------------------------
 if (isset($_GET['limit'])) $lim = $_GET['limit'];
 if (isset($limit)) {
-$limn = ($limit) + ($num_pages_of); 
-$limnm = ($limit) - ($num_pages_of); 
+    $limn = ((int)$limit) + ((int)$num_pages_of); 
+    $limnm = ((int)$limit) - ((int)$num_pages_of); 
 } else { 
-$limn = 1;
-$limnm = 1;
+    $limn = 1;
+    $limnm = 1;
 }
 // ---------------------------
 // ---------------------------
@@ -329,9 +336,9 @@ $limnm = 1;
 // ---------------------------
 if (isset($_GET['show'])) $sw = $_GET['show'];
 if (isset($page)) {
-$swn = $show + $num_pages_of; 
-$swnm = $show - $num_pages_of;
-} 
+    $swn = ((int)$show) + ((int)$num_pages_of); 
+    $swnm = ((int)$show) - ((int)$num_pages_of);
+}
 // ---------------------------
 // ---------------------------
 // get READY to go! OOOH 
@@ -374,7 +381,7 @@ setcookie("phpqa_user_p", $thepassword_in_db, time()+2592000, "/", "", false, tr
 // Count the logins here:
 $time = time();
 
-run_iquery("UPDATE phpqa_accounts SET logins=".++$exist['logins'].", vtstamp=".$time." WHERE name='" . $userID ."'"); 
+run_iquery("UPDATE phpqa_accounts SET logins=".(++$exist['logins']).", vtstamp=".$time." WHERE name='" . $userID ."'"); 
 
 if (isset($exist['logins'])&&$exist['logins'] =='1' ) {
 header("Location: index.php");
