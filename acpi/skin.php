@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: skin - Administrator Control Panel - Hardened Version -   Modified: 9/5/2025   By: MaSoDo - Updated for new editor system
+# Section: acpi Place: skin - Administrator Control Panel - Hardened Version -   Modified: 9/6/2025   By: MaSoDo - Updated for new editor system
 
 if (isset($_GET['skinremove'])) {
     vsess();
