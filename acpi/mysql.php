@@ -8,7 +8,7 @@
 // Version: 3.0.23 Final. Released: Sunday, May 02, 2010
 //-----------------------------------------------------------------------------------/
 // Section: acpi  Place: mysql - Administrator Control Panel
-// Original: 7/29/2019 by MaSoDo  |  Claude Updated: 4/1/2026 for PHP 8.x compatibility
+// Original: 7/29/2019 by MaSoDo  |  Claude Updated: 4/2/2026 for PHP 8.x compatibility
 //-----------------------------------------------------------------------------------/
 
 // NOTE: This file expects $conn (mysqli connection object), $key, $imgloc,
@@ -45,7 +45,7 @@
     if (isset($_POST['CHAMPwipe']) && $_POST['CHAMPwipe'] == '1') {
         if (isset($_POST['RESETC']) && $_POST['RESETC'] == 'yes') {
             vsess();
-            $goquery2 = run_iquery("UPDATE phpqa_games SET Champion_name = '', Champion_score = '' WHERE Champion_score > 0");
+            $goquery2 = run_iquery("UPDATE phpqa_games SET Champion_name = '', Champion_score = 0 WHERE Champion_score != 0");
             if ($goquery2) {
                 $goquery3 = run_iquery("TRUNCATE TABLE phpqa_scores");
                 if ($goquery3) {
