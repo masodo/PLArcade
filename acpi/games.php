@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com 
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi Place: games - Administrator Control Panel   Modified: 7/29/2019   By: MaSoDo
+# Section: acpi Place: games - Administrator Control Panel   Modified: 7/29/2019   By: MaSoDo < fixed 4/2/2026
 
 
 {
@@ -71,7 +71,7 @@ $f=htmlspecialchars($gselect[$x], ENT_QUOTES);
 run_iquery("DELETE FROM phpqa_scores WHERE gameidname = '$f'");
 run_iquery("DELETE FROM phpqa_leaderboard WHERE gamename = '$f'");
 run_iquery("UPDATE phpqa_games SET Champion_name = '' WHERE gameid='$f'");
-run_iquery("UPDATE phpqa_games SET Champion_score = '' WHERE gameid='$f'");
+run_iquery("UPDATE phpqa_games SET Champion_score = 0 WHERE gameid='$f'");
 }
 }
 
