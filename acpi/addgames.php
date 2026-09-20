@@ -11,7 +11,7 @@
 // Thanks to (Sean) http://seanj.jcink.com  
 // for: Tournies, JS, and more
 // ---------------------------------------------------------------------------------/
-# Section: acpi place: addgames Administrator Control Panel   Modified: 7-27-2025 Major Redesign w/Claude   By: MaSoDo
+# Section: acpi place: addgames Administrator Control Panel   Modified: 7-26-2025 | 9/20/2026 working w/Claude   By: MaSoDo
 
 // Create database connection
 require("./arcade_conf.php");
@@ -217,11 +217,11 @@ if (($gif_ok ?? '') == 'Yes' && ($swf_ok ?? '') == 'Yes' && $found_swf == 'Yes')
         message("Game added/edited. <br>[ <a href='index.php?cpiarea=idx'>Arcade CP Home</a> | <a href='index.php?cpiarea=addgames&method=".$_GET['method']."'>Add Another</a> ]<br>[ <a href='index.php?play=".$idname."#playzone'>Test It</a> ]");
         
         // Use prepared statement for insert
-        $insert_stmt = mysqli_prepare($iconnect, "INSERT INTO phpqa_games (id,game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring,exclusiv,HOF_name,HOF_score) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        $insert_stmt = mysqli_prepare($iconnect, "INSERT INTO phpqa_games (game,gameid,gameheight,gamewidth,about,gamecat,remotelink,Champion_name,Champion_score,times_played,platform,scoring,exclusiv,HOF_name,HOF_score) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         
         if ($insert_stmt) {
-            mysqli_stmt_bind_param($insert_stmt, "sssssssssissssss", 
-                $preid, $gamename, $idname, $gameheight, $gamewidth, $about, 
+            mysqli_stmt_bind_param($insert_stmt, "ssssssssissssss", 
+                $gamename, $idname, $gameheight, $gamewidth, $about, 
                 $gamecat, $remoteurl, $champ, $champs, $pretimes, $plattype, 
                 $scoretype, $exclusiv, $HOFn, $HOFs);
             mysqli_stmt_execute($insert_stmt);
